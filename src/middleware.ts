@@ -7,7 +7,13 @@ export default withAuth(
     const token = req.nextauth.token
 
     // Allow public routes
-    const publicRoutes = ['/', '/auth/signin', '/auth/signup', '/auth/verify', '/auth/error']
+    const publicRoutes = [
+      '/',
+      '/auth/signin',
+      '/auth/signup',
+      '/auth/verify',
+      '/auth/error',
+    ]
     if (publicRoutes.includes(pathname)) {
       return NextResponse.next()
     }
@@ -21,14 +27,14 @@ export default withAuth(
 
     // Role-based access control
     const userType = token.userType
-    
+
     // Admin-only routes
     if (pathname.startsWith('/admin')) {
       if (userType !== 'ADMIN') {
         return NextResponse.redirect(new URL('/unauthorized', req.url))
       }
     }
-    
+
     // Business owner/broker routes
     if (pathname.startsWith('/manage') || pathname.startsWith('/evaluations')) {
       if (!['BUSINESS_OWNER', 'BROKER', 'ADMIN'].includes(userType as string)) {
@@ -42,13 +48,19 @@ export default withAuth(
     callbacks: {
       authorized: ({ token, req }) => {
         const { pathname } = req.nextUrl
-        
+
         // Always allow public routes
-        const publicRoutes = ['/', '/auth/signin', '/auth/signup', '/auth/verify', '/auth/error']
+        const publicRoutes = [
+          '/',
+          '/auth/signin',
+          '/auth/signup',
+          '/auth/verify',
+          '/auth/error',
+        ]
         if (publicRoutes.includes(pathname)) {
           return true
         }
-        
+
         // Require authentication for protected routes
         return !!token
       },

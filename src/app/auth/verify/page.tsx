@@ -6,7 +6,9 @@ import Link from 'next/link'
 import { LoadingSpinner } from '@/components/ui/loading'
 
 export default function VerifyPage() {
-  const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading')
+  const [status, setStatus] = useState<'loading' | 'success' | 'error'>(
+    'loading'
+  )
   const [message, setMessage] = useState('')
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -28,13 +30,15 @@ export default function VerifyPage() {
 
   const verifyEmail = async () => {
     try {
-      const response = await fetch(`/api/auth/verify?token=${token}&email=${encodeURIComponent(email!)}`)
+      const response = await fetch(
+        `/api/auth/verify?token=${token}&email=${encodeURIComponent(email!)}`
+      )
       const data = await response.json()
 
       if (response.ok) {
         setStatus('success')
         setMessage('Your email has been verified successfully!')
-        
+
         // Redirect to sign in after 3 seconds
         setTimeout(() => {
           router.push('/auth/signin?message=verified')
@@ -60,7 +64,7 @@ export default function VerifyPage() {
       })
 
       const data = await response.json()
-      
+
       if (response.ok) {
         setMessage('Verification email sent! Please check your inbox.')
       } else {

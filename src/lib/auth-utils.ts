@@ -12,11 +12,13 @@ export async function getAuthSession() {
 // Require authentication - redirect to signin if not authenticated
 export async function requireAuth(redirectTo?: string) {
   const session = await getAuthSession()
-  
+
   if (!session || !session.user) {
-    redirect(`/auth/signin?callbackUrl=${encodeURIComponent(redirectTo || '/dashboard')}`)
+    redirect(
+      `/auth/signin?callbackUrl=${encodeURIComponent(redirectTo || '/dashboard')}`
+    )
   }
-  
+
   return session
 }
 
@@ -26,22 +28,22 @@ export async function requireUserType(
   redirectTo?: string
 ) {
   const session = await requireAuth(redirectTo)
-  
+
   if (!allowedTypes.includes(session.user.userType)) {
     redirect('/unauthorized')
   }
-  
+
   return session
 }
 
 // Get user with additional database information
 export async function getCurrentUser() {
   const session = await getAuthSession()
-  
+
   if (!session?.user?.id) {
     return null
   }
-  
+
   const user = await prisma.user.findUnique({
     where: { id: session.user.id },
     include: {
@@ -55,7 +57,7 @@ export async function getCurrentUser() {
       },
     },
   })
-  
+
   return user
 }
 
@@ -70,22 +72,32 @@ export function hasPermission(
 // Role-based access control helpers
 export const PERMISSIONS = {
   // General permissions
-  VIEW_BUSINESSES: [UserType.BUYER, UserType.BUSINESS_OWNER, UserType.BROKER, UserType.ADMIN],
+  VIEW_BUSINESSES: [
+    UserType.BUYER,
+    UserType.BUSINESS_OWNER,
+    UserType.BROKER,
+    UserType.ADMIN,
+  ],
   CREATE_BUSINESS: [UserType.BUSINESS_OWNER, UserType.BROKER, UserType.ADMIN],
   EDIT_BUSINESS: [UserType.BUSINESS_OWNER, UserType.BROKER, UserType.ADMIN],
   DELETE_BUSINESS: [UserType.BUSINESS_OWNER, UserType.ADMIN],
-  
+
   // Evaluation permissions
-  VIEW_EVALUATIONS: [UserType.BUYER, UserType.BUSINESS_OWNER, UserType.BROKER, UserType.ADMIN],
+  VIEW_EVALUATIONS: [
+    UserType.BUYER,
+    UserType.BUSINESS_OWNER,
+    UserType.BROKER,
+    UserType.ADMIN,
+  ],
   CREATE_EVALUATION: [UserType.BROKER, UserType.ADMIN],
   EDIT_EVALUATION: [UserType.BROKER, UserType.ADMIN],
   DELETE_EVALUATION: [UserType.ADMIN],
-  
+
   // User management
   VIEW_USERS: [UserType.ADMIN],
   EDIT_USERS: [UserType.ADMIN],
   DELETE_USERS: [UserType.ADMIN],
-  
+
   // Admin permissions
   VIEW_ANALYTICS: [UserType.ADMIN],
   MANAGE_SYSTEM: [UserType.ADMIN],

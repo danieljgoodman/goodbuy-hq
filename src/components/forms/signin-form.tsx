@@ -127,14 +127,19 @@ export default function SignInForm() {
           <div className="w-full border-t border-secondary-300" />
         </div>
         <div className="relative flex justify-center text-sm">
-          <span className="bg-white px-2 text-secondary-500">Or continue with email</span>
+          <span className="bg-white px-2 text-secondary-500">
+            Or continue with email
+          </span>
         </div>
       </div>
 
       {/* Email/Password Form */}
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-secondary-700 mb-1">
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-secondary-700 mb-1"
+          >
             Email Address
           </label>
           <input
@@ -144,12 +149,17 @@ export default function SignInForm() {
             placeholder="Enter your email"
           />
           {errors.email && (
-            <p className="mt-1 text-sm text-error-600">{errors.email.message}</p>
+            <p className="mt-1 text-sm text-error-600">
+              {errors.email.message}
+            </p>
           )}
         </div>
 
         <div>
-          <label htmlFor="password" className="block text-sm font-medium text-secondary-700 mb-1">
+          <label
+            htmlFor="password"
+            className="block text-sm font-medium text-secondary-700 mb-1"
+          >
             Password
           </label>
           <input
@@ -159,7 +169,9 @@ export default function SignInForm() {
             placeholder="Enter your password"
           />
           {errors.password && (
-            <p className="mt-1 text-sm text-error-600">{errors.password.message}</p>
+            <p className="mt-1 text-sm text-error-600">
+              {errors.password.message}
+            </p>
           )}
         </div>
 
@@ -184,7 +196,10 @@ export default function SignInForm() {
       <div className="text-center">
         <p className="text-sm text-secondary-600">
           Don&apos;t have an account?{' '}
-          <Link href="/auth/signup" className="text-primary-600 hover:text-primary-500 font-medium">
+          <Link
+            href="/auth/signup"
+            className="text-primary-600 hover:text-primary-500 font-medium"
+          >
             Sign up
           </Link>
         </p>

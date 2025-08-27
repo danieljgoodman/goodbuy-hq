@@ -5,6 +5,7 @@ This guide will help you set up authentication and database functionality for Go
 ## 🗄️ Database Setup
 
 ### Prerequisites
+
 - PostgreSQL 14+ installed and running
 - Environment variables configured
 
@@ -67,6 +68,7 @@ The application uses NextAuth.js with multiple authentication providers:
    - `https://yourdomain.com/api/auth/callback/google` (production)
 
 Update `.env.local`:
+
 ```bash
 GOOGLE_CLIENT_ID="your-google-client-id"
 GOOGLE_CLIENT_SECRET="your-google-client-secret"
@@ -81,6 +83,7 @@ GOOGLE_CLIENT_SECRET="your-google-client-secret"
    - `https://yourdomain.com/api/auth/callback/linkedin` (production)
 
 Update `.env.local`:
+
 ```bash
 LINKEDIN_CLIENT_ID="your-linkedin-client-id"
 LINKEDIN_CLIENT_SECRET="your-linkedin-client-secret"
@@ -114,24 +117,28 @@ NEXTAUTH_SECRET="your-generated-secret-here"
 The application supports four user types with different permissions:
 
 ### 🏢 Business Owner
+
 - Create and manage business listings
 - View inquiries from buyers
 - Access basic analytics
 - Update business information
 
 ### 💼 Buyer
+
 - Browse business listings
 - Save favorite businesses
 - Submit inquiries
 - Access evaluation reports
 
 ### 🤝 Broker
+
 - Manage multiple client listings
 - Create professional evaluations
 - Access advanced analytics
 - Manage client relationships
 
 ### ⚡ Admin
+
 - Full system access
 - User management
 - System configuration
@@ -140,22 +147,26 @@ The application supports four user types with different permissions:
 ## 🔒 Security Features
 
 ### Email Verification
+
 - All new accounts require email verification
 - Verification tokens expire in 24 hours
 - Automatic welcome emails on verification
 
 ### Password Security
+
 - Minimum 8 characters required
 - Passwords hashed with bcrypt (12 rounds)
 - Secure password reset flow
 
 ### Session Management
+
 - JWT-based sessions
 - 30-day session lifetime
 - Secure cookie configuration
 - Automatic session refresh
 
 ### Protected Routes
+
 - Middleware-based route protection
 - Role-based access control
 - Automatic redirects for unauthorized access
@@ -163,27 +174,32 @@ The application supports four user types with different permissions:
 ## 🚀 Getting Started
 
 ### 1. Install Dependencies
+
 ```bash
 npm install
 ```
 
 ### 2. Configure Environment
+
 ```bash
 cp .env.example .env.local
 # Edit .env.local with your configuration
 ```
 
 ### 3. Set Up Database
+
 ```bash
 npm run db:push
 ```
 
 ### 4. Start Development Server
+
 ```bash
 npm run dev
 ```
 
 ### 5. Test Authentication
+
 - Visit `http://localhost:3000/auth/signin`
 - Create a new account or sign in with OAuth
 - Access dashboard at `http://localhost:3000/dashboard`
@@ -191,6 +207,7 @@ npm run dev
 ## 🧪 Testing
 
 ### Test User Registration
+
 1. Go to `/auth/signup`
 2. Fill in the registration form
 3. Check email for verification link
@@ -198,6 +215,7 @@ npm run dev
 5. Sign in and access dashboard
 
 ### Test OAuth Providers
+
 1. Configure OAuth credentials
 2. Go to `/auth/signin`
 3. Click on Google/LinkedIn buttons
@@ -222,16 +240,19 @@ The database includes the following main entities:
 ### Common Issues
 
 #### Database Connection Issues
+
 - Check PostgreSQL is running
 - Verify DATABASE_URL format
 - Ensure database exists
 
 #### OAuth Issues
+
 - Check client ID/secret configuration
 - Verify redirect URLs match exactly
 - Ensure OAuth APIs are enabled
 
 #### Email Issues
+
 - Check SMTP configuration
 - Verify app password for Gmail
 - Test email connectivity
@@ -272,6 +293,7 @@ If you encounter issues:
 4. Verify OAuth provider settings
 
 For additional help, refer to the documentation:
+
 - [NextAuth.js Docs](https://next-auth.js.org/)
 - [Prisma Docs](https://www.prisma.io/docs/)
 - [PostgreSQL Docs](https://www.postgresql.org/docs/)

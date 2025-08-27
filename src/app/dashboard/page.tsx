@@ -81,7 +81,9 @@ export default async function DashboardPage() {
                 <div className="text-secondary-600">Active Listings</div>
               </div>
               <div className="card text-center">
-                <div className="text-3xl font-bold text-success-600 mb-2">0</div>
+                <div className="text-3xl font-bold text-success-600 mb-2">
+                  0
+                </div>
                 <div className="text-secondary-600">Inquiries</div>
               </div>
               <div className="card text-center">
@@ -94,11 +96,15 @@ export default async function DashboardPage() {
           {session.user.userType === UserType.BUYER && (
             <>
               <div className="card text-center">
-                <div className="text-3xl font-bold text-primary-600 mb-2">0</div>
+                <div className="text-3xl font-bold text-primary-600 mb-2">
+                  0
+                </div>
                 <div className="text-secondary-600">Saved Businesses</div>
               </div>
               <div className="card text-center">
-                <div className="text-3xl font-bold text-success-600 mb-2">0</div>
+                <div className="text-3xl font-bold text-success-600 mb-2">
+                  0
+                </div>
                 <div className="text-secondary-600">Active Inquiries</div>
               </div>
               <div className="card text-center">

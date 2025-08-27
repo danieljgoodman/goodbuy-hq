@@ -17,20 +17,36 @@ export default function SignUpPage() {
               Join thousands of successful business professionals
             </h2>
             <p className="text-lg text-secondary-600">
-              Whether you&apos;re buying, selling, or brokering businesses, our platform provides the tools and insights you need to succeed.
+              Whether you&apos;re buying, selling, or brokering businesses, our
+              platform provides the tools and insights you need to succeed.
             </p>
             <div className="grid grid-cols-1 gap-4">
               <div className="bg-white/50 rounded-lg p-4">
-                <h3 className="font-semibold text-secondary-900 mb-2">For Business Buyers</h3>
-                <p className="text-sm text-secondary-600">Access verified listings, detailed financials, and professional evaluations.</p>
+                <h3 className="font-semibold text-secondary-900 mb-2">
+                  For Business Buyers
+                </h3>
+                <p className="text-sm text-secondary-600">
+                  Access verified listings, detailed financials, and
+                  professional evaluations.
+                </p>
               </div>
               <div className="bg-white/50 rounded-lg p-4">
-                <h3 className="font-semibold text-secondary-900 mb-2">For Business Owners</h3>
-                <p className="text-sm text-secondary-600">List your business, get professional valuations, and connect with qualified buyers.</p>
+                <h3 className="font-semibold text-secondary-900 mb-2">
+                  For Business Owners
+                </h3>
+                <p className="text-sm text-secondary-600">
+                  List your business, get professional valuations, and connect
+                  with qualified buyers.
+                </p>
               </div>
               <div className="bg-white/50 rounded-lg p-4">
-                <h3 className="font-semibold text-secondary-900 mb-2">For Brokers</h3>
-                <p className="text-sm text-secondary-600">Manage multiple listings, provide evaluations, and grow your client base.</p>
+                <h3 className="font-semibold text-secondary-900 mb-2">
+                  For Brokers
+                </h3>
+                <p className="text-sm text-secondary-600">
+                  Manage multiple listings, provide evaluations, and grow your
+                  client base.
+                </p>
               </div>
             </div>
           </div>

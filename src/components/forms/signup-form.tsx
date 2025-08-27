@@ -10,19 +10,21 @@ import { z } from 'zod'
 import { LoadingButton } from '@/components/ui/loading'
 import { UserType } from '@prisma/client'
 
-const signUpSchema = z.object({
-  firstName: z.string().min(2, 'First name must be at least 2 characters'),
-  lastName: z.string().min(2, 'Last name must be at least 2 characters'),
-  email: z.string().email('Please enter a valid email address'),
-  password: z.string().min(8, 'Password must be at least 8 characters'),
-  confirmPassword: z.string(),
-  userType: z.nativeEnum(UserType),
-  company: z.string().optional(),
-  position: z.string().optional(),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords don't match",
-  path: ["confirmPassword"],
-})
+const signUpSchema = z
+  .object({
+    firstName: z.string().min(2, 'First name must be at least 2 characters'),
+    lastName: z.string().min(2, 'Last name must be at least 2 characters'),
+    email: z.string().email('Please enter a valid email address'),
+    password: z.string().min(8, 'Password must be at least 8 characters'),
+    confirmPassword: z.string(),
+    userType: z.nativeEnum(UserType),
+    company: z.string().optional(),
+    position: z.string().optional(),
+  })
+  .refine(data => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ['confirmPassword'],
+  })
 
 type SignUpFormData = z.infer<typeof signUpSchema>
 
@@ -86,7 +88,9 @@ export default function SignUpForm() {
   return (
     <div className="w-full max-w-md space-y-6">
       <div className="text-center">
-        <h1 className="text-3xl font-bold text-secondary-900">Create Account</h1>
+        <h1 className="text-3xl font-bold text-secondary-900">
+          Create Account
+        </h1>
         <p className="mt-2 text-secondary-600">
           Join GoodBuy HQ and start your journey
         </p>
@@ -143,7 +147,9 @@ export default function SignUpForm() {
           <div className="w-full border-t border-secondary-300" />
         </div>
         <div className="relative flex justify-center text-sm">
-          <span className="bg-white px-2 text-secondary-500">Or create account with email</span>
+          <span className="bg-white px-2 text-secondary-500">
+            Or create account with email
+          </span>
         </div>
       </div>
 
@@ -151,7 +157,10 @@ export default function SignUpForm() {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label htmlFor="firstName" className="block text-sm font-medium text-secondary-700 mb-1">
+            <label
+              htmlFor="firstName"
+              className="block text-sm font-medium text-secondary-700 mb-1"
+            >
               First Name
             </label>
             <input
@@ -161,12 +170,17 @@ export default function SignUpForm() {
               placeholder="John"
             />
             {errors.firstName && (
-              <p className="mt-1 text-sm text-error-600">{errors.firstName.message}</p>
+              <p className="mt-1 text-sm text-error-600">
+                {errors.firstName.message}
+              </p>
             )}
           </div>
 
           <div>
-            <label htmlFor="lastName" className="block text-sm font-medium text-secondary-700 mb-1">
+            <label
+              htmlFor="lastName"
+              className="block text-sm font-medium text-secondary-700 mb-1"
+            >
               Last Name
             </label>
             <input
@@ -176,13 +190,18 @@ export default function SignUpForm() {
               placeholder="Doe"
             />
             {errors.lastName && (
-              <p className="mt-1 text-sm text-error-600">{errors.lastName.message}</p>
+              <p className="mt-1 text-sm text-error-600">
+                {errors.lastName.message}
+              </p>
             )}
           </div>
         </div>
 
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-secondary-700 mb-1">
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-secondary-700 mb-1"
+          >
             Email Address
           </label>
           <input
@@ -192,12 +211,17 @@ export default function SignUpForm() {
             placeholder="john@example.com"
           />
           {errors.email && (
-            <p className="mt-1 text-sm text-error-600">{errors.email.message}</p>
+            <p className="mt-1 text-sm text-error-600">
+              {errors.email.message}
+            </p>
           )}
         </div>
 
         <div>
-          <label htmlFor="userType" className="block text-sm font-medium text-secondary-700 mb-1">
+          <label
+            htmlFor="userType"
+            className="block text-sm font-medium text-secondary-700 mb-1"
+          >
             I am a
           </label>
           <select {...register('userType')} className="input-field">
@@ -206,14 +230,20 @@ export default function SignUpForm() {
             <option value={UserType.BROKER}>Business Broker</option>
           </select>
           {errors.userType && (
-            <p className="mt-1 text-sm text-error-600">{errors.userType.message}</p>
+            <p className="mt-1 text-sm text-error-600">
+              {errors.userType.message}
+            </p>
           )}
         </div>
 
-        {(watchUserType === UserType.BUSINESS_OWNER || watchUserType === UserType.BROKER) && (
+        {(watchUserType === UserType.BUSINESS_OWNER ||
+          watchUserType === UserType.BROKER) && (
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label htmlFor="company" className="block text-sm font-medium text-secondary-700 mb-1">
+              <label
+                htmlFor="company"
+                className="block text-sm font-medium text-secondary-700 mb-1"
+              >
                 Company
               </label>
               <input
@@ -225,7 +255,10 @@ export default function SignUpForm() {
             </div>
 
             <div>
-              <label htmlFor="position" className="block text-sm font-medium text-secondary-700 mb-1">
+              <label
+                htmlFor="position"
+                className="block text-sm font-medium text-secondary-700 mb-1"
+              >
                 Position
               </label>
               <input
@@ -239,7 +272,10 @@ export default function SignUpForm() {
         )}
 
         <div>
-          <label htmlFor="password" className="block text-sm font-medium text-secondary-700 mb-1">
+          <label
+            htmlFor="password"
+            className="block text-sm font-medium text-secondary-700 mb-1"
+          >
             Password
           </label>
           <input
@@ -249,12 +285,17 @@ export default function SignUpForm() {
             placeholder="Create a password"
           />
           {errors.password && (
-            <p className="mt-1 text-sm text-error-600">{errors.password.message}</p>
+            <p className="mt-1 text-sm text-error-600">
+              {errors.password.message}
+            </p>
           )}
         </div>
 
         <div>
-          <label htmlFor="confirmPassword" className="block text-sm font-medium text-secondary-700 mb-1">
+          <label
+            htmlFor="confirmPassword"
+            className="block text-sm font-medium text-secondary-700 mb-1"
+          >
             Confirm Password
           </label>
           <input
@@ -264,7 +305,9 @@ export default function SignUpForm() {
             placeholder="Confirm your password"
           />
           {errors.confirmPassword && (
-            <p className="mt-1 text-sm text-error-600">{errors.confirmPassword.message}</p>
+            <p className="mt-1 text-sm text-error-600">
+              {errors.confirmPassword.message}
+            </p>
           )}
         </div>
 
@@ -280,7 +323,10 @@ export default function SignUpForm() {
       <div className="text-center">
         <p className="text-sm text-secondary-600">
           Already have an account?{' '}
-          <Link href="/auth/signin" className="text-primary-600 hover:text-primary-500 font-medium">
+          <Link
+            href="/auth/signin"
+            className="text-primary-600 hover:text-primary-500 font-medium"
+          >
             Sign in
           </Link>
         </p>

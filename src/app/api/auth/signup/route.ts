@@ -18,10 +18,10 @@ const signUpSchema = z.object({
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    
+
     // Validate input
     const validatedData = signUpSchema.parse(body)
-    
+
     // Check if user already exists
     const existingUser = await prisma.user.findUnique({
       where: { email: validatedData.email },
@@ -67,7 +67,11 @@ export async function POST(request: NextRequest) {
 
     // Send verification email
     try {
-      await sendVerificationEmail(user.email, verificationToken, user.name || user.email)
+      await sendVerificationEmail(
+        user.email,
+        verificationToken,
+        user.name || user.email
+      )
     } catch (emailError) {
       console.error('Failed to send verification email:', emailError)
       // Don't fail the registration if email fails
@@ -75,14 +79,15 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(
       {
-        message: 'Account created successfully. Please check your email to verify your account.',
+        message:
+          'Account created successfully. Please check your email to verify your account.',
         userId: user.id,
       },
       { status: 201 }
     )
   } catch (error) {
     console.error('Signup error:', error)
-    
+
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { message: 'Invalid input data', errors: error.issues },
