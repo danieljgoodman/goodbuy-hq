@@ -1,7 +1,14 @@
 'use client'
 
 import { useState } from 'react'
-import { Mail, ArrowRight, Check, TrendingUp, Users, Shield } from 'lucide-react'
+import {
+  Mail,
+  ArrowRight,
+  Check,
+  TrendingUp,
+  Users,
+  Shield,
+} from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
@@ -9,18 +16,21 @@ const benefits = [
   {
     icon: TrendingUp,
     title: 'Weekly Market Insights',
-    description: 'Get the latest business valuation trends and market analysis delivered to your inbox.'
+    description:
+      'Get the latest business valuation trends and market analysis delivered to your inbox.',
   },
   {
     icon: Users,
     title: 'Exclusive Content',
-    description: 'Access premium guides, case studies, and expert tips from industry professionals.'
+    description:
+      'Access premium guides, case studies, and expert tips from industry professionals.',
   },
   {
     icon: Shield,
     title: 'Early Access',
-    description: 'Be the first to try new features and get priority support from our team.'
-  }
+    description:
+      'Be the first to try new features and get priority support from our team.',
+  },
 ]
 
 export function Newsletter() {
@@ -33,10 +43,10 @@ export function Newsletter() {
     if (!email || isLoading) return
 
     setIsLoading(true)
-    
+
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1000))
-    
+
     setIsSubmitted(true)
     setIsLoading(false)
   }
@@ -53,14 +63,15 @@ export function Newsletter() {
               Welcome to the GoodBuy HQ Community!
             </h2>
             <p className="text-lg text-secondary-600 mb-6">
-              Thank you for subscribing. You'll receive your first market insights email within the next 24 hours.
+              Thank you for subscribing. You'll receive your first market
+              insights email within the next 24 hours.
             </p>
-            <Button 
+            <Button
               onClick={() => {
                 setIsSubmitted(false)
                 setEmail('')
               }}
-              variant="ghost" 
+              variant="ghost"
               className="text-secondary-600 hover:text-primary-600"
             >
               Subscribe another email
@@ -83,13 +94,13 @@ export function Newsletter() {
                 <span>Join 25,000+ Business Leaders</span>
               </div>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-secondary-900 mb-6">
-                Stay Ahead of the 
-                <span className="text-primary-600 block">
-                  Business Game
-                </span>
+                Stay Ahead of the
+                <span className="text-primary-600 block">Business Game</span>
               </h2>
               <p className="text-lg text-secondary-600 leading-relaxed">
-                Get exclusive insights, market trends, and valuation tips delivered straight to your inbox. Join thousands of business owners who trust our weekly newsletter.
+                Get exclusive insights, market trends, and valuation tips
+                delivered straight to your inbox. Join thousands of business
+                owners who trust our weekly newsletter.
               </p>
             </div>
 
@@ -98,8 +109,8 @@ export function Newsletter() {
               {benefits.map((benefit, index) => {
                 const IconComponent = benefit.icon
                 return (
-                  <div 
-                    key={benefit.title} 
+                  <div
+                    key={benefit.title}
                     className="flex items-start space-x-4 animate-fade-in"
                     style={{ animationDelay: `${index * 100}ms` }}
                   >
@@ -122,9 +133,9 @@ export function Newsletter() {
             {/* Social Proof */}
             <div className="flex items-center space-x-6 text-sm text-secondary-500">
               <div className="flex -space-x-2">
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <div 
-                    key={i} 
+                {[1, 2, 3, 4, 5].map(i => (
+                  <div
+                    key={i}
                     className="w-8 h-8 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full border-2 border-white flex items-center justify-center"
                   >
                     <span className="text-xs text-white font-medium">
@@ -151,22 +162,25 @@ export function Newsletter() {
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-secondary-700 mb-2">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-secondary-700 mb-2"
+                  >
                     Email Address
                   </label>
                   <Input
                     id="email"
                     type="email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={e => setEmail(e.target.value)}
                     placeholder="Enter your business email"
                     required
                     className="w-full"
                   />
                 </div>
 
-                <Button 
-                  type="submit" 
+                <Button
+                  type="submit"
                   disabled={isLoading || !email}
                   className="w-full bg-primary-600 hover:bg-primary-700 text-white disabled:opacity-50"
                 >

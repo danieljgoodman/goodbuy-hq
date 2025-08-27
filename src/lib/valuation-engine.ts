@@ -1,10 +1,10 @@
-import { 
-  EvaluationFormData, 
-  ValuationResult, 
+import {
+  EvaluationFormData,
+  ValuationResult,
   ValuationMethod,
   BusinessInfo,
   FinancialData,
-  BusinessDetails
+  BusinessDetails,
 } from '@/types/valuation'
 import { INDUSTRY_MULTIPLIERS } from './industry-data'
 
@@ -19,11 +19,11 @@ export class ValuationEngine {
     const methods = this.calculateAllMethods()
     const adjustmentFactors = this.calculateAdjustmentFactors()
     const keyMetrics = this.calculateKeyMetrics()
-    
+
     // Apply adjustment factors to each method
     const adjustedMethods = methods.map(method => ({
       ...method,
-      value: this.applyAdjustments(method.value, adjustmentFactors)
+      value: this.applyAdjustments(method.value, adjustmentFactors),
     }))
 
     // Calculate weighted average based on confidence scores
@@ -39,7 +39,7 @@ export class ValuationEngine {
       adjustmentFactors,
       keyMetrics,
       recommendations: this.generateRecommendations(),
-      riskFactors: this.data.businessDetails.riskFactors
+      riskFactors: this.data.businessDetails.riskFactors,
     }
   }
 
@@ -67,7 +67,8 @@ export class ValuationEngine {
   private calculateRevenueMultiple(): ValuationMethod {
     const revenue = this.data.financialData.annualRevenue
     const industry = this.data.basicInfo.industry
-    const multiplier = INDUSTRY_MULTIPLIERS[industry]?.revenueMultiplier?.average || 2.5
+    const multiplier =
+      INDUSTRY_MULTIPLIERS[industry]?.revenueMultiplier?.average || 2.5
 
     const value = revenue * multiplier
     const confidence = this.calculateConfidence('revenue', revenue)
@@ -76,7 +77,7 @@ export class ValuationEngine {
       name: 'Revenue Multiple',
       value,
       confidence,
-      description: `Based on ${multiplier}x revenue multiple for ${industry} industry`
+      description: `Based on ${multiplier}x revenue multiple for ${industry} industry`,
     }
   }
 
@@ -84,7 +85,8 @@ export class ValuationEngine {
     const grossProfit = this.data.financialData.grossProfit
     const ebitda = grossProfit * 0.8 // Simplified EBITDA estimation
     const industry = this.data.basicInfo.industry
-    const multiplier = INDUSTRY_MULTIPLIERS[industry]?.ebitdaMultiplier?.average || 10
+    const multiplier =
+      INDUSTRY_MULTIPLIERS[industry]?.ebitdaMultiplier?.average || 10
 
     const value = ebitda * multiplier
     const confidence = this.calculateConfidence('ebitda', ebitda)
@@ -93,7 +95,7 @@ export class ValuationEngine {
       name: 'EBITDA Multiple',
       value,
       confidence,
-      description: `Based on ${multiplier}x EBITDA multiple for ${industry} industry`
+      description: `Based on ${multiplier}x EBITDA multiple for ${industry} industry`,
     }
   }
 
@@ -109,7 +111,7 @@ export class ValuationEngine {
       name: 'P/E Ratio',
       value,
       confidence,
-      description: `Based on ${peRatio}x P/E ratio for ${industry} industry`
+      description: `Based on ${peRatio}x P/E ratio for ${industry} industry`,
     }
   }
 
@@ -126,7 +128,7 @@ export class ValuationEngine {
       name: 'Asset-Based',
       value,
       confidence: 75,
-      description: `Based on adjusted book value of assets minus liabilities`
+      description: `Based on adjusted book value of assets minus liabilities`,
     }
   }
 
@@ -134,14 +136,14 @@ export class ValuationEngine {
     const cashFlow = this.data.financialData.cashFlow
     const growthRate = this.calculateGrowthRate()
     const discountRate = this.calculateDiscountRate()
-    
+
     // Simplified DCF: 5-year projection with terminal value
     let dcfValue = 0
     let projectedCF = cashFlow
 
     // 5-year cash flow projection
     for (let year = 1; year <= 5; year++) {
-      projectedCF *= (1 + growthRate)
+      projectedCF *= 1 + growthRate
       dcfValue += projectedCF / Math.pow(1 + discountRate, year)
     }
 
@@ -153,7 +155,7 @@ export class ValuationEngine {
       name: 'Discounted Cash Flow',
       value: dcfValue,
       confidence: 80,
-      description: `Based on projected cash flows with ${(growthRate * 100).toFixed(1)}% growth rate`
+      description: `Based on projected cash flows with ${(growthRate * 100).toFixed(1)}% growth rate`,
     }
   }
 
@@ -167,7 +169,7 @@ export class ValuationEngine {
       growthAdjustment,
       riskAdjustment,
       marketPositionAdjustment,
-      sizeAdjustment
+      sizeAdjustment,
     }
   }
 
@@ -176,10 +178,13 @@ export class ValuationEngine {
     const stage = this.data.businessDetails.growthStage
 
     let baseAdjustment = 1
-    
-    if (growthRate > 0.3) baseAdjustment = 1.3 // High growth
-    else if (growthRate > 0.15) baseAdjustment = 1.15 // Medium growth
-    else if (growthRate > 0.05) baseAdjustment = 1.05 // Low growth
+
+    if (growthRate > 0.3)
+      baseAdjustment = 1.3 // High growth
+    else if (growthRate > 0.15)
+      baseAdjustment = 1.15 // Medium growth
+    else if (growthRate > 0.05)
+      baseAdjustment = 1.05 // Low growth
     else baseAdjustment = 0.9 // Declining
 
     // Stage adjustments
@@ -187,7 +192,7 @@ export class ValuationEngine {
       startup: 1.2,
       growth: 1.1,
       mature: 1.0,
-      decline: 0.8
+      decline: 0.8,
     }
 
     return baseAdjustment * stageMultipliers[stage]
@@ -195,14 +200,15 @@ export class ValuationEngine {
 
   private calculateRiskAdjustment(): number {
     const riskFactors = this.data.businessDetails.riskFactors.length
-    const customerConcentration = this.data.businessDetails.customerConcentration
+    const customerConcentration =
+      this.data.businessDetails.customerConcentration
     const regulatoryRisk = this.data.businessDetails.regulatoryRisk
 
     let riskScore = 0
-    
+
     // Risk factor count
     riskScore += riskFactors * 0.02
-    
+
     // Customer concentration risk
     if (customerConcentration === 'high') riskScore += 0.1
     else if (customerConcentration === 'medium') riskScore += 0.05
@@ -222,14 +228,14 @@ export class ValuationEngine {
       leader: 1.2,
       challenger: 1.1,
       follower: 1.0,
-      niche: 0.95
+      niche: 0.95,
     }
 
     const sizeMultipliers = {
       massive: 1.1,
       large: 1.05,
       medium: 1.0,
-      small: 0.95
+      small: 0.95,
     }
 
     return positionMultipliers[position] * sizeMultipliers[marketSize]
@@ -237,7 +243,7 @@ export class ValuationEngine {
 
   private calculateSizeAdjustment(): number {
     const revenue = this.data.financialData.annualRevenue
-    
+
     if (revenue > 100000000) return 1.1 // >$100M
     if (revenue > 50000000) return 1.05 // >$50M
     if (revenue > 10000000) return 1.0 // >$10M
@@ -257,14 +263,14 @@ export class ValuationEngine {
       profitMargin: (netIncome / revenue) * 100,
       returnOnAssets: (netIncome / totalAssets) * 100,
       debtToEquity: this.data.financialData.debtToEquity,
-      growthRate: this.calculateGrowthRate() * 100
+      growthRate: this.calculateGrowthRate() * 100,
     }
   }
 
   private calculateGrowthRate(): number {
     const currentRevenue = this.data.financialData.annualRevenue
     const previousRevenue = this.data.financialData.previousYearRevenue
-    
+
     if (previousRevenue > 0) {
       return (currentRevenue - previousRevenue) / previousRevenue
     }
@@ -273,12 +279,13 @@ export class ValuationEngine {
 
   private calculateDiscountRate(): number {
     // Risk-free rate + risk premium based on business characteristics
-    let riskFreeRate = 0.04 // 4% base rate
+    const riskFreeRate = 0.04 // 4% base rate
     let riskPremium = 0.06 // Base 6% risk premium
 
     // Adjust based on company size and risk factors
     const revenue = this.data.financialData.annualRevenue
-    if (revenue < 1000000) riskPremium += 0.04 // Small company premium
+    if (revenue < 1000000)
+      riskPremium += 0.04 // Small company premium
     else if (revenue < 10000000) riskPremium += 0.02
 
     // Adjust for risk factors
@@ -290,18 +297,18 @@ export class ValuationEngine {
 
   private getAssetMultiplier(): number {
     const industry = this.data.basicInfo.industry
-    
+
     // Asset-light businesses typically trade at premium to book value
     const assetLightIndustries = [
       'Technology - Software',
       'Professional Services',
-      'Media & Entertainment'
+      'Media & Entertainment',
     ]
-    
+
     if (assetLightIndustries.includes(industry)) {
       return 1.5
     }
-    
+
     return 1.2 // Default asset multiplier
   }
 
@@ -319,7 +326,10 @@ export class ValuationEngine {
     }
 
     // Method-specific adjustments
-    if (method === 'revenue' && this.data.financialData.annualRevenue > 1000000) {
+    if (
+      method === 'revenue' &&
+      this.data.financialData.annualRevenue > 1000000
+    ) {
       confidence += 5
     }
 
@@ -327,43 +337,65 @@ export class ValuationEngine {
   }
 
   private applyAdjustments(baseValue: number, factors: any): number {
-    return baseValue * 
-           factors.growthAdjustment * 
-           factors.riskAdjustment * 
-           factors.marketPositionAdjustment * 
-           factors.sizeAdjustment
+    return (
+      baseValue *
+      factors.growthAdjustment *
+      factors.riskAdjustment *
+      factors.marketPositionAdjustment *
+      factors.sizeAdjustment
+    )
   }
 
   private calculateWeightedAverage(methods: ValuationMethod[]): number {
-    const totalWeight = methods.reduce((sum, method) => sum + method.confidence, 0)
-    const weightedSum = methods.reduce((sum, method) => sum + (method.value * method.confidence), 0)
-    
+    const totalWeight = methods.reduce(
+      (sum, method) => sum + method.confidence,
+      0
+    )
+    const weightedSum = methods.reduce(
+      (sum, method) => sum + method.value * method.confidence,
+      0
+    )
+
     return weightedSum / totalWeight
   }
 
   private calculateOverallConfidence(methods: ValuationMethod[]): number {
-    return methods.reduce((sum, method) => sum + method.confidence, 0) / methods.length
+    return (
+      methods.reduce((sum, method) => sum + method.confidence, 0) /
+      methods.length
+    )
   }
 
   private generateRecommendations(): string[] {
     const recommendations: string[] = []
     const growthRate = this.calculateGrowthRate()
-    const profitMargin = (this.data.financialData.netIncome / this.data.financialData.annualRevenue) * 100
+    const profitMargin =
+      (this.data.financialData.netIncome /
+        this.data.financialData.annualRevenue) *
+      100
 
     if (growthRate < 0.05) {
-      recommendations.push('Focus on growth initiatives to improve revenue trajectory')
+      recommendations.push(
+        'Focus on growth initiatives to improve revenue trajectory'
+      )
     }
 
     if (profitMargin < 10) {
-      recommendations.push('Improve operational efficiency to increase profit margins')
+      recommendations.push(
+        'Improve operational efficiency to increase profit margins'
+      )
     }
 
     if (this.data.financialData.debtToEquity > 2) {
-      recommendations.push('Consider debt reduction to improve financial stability')
+      recommendations.push(
+        'Consider debt reduction to improve financial stability'
+      )
     }
 
     if (this.data.businessDetails.riskFactors.length > 3) {
-      recommendations.push('Develop risk mitigation strategies to reduce business uncertainty')
+      recommendations.push(
+        'Develop risk mitigation strategies to reduce business uncertainty'
+      )
     }
 
     return recommendations

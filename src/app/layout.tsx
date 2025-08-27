@@ -8,9 +8,10 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: {
     template: '%s | GoodBuy HQ',
-    default: 'GoodBuy HQ - AI-Powered Business Valuation Platform'
+    default: 'GoodBuy HQ - AI-Powered Business Valuation Platform',
   },
-  description: 'Get your business valued by AI in minutes. Our advanced platform provides accurate business valuations, financial health assessments, market analysis, and growth scores trusted by 10,000+ businesses worldwide.',
+  description:
+    'Get your business valued by AI in minutes. Our advanced platform provides accurate business valuations, financial health assessments, market analysis, and growth scores trusted by 10,000+ businesses worldwide.',
   keywords: [
     'business valuation',
     'AI valuation',
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
     'financial health',
     'growth score',
     'M&A valuation',
-    'investment analysis'
+    'investment analysis',
   ],
   authors: [{ name: 'GoodBuy HQ Team' }],
   creator: 'GoodBuy HQ',
@@ -35,7 +36,8 @@ export const metadata: Metadata = {
   ),
   openGraph: {
     title: 'GoodBuy HQ - AI-Powered Business Valuation Platform',
-    description: 'Get your business valued by AI in minutes. Trusted by 10,000+ businesses for accurate valuations, financial health assessments, and growth analysis.',
+    description:
+      'Get your business valued by AI in minutes. Trusted by 10,000+ businesses for accurate valuations, financial health assessments, and growth analysis.',
     url: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
     siteName: 'GoodBuy HQ',
     type: 'website',
@@ -52,7 +54,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'GoodBuy HQ - AI-Powered Business Valuation Platform',
-    description: 'Get your business valued by AI in minutes. Trusted by 10,000+ businesses worldwide.',
+    description:
+      'Get your business valued by AI in minutes. Trusted by 10,000+ businesses worldwide.',
     images: ['/og-image.jpg'],
     creator: '@goodbuyhq',
   },

@@ -18,7 +18,9 @@ export function Header() {
               <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">GB</span>
               </div>
-              <span className="text-xl font-bold text-secondary-900">GoodBuy HQ</span>
+              <span className="text-xl font-bold text-secondary-900">
+                GoodBuy HQ
+              </span>
             </Link>
           </div>
 
@@ -30,34 +32,61 @@ export function Header() {
                 <ChevronDown className="w-4 h-4" />
               </button>
               <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-secondary-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                <Link href="/calculator" className="block px-4 py-3 text-sm text-secondary-700 hover:bg-secondary-50 hover:text-primary-600 font-medium">
+                <Link
+                  href="/calculator"
+                  className="block px-4 py-3 text-sm text-secondary-700 hover:bg-secondary-50 hover:text-primary-600 font-medium"
+                >
                   Business Calculator
                 </Link>
                 <div className="border-t border-secondary-100 my-1" />
-                <Link href="/ai-valuation" className="block px-4 py-3 text-sm text-secondary-700 hover:bg-secondary-50 hover:text-primary-600">
+                <Link
+                  href="/ai-valuation"
+                  className="block px-4 py-3 text-sm text-secondary-700 hover:bg-secondary-50 hover:text-primary-600"
+                >
                   AI Valuation
                 </Link>
-                <Link href="/financial-health" className="block px-4 py-3 text-sm text-secondary-700 hover:bg-secondary-50 hover:text-primary-600">
+                <Link
+                  href="/financial-health"
+                  className="block px-4 py-3 text-sm text-secondary-700 hover:bg-secondary-50 hover:text-primary-600"
+                >
                   Financial Health
                 </Link>
-                <Link href="/market-analysis" className="block px-4 py-3 text-sm text-secondary-700 hover:bg-secondary-50 hover:text-primary-600">
+                <Link
+                  href="/market-analysis"
+                  className="block px-4 py-3 text-sm text-secondary-700 hover:bg-secondary-50 hover:text-primary-600"
+                >
                   Market Analysis
                 </Link>
-                <Link href="/growth-score" className="block px-4 py-3 text-sm text-secondary-700 hover:bg-secondary-50 hover:text-primary-600">
+                <Link
+                  href="/growth-score"
+                  className="block px-4 py-3 text-sm text-secondary-700 hover:bg-secondary-50 hover:text-primary-600"
+                >
                   Growth Score
                 </Link>
               </div>
             </div>
-            <Link href="/calculator" className="text-secondary-600 hover:text-primary-600 transition-colors">
+            <Link
+              href="/calculator"
+              className="text-secondary-600 hover:text-primary-600 transition-colors"
+            >
               Calculator
             </Link>
-            <Link href="/pricing" className="text-secondary-600 hover:text-primary-600 transition-colors">
+            <Link
+              href="/pricing"
+              className="text-secondary-600 hover:text-primary-600 transition-colors"
+            >
               Pricing
             </Link>
-            <Link href="/about" className="text-secondary-600 hover:text-primary-600 transition-colors">
+            <Link
+              href="/about"
+              className="text-secondary-600 hover:text-primary-600 transition-colors"
+            >
               About
             </Link>
-            <Link href="/contact" className="text-secondary-600 hover:text-primary-600 transition-colors">
+            <Link
+              href="/contact"
+              className="text-secondary-600 hover:text-primary-600 transition-colors"
+            >
               Contact
             </Link>
           </nav>
@@ -65,7 +94,10 @@ export function Header() {
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center space-x-4">
             <Link href="/auth/signin">
-              <Button variant="ghost" className="text-secondary-600 hover:text-primary-600">
+              <Button
+                variant="ghost"
+                className="text-secondary-600 hover:text-primary-600"
+              >
                 Sign In
               </Button>
             </Link>
@@ -81,7 +113,11 @@ export function Header() {
             className="md:hidden p-2 rounded-md text-secondary-600 hover:text-primary-600 hover:bg-secondary-100"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isMobileMenuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
           </button>
         </div>
 
@@ -90,32 +126,58 @@ export function Header() {
           <div className="md:hidden border-t border-secondary-200 py-4">
             <div className="space-y-4">
               <div className="space-y-2">
-                <div className="text-sm font-medium text-secondary-900 px-4">Services</div>
-                <Link href="/ai-valuation" className="block px-4 py-2 text-sm text-secondary-600 hover:text-primary-600">
+                <div className="text-sm font-medium text-secondary-900 px-4">
+                  Services
+                </div>
+                <Link
+                  href="/ai-valuation"
+                  className="block px-4 py-2 text-sm text-secondary-600 hover:text-primary-600"
+                >
                   AI Valuation
                 </Link>
-                <Link href="/financial-health" className="block px-4 py-2 text-sm text-secondary-600 hover:text-primary-600">
+                <Link
+                  href="/financial-health"
+                  className="block px-4 py-2 text-sm text-secondary-600 hover:text-primary-600"
+                >
                   Financial Health
                 </Link>
-                <Link href="/market-analysis" className="block px-4 py-2 text-sm text-secondary-600 hover:text-primary-600">
+                <Link
+                  href="/market-analysis"
+                  className="block px-4 py-2 text-sm text-secondary-600 hover:text-primary-600"
+                >
                   Market Analysis
                 </Link>
-                <Link href="/growth-score" className="block px-4 py-2 text-sm text-secondary-600 hover:text-primary-600">
+                <Link
+                  href="/growth-score"
+                  className="block px-4 py-2 text-sm text-secondary-600 hover:text-primary-600"
+                >
                   Growth Score
                 </Link>
               </div>
-              <Link href="/pricing" className="block px-4 py-2 text-secondary-600 hover:text-primary-600">
+              <Link
+                href="/pricing"
+                className="block px-4 py-2 text-secondary-600 hover:text-primary-600"
+              >
                 Pricing
               </Link>
-              <Link href="/about" className="block px-4 py-2 text-secondary-600 hover:text-primary-600">
+              <Link
+                href="/about"
+                className="block px-4 py-2 text-secondary-600 hover:text-primary-600"
+              >
                 About
               </Link>
-              <Link href="/contact" className="block px-4 py-2 text-secondary-600 hover:text-primary-600">
+              <Link
+                href="/contact"
+                className="block px-4 py-2 text-secondary-600 hover:text-primary-600"
+              >
                 Contact
               </Link>
               <div className="border-t border-secondary-200 pt-4 space-y-2">
                 <Link href="/auth/signin" className="block px-4">
-                  <Button variant="ghost" className="w-full justify-start text-secondary-600 hover:text-primary-600">
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start text-secondary-600 hover:text-primary-600"
+                  >
                     Sign In
                   </Button>
                 </Link>

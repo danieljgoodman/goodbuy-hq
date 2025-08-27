@@ -15,8 +15,8 @@ export class EvaluationStorage {
   // For now, we'll use localStorage for demo purposes
 
   static async saveEvaluation(
-    userId: string, 
-    formData: EvaluationFormData, 
+    userId: string,
+    formData: EvaluationFormData,
     result: ValuationResult
   ): Promise<SavedEvaluation> {
     const evaluation: SavedEvaluation = {
@@ -26,7 +26,7 @@ export class EvaluationStorage {
       formData,
       result,
       createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     }
 
     // Save to localStorage (in production, this would be a database call)
@@ -38,14 +38,14 @@ export class EvaluationStorage {
   }
 
   static async updateEvaluation(
-    userId: string, 
-    evaluationId: string, 
-    formData: EvaluationFormData, 
+    userId: string,
+    evaluationId: string,
+    formData: EvaluationFormData,
     result: ValuationResult
   ): Promise<SavedEvaluation> {
     const saved = this.getSavedEvaluations(userId)
     const index = saved.findIndex(e => e.id === evaluationId)
-    
+
     if (index === -1) {
       throw new Error('Evaluation not found')
     }
@@ -54,7 +54,7 @@ export class EvaluationStorage {
       ...saved[index],
       formData,
       result,
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     }
 
     localStorage.setItem(`evaluations_${userId}`, JSON.stringify(saved))
@@ -63,17 +63,23 @@ export class EvaluationStorage {
 
   static getSavedEvaluations(userId: string): SavedEvaluation[] {
     if (typeof window === 'undefined') return []
-    
+
     const saved = localStorage.getItem(`evaluations_${userId}`)
     return saved ? JSON.parse(saved) : []
   }
 
-  static async getEvaluation(userId: string, evaluationId: string): Promise<SavedEvaluation | null> {
+  static async getEvaluation(
+    userId: string,
+    evaluationId: string
+  ): Promise<SavedEvaluation | null> {
     const saved = this.getSavedEvaluations(userId)
     return saved.find(e => e.id === evaluationId) || null
   }
 
-  static async deleteEvaluation(userId: string, evaluationId: string): Promise<void> {
+  static async deleteEvaluation(
+    userId: string,
+    evaluationId: string
+  ): Promise<void> {
     const saved = this.getSavedEvaluations(userId)
     const filtered = saved.filter(e => e.id !== evaluationId)
     localStorage.setItem(`evaluations_${userId}`, JSON.stringify(filtered))

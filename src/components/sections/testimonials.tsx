@@ -10,11 +10,12 @@ const testimonials = [
     company: 'TechFlow Solutions',
     image: '/avatars/sarah.jpg',
     rating: 5,
-    quote: "GoodBuy HQ's AI valuation was spot-on with our Series A valuation. The insights helped us negotiate better terms and understand our true market position. Absolutely game-changing for founders.",
+    quote:
+      "GoodBuy HQ's AI valuation was spot-on with our Series A valuation. The insights helped us negotiate better terms and understand our true market position. Absolutely game-changing for founders.",
     metrics: {
       label: 'Valuation Accuracy',
-      value: '98%'
-    }
+      value: '98%',
+    },
   },
   {
     id: 2,
@@ -23,11 +24,12 @@ const testimonials = [
     company: 'Venture Capital Partners',
     image: '/avatars/michael.jpg',
     rating: 5,
-    quote: "We use GoodBuy HQ to quickly assess potential investments. Their AI analysis saves us weeks of due diligence and provides insights we might have missed. It's become essential to our workflow.",
+    quote:
+      "We use GoodBuy HQ to quickly assess potential investments. Their AI analysis saves us weeks of due diligence and provides insights we might have missed. It's become essential to our workflow.",
     metrics: {
       label: 'Time Saved',
-      value: '15 hrs/deal'
-    }
+      value: '15 hrs/deal',
+    },
   },
   {
     id: 3,
@@ -36,11 +38,12 @@ const testimonials = [
     company: 'Park Manufacturing',
     image: '/avatars/jennifer.jpg',
     rating: 5,
-    quote: "After 20 years in business, I finally understood my company's true value and growth potential. The recommendations helped increase our EBITDA by 23% in just 8 months.",
+    quote:
+      "After 20 years in business, I finally understood my company's true value and growth potential. The recommendations helped increase our EBITDA by 23% in just 8 months.",
     metrics: {
       label: 'EBITDA Growth',
-      value: '+23%'
-    }
+      value: '+23%',
+    },
   },
   {
     id: 4,
@@ -49,11 +52,12 @@ const testimonials = [
     company: 'Thompson & Associates',
     image: '/avatars/david.jpg',
     rating: 5,
-    quote: "The depth of analysis is remarkable. What used to take our team days now happens in minutes, and the accuracy rivals traditional valuation methods. Our clients love the transparency.",
+    quote:
+      'The depth of analysis is remarkable. What used to take our team days now happens in minutes, and the accuracy rivals traditional valuation methods. Our clients love the transparency.',
     metrics: {
       label: 'Client Satisfaction',
-      value: '96%'
-    }
+      value: '96%',
+    },
   },
   {
     id: 5,
@@ -62,11 +66,12 @@ const testimonials = [
     company: 'GreenTech Industries',
     image: '/avatars/lisa.jpg',
     rating: 5,
-    quote: "The financial health assessment identified cash flow issues we hadn't noticed. Following their recommendations improved our working capital by $2.1M within 6 months.",
+    quote:
+      "The financial health assessment identified cash flow issues we hadn't noticed. Following their recommendations improved our working capital by $2.1M within 6 months.",
     metrics: {
       label: 'Working Capital',
-      value: '+$2.1M'
-    }
+      value: '+$2.1M',
+    },
   },
   {
     id: 6,
@@ -75,19 +80,20 @@ const testimonials = [
     company: 'Kim Ventures',
     image: '/avatars/robert.jpg',
     rating: 5,
-    quote: "I've sold three companies, and GoodBuy HQ's valuations were consistently within 5% of final sale prices. It's the most accurate tool I've used for business valuation.",
+    quote:
+      "I've sold three companies, and GoodBuy HQ's valuations were consistently within 5% of final sale prices. It's the most accurate tool I've used for business valuation.",
     metrics: {
       label: 'Sale Price Accuracy',
-      value: '95%'
-    }
-  }
+      value: '95%',
+    },
+  },
 ]
 
 const stats = [
   { value: '10,000+', label: 'Businesses Valued' },
   { value: '95%', label: 'Accuracy Rate' },
   { value: '$2.8B', label: 'Total Value Analyzed' },
-  { value: '4.9/5', label: 'User Rating' }
+  { value: '4.9/5', label: 'User Rating' },
 ]
 
 export function Testimonials() {
@@ -100,24 +106,23 @@ export function Testimonials() {
             Trusted by Industry Leaders
           </h2>
           <p className="text-lg text-secondary-600 leading-relaxed">
-            Join thousands of business owners, investors, and advisors who rely on our AI-powered platform for accurate business valuations.
+            Join thousands of business owners, investors, and advisors who rely
+            on our AI-powered platform for accurate business valuations.
           </p>
         </div>
 
         {/* Stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
           {stats.map((stat, index) => (
-            <div 
-              key={stat.label} 
+            <div
+              key={stat.label}
               className="text-center animate-fade-in"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className="text-3xl lg:text-4xl font-bold text-primary-600 mb-2">
                 {stat.value}
               </div>
-              <div className="text-secondary-600 font-medium">
-                {stat.label}
-              </div>
+              <div className="text-secondary-600 font-medium">{stat.label}</div>
             </div>
           ))}
         </div>
@@ -125,7 +130,7 @@ export function Testimonials() {
         {/* Testimonials Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {testimonials.map((testimonial, index) => (
-            <div 
+            <div
               key={testimonial.id}
               className="bg-white rounded-2xl border border-secondary-200 p-8 hover:shadow-xl transition-shadow duration-300 animate-fade-in"
               style={{ animationDelay: `${index * 150}ms` }}
@@ -138,7 +143,10 @@ export function Testimonials() {
               {/* Rating */}
               <div className="flex items-center mb-4">
                 {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 text-warning-400 fill-current" />
+                  <Star
+                    key={i}
+                    className="w-4 h-4 text-warning-400 fill-current"
+                  />
                 ))}
               </div>
 
@@ -161,7 +169,10 @@ export function Testimonials() {
               <div className="flex items-center">
                 <div className="w-12 h-12 bg-gradient-to-br from-primary-100 to-primary-200 rounded-full flex items-center justify-center mr-4">
                   <span className="text-primary-600 font-semibold text-lg">
-                    {testimonial.name.split(' ').map(n => n[0]).join('')}
+                    {testimonial.name
+                      .split(' ')
+                      .map(n => n[0])
+                      .join('')}
                   </span>
                 </div>
                 <div>
@@ -184,7 +195,8 @@ export function Testimonials() {
               Ready to join our success stories?
             </h3>
             <p className="text-lg text-secondary-600 mb-8 max-w-2xl mx-auto">
-              Get your business valued by AI in minutes and discover insights that could transform your company's future.
+              Get your business valued by AI in minutes and discover insights
+              that could transform your company's future.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button className="px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium text-lg transition-colors">

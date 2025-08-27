@@ -2,41 +2,58 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { ChevronLeft, ChevronRight, Calculator, Building, DollarSign, BarChart3 } from 'lucide-react'
+import {
+  ChevronLeft,
+  ChevronRight,
+  Calculator,
+  Building,
+  DollarSign,
+  BarChart3,
+} from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { EvaluationFormData, FormStep, FormState, ValuationResult } from '@/types/valuation'
+import {
+  EvaluationFormData,
+  FormStep,
+  FormState,
+  ValuationResult,
+} from '@/types/valuation'
 import { BasicInfoForm } from './forms/basic-info-form'
 import { FinancialDataForm } from './forms/financial-data-form'
 import { BusinessDetailsForm } from './forms/business-details-form'
 import { ValuationResults } from './valuation-results'
 import { ValuationEngine } from '@/lib/valuation-engine'
 
-const FORM_STEPS: { key: FormStep; title: string; icon: any; description: string }[] = [
+const FORM_STEPS: {
+  key: FormStep
+  title: string
+  icon: any
+  description: string
+}[] = [
   {
     key: 'basic-info',
     title: 'Basic Information',
     icon: Building,
-    description: 'Company details and industry information'
+    description: 'Company details and industry information',
   },
   {
     key: 'financial-data',
     title: 'Financial Data',
     icon: DollarSign,
-    description: 'Revenue, profit, assets, and financial metrics'
+    description: 'Revenue, profit, assets, and financial metrics',
   },
   {
     key: 'business-details',
     title: 'Business Details',
     icon: BarChart3,
-    description: 'Market position, growth stage, and risk factors'
+    description: 'Market position, growth stage, and risk factors',
   },
   {
     key: 'results',
     title: 'Valuation Results',
     icon: Calculator,
-    description: 'Your comprehensive business evaluation'
-  }
+    description: 'Your comprehensive business evaluation',
+  },
 ]
 
 export function BusinessEvaluationForm() {
@@ -45,12 +62,15 @@ export function BusinessEvaluationForm() {
     currentStep: 'basic-info',
     data: {},
     isValid: false,
-    errors: {}
+    errors: {},
   })
-  const [valuationResult, setValuationResult] = useState<ValuationResult | null>(null)
+  const [valuationResult, setValuationResult] =
+    useState<ValuationResult | null>(null)
   const [isCalculating, setIsCalculating] = useState(false)
 
-  const currentStepIndex = FORM_STEPS.findIndex(step => step.key === formState.currentStep)
+  const currentStepIndex = FORM_STEPS.findIndex(
+    step => step.key === formState.currentStep
+  )
   const isLastStep = currentStepIndex === FORM_STEPS.length - 1
   const isFirstStep = currentStepIndex === 0
 
@@ -62,15 +82,15 @@ export function BusinessEvaluationForm() {
       ...prev,
       data: {
         ...prev.data,
-        [section]: data
+        [section]: data,
       },
-      errors: {}
+      errors: {},
     }))
   }
 
   const validateCurrentStep = (): boolean => {
     const { currentStep, data } = formState
-    
+
     switch (currentStep) {
       case 'basic-info':
         return !!(
@@ -100,7 +120,7 @@ export function BusinessEvaluationForm() {
     if (!validateCurrentStep()) {
       setFormState(prev => ({
         ...prev,
-        errors: { general: 'Please fill in all required fields' }
+        errors: { general: 'Please fill in all required fields' },
       }))
       return
     }
@@ -117,7 +137,9 @@ export function BusinessEvaluationForm() {
         console.error('Valuation calculation error:', error)
         setFormState(prev => ({
           ...prev,
-          errors: { general: 'Error calculating valuation. Please check your inputs.' }
+          errors: {
+            general: 'Error calculating valuation. Please check your inputs.',
+          },
         }))
       }
       setIsCalculating(false)
@@ -126,7 +148,7 @@ export function BusinessEvaluationForm() {
       if (nextStepIndex < FORM_STEPS.length) {
         setFormState(prev => ({
           ...prev,
-          currentStep: FORM_STEPS[nextStepIndex].key
+          currentStep: FORM_STEPS[nextStepIndex].key,
         }))
       }
     }
@@ -137,7 +159,7 @@ export function BusinessEvaluationForm() {
     if (prevStepIndex >= 0) {
       setFormState(prev => ({
         ...prev,
-        currentStep: FORM_STEPS[prevStepIndex].key
+        currentStep: FORM_STEPS[prevStepIndex].key,
       }))
     }
   }
@@ -145,9 +167,12 @@ export function BusinessEvaluationForm() {
   const handleStepClick = (stepKey: FormStep) => {
     const stepIndex = FORM_STEPS.findIndex(step => step.key === stepKey)
     const currentIndex = currentStepIndex
-    
+
     // Only allow clicking on previous steps or next step if current is valid
-    if (stepIndex < currentIndex || (stepIndex === currentIndex + 1 && validateCurrentStep())) {
+    if (
+      stepIndex < currentIndex ||
+      (stepIndex === currentIndex + 1 && validateCurrentStep())
+    ) {
       setFormState(prev => ({ ...prev, currentStep: stepKey }))
     }
   }
@@ -158,7 +183,7 @@ export function BusinessEvaluationForm() {
         return (
           <BasicInfoForm
             data={formState.data.basicInfo}
-            onUpdate={(data) => updateFormData('basicInfo', data)}
+            onUpdate={data => updateFormData('basicInfo', data)}
             errors={formState.errors}
           />
         )
@@ -166,7 +191,7 @@ export function BusinessEvaluationForm() {
         return (
           <FinancialDataForm
             data={formState.data.financialData}
-            onUpdate={(data) => updateFormData('financialData', data)}
+            onUpdate={data => updateFormData('financialData', data)}
             errors={formState.errors}
           />
         )
@@ -174,7 +199,7 @@ export function BusinessEvaluationForm() {
         return (
           <BusinessDetailsForm
             data={formState.data.businessDetails}
-            onUpdate={(data) => updateFormData('businessDetails', data)}
+            onUpdate={data => updateFormData('businessDetails', data)}
             errors={formState.errors}
           />
         )
@@ -201,8 +226,10 @@ export function BusinessEvaluationForm() {
             const IconComponent = step.icon
             const isActive = step.key === formState.currentStep
             const isCompleted = index < currentStepIndex
-            const isAccessible = index <= currentStepIndex || (index === currentStepIndex + 1 && validateCurrentStep())
-            
+            const isAccessible =
+              index <= currentStepIndex ||
+              (index === currentStepIndex + 1 && validateCurrentStep())
+
             return (
               <div key={step.key} className="flex-1 relative">
                 <button
@@ -212,20 +239,22 @@ export function BusinessEvaluationForm() {
                     isActive
                       ? 'border-primary-500 bg-primary-50'
                       : isCompleted
-                      ? 'border-success-500 bg-success-50 hover:bg-success-100'
-                      : isAccessible
-                      ? 'border-secondary-300 bg-white hover:bg-secondary-50'
-                      : 'border-secondary-200 bg-secondary-50 opacity-50 cursor-not-allowed'
+                        ? 'border-success-500 bg-success-50 hover:bg-success-100'
+                        : isAccessible
+                          ? 'border-secondary-300 bg-white hover:bg-secondary-50'
+                          : 'border-secondary-200 bg-secondary-50 opacity-50 cursor-not-allowed'
                   }`}
                 >
                   <div className="flex items-center space-x-3">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                      isActive
-                        ? 'bg-primary-500 text-white'
-                        : isCompleted
-                        ? 'bg-success-500 text-white'
-                        : 'bg-secondary-300 text-secondary-600'
-                    }`}>
+                    <div
+                      className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                        isActive
+                          ? 'bg-primary-500 text-white'
+                          : isCompleted
+                            ? 'bg-success-500 text-white'
+                            : 'bg-secondary-300 text-secondary-600'
+                      }`}
+                    >
                       {isCompleted ? (
                         <span className="text-sm">✓</span>
                       ) : (
@@ -233,9 +262,15 @@ export function BusinessEvaluationForm() {
                       )}
                     </div>
                     <div>
-                      <div className={`font-medium ${
-                        isActive ? 'text-primary-700' : isCompleted ? 'text-success-700' : 'text-secondary-700'
-                      }`}>
+                      <div
+                        className={`font-medium ${
+                          isActive
+                            ? 'text-primary-700'
+                            : isCompleted
+                              ? 'text-success-700'
+                              : 'text-secondary-700'
+                        }`}
+                      >
                         {step.title}
                       </div>
                       <div className="text-sm text-secondary-500">
@@ -244,7 +279,7 @@ export function BusinessEvaluationForm() {
                     </div>
                   </div>
                 </button>
-                
+
                 {index < FORM_STEPS.length - 1 && (
                   <div className="absolute top-1/2 -right-2 w-4 h-0.5 bg-secondary-300 transform -translate-y-1/2" />
                 )}
@@ -262,7 +297,7 @@ export function BusinessEvaluationForm() {
               <p className="text-error-700">{formState.errors.general}</p>
             </div>
           )}
-          
+
           {renderCurrentForm()}
         </div>
 
@@ -295,7 +330,11 @@ export function BusinessEvaluationForm() {
                 </>
               ) : (
                 <>
-                  <span>{formState.currentStep === 'business-details' ? 'Calculate Valuation' : 'Next'}</span>
+                  <span>
+                    {formState.currentStep === 'business-details'
+                      ? 'Calculate Valuation'
+                      : 'Next'}
+                  </span>
                   <ChevronRight className="w-4 h-4" />
                 </>
               )}

@@ -55,8 +55,8 @@ export function ValuationChart({ methods }: ValuationChartProps) {
         borderWidth: 2,
         borderRadius: 4,
         borderSkipped: false,
-      }
-    ]
+      },
+    ],
   }
 
   const options = {
@@ -71,32 +71,32 @@ export function ValuationChart({ methods }: ValuationChartProps) {
       },
       tooltip: {
         callbacks: {
-          label: function(context: any) {
+          label: function (context: any) {
             const method = methods[context.dataIndex]
             return [
               `Value: ${formatCurrency(context.raw)}`,
-              `Confidence: ${method.confidence.toFixed(0)}%`
+              `Confidence: ${method.confidence.toFixed(0)}%`,
             ]
-          }
-        }
-      }
+          },
+        },
+      },
     },
     scales: {
       y: {
         beginAtZero: true,
         ticks: {
-          callback: function(value: any) {
+          callback: function (value: any) {
             return formatCurrency(value)
-          }
-        }
+          },
+        },
       },
       x: {
         ticks: {
           maxRotation: 45,
-          minRotation: 0
-        }
-      }
-    }
+          minRotation: 0,
+        },
+      },
+    },
   }
 
   return (
