@@ -30,6 +30,10 @@ export function Header() {
                 <ChevronDown className="w-4 h-4" />
               </button>
               <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-secondary-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                <Link href="/calculator" className="block px-4 py-3 text-sm text-secondary-700 hover:bg-secondary-50 hover:text-primary-600 font-medium">
+                  Business Calculator
+                </Link>
+                <div className="border-t border-secondary-100 my-1" />
                 <Link href="/ai-valuation" className="block px-4 py-3 text-sm text-secondary-700 hover:bg-secondary-50 hover:text-primary-600">
                   AI Valuation
                 </Link>
@@ -44,6 +48,9 @@ export function Header() {
                 </Link>
               </div>
             </div>
+            <Link href="/calculator" className="text-secondary-600 hover:text-primary-600 transition-colors">
+              Calculator
+            </Link>
             <Link href="/pricing" className="text-secondary-600 hover:text-primary-600 transition-colors">
               Pricing
             </Link>
