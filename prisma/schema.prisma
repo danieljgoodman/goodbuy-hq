@@ -1,0 +1,258 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User Types Enum
+enum UserType {
+  BUSINESS_OWNER
+  BUYER
+  BROKER
+  ADMIN
+}
+
+// User Status
+enum UserStatus {
+  PENDING
+  ACTIVE
+  SUSPENDED
+  DELETED
+}
+
+// Business Status
+enum BusinessStatus {
+  DRAFT
+  ACTIVE
+  UNDER_REVIEW
+  SOLD
+  ARCHIVED
+}
+
+// Evaluation Status
+enum EvaluationStatus {
+  DRAFT
+  IN_PROGRESS
+  COMPLETED
+  PUBLISHED
+}
+
+// Main User model
+model User {
+  id            String       @id @default(cuid())
+  email         String       @unique
+  name          String?
+  image         String?
+  userType      UserType     @default(BUYER)
+  status        UserStatus   @default(PENDING)
+  emailVerified DateTime?
+  
+  // Profile information
+  firstName     String?
+  lastName      String?
+  phone         String?
+  company       String?
+  position      String?
+  bio           String?
+  
+  // Authentication
+  hashedPassword String?
+  
+  // Timestamps
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  lastLoginAt   DateTime?
+  
+  // Relations
+  accounts      Account[]
+  sessions      Session[]
+  businesses    Business[]   @relation("BusinessOwner")
+  evaluations   Evaluation[]
+  favorites     Favorite[]
+  inquiries     Inquiry[]
+  
+  // Email verification
+  verificationTokens VerificationToken[]
+  
+  @@map("users")
+}
+
+// NextAuth Account model
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+// NextAuth Session model
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+// Business model
+model Business {
+  id          String         @id @default(cuid())
+  title       String
+  description String
+  industry    String?
+  location    String?
+  website     String?
+  
+  // Financial information
+  askingPrice     Decimal?
+  revenue         Decimal?
+  profit          Decimal?
+  established     DateTime?
+  employees       Int?
+  
+  // Status and metadata
+  status          BusinessStatus @default(DRAFT)
+  featured        Boolean        @default(false)
+  
+  // Media
+  images          String[]
+  documents       String[]
+  
+  // SEO
+  slug            String?        @unique
+  metaTitle       String?
+  metaDescription String?
+  
+  // Timestamps
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  publishedAt     DateTime?
+  
+  // Relations
+  ownerId         String
+  owner           User           @relation("BusinessOwner", fields: [ownerId], references: [id])
+  evaluations     Evaluation[]
+  favorites       Favorite[]
+  inquiries       Inquiry[]
+  
+  @@map("businesses")
+}
+
+// Business Evaluation model
+model Evaluation {
+  id          String            @id @default(cuid())
+  title       String
+  summary     String?
+  
+  // Evaluation details
+  financialScore    Int?       // 1-100
+  operationalScore  Int?       // 1-100
+  marketScore       Int?       // 1-100
+  overallScore      Int?       // 1-100
+  
+  // Detailed analysis
+  strengths         String[]
+  weaknesses        String[]
+  opportunities     String[]
+  threats           String[]
+  
+  // Recommendations
+  recommendations   String?
+  estimatedValue    Decimal?
+  
+  // Status and metadata
+  status            EvaluationStatus @default(DRAFT)
+  isPublic          Boolean          @default(false)
+  
+  // Timestamps
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  completedAt       DateTime?
+  
+  // Relations
+  businessId        String
+  business          Business         @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  evaluatorId       String
+  evaluator         User             @relation(fields: [evaluatorId], references: [id])
+  
+  @@map("evaluations")
+}
+
+// User favorites
+model Favorite {
+  id         String   @id @default(cuid())
+  userId     String
+  businessId String
+  createdAt  DateTime @default(now())
+  
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, businessId])
+  @@map("favorites")
+}
+
+// Business inquiries
+model Inquiry {
+  id         String   @id @default(cuid())
+  subject    String
+  message    String
+  
+  // Contact information
+  contactName  String
+  contactEmail String
+  contactPhone String?
+  
+  // Status
+  isRead       Boolean  @default(false)
+  isArchived   Boolean  @default(false)
+  
+  // Timestamps
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  
+  // Relations
+  businessId   String
+  business     Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  userId       String?
+  user         User?    @relation(fields: [userId], references: [id])
+  
+  @@map("inquiries")
+}
+
+// Email verification tokens
+model VerificationToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  email     String
+  expires   DateTime
+  createdAt DateTime @default(now())
+  
+  // Relations
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([email, token])
+  @@map("verification_tokens")
+}

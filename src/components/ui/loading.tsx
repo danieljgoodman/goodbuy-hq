@@ -115,6 +115,7 @@ interface LoadingButtonProps {
   disabled?: boolean
   className?: string
   onClick?: () => void
+  type?: 'button' | 'submit' | 'reset'
 }
 
 export function LoadingButton({
@@ -123,9 +124,11 @@ export function LoadingButton({
   disabled,
   className,
   onClick,
+  type = 'button',
 }: LoadingButtonProps) {
   return (
     <button
+      type={type}
       onClick={onClick}
       disabled={disabled || isLoading}
       className={cn(
