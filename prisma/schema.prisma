@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,7 +7,548 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// User Types Enum
+model User {
+  id                       String                    @id @default(cuid())
+  email                    String                    @unique
+  name                     String?
+  image                    String?
+  userType                 UserType                  @default(BUYER)
+  status                   UserStatus                @default(PENDING)
+  emailVerified            DateTime?
+  firstName                String?
+  lastName                 String?
+  phone                    String?
+  company                  String?
+  position                 String?
+  bio                      String?
+  hashedPassword           String?
+  createdAt                DateTime                  @default(now())
+  updatedAt                DateTime                  @updatedAt
+  lastLoginAt              DateTime?
+  accounts                 Account[]
+  businessViews            BusinessView[]
+  businesses               Business[]                @relation("BusinessOwner")
+  communicationAuditLogs   CommunicationAuditLog[]
+  communicationPreferences CommunicationPreferences?
+  documentAccessLogs       DocumentAccessLog[]
+  evaluations              Evaluation[]
+  favorites                Favorite[]
+  inquiries                Inquiry[]
+  meetingAttendances       MeetingAttendee[]
+  meetingReminders         MeetingReminder[]
+  organizedMeetings        Meeting[]                 @relation("MeetingOrganizer")
+  messageReadReceipts      MessageReadReceipt[]
+  sentMessages             Message[]
+  notifications            Notification[]
+  savedSearches            SavedSearch[]
+  sessions                 Session[]
+  uploadedDocuments        SharedDocument[]
+  threadParticipants       ThreadParticipant[]
+  verificationTokens       VerificationToken[]
+
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model Business {
+  id                   String                @id @default(cuid())
+  title                String
+  description          String
+  industry             String?
+  location             String?
+  website              String?
+  askingPrice          Decimal?
+  revenue              Decimal?
+  profit               Decimal?
+  established          DateTime?
+  employees            Int?
+  status               BusinessStatus        @default(DRAFT)
+  featured             Boolean               @default(false)
+  images               String[]
+  documents            String[]
+  slug                 String?               @unique
+  metaTitle            String?
+  metaDescription      String?
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  publishedAt          DateTime?
+  ownerId              String
+  address              String?
+  adminNotes           String?
+  cashFlow             Decimal?
+  category             BusinessCategory?
+  city                 String?
+  competition          String?
+  country              String                @default("US")
+  customerBase         Int?
+  daysOpen             String[]
+  ebitda               Decimal?
+  email                String?
+  equipment            Decimal?
+  expiresAt            DateTime?
+  financing            String?
+  grossMargin          Float?
+  hoursOfOperation     String?
+  inquiryCount         Int                   @default(0)
+  inventory            Decimal?
+  keywords             String[]
+  lastViewedAt         DateTime?
+  latitude             Float?
+  liabilities          Decimal?
+  listingType          ListingType           @default(BUSINESS_SALE)
+  longitude            Float?
+  monthlyRevenue       Decimal?
+  negotiations         String?
+  netMargin            Float?
+  phone                String?
+  priority             Int                   @default(0)
+  realEstate           Decimal?
+  reasonForSelling     String?
+  rejectionReason      String?
+  reviewedAt           DateTime?
+  reviewedBy           String?
+  seasonality          String?
+  state                String?
+  timeframe            String?
+  totalAssets          Decimal?
+  viewCount            Int                   @default(0)
+  virtualTour          String?
+  yearlyGrowth         Float?
+  zipCode              String?
+  documents_rel        BusinessDocument[]
+  images_rel           BusinessImage[]
+  views                BusinessView[]
+  owner                User                  @relation("BusinessOwner", fields: [ownerId], references: [id])
+  communicationThreads CommunicationThread[]
+  evaluations          Evaluation[]
+  favorites            Favorite[]
+  inquiries            Inquiry[]
+
+  @@map("businesses")
+}
+
+model Evaluation {
+  id               String           @id @default(cuid())
+  title            String
+  summary          String?
+  financialScore   Int?
+  operationalScore Int?
+  marketScore      Int?
+  overallScore     Int?
+  strengths        String[]
+  weaknesses       String[]
+  opportunities    String[]
+  threats          String[]
+  recommendations  String?
+  estimatedValue   Decimal?
+  status           EvaluationStatus @default(DRAFT)
+  isPublic         Boolean          @default(false)
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  completedAt      DateTime?
+  businessId       String
+  evaluatorId      String
+  business         Business         @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  evaluator        User             @relation(fields: [evaluatorId], references: [id])
+
+  @@map("evaluations")
+}
+
+model Favorite {
+  id         String   @id @default(cuid())
+  userId     String
+  businessId String
+  createdAt  DateTime @default(now())
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, businessId])
+  @@map("favorites")
+}
+
+model Inquiry {
+  id           String   @id @default(cuid())
+  subject      String
+  message      String
+  contactName  String
+  contactEmail String
+  contactPhone String?
+  isRead       Boolean  @default(false)
+  isArchived   Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  businessId   String
+  userId       String?
+  business     Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  user         User?    @relation(fields: [userId], references: [id])
+
+  @@map("inquiries")
+}
+
+model CommunicationThread {
+  id            String              @id @default(cuid())
+  subject       String?
+  businessId    String?
+  isArchived    Boolean             @default(false)
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
+  lastMessageAt DateTime            @default(now())
+  business      Business?           @relation(fields: [businessId], references: [id])
+  meetings      Meeting[]
+  messages      Message[]
+  documents     SharedDocument[]
+  participants  ThreadParticipant[]
+
+  @@map("communication_threads")
+}
+
+model ThreadParticipant {
+  id                  String              @id @default(cuid())
+  threadId            String
+  userId              String
+  joinedAt            DateTime            @default(now())
+  leftAt              DateTime?
+  isActive            Boolean             @default(true)
+  canInvite           Boolean             @default(false)
+  isAdmin             Boolean             @default(false)
+  allowDirectMessages Boolean             @default(true)
+  allowMeetingInvites Boolean             @default(true)
+  thread              CommunicationThread @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  user                User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([threadId, userId])
+  @@map("thread_participants")
+}
+
+model Message {
+  id           String               @id @default(cuid())
+  threadId     String
+  senderId     String
+  content      String
+  status       MessageStatus        @default(SENT)
+  isEdited     Boolean              @default(false)
+  editedAt     DateTime?
+  messageType  String               @default("text")
+  metadata     Json?
+  replyToId    String?
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @updatedAt
+  scheduledFor DateTime?
+  attachments  MessageAttachment[]
+  readReceipts MessageReadReceipt[]
+  replyTo      Message?             @relation("MessageReplies", fields: [replyToId], references: [id])
+  replies      Message[]            @relation("MessageReplies")
+  sender       User                 @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  thread       CommunicationThread  @relation(fields: [threadId], references: [id], onDelete: Cascade)
+
+  @@map("messages")
+}
+
+model MessageAttachment {
+  id           String   @id @default(cuid())
+  messageId    String
+  fileName     String
+  originalName String
+  mimeType     String
+  size         Int
+  path         String
+  isScanned    Boolean  @default(false)
+  scanResult   String?
+  createdAt    DateTime @default(now())
+  message      Message  @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+  @@map("message_attachments")
+}
+
+model MessageReadReceipt {
+  id        String   @id @default(cuid())
+  messageId String
+  userId    String
+  readAt    DateTime @default(now())
+  message   Message  @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([messageId, userId])
+  @@map("message_read_receipts")
+}
+
+model Meeting {
+  id                   String               @id @default(cuid())
+  threadId             String?
+  organizerId          String
+  title                String
+  description          String?
+  status               MeetingStatus        @default(SCHEDULED)
+  scheduledStart       DateTime
+  scheduledEnd         DateTime
+  actualStart          DateTime?
+  actualEnd            DateTime?
+  timezone             String               @default("UTC")
+  location             String?
+  meetingType          String               @default("virtual")
+  isRecurring          Boolean              @default(false)
+  recurringRule        Json?
+  maxAttendees         Int?
+  requiresConfirmation Boolean              @default(true)
+  createdAt            DateTime             @default(now())
+  updatedAt            DateTime             @updatedAt
+  attendees            MeetingAttendee[]
+  reminders            MeetingReminder[]
+  organizer            User                 @relation("MeetingOrganizer", fields: [organizerId], references: [id])
+  thread               CommunicationThread? @relation(fields: [threadId], references: [id])
+
+  @@map("meetings")
+}
+
+model MeetingAttendee {
+  id         String    @id @default(cuid())
+  meetingId  String
+  userId     String
+  status     String    @default("invited")
+  responseAt DateTime?
+  notes      String?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  meeting    Meeting   @relation(fields: [meetingId], references: [id], onDelete: Cascade)
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([meetingId, userId])
+  @@map("meeting_attendees")
+}
+
+model MeetingReminder {
+  id           String    @id @default(cuid())
+  meetingId    String
+  userId       String
+  reminderTime DateTime
+  isSent       Boolean   @default(false)
+  sentAt       DateTime?
+  meeting      Meeting   @relation(fields: [meetingId], references: [id], onDelete: Cascade)
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("meeting_reminders")
+}
+
+model SharedDocument {
+  id            String               @id @default(cuid())
+  threadId      String?
+  uploaderId    String
+  fileName      String
+  originalName  String
+  description   String?
+  mimeType      String
+  size          Int
+  path          String
+  accessLevel   DocumentAccessLevel  @default(SHARED)
+  category      String?
+  tags          String[]
+  version       String               @default("1.0")
+  isEncrypted   Boolean              @default(false)
+  encryptionKey String?
+  isScanned     Boolean              @default(false)
+  scanResult    String?
+  expiresAt     DateTime?
+  downloadCount Int                  @default(0)
+  maxDownloads  Int?
+  requiresAuth  Boolean              @default(true)
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
+  accessLogs    DocumentAccessLog[]
+  thread        CommunicationThread? @relation(fields: [threadId], references: [id])
+  uploader      User                 @relation(fields: [uploaderId], references: [id])
+
+  @@map("shared_documents")
+}
+
+model DocumentAccessLog {
+  id         String         @id @default(cuid())
+  documentId String
+  userId     String
+  action     String
+  ipAddress  String?
+  userAgent  String?
+  createdAt  DateTime       @default(now())
+  document   SharedDocument @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  user       User           @relation(fields: [userId], references: [id])
+
+  @@map("document_access_logs")
+}
+
+model Notification {
+  id           String             @id @default(cuid())
+  userId       String
+  type         NotificationType
+  status       NotificationStatus @default(PENDING)
+  title        String
+  message      String
+  actionUrl    String?
+  data         Json?
+  priority     String             @default("normal")
+  channel      String[]           @default(["in_app"])
+  scheduledFor DateTime?
+  sentAt       DateTime?
+  readAt       DateTime?
+  dismissedAt  DateTime?
+  relatedId    String?
+  relatedType  String?
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  user         User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notifications")
+}
+
+model CommunicationPreferences {
+  id                   String   @id @default(cuid())
+  userId               String   @unique
+  emailNewMessages     Boolean  @default(true)
+  emailMeetingInvites  Boolean  @default(true)
+  emailDocumentShares  Boolean  @default(true)
+  emailDigest          Boolean  @default(true)
+  digestFrequency      String   @default("daily")
+  showReadReceipts     Boolean  @default(true)
+  showOnlineStatus     Boolean  @default(true)
+  allowDirectMessages  Boolean  @default(true)
+  defaultMeetingLength Int      @default(30)
+  workingHoursStart    String   @default("09:00")
+  workingHoursEnd      String   @default("17:00")
+  timezone             String   @default("UTC")
+  shareContactInfo     Boolean  @default(false)
+  allowPublicProfile   Boolean  @default(true)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("communication_preferences")
+}
+
+model CommunicationAuditLog {
+  id         String   @id @default(cuid())
+  userId     String
+  action     String
+  entityType String
+  entityId   String
+  details    Json?
+  ipAddress  String?
+  userAgent  String?
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id])
+
+  @@map("communication_audit_logs")
+}
+
+model BusinessImage {
+  id           String   @id @default(cuid())
+  businessId   String
+  url          String
+  thumbnailUrl String?
+  alt          String?
+  caption      String?
+  isPrimary    Boolean  @default(false)
+  orderIndex   Int      @default(0)
+  originalName String?
+  size         Int?
+  width        Int?
+  height       Int?
+  format       String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  business     Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  @@map("business_images")
+}
+
+model BusinessDocument {
+  id             String   @id @default(cuid())
+  businessId     String
+  name           String
+  description    String?
+  url            String
+  type           String
+  size           Int?
+  mimeType       String?
+  isConfidential Boolean  @default(true)
+  requiresNDA    Boolean  @default(false)
+  accessLevel    String   @default("owner_only")
+  downloadCount  Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  business       Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  @@map("business_documents")
+}
+
+model BusinessView {
+  id         String   @id @default(cuid())
+  businessId String
+  userId     String?
+  ipAddress  String?
+  userAgent  String?
+  referrer   String?
+  sessionId  String?
+  duration   Int?
+  createdAt  DateTime @default(now())
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  user       User?    @relation(fields: [userId], references: [id])
+
+  @@map("business_views")
+}
+
+model SavedSearch {
+  id            String    @id @default(cuid())
+  userId        String
+  name          String
+  query         Json
+  emailAlerts   Boolean   @default(false)
+  lastAlertSent DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("saved_searches")
+}
+
+model VerificationToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  email     String
+  expires   DateTime
+  createdAt DateTime @default(now())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([email, token])
+  @@map("verification_tokens")
+}
+
 enum UserType {
   BUSINESS_OWNER
   BUYER
@@ -18,7 +556,6 @@ enum UserType {
   ADMIN
 }
 
-// User Status
 enum UserStatus {
   PENDING
   ACTIVE
@@ -26,18 +563,16 @@ enum UserStatus {
   DELETED
 }
 
-// Business Status
 enum BusinessStatus {
   DRAFT
   ACTIVE
   UNDER_REVIEW
-  REJECTED
   SOLD
   ARCHIVED
+  REJECTED
   EXPIRED
 }
 
-// Business Category
 enum BusinessCategory {
   RESTAURANT
   RETAIL
@@ -53,7 +588,6 @@ enum BusinessCategory {
   OTHER
 }
 
-// Listing Type
 enum ListingType {
   BUSINESS_SALE
   ASSET_SALE
@@ -62,7 +596,6 @@ enum ListingType {
   INVESTMENT
 }
 
-// Evaluation Status
 enum EvaluationStatus {
   DRAFT
   IN_PROGRESS
@@ -70,284 +603,6 @@ enum EvaluationStatus {
   PUBLISHED
 }
 
-// Main User model
-model User {
-  id            String       @id @default(cuid())
-  email         String       @unique
-  name          String?
-  image         String?
-  userType      UserType     @default(BUYER)
-  status        UserStatus   @default(PENDING)
-  emailVerified DateTime?
-  
-  // Profile information
-  firstName     String?
-  lastName      String?
-  phone         String?
-  company       String?
-  position      String?
-  bio           String?
-  
-  // Authentication
-  hashedPassword String?
-  
-  // Timestamps
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-  lastLoginAt   DateTime?
-  
-  // Relations
-  accounts      Account[]
-  sessions      Session[]
-  businesses    Business[]   @relation("BusinessOwner")
-  evaluations   Evaluation[]
-  favorites     Favorite[]
-  inquiries     Inquiry[]
-  
-  // Communication system relations
-  threadParticipants ThreadParticipant[]
-  sentMessages  Message[]
-  messageReadReceipts MessageReadReceipt[]
-  organizedMeetings Meeting[] @relation("MeetingOrganizer")
-  meetingAttendances MeetingAttendee[]
-  meetingReminders MeetingReminder[]
-  uploadedDocuments SharedDocument[]
-  documentAccessLogs DocumentAccessLog[]
-  notifications Notification[]
-  communicationPreferences CommunicationPreferences?
-  communicationAuditLogs CommunicationAuditLog[]
-  
-  // Email verification
-  verificationTokens VerificationToken[]
-  
-  // Marketplace relations
-  businessViews     BusinessView[]
-  savedSearches     SavedSearch[]
-  
-  @@map("users")
-}
-
-// NextAuth Account model
-model Account {
-  id                String  @id @default(cuid())
-  userId            String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String? @db.Text
-  session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
-  @@map("accounts")
-}
-
-// NextAuth Session model
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@map("sessions")
-}
-
-// Business model
-model Business {
-  id          String         @id @default(cuid())
-  title       String
-  description String
-  
-  // Business details
-  industry    String?
-  category    BusinessCategory?
-  listingType ListingType    @default(BUSINESS_SALE)
-  
-  // Location information
-  address     String?
-  city        String?
-  state       String?
-  zipCode     String?
-  country     String         @default("US")
-  location    String?        // Combined location for search
-  latitude    Float?
-  longitude   Float?
-  
-  // Contact information
-  website     String?
-  phone       String?
-  email       String?
-  
-  // Financial information
-  askingPrice     Decimal?
-  revenue         Decimal?
-  profit          Decimal?
-  cashFlow        Decimal?
-  ebitda          Decimal?
-  grossMargin     Float?
-  netMargin       Float?
-  
-  // Business metrics
-  established     DateTime?
-  employees       Int?
-  monthlyRevenue  Decimal?
-  yearlyGrowth    Float?
-  customerBase    Int?
-  
-  // Inventory and assets
-  inventory       Decimal?
-  equipment       Decimal?
-  realEstate      Decimal?
-  totalAssets     Decimal?
-  liabilities     Decimal?
-  
-  // Operating details
-  hoursOfOperation String?
-  daysOpen        String[]
-  seasonality     String?
-  competition     String?
-  
-  // Reason for sale
-  reasonForSelling String?
-  timeframe       String?
-  negotiations    String?
-  financing       String?
-  
-  // Status and metadata
-  status          BusinessStatus @default(DRAFT)
-  featured        Boolean        @default(false)
-  priority        Int            @default(0)
-  viewCount       Int            @default(0)
-  inquiryCount    Int            @default(0)
-  
-  // Admin fields
-  adminNotes      String?
-  rejectionReason String?
-  reviewedAt      DateTime?
-  reviewedBy      String?
-  
-  // Media
-  images          String[]       // URLs to images
-  documents       String[]       // URLs to documents
-  virtualTour     String?        // URL to virtual tour
-  
-  // SEO
-  slug            String?        @unique
-  metaTitle       String?
-  metaDescription String?
-  keywords        String[]
-  
-  // Timestamps
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
-  publishedAt     DateTime?
-  expiresAt       DateTime?
-  lastViewedAt    DateTime?
-  
-  // Relations
-  ownerId         String
-  owner           User           @relation("BusinessOwner", fields: [ownerId], references: [id])
-  evaluations     Evaluation[]
-  favorites       Favorite[]
-  inquiries       Inquiry[]
-  images_rel      BusinessImage[]
-  documents_rel   BusinessDocument[]
-  views           BusinessView[]
-  communicationThreads CommunicationThread[]
-  
-  @@map("businesses")
-}
-
-// Business Evaluation model
-model Evaluation {
-  id          String            @id @default(cuid())
-  title       String
-  summary     String?
-  
-  // Evaluation details
-  financialScore    Int?       // 1-100
-  operationalScore  Int?       // 1-100
-  marketScore       Int?       // 1-100
-  overallScore      Int?       // 1-100
-  
-  // Detailed analysis
-  strengths         String[]
-  weaknesses        String[]
-  opportunities     String[]
-  threats           String[]
-  
-  // Recommendations
-  recommendations   String?
-  estimatedValue    Decimal?
-  
-  // Status and metadata
-  status            EvaluationStatus @default(DRAFT)
-  isPublic          Boolean          @default(false)
-  
-  // Timestamps
-  createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @updatedAt
-  completedAt       DateTime?
-  
-  // Relations
-  businessId        String
-  business          Business         @relation(fields: [businessId], references: [id], onDelete: Cascade)
-  evaluatorId       String
-  evaluator         User             @relation(fields: [evaluatorId], references: [id])
-  
-  @@map("evaluations")
-}
-
-// User favorites
-model Favorite {
-  id         String   @id @default(cuid())
-  userId     String
-  businessId String
-  createdAt  DateTime @default(now())
-  
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
-  
-  @@unique([userId, businessId])
-  @@map("favorites")
-}
-
-// Business inquiries
-model Inquiry {
-  id         String   @id @default(cuid())
-  subject    String
-  message    String
-  
-  // Contact information
-  contactName  String
-  contactEmail String
-  contactPhone String?
-  
-  // Status
-  isRead       Boolean  @default(false)
-  isArchived   Boolean  @default(false)
-  
-  // Timestamps
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  
-  // Relations
-  businessId   String
-  business     Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
-  userId       String?
-  user         User?    @relation(fields: [userId], references: [id])
-  
-  @@map("inquiries")
-}
-
-// Message Status
 enum MessageStatus {
   SENT
   DELIVERED
@@ -355,7 +610,6 @@ enum MessageStatus {
   DELETED
 }
 
-// Meeting Status
 enum MeetingStatus {
   SCHEDULED
   CONFIRMED
@@ -364,14 +618,12 @@ enum MeetingStatus {
   RESCHEDULED
 }
 
-// Document Access Level
 enum DocumentAccessLevel {
   PUBLIC
   PRIVATE
   SHARED
 }
 
-// Notification Type
 enum NotificationType {
   MESSAGE
   MEETING_INVITE
@@ -381,468 +633,9 @@ enum NotificationType {
   SYSTEM_ALERT
 }
 
-// Notification Status
 enum NotificationStatus {
   PENDING
   SENT
   READ
   DISMISSED
-}
-
-// Communication Threads (Conversations)
-model CommunicationThread {
-  id          String   @id @default(cuid())
-  subject     String?
-  businessId  String?
-  isArchived  Boolean  @default(false)
-  
-  // Timestamps
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  lastMessageAt DateTime @default(now())
-  
-  // Relations
-  business    Business? @relation(fields: [businessId], references: [id], onDelete: SetNull)
-  messages    Message[]
-  participants ThreadParticipant[]
-  meetings    Meeting[]
-  documents   SharedDocument[]
-  
-  @@map("communication_threads")
-}
-
-// Thread Participants
-model ThreadParticipant {
-  id          String   @id @default(cuid())
-  threadId    String
-  userId      String
-  joinedAt    DateTime @default(now())
-  leftAt      DateTime?
-  isActive    Boolean  @default(true)
-  canInvite   Boolean  @default(false)
-  isAdmin     Boolean  @default(false)
-  
-  // Privacy settings
-  allowDirectMessages Boolean @default(true)
-  allowMeetingInvites Boolean @default(true)
-  
-  // Relations
-  thread      CommunicationThread @relation(fields: [threadId], references: [id], onDelete: Cascade)
-  user        User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  @@unique([threadId, userId])
-  @@map("thread_participants")
-}
-
-// Messages
-model Message {
-  id          String        @id @default(cuid())
-  threadId    String
-  senderId    String
-  content     String
-  status      MessageStatus @default(SENT)
-  isEdited    Boolean       @default(false)
-  editedAt    DateTime?
-  
-  // Message metadata
-  messageType String        @default("text") // text, file, meeting_invite, system
-  metadata    Json?
-  
-  // Reply functionality
-  replyToId   String?
-  replyTo     Message?      @relation("MessageReplies", fields: [replyToId], references: [id])
-  replies     Message[]     @relation("MessageReplies")
-  
-  // Timestamps
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  scheduledFor DateTime?
-  
-  // Relations
-  thread      CommunicationThread @relation(fields: [threadId], references: [id], onDelete: Cascade)
-  sender      User          @relation(fields: [senderId], references: [id], onDelete: Cascade)
-  attachments MessageAttachment[]
-  readReceipts MessageReadReceipt[]
-  
-  @@map("messages")
-}
-
-// Message Attachments
-model MessageAttachment {
-  id          String   @id @default(cuid())
-  messageId   String
-  fileName    String
-  originalName String
-  mimeType    String
-  size        Int
-  path        String
-  
-  // Security
-  isScanned   Boolean  @default(false)
-  scanResult  String?
-  
-  // Timestamps
-  createdAt   DateTime @default(now())
-  
-  // Relations
-  message     Message  @relation(fields: [messageId], references: [id], onDelete: Cascade)
-  
-  @@map("message_attachments")
-}
-
-// Message Read Receipts
-model MessageReadReceipt {
-  id        String   @id @default(cuid())
-  messageId String
-  userId    String
-  readAt    DateTime @default(now())
-  
-  // Relations
-  message   Message  @relation(fields: [messageId], references: [id], onDelete: Cascade)
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  @@unique([messageId, userId])
-  @@map("message_read_receipts")
-}
-
-// Meeting Scheduler
-model Meeting {
-  id            String        @id @default(cuid())
-  threadId      String?
-  organizerId   String
-  title         String
-  description   String?
-  status        MeetingStatus @default(SCHEDULED)
-  
-  // Meeting details
-  scheduledStart DateTime
-  scheduledEnd   DateTime
-  actualStart    DateTime?
-  actualEnd      DateTime?
-  timezone       String        @default("UTC")
-  location       String?       // Physical or virtual meeting link
-  meetingType    String        @default("virtual") // virtual, physical, phone
-  
-  // Meeting settings
-  isRecurring    Boolean       @default(false)
-  recurringRule  Json?
-  maxAttendees   Int?
-  requiresConfirmation Boolean @default(true)
-  
-  // Timestamps
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
-  
-  // Relations
-  thread        CommunicationThread? @relation(fields: [threadId], references: [id], onDelete: SetNull)
-  organizer     User          @relation("MeetingOrganizer", fields: [organizerId], references: [id])
-  attendees     MeetingAttendee[]
-  reminders     MeetingReminder[]
-  
-  @@map("meetings")
-}
-
-// Meeting Attendees
-model MeetingAttendee {
-  id          String   @id @default(cuid())
-  meetingId   String
-  userId      String
-  status      String   @default("invited") // invited, accepted, declined, tentative
-  responseAt  DateTime?
-  notes       String?
-  
-  // Timestamps
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  
-  // Relations
-  meeting     Meeting  @relation(fields: [meetingId], references: [id], onDelete: Cascade)
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  @@unique([meetingId, userId])
-  @@map("meeting_attendees")
-}
-
-// Meeting Reminders
-model MeetingReminder {
-  id          String   @id @default(cuid())
-  meetingId   String
-  userId      String
-  reminderTime DateTime
-  isSent      Boolean  @default(false)
-  sentAt      DateTime?
-  
-  // Relations
-  meeting     Meeting  @relation(fields: [meetingId], references: [id], onDelete: Cascade)
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  @@map("meeting_reminders")
-}
-
-// Shared Documents
-model SharedDocument {
-  id            String              @id @default(cuid())
-  threadId      String?
-  uploaderId    String
-  fileName      String
-  originalName  String
-  description   String?
-  mimeType      String
-  size          Int
-  path          String
-  accessLevel   DocumentAccessLevel @default(SHARED)
-  
-  // Document metadata
-  category      String?
-  tags          String[]
-  version       String              @default("1.0")
-  
-  // Security and compliance
-  isEncrypted   Boolean             @default(false)
-  encryptionKey String?
-  isScanned     Boolean             @default(false)
-  scanResult    String?
-  expiresAt     DateTime?
-  
-  // Access control
-  downloadCount Int                 @default(0)
-  maxDownloads  Int?
-  requiresAuth  Boolean             @default(true)
-  
-  // Timestamps
-  createdAt     DateTime            @default(now())
-  updatedAt     DateTime            @updatedAt
-  
-  // Relations
-  thread        CommunicationThread? @relation(fields: [threadId], references: [id], onDelete: SetNull)
-  uploader      User                @relation(fields: [uploaderId], references: [id])
-  accessLogs    DocumentAccessLog[]
-  
-  @@map("shared_documents")
-}
-
-// Document Access Logs (for audit trail)
-model DocumentAccessLog {
-  id          String   @id @default(cuid())
-  documentId  String
-  userId      String
-  action      String   // view, download, share, delete
-  ipAddress   String?
-  userAgent   String?
-  
-  // Timestamps
-  createdAt   DateTime @default(now())
-  
-  // Relations
-  document    SharedDocument @relation(fields: [documentId], references: [id], onDelete: Cascade)
-  user        User     @relation(fields: [userId], references: [id])
-  
-  @@map("document_access_logs")
-}
-
-// Notifications
-model Notification {
-  id          String             @id @default(cuid())
-  userId      String
-  type        NotificationType
-  status      NotificationStatus @default(PENDING)
-  title       String
-  message     String
-  actionUrl   String?
-  
-  // Notification metadata
-  data        Json?
-  priority    String             @default("normal") // low, normal, high, urgent
-  channel     String[]           @default(["in_app"]) // in_app, email, sms, push
-  
-  // Scheduling
-  scheduledFor DateTime?
-  sentAt      DateTime?
-  readAt      DateTime?
-  dismissedAt DateTime?
-  
-  // Relations
-  relatedId   String? // ID of related entity (message, meeting, etc.)
-  relatedType String? // Type of related entity
-  
-  // Timestamps
-  createdAt   DateTime           @default(now())
-  updatedAt   DateTime           @updatedAt
-  
-  // Relations
-  user        User               @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  @@map("notifications")
-}
-
-// Communication Preferences
-model CommunicationPreferences {
-  id               String   @id @default(cuid())
-  userId           String   @unique
-  
-  // Email preferences
-  emailNewMessages Boolean  @default(true)
-  emailMeetingInvites Boolean @default(true)
-  emailDocumentShares Boolean @default(true)
-  emailDigest      Boolean  @default(true)
-  digestFrequency  String   @default("daily") // daily, weekly, never
-  
-  // In-app preferences
-  showReadReceipts Boolean  @default(true)
-  showOnlineStatus Boolean  @default(true)
-  allowDirectMessages Boolean @default(true)
-  
-  // Meeting preferences
-  defaultMeetingLength Int   @default(30) // minutes
-  workingHoursStart String  @default("09:00")
-  workingHoursEnd   String  @default("17:00")
-  timezone          String  @default("UTC")
-  
-  // Privacy preferences
-  shareContactInfo  Boolean @default(false)
-  allowPublicProfile Boolean @default(true)
-  
-  // Timestamps
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
-  
-  // Relations
-  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  @@map("communication_preferences")
-}
-
-// Audit Trail for Communications
-model CommunicationAuditLog {
-  id          String   @id @default(cuid())
-  userId      String
-  action      String   // message_sent, message_read, document_shared, meeting_scheduled, etc.
-  entityType  String   // message, document, meeting, thread
-  entityId    String
-  details     Json?
-  ipAddress   String?
-  userAgent   String?
-  
-  // Timestamps
-  createdAt   DateTime @default(now())
-  
-  // Relations
-  user        User     @relation(fields: [userId], references: [id])
-  
-  @@map("communication_audit_logs")
-}
-
-// Business Images
-model BusinessImage {
-  id          String   @id @default(cuid())
-  businessId  String
-  url         String
-  thumbnailUrl String?
-  alt         String?
-  caption     String?
-  isPrimary   Boolean  @default(false)
-  orderIndex  Int      @default(0)
-  
-  // Image metadata
-  originalName String?
-  size        Int?
-  width       Int?
-  height      Int?
-  format      String?
-  
-  // Timestamps
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  
-  // Relations
-  business    Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
-  
-  @@map("business_images")
-}
-
-// Business Documents
-model BusinessDocument {
-  id          String   @id @default(cuid())
-  businessId  String
-  name        String
-  description String?
-  url         String
-  type        String   // financial_statement, tax_return, lease_agreement, etc.
-  size        Int?
-  mimeType    String?
-  isConfidential Boolean @default(true)
-  requiresNDA    Boolean @default(false)
-  
-  // Access control
-  accessLevel String   @default("owner_only") // owner_only, inquired_buyers, public
-  downloadCount Int    @default(0)
-  
-  // Timestamps
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  
-  // Relations
-  business    Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
-  
-  @@map("business_documents")
-}
-
-// Business Views (Analytics)
-model BusinessView {
-  id          String   @id @default(cuid())
-  businessId  String
-  userId      String?
-  ipAddress   String?
-  userAgent   String?
-  referrer    String?
-  
-  // View details
-  sessionId   String?
-  duration    Int?     // seconds spent viewing
-  
-  // Timestamps
-  createdAt   DateTime @default(now())
-  
-  // Relations
-  business    Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
-  user        User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
-  
-  @@map("business_views")
-}
-
-// Saved Searches
-model SavedSearch {
-  id          String   @id @default(cuid())
-  userId      String
-  name        String
-  query       Json     // Search parameters
-  
-  // Notification settings
-  emailAlerts Boolean  @default(false)
-  lastAlertSent DateTime?
-  
-  // Timestamps
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  
-  // Relations
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  @@map("saved_searches")
-}
-
-// Email verification tokens
-model VerificationToken {
-  id        String   @id @default(cuid())
-  token     String   @unique
-  email     String
-  expires   DateTime
-  createdAt DateTime @default(now())
-  
-  // Relations
-  userId    String?
-  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  @@unique([email, token])
-  @@map("verification_tokens")
 }
