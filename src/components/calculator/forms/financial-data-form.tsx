@@ -374,7 +374,9 @@ export function FinancialDataForm({
           <li>
             • Cash flow should reflect actual cash generated from operations
           </li>
-          <li>• If you don&apos;t have exact figures, use your best estimates</li>
+          <li>
+            • If you don&apos;t have exact figures, use your best estimates
+          </li>
         </ul>
       </div>
     </div>
