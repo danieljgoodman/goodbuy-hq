@@ -93,7 +93,11 @@ export interface EvaluationFormData {
   businessDetails: BusinessDetails
 }
 
-export type FormStep = 'basic-info' | 'financial-data' | 'business-details' | 'results'
+export type FormStep =
+  | 'basic-info'
+  | 'financial-data'
+  | 'business-details'
+  | 'results'
 
 export interface FormState {
   currentStep: FormStep

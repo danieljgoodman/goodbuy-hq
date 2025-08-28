@@ -7,38 +7,41 @@ const steps = [
     step: '01',
     icon: Upload,
     title: 'Upload Your Data',
-    description: 'Securely upload your financial statements, tax returns, and business documents. Our platform accepts multiple formats including PDF, Excel, and CSV.',
+    description:
+      'Securely upload your financial statements, tax returns, and business documents. Our platform accepts multiple formats including PDF, Excel, and CSV.',
     details: [
       'Bank-grade 256-bit encryption',
       'Automated data extraction',
       'Multiple file format support',
-      'Real-time validation'
-    ]
+      'Real-time validation',
+    ],
   },
   {
     step: '02',
     icon: Brain,
     title: 'AI Analysis',
-    description: 'Our advanced AI algorithms analyze your data using 200+ valuation metrics, industry benchmarks, and market conditions to build a comprehensive picture.',
+    description:
+      'Our advanced AI algorithms analyze your data using 200+ valuation metrics, industry benchmarks, and market conditions to build a comprehensive picture.',
     details: [
       'Machine learning models',
       '200+ valuation metrics',
       'Real-time market data',
-      'Industry comparisons'
-    ]
+      'Industry comparisons',
+    ],
   },
   {
     step: '03',
     icon: FileText,
     title: 'Get Your Report',
-    description: 'Receive a detailed valuation report with actionable insights, growth recommendations, and market positioning analysis within minutes.',
+    description:
+      'Receive a detailed valuation report with actionable insights, growth recommendations, and market positioning analysis within minutes.',
     details: [
       'Comprehensive PDF report',
       'Interactive dashboard',
       'Actionable recommendations',
-      'Export & sharing options'
-    ]
-  }
+      'Export & sharing options',
+    ],
+  },
 ]
 
 export function HowItWorks() {
@@ -51,7 +54,9 @@ export function HowItWorks() {
             How It Works
           </h2>
           <p className="text-lg text-secondary-600 leading-relaxed">
-            Get your business valued in three simple steps. Our AI-powered platform makes professional business valuation accessible to everyone.
+            Get your business valued in three simple steps. Our AI-powered
+            platform makes professional business valuation accessible to
+            everyone.
           </p>
         </div>
 
@@ -68,9 +73,9 @@ export function HowItWorks() {
           <div className="grid lg:grid-cols-3 gap-8 lg:gap-12">
             {steps.map((step, index) => {
               const IconComponent = step.icon
-              
+
               return (
-                <div 
+                <div
                   key={step.step}
                   className="relative text-center animate-fade-in"
                   style={{ animationDelay: `${index * 200}ms` }}
@@ -78,7 +83,9 @@ export function HowItWorks() {
                   {/* Step Number */}
                   <div className="relative mb-8">
                     <div className="w-20 h-20 mx-auto bg-gradient-to-br from-primary-500 to-primary-700 rounded-full flex items-center justify-center shadow-lg">
-                      <span className="text-2xl font-bold text-white">{step.step}</span>
+                      <span className="text-2xl font-bold text-white">
+                        {step.step}
+                      </span>
                     </div>
                     {/* Icon overlay */}
                     <div className="absolute -bottom-2 -right-2 w-12 h-12 bg-white rounded-full border-4 border-white shadow-lg flex items-center justify-center">
@@ -98,8 +105,11 @@ export function HowItWorks() {
                     {/* Details */}
                     <div className="bg-white rounded-xl border border-secondary-200 p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
                       <ul className="space-y-3 text-left">
-                        {step.details.map((detail) => (
-                          <li key={detail} className="flex items-center text-sm text-secondary-600">
+                        {step.details.map(detail => (
+                          <li
+                            key={detail}
+                            className="flex items-center text-sm text-secondary-600"
+                          >
                             <div className="w-2 h-2 bg-primary-500 rounded-full mr-3 flex-shrink-0" />
                             {detail}
                           </li>
@@ -128,7 +138,8 @@ export function HowItWorks() {
               Ready to get started?
             </h3>
             <p className="text-secondary-600 mb-6">
-              Join thousands of business owners who trust our AI-powered valuation platform.
+              Join thousands of business owners who trust our AI-powered
+              valuation platform.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button className="px-8 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium transition-colors">

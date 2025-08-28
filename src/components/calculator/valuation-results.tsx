@@ -1,16 +1,17 @@
 'use client'
 
 import { useState } from 'react'
-import { 
-  Download, 
-  Save, 
-  TrendingUp, 
-  AlertTriangle, 
-  CheckCircle, 
+import {
+  Download,
+  Save,
+  TrendingUp,
+  AlertTriangle,
+  CheckCircle,
   DollarSign,
   BarChart3,
   PieChart,
-  Target
+  Target,
+  Brain,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { ValuationResult } from '@/types/valuation'
@@ -19,13 +20,18 @@ import { exportToPDF } from '@/lib/pdf-export'
 import { EvaluationStorage } from '@/lib/evaluation-storage'
 import { ValuationChart } from './valuation-chart'
 import { MetricsChart } from './metrics-chart'
+import BusinessAnalysisPanel from '@/components/ai/business-analysis-panel'
+import type { BusinessData } from '@/types/business'
 
 interface ValuationResultsProps {
   result: ValuationResult
+  businessData?: BusinessData
 }
 
-export function ValuationResults({ result }: ValuationResultsProps) {
-  const [activeTab, setActiveTab] = useState<'overview' | 'methods' | 'metrics' | 'recommendations'>('overview')
+export function ValuationResults({ result, businessData }: ValuationResultsProps) {
+  const [activeTab, setActiveTab] = useState<
+    'overview' | 'methods' | 'metrics' | 'recommendations' | 'ai-analysis'
+  >('overview')
   const [isSaving, setIsSaving] = useState(false)
   const [isExporting, setIsExporting] = useState(false)
 
@@ -62,7 +68,8 @@ export function ValuationResults({ result }: ValuationResultsProps) {
     { key: 'overview', label: 'Overview', icon: Target },
     { key: 'methods', label: 'Valuation Methods', icon: BarChart3 },
     { key: 'metrics', label: 'Key Metrics', icon: PieChart },
-    { key: 'recommendations', label: 'Recommendations', icon: TrendingUp }
+    { key: 'recommendations', label: 'Recommendations', icon: TrendingUp },
+    ...(businessData ? [{ key: 'ai-analysis', label: 'AI Analysis', icon: Brain }] : []),
   ]
 
   return (
@@ -73,7 +80,8 @@ export function ValuationResults({ result }: ValuationResultsProps) {
           Business Valuation Report
         </h2>
         <p className="text-secondary-600">
-          {result.companyName} • Generated on {new Date(result.evaluationDate).toLocaleDateString()}
+          {result.companyName} • Generated on{' '}
+          {new Date(result.evaluationDate).toLocaleDateString()}
         </p>
       </div>
 
@@ -82,18 +90,21 @@ export function ValuationResults({ result }: ValuationResultsProps) {
         <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-500 rounded-full mb-4">
           <DollarSign className="w-8 h-8 text-white" />
         </div>
-        
+
         <div className="text-4xl font-bold text-secondary-900 mb-2">
           {formatCurrency(result.overallValuation)}
         </div>
-        
+
         <div className="text-lg text-secondary-600 mb-4">
           Estimated Business Value
         </div>
-        
-        <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${getConfidenceColor(result.confidenceScore)}`}>
+
+        <div
+          className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${getConfidenceColor(result.confidenceScore)}`}
+        >
           <CheckCircle className="w-4 h-4 mr-2" />
-          {getConfidenceLabel(result.confidenceScore)} ({result.confidenceScore.toFixed(0)}%)
+          {getConfidenceLabel(result.confidenceScore)} (
+          {result.confidenceScore.toFixed(0)}%)
         </div>
       </div>
 
@@ -112,7 +123,7 @@ export function ValuationResults({ result }: ValuationResultsProps) {
           )}
           <span>{isSaving ? 'Saving...' : 'Save Report'}</span>
         </Button>
-        
+
         <Button
           onClick={handleExportPDF}
           disabled={isExporting}
@@ -133,7 +144,7 @@ export function ValuationResults({ result }: ValuationResultsProps) {
           {tabs.map(tab => {
             const IconComponent = tab.icon
             const isActive = activeTab === tab.key
-            
+
             return (
               <button
                 key={tab.key}
@@ -161,7 +172,7 @@ export function ValuationResults({ result }: ValuationResultsProps) {
             </h3>
             <ValuationChart methods={result.methods} />
           </div>
-          
+
           <div className="bg-white border border-secondary-200 rounded-lg p-6">
             <h3 className="text-lg font-semibold text-secondary-900 mb-4">
               Adjustment Factors
@@ -173,10 +184,17 @@ export function ValuationResults({ result }: ValuationResultsProps) {
                     {key.replace(/([A-Z])/g, ' $1').toLowerCase()}
                   </span>
                   <div className="flex items-center">
-                    <div className={`text-sm font-medium ${
-                      value > 1 ? 'text-success-600' : value < 1 ? 'text-error-600' : 'text-secondary-600'
-                    }`}>
-                      {value > 1 ? '+' : ''}{((value - 1) * 100).toFixed(1)}%
+                    <div
+                      className={`text-sm font-medium ${
+                        value > 1
+                          ? 'text-success-600'
+                          : value < 1
+                            ? 'text-error-600'
+                            : 'text-secondary-600'
+                      }`}
+                    >
+                      {value > 1 ? '+' : ''}
+                      {((value - 1) * 100).toFixed(1)}%
                     </div>
                   </div>
                 </div>
@@ -189,7 +207,10 @@ export function ValuationResults({ result }: ValuationResultsProps) {
       {activeTab === 'methods' && (
         <div className="grid gap-6">
           {result.methods.map(method => (
-            <div key={method.name} className="bg-white border border-secondary-200 rounded-lg p-6">
+            <div
+              key={method.name}
+              className="bg-white border border-secondary-200 rounded-lg p-6"
+            >
               <div className="flex justify-between items-start mb-3">
                 <div>
                   <h3 className="text-lg font-semibold text-secondary-900">
@@ -203,14 +224,16 @@ export function ValuationResults({ result }: ValuationResultsProps) {
                   <div className="text-2xl font-bold text-secondary-900">
                     {formatCurrency(method.value)}
                   </div>
-                  <div className={`text-sm font-medium ${getConfidenceColor(method.confidence)}`}>
+                  <div
+                    className={`text-sm font-medium ${getConfidenceColor(method.confidence)}`}
+                  >
                     {method.confidence.toFixed(0)}% confidence
                   </div>
                 </div>
               </div>
-              
+
               <div className="w-full bg-secondary-200 rounded-full h-2">
-                <div 
+                <div
                   className="bg-primary-500 h-2 rounded-full transition-all duration-500"
                   style={{ width: `${method.confidence}%` }}
                 />
@@ -228,7 +251,7 @@ export function ValuationResults({ result }: ValuationResultsProps) {
             </h3>
             <MetricsChart metrics={result.keyMetrics} />
           </div>
-          
+
           <div className="bg-white border border-secondary-200 rounded-lg p-6">
             <h3 className="text-lg font-semibold text-secondary-900 mb-4">
               Key Performance Indicators
@@ -240,12 +263,13 @@ export function ValuationResults({ result }: ValuationResultsProps) {
                     {key.replace(/([A-Z])/g, ' $1').toLowerCase()}
                   </span>
                   <span className="font-medium text-secondary-900">
-                    {typeof value === 'number' && key.includes('Rate') || key.includes('Margin') || key.includes('Return')
+                    {(typeof value === 'number' && key.includes('Rate')) ||
+                    key.includes('Margin') ||
+                    key.includes('Return')
                       ? `${value.toFixed(1)}%`
                       : typeof value === 'number' && key.includes('Multiple')
-                      ? `${value.toFixed(1)}x`
-                      : value
-                    }
+                        ? `${value.toFixed(1)}x`
+                        : value}
                   </span>
                 </div>
               ))}
@@ -269,14 +293,15 @@ export function ValuationResults({ result }: ValuationResultsProps) {
                 </div>
               ))}
             </div>
-            
+
             {result.recommendations.length === 0 && (
               <p className="text-secondary-500 italic">
-                Your business shows strong performance across all key metrics. Continue monitoring market conditions and growth opportunities.
+                Your business shows strong performance across all key metrics.
+                Continue monitoring market conditions and growth opportunities.
               </p>
             )}
           </div>
-          
+
           <div className="bg-white border border-secondary-200 rounded-lg p-6">
             <h3 className="text-lg font-semibold text-secondary-900 mb-4 flex items-center">
               <AlertTriangle className="w-5 h-5 text-warning-500 mr-2" />
@@ -290,25 +315,36 @@ export function ValuationResults({ result }: ValuationResultsProps) {
                 </div>
               ))}
             </div>
-            
+
             {result.riskFactors.length === 0 && (
               <p className="text-secondary-500 italic">
-                No significant risk factors identified. Your business appears to have a stable risk profile.
+                No significant risk factors identified. Your business appears to
+                have a stable risk profile.
               </p>
             )}
           </div>
         </div>
       )}
 
+      {activeTab === 'ai-analysis' && businessData && (
+        <div>
+          <BusinessAnalysisPanel businessData={businessData} />
+        </div>
+      )}
+
       {/* Disclaimer */}
       <div className="bg-secondary-50 border border-secondary-200 rounded-lg p-6">
-        <h3 className="font-medium text-secondary-800 mb-2">Important Disclaimer</h3>
+        <h3 className="font-medium text-secondary-800 mb-2">
+          Important Disclaimer
+        </h3>
         <p className="text-sm text-secondary-600 leading-relaxed">
-          This valuation is an estimate based on the information provided and industry benchmarks. 
-          Actual business value may vary significantly based on market conditions, buyer perspectives, 
-          due diligence findings, and other factors not captured in this analysis. 
-          For investment decisions or transactions, consult with qualified financial professionals 
-          and consider obtaining a professional business appraisal.
+          This valuation is an estimate based on the information provided and
+          industry benchmarks. Actual business value may vary significantly
+          based on market conditions, buyer perspectives, due diligence
+          findings, and other factors not captured in this analysis. For
+          investment decisions or transactions, consult with qualified financial
+          professionals and consider obtaining a professional business
+          appraisal.
         </p>
       </div>
     </div>

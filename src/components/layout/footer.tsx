@@ -1,7 +1,15 @@
 'use client'
 
 import Link from 'next/link'
-import { Mail, Phone, MapPin, Linkedin, Twitter, Github, ArrowRight } from 'lucide-react'
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Linkedin,
+  Twitter,
+  Github,
+  ArrowRight,
+} from 'lucide-react'
 
 const footerLinks = {
   services: [
@@ -31,7 +39,11 @@ const footerLinks = {
 }
 
 const socialLinks = [
-  { name: 'LinkedIn', href: 'https://linkedin.com/company/goodbuy-hq', icon: Linkedin },
+  {
+    name: 'LinkedIn',
+    href: 'https://linkedin.com/company/goodbuy-hq',
+    icon: Linkedin,
+  },
   { name: 'Twitter', href: 'https://twitter.com/goodbuyhq', icon: Twitter },
   { name: 'GitHub', href: 'https://github.com/goodbuy-hq', icon: Github },
 ]
@@ -51,9 +63,10 @@ export function Footer() {
               <span className="text-2xl font-bold">GoodBuy HQ</span>
             </div>
             <p className="text-secondary-300 leading-relaxed max-w-sm">
-              AI-powered business valuation platform trusted by thousands of entrepreneurs, investors, and advisors worldwide.
+              AI-powered business valuation platform trusted by thousands of
+              entrepreneurs, investors, and advisors worldwide.
             </p>
-            
+
             {/* Contact Info */}
             <div className="space-y-3">
               <div className="flex items-center space-x-3 text-secondary-300">
@@ -72,7 +85,7 @@ export function Footer() {
 
             {/* Social Links */}
             <div className="flex items-center space-x-4">
-              {socialLinks.map((social) => {
+              {socialLinks.map(social => {
                 const IconComponent = social.icon
                 return (
                   <Link
@@ -94,7 +107,7 @@ export function Footer() {
             <div>
               <h3 className="text-lg font-semibold mb-4">Services</h3>
               <ul className="space-y-3">
-                {footerLinks.services.map((link) => (
+                {footerLinks.services.map(link => (
                   <li key={link.name}>
                     <Link
                       href={link.href}
@@ -112,7 +125,7 @@ export function Footer() {
             <div>
               <h3 className="text-lg font-semibold mb-4">Company</h3>
               <ul className="space-y-3">
-                {footerLinks.company.map((link) => (
+                {footerLinks.company.map(link => (
                   <li key={link.name}>
                     <Link
                       href={link.href}
@@ -130,7 +143,7 @@ export function Footer() {
             <div>
               <h3 className="text-lg font-semibold mb-4">Resources</h3>
               <ul className="space-y-3">
-                {footerLinks.resources.map((link) => (
+                {footerLinks.resources.map(link => (
                   <li key={link.name}>
                     <Link
                       href={link.href}
@@ -148,7 +161,7 @@ export function Footer() {
             <div>
               <h3 className="text-lg font-semibold mb-4">Legal</h3>
               <ul className="space-y-3">
-                {footerLinks.legal.map((link) => (
+                {footerLinks.legal.map(link => (
                   <li key={link.name}>
                     <Link
                       href={link.href}

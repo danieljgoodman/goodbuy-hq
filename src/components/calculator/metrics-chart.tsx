@@ -43,9 +43,15 @@ export function MetricsChart({ metrics }: MetricsChartProps) {
     return {
       'Revenue Multiple': Math.min(metrics.revenueMultiple * 10, 100), // Cap at 10x
       'Profit Margin': Math.min(Math.max(metrics.profitMargin, 0), 100),
-      'Return on Assets': Math.min(Math.max(metrics.returnOnAssets + 50, 0), 100), // Shift to positive scale
+      'Return on Assets': Math.min(
+        Math.max(metrics.returnOnAssets + 50, 0),
+        100
+      ), // Shift to positive scale
       'Growth Rate': Math.min(Math.max(metrics.growthRate + 50, 0), 100), // Shift to positive scale
-      'Financial Stability': Math.min(Math.max(100 - (metrics.debtToEquity * 20), 0), 100) // Invert debt ratio
+      'Financial Stability': Math.min(
+        Math.max(100 - metrics.debtToEquity * 20, 0),
+        100
+      ), // Invert debt ratio
     }
   }
 
@@ -66,8 +72,8 @@ export function MetricsChart({ metrics }: MetricsChartProps) {
         pointHoverBorderColor: 'rgba(14, 165, 233, 1)',
         pointRadius: 4,
         pointHoverRadius: 6,
-      }
-    ]
+      },
+    ],
   }
 
   const options = {
@@ -79,10 +85,10 @@ export function MetricsChart({ metrics }: MetricsChartProps) {
       },
       tooltip: {
         callbacks: {
-          label: function(context: any) {
+          label: function (context: any) {
             const label = context.label
             let actualValue: string
-            
+
             switch (label) {
               case 'Revenue Multiple':
                 actualValue = `${metrics.revenueMultiple.toFixed(1)}x`
@@ -102,34 +108,34 @@ export function MetricsChart({ metrics }: MetricsChartProps) {
               default:
                 actualValue = context.raw.toFixed(1)
             }
-            
+
             return `${label}: ${actualValue}`
-          }
-        }
-      }
+          },
+        },
+      },
     },
     scales: {
       r: {
         angleLines: {
           display: true,
-          color: 'rgba(0, 0, 0, 0.1)'
+          color: 'rgba(0, 0, 0, 0.1)',
         },
         grid: {
-          color: 'rgba(0, 0, 0, 0.1)'
+          color: 'rgba(0, 0, 0, 0.1)',
         },
         pointLabels: {
           font: {
-            size: 12
+            size: 12,
           },
-          color: 'rgba(0, 0, 0, 0.7)'
+          color: 'rgba(0, 0, 0, 0.7)',
         },
         ticks: {
           display: false,
           beginAtZero: true,
-          max: 100
-        }
-      }
-    }
+          max: 100,
+        },
+      },
+    },
   }
 
   return (
