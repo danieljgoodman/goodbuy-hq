@@ -77,6 +77,19 @@ model User {
   favorites     Favorite[]
   inquiries     Inquiry[]
   
+  // Communication system relations
+  threadParticipants ThreadParticipant[]
+  sentMessages  Message[]
+  messageReadReceipts MessageReadReceipt[]
+  organizedMeetings Meeting[] @relation("MeetingOrganizer")
+  meetingAttendances MeetingAttendee[]
+  meetingReminders MeetingReminder[]
+  uploadedDocuments SharedDocument[]
+  documentAccessLogs DocumentAccessLog[]
+  notifications Notification[]
+  communicationPreferences CommunicationPreferences?
+  communicationAuditLogs CommunicationAuditLog[]
+  
   // Email verification
   verificationTokens VerificationToken[]
   
@@ -155,6 +168,7 @@ model Business {
   evaluations     Evaluation[]
   favorites       Favorite[]
   inquiries       Inquiry[]
+  communicationThreads CommunicationThread[]
   
   @@map("businesses")
 }
@@ -239,6 +253,391 @@ model Inquiry {
   user         User?    @relation(fields: [userId], references: [id])
   
   @@map("inquiries")
+}
+
+// Message Status
+enum MessageStatus {
+  SENT
+  DELIVERED
+  READ
+  DELETED
+}
+
+// Meeting Status
+enum MeetingStatus {
+  SCHEDULED
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+  RESCHEDULED
+}
+
+// Document Access Level
+enum DocumentAccessLevel {
+  PUBLIC
+  PRIVATE
+  SHARED
+}
+
+// Notification Type
+enum NotificationType {
+  MESSAGE
+  MEETING_INVITE
+  MEETING_REMINDER
+  DOCUMENT_SHARED
+  INQUIRY_RECEIVED
+  SYSTEM_ALERT
+}
+
+// Notification Status
+enum NotificationStatus {
+  PENDING
+  SENT
+  READ
+  DISMISSED
+}
+
+// Communication Threads (Conversations)
+model CommunicationThread {
+  id          String   @id @default(cuid())
+  subject     String?
+  businessId  String?
+  isArchived  Boolean  @default(false)
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  lastMessageAt DateTime @default(now())
+  
+  // Relations
+  business    Business? @relation(fields: [businessId], references: [id], onDelete: SetNull)
+  messages    Message[]
+  participants ThreadParticipant[]
+  meetings    Meeting[]
+  documents   SharedDocument[]
+  
+  @@map("communication_threads")
+}
+
+// Thread Participants
+model ThreadParticipant {
+  id          String   @id @default(cuid())
+  threadId    String
+  userId      String
+  joinedAt    DateTime @default(now())
+  leftAt      DateTime?
+  isActive    Boolean  @default(true)
+  canInvite   Boolean  @default(false)
+  isAdmin     Boolean  @default(false)
+  
+  // Privacy settings
+  allowDirectMessages Boolean @default(true)
+  allowMeetingInvites Boolean @default(true)
+  
+  // Relations
+  thread      CommunicationThread @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  user        User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([threadId, userId])
+  @@map("thread_participants")
+}
+
+// Messages
+model Message {
+  id          String        @id @default(cuid())
+  threadId    String
+  senderId    String
+  content     String
+  status      MessageStatus @default(SENT)
+  isEdited    Boolean       @default(false)
+  editedAt    DateTime?
+  
+  // Message metadata
+  messageType String        @default("text") // text, file, meeting_invite, system
+  metadata    Json?
+  
+  // Reply functionality
+  replyToId   String?
+  replyTo     Message?      @relation("MessageReplies", fields: [replyToId], references: [id])
+  replies     Message[]     @relation("MessageReplies")
+  
+  // Timestamps
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  scheduledFor DateTime?
+  
+  // Relations
+  thread      CommunicationThread @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  sender      User          @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  attachments MessageAttachment[]
+  readReceipts MessageReadReceipt[]
+  
+  @@map("messages")
+}
+
+// Message Attachments
+model MessageAttachment {
+  id          String   @id @default(cuid())
+  messageId   String
+  fileName    String
+  originalName String
+  mimeType    String
+  size        Int
+  path        String
+  
+  // Security
+  isScanned   Boolean  @default(false)
+  scanResult  String?
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  
+  // Relations
+  message     Message  @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  
+  @@map("message_attachments")
+}
+
+// Message Read Receipts
+model MessageReadReceipt {
+  id        String   @id @default(cuid())
+  messageId String
+  userId    String
+  readAt    DateTime @default(now())
+  
+  // Relations
+  message   Message  @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([messageId, userId])
+  @@map("message_read_receipts")
+}
+
+// Meeting Scheduler
+model Meeting {
+  id            String        @id @default(cuid())
+  threadId      String?
+  organizerId   String
+  title         String
+  description   String?
+  status        MeetingStatus @default(SCHEDULED)
+  
+  // Meeting details
+  scheduledStart DateTime
+  scheduledEnd   DateTime
+  actualStart    DateTime?
+  actualEnd      DateTime?
+  timezone       String        @default("UTC")
+  location       String?       // Physical or virtual meeting link
+  meetingType    String        @default("virtual") // virtual, physical, phone
+  
+  // Meeting settings
+  isRecurring    Boolean       @default(false)
+  recurringRule  Json?
+  maxAttendees   Int?
+  requiresConfirmation Boolean @default(true)
+  
+  // Timestamps
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  
+  // Relations
+  thread        CommunicationThread? @relation(fields: [threadId], references: [id], onDelete: SetNull)
+  organizer     User          @relation("MeetingOrganizer", fields: [organizerId], references: [id])
+  attendees     MeetingAttendee[]
+  reminders     MeetingReminder[]
+  
+  @@map("meetings")
+}
+
+// Meeting Attendees
+model MeetingAttendee {
+  id          String   @id @default(cuid())
+  meetingId   String
+  userId      String
+  status      String   @default("invited") // invited, accepted, declined, tentative
+  responseAt  DateTime?
+  notes       String?
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  meeting     Meeting  @relation(fields: [meetingId], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([meetingId, userId])
+  @@map("meeting_attendees")
+}
+
+// Meeting Reminders
+model MeetingReminder {
+  id          String   @id @default(cuid())
+  meetingId   String
+  userId      String
+  reminderTime DateTime
+  isSent      Boolean  @default(false)
+  sentAt      DateTime?
+  
+  // Relations
+  meeting     Meeting  @relation(fields: [meetingId], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("meeting_reminders")
+}
+
+// Shared Documents
+model SharedDocument {
+  id            String              @id @default(cuid())
+  threadId      String?
+  uploaderId    String
+  fileName      String
+  originalName  String
+  description   String?
+  mimeType      String
+  size          Int
+  path          String
+  accessLevel   DocumentAccessLevel @default(SHARED)
+  
+  // Document metadata
+  category      String?
+  tags          String[]
+  version       String              @default("1.0")
+  
+  // Security and compliance
+  isEncrypted   Boolean             @default(false)
+  encryptionKey String?
+  isScanned     Boolean             @default(false)
+  scanResult    String?
+  expiresAt     DateTime?
+  
+  // Access control
+  downloadCount Int                 @default(0)
+  maxDownloads  Int?
+  requiresAuth  Boolean             @default(true)
+  
+  // Timestamps
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
+  
+  // Relations
+  thread        CommunicationThread? @relation(fields: [threadId], references: [id], onDelete: SetNull)
+  uploader      User                @relation(fields: [uploaderId], references: [id])
+  accessLogs    DocumentAccessLog[]
+  
+  @@map("shared_documents")
+}
+
+// Document Access Logs (for audit trail)
+model DocumentAccessLog {
+  id          String   @id @default(cuid())
+  documentId  String
+  userId      String
+  action      String   // view, download, share, delete
+  ipAddress   String?
+  userAgent   String?
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  
+  // Relations
+  document    SharedDocument @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id])
+  
+  @@map("document_access_logs")
+}
+
+// Notifications
+model Notification {
+  id          String             @id @default(cuid())
+  userId      String
+  type        NotificationType
+  status      NotificationStatus @default(PENDING)
+  title       String
+  message     String
+  actionUrl   String?
+  
+  // Notification metadata
+  data        Json?
+  priority    String             @default("normal") // low, normal, high, urgent
+  channel     String[]           @default(["in_app"]) // in_app, email, sms, push
+  
+  // Scheduling
+  scheduledFor DateTime?
+  sentAt      DateTime?
+  readAt      DateTime?
+  dismissedAt DateTime?
+  
+  // Relations
+  relatedId   String? // ID of related entity (message, meeting, etc.)
+  relatedType String? // Type of related entity
+  
+  // Timestamps
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+  
+  // Relations
+  user        User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("notifications")
+}
+
+// Communication Preferences
+model CommunicationPreferences {
+  id               String   @id @default(cuid())
+  userId           String   @unique
+  
+  // Email preferences
+  emailNewMessages Boolean  @default(true)
+  emailMeetingInvites Boolean @default(true)
+  emailDocumentShares Boolean @default(true)
+  emailDigest      Boolean  @default(true)
+  digestFrequency  String   @default("daily") // daily, weekly, never
+  
+  // In-app preferences
+  showReadReceipts Boolean  @default(true)
+  showOnlineStatus Boolean  @default(true)
+  allowDirectMessages Boolean @default(true)
+  
+  // Meeting preferences
+  defaultMeetingLength Int   @default(30) // minutes
+  workingHoursStart String  @default("09:00")
+  workingHoursEnd   String  @default("17:00")
+  timezone          String  @default("UTC")
+  
+  // Privacy preferences
+  shareContactInfo  Boolean @default(false)
+  allowPublicProfile Boolean @default(true)
+  
+  // Timestamps
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  
+  // Relations
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("communication_preferences")
+}
+
+// Audit Trail for Communications
+model CommunicationAuditLog {
+  id          String   @id @default(cuid())
+  userId      String
+  action      String   // message_sent, message_read, document_shared, meeting_scheduled, etc.
+  entityType  String   // message, document, meeting, thread
+  entityId    String
+  details     Json?
+  ipAddress   String?
+  userAgent   String?
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  
+  // Relations
+  user        User     @relation(fields: [userId], references: [id])
+  
+  @@map("communication_audit_logs")
 }
 
 // Email verification tokens
