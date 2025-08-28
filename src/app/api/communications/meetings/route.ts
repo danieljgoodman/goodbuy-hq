@@ -17,7 +17,7 @@ const createMeetingSchema = z.object({
   requiresConfirmation: z.boolean().default(true),
   attendeeIds: z.array(z.string().cuid()).min(1),
   isRecurring: z.boolean().default(false),
-  recurringRule: z.record(z.unknown()).optional(),
+  recurringRule: z.record(z.string(), z.unknown()).optional(),
 })
 
 const updateMeetingSchema = z.object({
@@ -230,7 +230,7 @@ export async function POST(request: NextRequest) {
           maxAttendees: validatedData.maxAttendees,
           requiresConfirmation: validatedData.requiresConfirmation,
           isRecurring: validatedData.isRecurring,
-          recurringRule: validatedData.recurringRule,
+          recurringRule: validatedData.recurringRule as any,
         },
       })
 

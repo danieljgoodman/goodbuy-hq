@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
-import { authOptions } from '../../auth/[...nextauth]/route'
+import { authOptions } from '@/lib/auth'
 import { storage } from '@/lib/storage'
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10MB
@@ -81,7 +81,10 @@ export async function DELETE(request: NextRequest) {
     const publicId = searchParams.get('publicId')
 
     if (!publicId) {
-      return NextResponse.json({ error: 'No publicId provided' }, { status: 400 })
+      return NextResponse.json(
+        { error: 'No publicId provided' },
+        { status: 400 }
+      )
     }
 
     // Verify the user owns this file (basic check)

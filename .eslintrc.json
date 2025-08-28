@@ -4,6 +4,7 @@
   "rules": {
     "prettier/prettier": "error",
     "prefer-const": "error",
-    "no-var": "error"
+    "no-var": "error",
+    "react/no-unescaped-entities": "off"
   }
 }

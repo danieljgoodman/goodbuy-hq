@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
-import { authOptions } from '../../auth/[...nextauth]/route'
+import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { z } from 'zod'
 import { CommunicationService } from '@/lib/communication-service'
@@ -29,13 +29,13 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '20')
     const skip = (page - 1) * limit
 
-    let where: any = {}
+    const where: any = {}
 
     if (businessId) {
       // Verify user owns the business
       const business = await prisma.business.findUnique({
         where: { id: businessId },
-        select: { ownerId: true }
+        select: { ownerId: true },
       })
 
       if (!business || business.ownerId !== session.user.id) {
@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
     } else {
       // Get inquiries for all user's businesses
       where.business = {
-        ownerId: session.user.id
+        ownerId: session.user.id,
       }
     }
 
@@ -61,19 +61,19 @@ export async function GET(request: NextRequest) {
             select: {
               id: true,
               title: true,
-              slug: true
-            }
+              slug: true,
+            },
           },
           user: {
             select: {
               id: true,
               name: true,
-              userType: true
-            }
-          }
-        }
+              userType: true,
+            },
+          },
+        },
       }),
-      prisma.inquiry.count({ where })
+      prisma.inquiry.count({ where }),
     ])
 
     return NextResponse.json({
@@ -82,8 +82,8 @@ export async function GET(request: NextRequest) {
         page,
         limit,
         total,
-        pages: Math.ceil(total / limit)
-      }
+        pages: Math.ceil(total / limit),
+      },
     })
   } catch (error) {
     console.error('Get inquiries error:', error)
@@ -103,9 +103,9 @@ export async function POST(request: NextRequest) {
 
     // Verify business exists and is active
     const business = await prisma.business.findUnique({
-      where: { 
+      where: {
         id: validatedData.businessId,
-        status: 'ACTIVE'
+        status: 'ACTIVE',
       },
       include: {
         owner: {
@@ -113,10 +113,10 @@ export async function POST(request: NextRequest) {
             id: true,
             name: true,
             email: true,
-            communicationPreferences: true
-          }
-        }
-      }
+            communicationPreferences: true,
+          },
+        },
+      },
     })
 
     if (!business) {
@@ -143,17 +143,17 @@ export async function POST(request: NextRequest) {
         contactName: validatedData.contactName,
         contactEmail: validatedData.contactEmail,
         contactPhone: validatedData.contactPhone,
-        userId: session?.user?.id || null
+        userId: session?.user?.id || null,
       },
       include: {
         business: {
           select: {
             id: true,
             title: true,
-            slug: true
-          }
-        }
-      }
+            slug: true,
+          },
+        },
+      },
     })
 
     // Update inquiry count
@@ -161,9 +161,9 @@ export async function POST(request: NextRequest) {
       where: { id: validatedData.businessId },
       data: {
         inquiryCount: {
-          increment: 1
-        }
-      }
+          increment: 1,
+        },
+      },
     })
 
     // Create communication thread if user is authenticated
@@ -177,22 +177,22 @@ export async function POST(request: NextRequest) {
             create: [
               {
                 userId: session.user.id,
-                isAdmin: false
+                isAdmin: false,
               },
               {
                 userId: business.owner.id,
-                isAdmin: true
-              }
-            ]
+                isAdmin: true,
+              },
+            ],
           },
           messages: {
             create: {
               senderId: session.user.id,
               content: `${validatedData.subject}\n\n${validatedData.message}`,
-              messageType: 'inquiry'
-            }
-          }
-        }
+              messageType: 'inquiry',
+            },
+          },
+        },
       })
       threadId = thread.id
     }
@@ -213,12 +213,15 @@ export async function POST(request: NextRequest) {
           businessTitle: business.title,
           inquirerName: validatedData.contactName,
           inquirerEmail: validatedData.contactEmail,
-          threadId
-        }
+          threadId,
+        },
       })
 
       // Send email notification if enabled
-      if (business.owner.communicationPreferences?.emailNewMessages && business.owner.email) {
+      if (
+        business.owner.communicationPreferences?.emailNewMessages &&
+        business.owner.email
+      ) {
         await sendNewInquiryNotification(
           business.owner.email,
           business.owner.name || business.owner.email,
@@ -235,14 +238,17 @@ export async function POST(request: NextRequest) {
       // Don't fail the inquiry creation if notification fails
     }
 
-    return NextResponse.json({
-      ...inquiry,
-      threadId
-    }, { status: 201 })
+    return NextResponse.json(
+      {
+        ...inquiry,
+        threadId,
+      },
+      { status: 201 }
+    )
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { error: 'Validation failed', details: error.errors },
+        { error: 'Validation failed', details: error.issues },
         { status: 400 }
       )
     }

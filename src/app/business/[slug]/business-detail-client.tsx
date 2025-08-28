@@ -2,12 +2,12 @@
 
 import { useState } from 'react'
 import { useSession } from 'next-auth/react'
-import { 
-  MapPin, 
-  Calendar, 
-  Users, 
-  Building2, 
-  DollarSign, 
+import {
+  MapPin,
+  Calendar,
+  Users,
+  Building2,
+  DollarSign,
   TrendingUp,
   Phone,
   Mail,
@@ -21,7 +21,7 @@ import {
   Eye,
   Clock,
   FileText,
-  Shield
+  Shield,
 } from 'lucide-react'
 import { formatDistanceToNow, format } from 'date-fns'
 import InquiryModal from '@/components/modals/inquiry-modal'
@@ -33,7 +33,7 @@ interface BusinessDetailProps {
     description: string
     category?: string
     listingType: string
-    
+
     // Location
     address?: string
     city?: string
@@ -42,12 +42,12 @@ interface BusinessDetailProps {
     location?: string
     latitude?: number
     longitude?: number
-    
+
     // Contact
     website?: string
     phone?: string
     email?: string
-    
+
     // Financial
     askingPrice?: number | null
     revenue?: number | null
@@ -58,50 +58,50 @@ interface BusinessDetailProps {
     netMargin?: number | null
     monthlyRevenue?: number | null
     yearlyGrowth?: number | null
-    
+
     // Business details
     established?: string
     employees?: number
     customerBase?: number
-    
+
     // Assets
     inventory?: number | null
     equipment?: number | null
     realEstate?: number | null
     totalAssets?: number | null
     liabilities?: number | null
-    
+
     // Operations
     hoursOfOperation?: string
     daysOpen: string[]
     seasonality?: string
     competition?: string
-    
+
     // Sale details
     reasonForSelling?: string
     timeframe?: string
     negotiations?: string
     financing?: string
-    
+
     // Status
     status: string
     featured: boolean
     priority: number
     viewCount: number
     inquiryCount: number
-    
+
     // Media
     images: string[]
     documents: string[]
     virtualTour?: string
-    
+
     // Meta
     slug?: string
     createdAt: string
     updatedAt: string
     publishedAt?: string
     lastViewedAt?: string
-    
+
     // Relations
     owner: {
       id: string
@@ -112,7 +112,7 @@ interface BusinessDetailProps {
       bio?: string
       createdAt: string
     }
-    
+
     images_rel: Array<{
       id: string
       url: string
@@ -122,7 +122,7 @@ interface BusinessDetailProps {
       isPrimary: boolean
       orderIndex: number
     }>
-    
+
     documents_rel: Array<{
       id: string
       name: string
@@ -133,7 +133,7 @@ interface BusinessDetailProps {
       accessLevel: string
       requiresNDA: boolean
     }>
-    
+
     evaluations: Array<{
       id: string
       title: string
@@ -150,7 +150,7 @@ interface BusinessDetailProps {
         userType: string
       }
     }>
-    
+
     _count: {
       favorites: number
       inquiries: number
@@ -159,15 +159,18 @@ interface BusinessDetailProps {
   }
 }
 
-export default function BusinessDetailClient({ business }: BusinessDetailProps) {
+export default function BusinessDetailClient({
+  business,
+}: BusinessDetailProps) {
   const { data: session } = useSession()
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [showInquiryModal, setShowInquiryModal] = useState(false)
   const [isFavorited, setIsFavorited] = useState(false)
 
-  const images = business.images_rel.length > 0 
-    ? business.images_rel.map(img => img.url)
-    : business.images
+  const images =
+    business.images_rel.length > 0
+      ? business.images_rel.map(img => img.url)
+      : business.images
 
   const formatPrice = (price?: number | null) => {
     if (!price) return 'Price on request'
@@ -175,7 +178,7 @@ export default function BusinessDetailClient({ business }: BusinessDetailProps) 
       style: 'currency',
       currency: 'USD',
       minimumFractionDigits: 0,
-      maximumFractionDigits: 0
+      maximumFractionDigits: 0,
     }).format(price)
   }
 
@@ -190,11 +193,11 @@ export default function BusinessDetailClient({ business }: BusinessDetailProps) 
   }
 
   const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % images.length)
+    setCurrentImageIndex(prev => (prev + 1) % images.length)
   }
 
   const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length)
+    setCurrentImageIndex(prev => (prev - 1 + images.length) % images.length)
   }
 
   const handleFavorite = async () => {
@@ -207,7 +210,7 @@ export default function BusinessDetailClient({ business }: BusinessDetailProps) 
       const response = await fetch('/api/businesses/favorites', {
         method: isFavorited ? 'DELETE' : 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ businessId: business.id })
+        body: JSON.stringify({ businessId: business.id }),
       })
 
       if (response.ok) {
@@ -224,7 +227,7 @@ export default function BusinessDetailClient({ business }: BusinessDetailProps) 
         await navigator.share({
           title: business.title,
           text: business.description,
-          url: window.location.href
+          url: window.location.href,
         })
       } catch (error) {
         // Fallback to clipboard
@@ -248,7 +251,7 @@ export default function BusinessDetailClient({ business }: BusinessDetailProps) 
               alt={business.title}
               className="w-full h-full object-cover"
             />
-            
+
             {images.length > 1 && (
               <>
                 <button
@@ -257,14 +260,14 @@ export default function BusinessDetailClient({ business }: BusinessDetailProps) 
                 >
                   <ChevronLeft className="w-6 h-6" />
                 </button>
-                
+
                 <button
                   onClick={nextImage}
                   className="absolute right-4 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-black/50 text-white rounded-full flex items-center justify-center hover:bg-black/70 transition-colors"
                 >
                   <ChevronRight className="w-6 h-6" />
                 </button>
-                
+
                 <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
                   {images.map((_, index) => (
                     <button
@@ -305,25 +308,32 @@ export default function BusinessDetailClient({ business }: BusinessDetailProps) 
                     <h1 className="text-3xl font-bold text-secondary-900 mb-2">
                       {business.title}
                     </h1>
-                    
+
                     <div className="flex items-center space-x-4 text-secondary-600 mb-4">
                       {business.category && (
                         <span className="flex items-center">
                           <Building2 className="w-4 h-4 mr-1" />
-                          {business.category.charAt(0) + business.category.slice(1).toLowerCase().replace('_', ' ')}
+                          {business.category.charAt(0) +
+                            business.category
+                              .slice(1)
+                              .toLowerCase()
+                              .replace('_', ' ')}
                         </span>
                       )}
-                      
+
                       {business.location && (
                         <span className="flex items-center">
                           <MapPin className="w-4 h-4 mr-1" />
                           {business.location}
                         </span>
                       )}
-                      
+
                       <span className="flex items-center">
                         <Calendar className="w-4 h-4 mr-1" />
-                        Listed {formatDistanceToNow(new Date(business.createdAt), { addSuffix: true })}
+                        Listed{' '}
+                        {formatDistanceToNow(new Date(business.createdAt), {
+                          addSuffix: true,
+                        })}
                       </span>
                     </div>
                   </div>
@@ -333,15 +343,18 @@ export default function BusinessDetailClient({ business }: BusinessDetailProps) 
                       onClick={handleFavorite}
                       className={`
                         p-2 rounded-full transition-colors
-                        ${isFavorited 
-                          ? 'bg-red-100 text-red-600' 
-                          : 'bg-secondary-100 text-secondary-600 hover:bg-secondary-200'
+                        ${
+                          isFavorited
+                            ? 'bg-red-100 text-red-600'
+                            : 'bg-secondary-100 text-secondary-600 hover:bg-secondary-200'
                         }
                       `}
                     >
-                      <Heart className={`w-5 h-5 ${isFavorited ? 'fill-current' : ''}`} />
+                      <Heart
+                        className={`w-5 h-5 ${isFavorited ? 'fill-current' : ''}`}
+                      />
                     </button>
-                    
+
                     <button
                       onClick={handleShare}
                       className="p-2 rounded-full bg-secondary-100 text-secondary-600 hover:bg-secondary-200 transition-colors"
@@ -355,7 +368,7 @@ export default function BusinessDetailClient({ business }: BusinessDetailProps) 
                   <div className="text-3xl font-bold text-primary-600">
                     {formatPrice(business.askingPrice)}
                   </div>
-                  
+
                   <div className="flex items-center space-x-6 text-sm text-secondary-600">
                     <span className="flex items-center">
                       <Eye className="w-4 h-4 mr-1" />
@@ -391,35 +404,41 @@ export default function BusinessDetailClient({ business }: BusinessDetailProps) 
                   <h2 className="text-xl font-semibold text-secondary-900 mb-6">
                     Financial Overview
                   </h2>
-                  
+
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {business.revenue && (
                       <div className="text-center p-4 bg-primary-50 rounded-lg">
                         <div className="text-2xl font-bold text-primary-600">
                           {formatPrice(business.revenue)}
                         </div>
-                        <div className="text-sm text-secondary-600">Annual Revenue</div>
+                        <div className="text-sm text-secondary-600">
+                          Annual Revenue
+                        </div>
                       </div>
                     )}
-                    
+
                     {business.profit && (
                       <div className="text-center p-4 bg-green-50 rounded-lg">
                         <div className="text-2xl font-bold text-green-600">
                           {formatPrice(business.profit)}
                         </div>
-                        <div className="text-sm text-secondary-600">Annual Profit</div>
+                        <div className="text-sm text-secondary-600">
+                          Annual Profit
+                        </div>
                       </div>
                     )}
-                    
+
                     {business.cashFlow && (
                       <div className="text-center p-4 bg-blue-50 rounded-lg">
                         <div className="text-2xl font-bold text-blue-600">
                           {formatPrice(business.cashFlow)}
                         </div>
-                        <div className="text-sm text-secondary-600">Cash Flow</div>
+                        <div className="text-sm text-secondary-600">
+                          Cash Flow
+                        </div>
                       </div>
                     )}
-                    
+
                     {business.ebitda && (
                       <div className="text-center p-4 bg-purple-50 rounded-lg">
                         <div className="text-2xl font-bold text-purple-600">
@@ -428,22 +447,26 @@ export default function BusinessDetailClient({ business }: BusinessDetailProps) 
                         <div className="text-sm text-secondary-600">EBITDA</div>
                       </div>
                     )}
-                    
+
                     {business.grossMargin && (
                       <div className="text-center p-4 bg-yellow-50 rounded-lg">
                         <div className="text-2xl font-bold text-yellow-600">
                           {formatPercentage(business.grossMargin)}
                         </div>
-                        <div className="text-sm text-secondary-600">Gross Margin</div>
+                        <div className="text-sm text-secondary-600">
+                          Gross Margin
+                        </div>
                       </div>
                     )}
-                    
+
                     {business.netMargin && (
                       <div className="text-center p-4 bg-indigo-50 rounded-lg">
                         <div className="text-2xl font-bold text-indigo-600">
                           {formatPercentage(business.netMargin)}
                         </div>
-                        <div className="text-sm text-secondary-600">Net Margin</div>
+                        <div className="text-sm text-secondary-600">
+                          Net Margin
+                        </div>
                       </div>
                     )}
                   </div>
@@ -455,56 +478,68 @@ export default function BusinessDetailClient({ business }: BusinessDetailProps) 
                 <h2 className="text-xl font-semibold text-secondary-900 mb-6">
                   Business Details
                 </h2>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {business.established && (
                     <div>
-                      <div className="text-sm text-secondary-600 mb-1">Established</div>
+                      <div className="text-sm text-secondary-600 mb-1">
+                        Established
+                      </div>
                       <div className="font-medium text-secondary-900">
                         {business.established}
                       </div>
                     </div>
                   )}
-                  
+
                   {business.employees && (
                     <div>
-                      <div className="text-sm text-secondary-600 mb-1">Employees</div>
+                      <div className="text-sm text-secondary-600 mb-1">
+                        Employees
+                      </div>
                       <div className="font-medium text-secondary-900">
                         {formatNumber(business.employees)}
                       </div>
                     </div>
                   )}
-                  
+
                   {business.customerBase && (
                     <div>
-                      <div className="text-sm text-secondary-600 mb-1">Customer Base</div>
+                      <div className="text-sm text-secondary-600 mb-1">
+                        Customer Base
+                      </div>
                       <div className="font-medium text-secondary-900">
                         {formatNumber(business.customerBase)}
                       </div>
                     </div>
                   )}
-                  
+
                   {business.hoursOfOperation && (
                     <div>
-                      <div className="text-sm text-secondary-600 mb-1">Hours</div>
+                      <div className="text-sm text-secondary-600 mb-1">
+                        Hours
+                      </div>
                       <div className="font-medium text-secondary-900">
                         {business.hoursOfOperation}
                       </div>
                     </div>
                   )}
-                  
+
                   {business.daysOpen.length > 0 && (
                     <div>
-                      <div className="text-sm text-secondary-600 mb-1">Days Open</div>
+                      <div className="text-sm text-secondary-600 mb-1">
+                        Days Open
+                      </div>
                       <div className="font-medium text-secondary-900">
                         {business.daysOpen.join(', ')}
                       </div>
                     </div>
                   )}
-                  
+
                   {business.yearlyGrowth && (
                     <div>
-                      <div className="text-sm text-secondary-600 mb-1">Yearly Growth</div>
+                      <div className="text-sm text-secondary-600 mb-1">
+                        Yearly Growth
+                      </div>
                       <div className="font-medium text-secondary-900">
                         {formatPercentage(business.yearlyGrowth)}
                       </div>
@@ -514,52 +549,64 @@ export default function BusinessDetailClient({ business }: BusinessDetailProps) 
               </div>
 
               {/* Assets & Liabilities */}
-              {(business.inventory || business.equipment || business.realEstate) && (
+              {(business.inventory ||
+                business.equipment ||
+                business.realEstate) && (
                 <div className="bg-white rounded-lg shadow-md p-6">
                   <h2 className="text-xl font-semibold text-secondary-900 mb-6">
                     Assets & Liabilities
                   </h2>
-                  
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {business.inventory && (
                       <div>
-                        <div className="text-sm text-secondary-600 mb-1">Inventory Value</div>
+                        <div className="text-sm text-secondary-600 mb-1">
+                          Inventory Value
+                        </div>
                         <div className="font-medium text-secondary-900">
                           {formatPrice(business.inventory)}
                         </div>
                       </div>
                     )}
-                    
+
                     {business.equipment && (
                       <div>
-                        <div className="text-sm text-secondary-600 mb-1">Equipment Value</div>
+                        <div className="text-sm text-secondary-600 mb-1">
+                          Equipment Value
+                        </div>
                         <div className="font-medium text-secondary-900">
                           {formatPrice(business.equipment)}
                         </div>
                       </div>
                     )}
-                    
+
                     {business.realEstate && (
                       <div>
-                        <div className="text-sm text-secondary-600 mb-1">Real Estate Value</div>
+                        <div className="text-sm text-secondary-600 mb-1">
+                          Real Estate Value
+                        </div>
                         <div className="font-medium text-secondary-900">
                           {formatPrice(business.realEstate)}
                         </div>
                       </div>
                     )}
-                    
+
                     {business.totalAssets && (
                       <div>
-                        <div className="text-sm text-secondary-600 mb-1">Total Assets</div>
+                        <div className="text-sm text-secondary-600 mb-1">
+                          Total Assets
+                        </div>
                         <div className="font-medium text-secondary-900">
                           {formatPrice(business.totalAssets)}
                         </div>
                       </div>
                     )}
-                    
+
                     {business.liabilities && (
                       <div>
-                        <div className="text-sm text-secondary-600 mb-1">Liabilities</div>
+                        <div className="text-sm text-secondary-600 mb-1">
+                          Liabilities
+                        </div>
                         <div className="font-medium text-secondary-900">
                           {formatPrice(business.liabilities)}
                         </div>
@@ -570,42 +617,58 @@ export default function BusinessDetailClient({ business }: BusinessDetailProps) 
               )}
 
               {/* Sale Information */}
-              {(business.reasonForSelling || business.timeframe || business.financing) && (
+              {(business.reasonForSelling ||
+                business.timeframe ||
+                business.financing) && (
                 <div className="bg-white rounded-lg shadow-md p-6">
                   <h2 className="text-xl font-semibold text-secondary-900 mb-6">
                     Sale Information
                   </h2>
-                  
+
                   {business.reasonForSelling && (
                     <div className="mb-4">
-                      <h3 className="font-medium text-secondary-900 mb-2">Reason for Selling</h3>
-                      <p className="text-secondary-700">{business.reasonForSelling}</p>
+                      <h3 className="font-medium text-secondary-900 mb-2">
+                        Reason for Selling
+                      </h3>
+                      <p className="text-secondary-700">
+                        {business.reasonForSelling}
+                      </p>
                     </div>
                   )}
-                  
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {business.timeframe && (
                       <div>
-                        <div className="text-sm text-secondary-600 mb-1">Sale Timeframe</div>
+                        <div className="text-sm text-secondary-600 mb-1">
+                          Sale Timeframe
+                        </div>
                         <div className="font-medium text-secondary-900">
-                          {business.timeframe.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                          {business.timeframe
+                            .replace('_', ' ')
+                            .replace(/\b\w/g, l => l.toUpperCase())}
                         </div>
                       </div>
                     )}
-                    
+
                     {business.negotiations && (
                       <div>
-                        <div className="text-sm text-secondary-600 mb-1">Price Negotiations</div>
+                        <div className="text-sm text-secondary-600 mb-1">
+                          Price Negotiations
+                        </div>
                         <div className="font-medium text-secondary-900">
-                          {business.negotiations.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                          {business.negotiations
+                            .replace('_', ' ')
+                            .replace(/\b\w/g, l => l.toUpperCase())}
                         </div>
                       </div>
                     )}
                   </div>
-                  
+
                   {business.financing && (
                     <div className="mt-4">
-                      <h3 className="font-medium text-secondary-900 mb-2">Financing Options</h3>
+                      <h3 className="font-medium text-secondary-900 mb-2">
+                        Financing Options
+                      </h3>
                       <p className="text-secondary-700">{business.financing}</p>
                     </div>
                   )}
@@ -618,22 +681,29 @@ export default function BusinessDetailClient({ business }: BusinessDetailProps) 
                   <h2 className="text-xl font-semibold text-secondary-900 mb-6">
                     Professional Evaluation
                   </h2>
-                  
+
                   {business.evaluations.map(evaluation => (
-                    <div key={evaluation.id} className="border-l-4 border-primary-500 pl-4">
+                    <div
+                      key={evaluation.id}
+                      className="border-l-4 border-primary-500 pl-4"
+                    >
                       <h3 className="font-medium text-secondary-900 mb-2">
                         {evaluation.title}
                       </h3>
-                      
+
                       {evaluation.summary && (
-                        <p className="text-secondary-700 mb-4">{evaluation.summary}</p>
+                        <p className="text-secondary-700 mb-4">
+                          {evaluation.summary}
+                        </p>
                       )}
-                      
+
                       {evaluation.overallScore && (
                         <div className="flex items-center mb-4">
-                          <span className="text-sm text-secondary-600 mr-3">Overall Score:</span>
+                          <span className="text-sm text-secondary-600 mr-3">
+                            Overall Score:
+                          </span>
                           <div className="flex-1 bg-secondary-200 rounded-full h-2 mr-3">
-                            <div 
+                            <div
                               className="bg-primary-500 h-2 rounded-full"
                               style={{ width: `${evaluation.overallScore}%` }}
                             />
@@ -643,13 +713,15 @@ export default function BusinessDetailClient({ business }: BusinessDetailProps) 
                           </span>
                         </div>
                       )}
-                      
+
                       <div className="text-xs text-secondary-500">
-                        Evaluated by {evaluation.evaluator.name} • {
-                          evaluation.completedAt 
-                            ? format(new Date(evaluation.completedAt), 'MMM d, yyyy')
-                            : 'Recent'
-                        }
+                        Evaluated by {evaluation.evaluator.name} •{' '}
+                        {evaluation.completedAt
+                          ? format(
+                              new Date(evaluation.completedAt),
+                              'MMM d, yyyy'
+                            )
+                          : 'Recent'}
                       </div>
                     </div>
                   ))}
@@ -667,13 +739,13 @@ export default function BusinessDetailClient({ business }: BusinessDetailProps) 
                 >
                   Contact Seller
                 </button>
-                
+
                 <div className="space-y-4">
                   <div className="text-center pb-4 border-b border-secondary-200">
                     <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-3">
                       {business.owner.image ? (
-                        <img 
-                          src={business.owner.image} 
+                        <img
+                          src={business.owner.image}
                           alt={business.owner.name}
                           className="w-12 h-12 rounded-full object-cover"
                         />
@@ -681,15 +753,21 @@ export default function BusinessDetailClient({ business }: BusinessDetailProps) 
                         <Building2 className="w-6 h-6 text-primary-600" />
                       )}
                     </div>
-                    <div className="font-medium text-secondary-900">{business.owner.name}</div>
+                    <div className="font-medium text-secondary-900">
+                      {business.owner.name}
+                    </div>
                     <div className="text-sm text-secondary-600">
-                      {business.owner.userType.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                      {business.owner.userType
+                        .replace('_', ' ')
+                        .replace(/\b\w/g, l => l.toUpperCase())}
                     </div>
                     {business.owner.company && (
-                      <div className="text-sm text-secondary-600">{business.owner.company}</div>
+                      <div className="text-sm text-secondary-600">
+                        {business.owner.company}
+                      </div>
                     )}
                   </div>
-                  
+
                   <div className="space-y-3 text-sm">
                     {business.website && (
                       <a
@@ -702,7 +780,7 @@ export default function BusinessDetailClient({ business }: BusinessDetailProps) 
                         Visit Website
                       </a>
                     )}
-                    
+
                     {business.phone && (
                       <a
                         href={`tel:${business.phone}`}
@@ -712,7 +790,7 @@ export default function BusinessDetailClient({ business }: BusinessDetailProps) 
                         {business.phone}
                       </a>
                     )}
-                    
+
                     {business.email && (
                       <a
                         href={`mailto:${business.email}`}
@@ -723,9 +801,10 @@ export default function BusinessDetailClient({ business }: BusinessDetailProps) 
                       </a>
                     )}
                   </div>
-                  
+
                   <div className="pt-4 border-t border-secondary-200 text-xs text-secondary-500">
-                    Member since {format(new Date(business.owner.createdAt), 'MMM yyyy')}
+                    Member since{' '}
+                    {format(new Date(business.owner.createdAt), 'MMM yyyy')}
                   </div>
                 </div>
               </div>
@@ -736,10 +815,13 @@ export default function BusinessDetailClient({ business }: BusinessDetailProps) 
                   <h3 className="text-lg font-semibold text-secondary-900 mb-4">
                     Available Documents
                   </h3>
-                  
+
                   <div className="space-y-3">
                     {business.documents_rel.map(doc => (
-                      <div key={doc.id} className="flex items-center justify-between p-3 bg-secondary-50 rounded-lg">
+                      <div
+                        key={doc.id}
+                        className="flex items-center justify-between p-3 bg-secondary-50 rounded-lg"
+                      >
                         <div className="flex items-center flex-1">
                           <FileText className="w-4 h-4 text-secondary-400 mr-3" />
                           <div className="flex-1">
@@ -753,13 +835,13 @@ export default function BusinessDetailClient({ business }: BusinessDetailProps) 
                             )}
                           </div>
                         </div>
-                        
+
                         {doc.requiresNDA && (
-                          <Shield className="w-4 h-4 text-yellow-600 ml-2" title="Requires NDA" />
+                          <Shield className="w-4 h-4 text-yellow-600 ml-2" />
                         )}
                       </div>
                     ))}
-                    
+
                     <div className="text-xs text-secondary-500 mt-3">
                       Contact seller to access confidential documents
                     </div>
@@ -772,29 +854,31 @@ export default function BusinessDetailClient({ business }: BusinessDetailProps) 
                 <h3 className="text-lg font-semibold text-secondary-900 mb-4">
                   Quick Stats
                 </h3>
-                
+
                 <div className="space-y-3 text-sm">
                   <div className="flex justify-between">
                     <span className="text-secondary-600">Listed</span>
                     <span className="font-medium text-secondary-900">
-                      {formatDistanceToNow(new Date(business.createdAt), { addSuffix: true })}
+                      {formatDistanceToNow(new Date(business.createdAt), {
+                        addSuffix: true,
+                      })}
                     </span>
                   </div>
-                  
+
                   <div className="flex justify-between">
                     <span className="text-secondary-600">Views</span>
                     <span className="font-medium text-secondary-900">
                       {formatNumber(business._count.views)}
                     </span>
                   </div>
-                  
+
                   <div className="flex justify-between">
                     <span className="text-secondary-600">Inquiries</span>
                     <span className="font-medium text-secondary-900">
                       {formatNumber(business._count.inquiries)}
                     </span>
                   </div>
-                  
+
                   <div className="flex justify-between">
                     <span className="text-secondary-600">Listing ID</span>
                     <span className="font-medium text-secondary-900 text-xs">
@@ -807,7 +891,7 @@ export default function BusinessDetailClient({ business }: BusinessDetailProps) 
           </div>
         </div>
       </div>
-      
+
       {/* Inquiry Modal */}
       <InquiryModal
         isOpen={showInquiryModal}
@@ -816,8 +900,8 @@ export default function BusinessDetailClient({ business }: BusinessDetailProps) 
           id: business.id,
           title: business.title,
           owner: {
-            name: business.owner.name
-          }
+            name: business.owner.name,
+          },
         }}
         onSuccess={() => {
           // Could show a success message or refresh data

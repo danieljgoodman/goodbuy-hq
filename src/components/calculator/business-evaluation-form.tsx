@@ -128,7 +128,7 @@ export function BusinessEvaluationForm() {
       businessName: formData.basicInfo?.companyName || '',
       industry: formData.basicInfo?.industry || '',
       description: formData.basicInfo?.description || '',
-      annualRevenue: formData.financialData?.revenue || 0,
+      annualRevenue: formData.financialData?.annualRevenue || 0,
       monthlyExpenses: formData.financialData?.operatingExpenses
         ? formData.financialData.operatingExpenses / 12
         : 0,

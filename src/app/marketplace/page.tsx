@@ -2,18 +2,18 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { 
-  Search, 
-  Filter, 
-  MapPin, 
-  DollarSign, 
-  Building2, 
+import {
+  Search,
+  Filter,
+  MapPin,
+  DollarSign,
+  Building2,
   Star,
   Eye,
   Heart,
   Grid,
   List,
-  SlidersHorizontal
+  SlidersHorizontal,
 } from 'lucide-react'
 import { formatDistanceToNow } from 'date-fns'
 
@@ -76,7 +76,7 @@ const BUSINESS_CATEGORIES = [
   { value: 'AUTOMOTIVE', label: 'Automotive' },
   { value: 'ENTERTAINMENT', label: 'Entertainment' },
   { value: 'EDUCATION', label: 'Education' },
-  { value: 'OTHER', label: 'Other' }
+  { value: 'OTHER', label: 'Other' },
 ]
 
 const SORT_OPTIONS = [
@@ -85,22 +85,22 @@ const SORT_OPTIONS = [
   { value: 'viewCount', label: 'Most Viewed' },
   { value: 'inquiryCount', label: 'Most Inquired' },
   { value: 'revenue', label: 'Revenue' },
-  { value: 'title', label: 'Alphabetical' }
+  { value: 'title', label: 'Alphabetical' },
 ]
 
 export default function MarketplacePage() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  
+
   const [businesses, setBusinesses] = useState<Business[]>([])
   const [loading, setLoading] = useState(true)
   const [pagination, setPagination] = useState({
     page: 1,
     limit: 20,
     total: 0,
-    pages: 0
+    pages: 0,
   })
-  
+
   const [filters, setFilters] = useState<SearchFilters>({
     search: searchParams.get('search') || '',
     category: searchParams.get('category') || '',
@@ -110,42 +110,45 @@ export default function MarketplacePage() {
     listingType: searchParams.get('listingType') || '',
     featured: searchParams.get('featured') === 'true',
     sort: searchParams.get('sort') || 'createdAt',
-    order: searchParams.get('order') || 'desc'
+    order: searchParams.get('order') || 'desc',
   })
-  
+
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [showFilters, setShowFilters] = useState(false)
 
-  const fetchBusinesses = useCallback(async (page = 1) => {
-    setLoading(true)
-    try {
-      const params = new URLSearchParams()
-      
-      params.set('page', page.toString())
-      params.set('limit', pagination.limit.toString())
-      params.set('status', 'ACTIVE')
-      
-      Object.entries(filters).forEach(([key, value]) => {
-        if (value && value !== '' && value !== false) {
-          params.set(key, value.toString())
+  const fetchBusinesses = useCallback(
+    async (page = 1) => {
+      setLoading(true)
+      try {
+        const params = new URLSearchParams()
+
+        params.set('page', page.toString())
+        params.set('limit', pagination.limit.toString())
+        params.set('status', 'ACTIVE')
+
+        Object.entries(filters).forEach(([key, value]) => {
+          if (value && value !== '' && value !== false) {
+            params.set(key, value.toString())
+          }
+        })
+
+        const response = await fetch(`/api/businesses?${params.toString()}`)
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch businesses')
         }
-      })
 
-      const response = await fetch(`/api/businesses?${params.toString()}`)
-      
-      if (!response.ok) {
-        throw new Error('Failed to fetch businesses')
+        const data = await response.json()
+        setBusinesses(data.businesses)
+        setPagination(data.pagination)
+      } catch (error) {
+        console.error('Fetch error:', error)
+      } finally {
+        setLoading(false)
       }
-
-      const data = await response.json()
-      setBusinesses(data.businesses)
-      setPagination(data.pagination)
-    } catch (error) {
-      console.error('Fetch error:', error)
-    } finally {
-      setLoading(false)
-    }
-  }, [filters, pagination.limit])
+    },
+    [filters, pagination.limit]
+  )
 
   useEffect(() => {
     fetchBusinesses(1)
@@ -154,15 +157,15 @@ export default function MarketplacePage() {
   const updateFilters = (updates: Partial<SearchFilters>) => {
     const newFilters = { ...filters, ...updates }
     setFilters(newFilters)
-    
+
     // Update URL
     const params = new URLSearchParams()
     Object.entries(newFilters).forEach(([key, value]) => {
-      if (value && value !== '' && value !== false) {
+      if (value && value !== '' && value !== 'false') {
         params.set(key, value.toString())
       }
     })
-    
+
     router.push(`/marketplace?${params.toString()}`, { scroll: false })
   }
 
@@ -176,7 +179,7 @@ export default function MarketplacePage() {
       listingType: '',
       featured: false,
       sort: 'createdAt',
-      order: 'desc'
+      order: 'desc',
     })
     router.push('/marketplace')
   }
@@ -187,18 +190,20 @@ export default function MarketplacePage() {
       style: 'currency',
       currency: 'USD',
       minimumFractionDigits: 0,
-      maximumFractionDigits: 0
+      maximumFractionDigits: 0,
     }).format(price)
   }
 
   const handleBusinessClick = (business: Business) => {
-    const slug = business.slug || `${business.title.toLowerCase().replace(/[^a-z0-9]/g, '-')}-${business.id.slice(-8)}`
+    const slug =
+      business.slug ||
+      `${business.title.toLowerCase().replace(/[^a-z0-9]/g, '-')}-${business.id.slice(-8)}`
     router.push(`/business/${slug}`)
   }
 
   const renderBusinessCard = (business: Business) => {
     const primaryImage = business.images[0] || '/placeholder-business.jpg'
-    
+
     if (viewMode === 'list') {
       return (
         <div
@@ -214,7 +219,7 @@ export default function MarketplacePage() {
                 className="w-full h-full object-cover"
               />
             </div>
-            
+
             <div className="flex-1 p-6">
               <div className="flex items-start justify-between mb-4">
                 <div>
@@ -225,7 +230,7 @@ export default function MarketplacePage() {
                     {business.description}
                   </p>
                 </div>
-                
+
                 {business.featured && (
                   <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full font-medium">
                     <Star className="w-3 h-3 inline mr-1" />
@@ -233,40 +238,43 @@ export default function MarketplacePage() {
                   </span>
                 )}
               </div>
-              
+
               <div className="flex items-center text-sm text-secondary-600 space-x-4 mb-4">
                 <span className="flex items-center">
                   <Building2 className="w-4 h-4 mr-1" />
-                  {business.category?.charAt(0) + business.category?.slice(1).toLowerCase().replace('_', ' ')}
+                  {business.category &&
+                    business.category.charAt(0) +
+                      business.category
+                        .slice(1)
+                        .toLowerCase()
+                        .replace('_', ' ')}
                 </span>
-                
+
                 {business.location && (
                   <span className="flex items-center">
                     <MapPin className="w-4 h-4 mr-1" />
                     {business.location}
                   </span>
                 )}
-                
+
                 {business.employees && (
-                  <span>
-                    {business.employees} employees
-                  </span>
+                  <span>{business.employees} employees</span>
                 )}
               </div>
-              
+
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
                   <span className="text-2xl font-bold text-primary-600">
                     {formatPrice(business.askingPrice)}
                   </span>
-                  
+
                   {business.revenue && (
                     <span className="text-sm text-secondary-600">
                       Rev: {formatPrice(business.revenue)}
                     </span>
                   )}
                 </div>
-                
+
                 <div className="flex items-center space-x-3 text-sm text-secondary-500">
                   <span className="flex items-center">
                     <Eye className="w-4 h-4 mr-1" />
@@ -277,7 +285,9 @@ export default function MarketplacePage() {
                     {business._count.favorites}
                   </span>
                   <span>
-                    {formatDistanceToNow(new Date(business.createdAt), { addSuffix: true })}
+                    {formatDistanceToNow(new Date(business.createdAt), {
+                      addSuffix: true,
+                    })}
                   </span>
                 </div>
               </div>
@@ -299,36 +309,37 @@ export default function MarketplacePage() {
             alt={business.title}
             className="w-full h-48 object-cover"
           />
-          
+
           {business.featured && (
             <div className="absolute top-3 left-3 bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full font-medium">
               <Star className="w-3 h-3 inline mr-1" />
               Featured
             </div>
           )}
-          
+
           <button className="absolute top-3 right-3 w-8 h-8 bg-white/80 rounded-full flex items-center justify-center hover:bg-white transition-colors">
             <Heart className="w-4 h-4 text-secondary-600" />
           </button>
         </div>
-        
+
         <div className="p-4">
           <h3 className="text-lg font-semibold text-secondary-900 mb-2 line-clamp-1">
             {business.title}
           </h3>
-          
+
           <p className="text-secondary-600 text-sm line-clamp-2 mb-3">
             {business.description}
           </p>
-          
+
           <div className="flex items-center text-sm text-secondary-600 space-x-3 mb-3">
             {business.category && (
               <span className="flex items-center">
                 <Building2 className="w-4 h-4 mr-1" />
-                {business.category.charAt(0) + business.category.slice(1).toLowerCase().replace('_', ' ')}
+                {business.category.charAt(0) +
+                  business.category.slice(1).toLowerCase().replace('_', ' ')}
               </span>
             )}
-            
+
             {business.location && (
               <span className="flex items-center">
                 <MapPin className="w-4 h-4 mr-1" />
@@ -336,12 +347,12 @@ export default function MarketplacePage() {
               </span>
             )}
           </div>
-          
+
           <div className="flex items-center justify-between">
             <span className="text-xl font-bold text-primary-600">
               {formatPrice(business.askingPrice)}
             </span>
-            
+
             <div className="flex items-center space-x-2 text-sm text-secondary-500">
               <span className="flex items-center">
                 <Eye className="w-4 h-4 mr-1" />
@@ -367,22 +378,23 @@ export default function MarketplacePage() {
             <h1 className="text-3xl font-bold text-secondary-900">
               Business Marketplace
             </h1>
-            
+
             <div className="flex items-center space-x-3">
               <button
                 onClick={() => setShowFilters(!showFilters)}
                 className={`
                   flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors
-                  ${showFilters 
-                    ? 'bg-primary-100 text-primary-700' 
-                    : 'bg-secondary-100 text-secondary-700 hover:bg-secondary-200'
+                  ${
+                    showFilters
+                      ? 'bg-primary-100 text-primary-700'
+                      : 'bg-secondary-100 text-secondary-700 hover:bg-secondary-200'
                   }
                 `}
               >
                 <SlidersHorizontal className="w-4 h-4 mr-2" />
                 Filters
               </button>
-              
+
               <div className="flex items-center bg-secondary-100 rounded-lg p-1">
                 <button
                   onClick={() => setViewMode('grid')}
@@ -413,7 +425,7 @@ export default function MarketplacePage() {
               type="text"
               placeholder="Search businesses..."
               value={filters.search}
-              onChange={(e) => updateFilters({ search: e.target.value })}
+              onChange={e => updateFilters({ search: e.target.value })}
               className="w-full pl-10 pr-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
           </div>
@@ -445,7 +457,7 @@ export default function MarketplacePage() {
                   </label>
                   <select
                     value={filters.category}
-                    onChange={(e) => updateFilters({ category: e.target.value })}
+                    onChange={e => updateFilters({ category: e.target.value })}
                     className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   >
                     <option value="">All Categories</option>
@@ -467,14 +479,18 @@ export default function MarketplacePage() {
                       type="number"
                       placeholder="Min"
                       value={filters.minPrice}
-                      onChange={(e) => updateFilters({ minPrice: e.target.value })}
+                      onChange={e =>
+                        updateFilters({ minPrice: e.target.value })
+                      }
                       className="px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     />
                     <input
                       type="number"
                       placeholder="Max"
                       value={filters.maxPrice}
-                      onChange={(e) => updateFilters({ maxPrice: e.target.value })}
+                      onChange={e =>
+                        updateFilters({ maxPrice: e.target.value })
+                      }
                       className="px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     />
                   </div>
@@ -489,7 +505,7 @@ export default function MarketplacePage() {
                     type="text"
                     placeholder="City, State"
                     value={filters.location}
-                    onChange={(e) => updateFilters({ location: e.target.value })}
+                    onChange={e => updateFilters({ location: e.target.value })}
                     className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   />
                 </div>
@@ -500,7 +516,9 @@ export default function MarketplacePage() {
                     <input
                       type="checkbox"
                       checked={filters.featured}
-                      onChange={(e) => updateFilters({ featured: e.target.checked })}
+                      onChange={e =>
+                        updateFilters({ featured: e.target.checked })
+                      }
                       className="rounded border-secondary-300 text-primary-600 focus:ring-primary-500"
                     />
                     <span className="ml-2 text-sm text-secondary-700">
@@ -517,18 +535,16 @@ export default function MarketplacePage() {
             {/* Results Header */}
             <div className="flex items-center justify-between mb-6">
               <div className="text-sm text-secondary-600">
-                {loading ? (
-                  'Loading...'
-                ) : (
-                  `${pagination.total} business${pagination.total !== 1 ? 'es' : ''} found`
-                )}
+                {loading
+                  ? 'Loading...'
+                  : `${pagination.total} business${pagination.total !== 1 ? 'es' : ''} found`}
               </div>
 
               <div className="flex items-center space-x-3">
                 <span className="text-sm text-secondary-600">Sort by:</span>
                 <select
                   value={`${filters.sort}-${filters.order}`}
-                  onChange={(e) => {
+                  onChange={e => {
                     const [sort, order] = e.target.value.split('-')
                     updateFilters({ sort, order })
                   }}
@@ -536,10 +552,16 @@ export default function MarketplacePage() {
                 >
                   {SORT_OPTIONS.map(option => (
                     <>
-                      <option key={`${option.value}-desc`} value={`${option.value}-desc`}>
+                      <option
+                        key={`${option.value}-desc`}
+                        value={`${option.value}-desc`}
+                      >
                         {option.label} (High to Low)
                       </option>
-                      <option key={`${option.value}-asc`} value={`${option.value}-asc`}>
+                      <option
+                        key={`${option.value}-asc`}
+                        value={`${option.value}-asc`}
+                      >
                         {option.label} (Low to High)
                       </option>
                     </>
@@ -552,7 +574,10 @@ export default function MarketplacePage() {
             {loading ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {Array.from({ length: 6 }).map((_, i) => (
-                  <div key={i} className="bg-white rounded-lg shadow-md overflow-hidden animate-pulse">
+                  <div
+                    key={i}
+                    className="bg-white rounded-lg shadow-md overflow-hidden animate-pulse"
+                  >
                     <div className="w-full h-48 bg-secondary-200"></div>
                     <div className="p-4 space-y-3">
                       <div className="h-6 bg-secondary-200 rounded"></div>
@@ -579,12 +604,15 @@ export default function MarketplacePage() {
                 </button>
               </div>
             ) : (
-              <div className={`
-                ${viewMode === 'grid' 
-                  ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' 
-                  : 'space-y-6'
+              <div
+                className={`
+                ${
+                  viewMode === 'grid'
+                    ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'
+                    : 'space-y-6'
                 }
-              `}>
+              `}
+              >
                 {businesses.map(renderBusinessCard)}
               </div>
             )}
@@ -602,7 +630,11 @@ export default function MarketplacePage() {
 
                 {Array.from({ length: pagination.pages }, (_, i) => i + 1)
                   .filter(page => {
-                    return Math.abs(page - pagination.page) <= 2 || page === 1 || page === pagination.pages
+                    return (
+                      Math.abs(page - pagination.page) <= 2 ||
+                      page === 1 ||
+                      page === pagination.pages
+                    )
                   })
                   .map((page, index, array) => (
                     <div key={page}>
@@ -613,9 +645,10 @@ export default function MarketplacePage() {
                         onClick={() => fetchBusinesses(page)}
                         className={`
                           px-4 py-2 rounded-lg text-sm font-medium transition-colors
-                          ${page === pagination.page
-                            ? 'bg-primary-500 text-white'
-                            : 'border border-secondary-300 text-secondary-700 hover:bg-secondary-50'
+                          ${
+                            page === pagination.page
+                              ? 'bg-primary-500 text-white'
+                              : 'border border-secondary-300 text-secondary-700 hover:bg-secondary-50'
                           }
                         `}
                       >

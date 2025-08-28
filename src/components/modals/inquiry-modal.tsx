@@ -17,14 +17,19 @@ interface InquiryModalProps {
   onSuccess?: () => void
 }
 
-export default function InquiryModal({ isOpen, onClose, business, onSuccess }: InquiryModalProps) {
+export default function InquiryModal({
+  isOpen,
+  onClose,
+  business,
+  onSuccess,
+}: InquiryModalProps) {
   const { data: session } = useSession()
   const [formData, setFormData] = useState({
     subject: `Inquiry about ${business.title}`,
     message: '',
     contactName: session?.user?.name || '',
     contactEmail: session?.user?.email || '',
-    contactPhone: ''
+    contactPhone: '',
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState('')
@@ -45,8 +50,8 @@ export default function InquiryModal({ isOpen, onClose, business, onSuccess }: I
         },
         body: JSON.stringify({
           businessId: business.id,
-          ...formData
-        })
+          ...formData,
+        }),
       })
 
       if (!response.ok) {
@@ -55,7 +60,7 @@ export default function InquiryModal({ isOpen, onClose, business, onSuccess }: I
       }
 
       setSuccess(true)
-      
+
       setTimeout(() => {
         onClose()
         onSuccess?.()
@@ -65,12 +70,14 @@ export default function InquiryModal({ isOpen, onClose, business, onSuccess }: I
           message: '',
           contactName: session?.user?.name || '',
           contactEmail: session?.user?.email || '',
-          contactPhone: ''
+          contactPhone: '',
         })
         setSuccess(false)
       }, 2000)
     } catch (error) {
-      setError(error instanceof Error ? error.message : 'Failed to send inquiry')
+      setError(
+        error instanceof Error ? error.message : 'Failed to send inquiry'
+      )
     } finally {
       setIsSubmitting(false)
     }
@@ -91,7 +98,8 @@ export default function InquiryModal({ isOpen, onClose, business, onSuccess }: I
             Inquiry Sent Successfully!
           </h3>
           <p className="text-secondary-600 mb-4">
-            Your inquiry has been sent to {business.owner.name}. They will receive an email notification and should respond soon.
+            Your inquiry has been sent to {business.owner.name}. They will
+            receive an email notification and should respond soon.
           </p>
           <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary-500 mx-auto"></div>
         </div>
@@ -109,7 +117,8 @@ export default function InquiryModal({ isOpen, onClose, business, onSuccess }: I
               Contact Business Owner
             </h2>
             <p className="text-sm text-secondary-600 mt-1">
-              Send an inquiry to {business.owner.name} about "{business.title}"
+              Send an inquiry to {business.owner.name} about &ldquo;
+              {business.title}&rdquo;
             </p>
           </div>
           <button
@@ -148,13 +157,15 @@ export default function InquiryModal({ isOpen, onClose, business, onSuccess }: I
                     type="text"
                     required
                     value={formData.contactName}
-                    onChange={(e) => updateFormData({ contactName: e.target.value })}
+                    onChange={e =>
+                      updateFormData({ contactName: e.target.value })
+                    }
                     className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     placeholder="Your full name"
                     disabled={isSubmitting}
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-secondary-700 mb-2">
                     Email Address *
@@ -163,14 +174,16 @@ export default function InquiryModal({ isOpen, onClose, business, onSuccess }: I
                     type="email"
                     required
                     value={formData.contactEmail}
-                    onChange={(e) => updateFormData({ contactEmail: e.target.value })}
+                    onChange={e =>
+                      updateFormData({ contactEmail: e.target.value })
+                    }
                     className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     placeholder="your@email.com"
                     disabled={isSubmitting}
                   />
                 </div>
               </div>
-              
+
               <div className="mt-4">
                 <label className="block text-sm font-medium text-secondary-700 mb-2">
                   Phone Number (Optional)
@@ -178,7 +191,9 @@ export default function InquiryModal({ isOpen, onClose, business, onSuccess }: I
                 <input
                   type="tel"
                   value={formData.contactPhone}
-                  onChange={(e) => updateFormData({ contactPhone: e.target.value })}
+                  onChange={e =>
+                    updateFormData({ contactPhone: e.target.value })
+                  }
                   className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder="(555) 123-4567"
                   disabled={isSubmitting}
@@ -191,7 +206,7 @@ export default function InquiryModal({ isOpen, onClose, business, onSuccess }: I
               <h3 className="text-lg font-medium text-secondary-900 mb-4">
                 Your Inquiry
               </h3>
-              
+
               <div className="mb-4">
                 <label className="block text-sm font-medium text-secondary-700 mb-2">
                   Subject *
@@ -200,7 +215,7 @@ export default function InquiryModal({ isOpen, onClose, business, onSuccess }: I
                   type="text"
                   required
                   value={formData.subject}
-                  onChange={(e) => updateFormData({ subject: e.target.value })}
+                  onChange={e => updateFormData({ subject: e.target.value })}
                   className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder="What would you like to know?"
                   disabled={isSubmitting}
@@ -215,7 +230,7 @@ export default function InquiryModal({ isOpen, onClose, business, onSuccess }: I
                   required
                   rows={6}
                   value={formData.message}
-                  onChange={(e) => updateFormData({ message: e.target.value })}
+                  onChange={e => updateFormData({ message: e.target.value })}
                   className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
                   placeholder="Please provide details about your inquiry. Consider including:&#10;• Your budget range&#10;• Timeline for purchase&#10;• Specific questions about the business&#10;• Your background/experience&#10;• Preferred contact method"
                   disabled={isSubmitting}
@@ -228,10 +243,12 @@ export default function InquiryModal({ isOpen, onClose, business, onSuccess }: I
 
             {/* Tips */}
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <h4 className="text-sm font-medium text-blue-900 mb-2">💡 Tips for a Great Inquiry:</h4>
+              <h4 className="text-sm font-medium text-blue-900 mb-2">
+                💡 Tips for a Great Inquiry:
+              </h4>
               <ul className="text-sm text-blue-800 space-y-1">
                 <li>• Be specific about your interest and timeline</li>
-                <li>• Mention your budget range to show you're serious</li>
+                <li>• Mention your budget range to show you&apos;re serious</li>
                 <li>• Share relevant experience in the industry</li>
                 <li>• Ask thoughtful questions about the business</li>
                 <li>• Be professional and courteous</li>
@@ -249,10 +266,16 @@ export default function InquiryModal({ isOpen, onClose, business, onSuccess }: I
             >
               Cancel
             </button>
-            
+
             <button
               type="submit"
-              disabled={isSubmitting || !formData.contactName.trim() || !formData.contactEmail.trim() || !formData.message.trim() || formData.message.length < 10}
+              disabled={
+                isSubmitting ||
+                !formData.contactName.trim() ||
+                !formData.contactEmail.trim() ||
+                !formData.message.trim() ||
+                formData.message.length < 10
+              }
               className="flex items-center px-6 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               {isSubmitting ? (
@@ -272,8 +295,9 @@ export default function InquiryModal({ isOpen, onClose, business, onSuccess }: I
           {/* Disclaimer */}
           <div className="mt-4 p-3 bg-secondary-50 rounded-lg">
             <p className="text-xs text-secondary-600">
-              By sending this inquiry, you agree to share your contact information with the business owner. 
-              They will be able to contact you directly via the information provided above.
+              By sending this inquiry, you agree to share your contact
+              information with the business owner. They will be able to contact
+              you directly via the information provided above.
             </p>
           </div>
         </form>

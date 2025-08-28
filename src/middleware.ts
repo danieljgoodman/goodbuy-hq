@@ -24,7 +24,7 @@ export default withAuth(
     if (publicRoutes.includes(pathname)) {
       return NextResponse.next()
     }
-    
+
     // Check for public path patterns
     const publicPathPatterns = ['/marketplace', '/business']
     if (publicPathPatterns.some(pattern => pathname.startsWith(pattern))) {
@@ -80,7 +80,7 @@ export default withAuth(
         if (publicRoutes.includes(pathname)) {
           return true
         }
-        
+
         // Check for public path patterns
         const publicPathPatterns = ['/marketplace', '/business']
         if (publicPathPatterns.some(pattern => pathname.startsWith(pattern))) {

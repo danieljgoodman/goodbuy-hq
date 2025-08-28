@@ -271,44 +271,48 @@ export default function BusinessAnalysisPanel({
                     >
                       {section.key === 'financial' && (
                         <div className="space-y-3">
-                          {section.data.strengths?.length > 0 && (
-                            <div>
-                              <h5 className="font-medium text-green-800 mb-2">
-                                Strengths
-                              </h5>
-                              <ul className="list-disc list-inside space-y-1">
-                                {section.data.strengths.map(
-                                  (item: string, index: number) => (
-                                    <li
-                                      key={index}
-                                      className="text-sm text-gray-700"
-                                    >
-                                      {item}
-                                    </li>
-                                  )
-                                )}
-                              </ul>
-                            </div>
-                          )}
-                          {section.data.concerns?.length > 0 && (
-                            <div>
-                              <h5 className="font-medium text-red-800 mb-2">
-                                Concerns
-                              </h5>
-                              <ul className="list-disc list-inside space-y-1">
-                                {section.data.concerns.map(
-                                  (item: string, index: number) => (
-                                    <li
-                                      key={index}
-                                      className="text-sm text-gray-700"
-                                    >
-                                      {item}
-                                    </li>
-                                  )
-                                )}
-                              </ul>
-                            </div>
-                          )}
+                          {'strengths' in section.data &&
+                            section.data.strengths?.length > 0 && (
+                              <div>
+                                <h5 className="font-medium text-green-800 mb-2">
+                                  Strengths
+                                </h5>
+                                <ul className="list-disc list-inside space-y-1">
+                                  {'strengths' in section.data &&
+                                    section.data.strengths.map(
+                                      (item: string, index: number) => (
+                                        <li
+                                          key={index}
+                                          className="text-sm text-gray-700"
+                                        >
+                                          {item}
+                                        </li>
+                                      )
+                                    )}
+                                </ul>
+                              </div>
+                            )}
+                          {'concerns' in section.data &&
+                            section.data.concerns?.length > 0 && (
+                              <div>
+                                <h5 className="font-medium text-red-800 mb-2">
+                                  Concerns
+                                </h5>
+                                <ul className="list-disc list-inside space-y-1">
+                                  {'concerns' in section.data &&
+                                    section.data.concerns.map(
+                                      (item: string, index: number) => (
+                                        <li
+                                          key={index}
+                                          className="text-sm text-gray-700"
+                                        >
+                                          {item}
+                                        </li>
+                                      )
+                                    )}
+                                </ul>
+                              </div>
+                            )}
                         </div>
                       )}
 
@@ -319,66 +323,70 @@ export default function BusinessAnalysisPanel({
                               Market Share
                             </h5>
                             <p className="text-sm text-gray-700">
-                              {section.data.marketShare}
+                              {'marketShare' in section.data &&
+                                section.data.marketShare}
                             </p>
                           </div>
-                          {section.data.differentiators?.length > 0 && (
-                            <div>
-                              <h5 className="font-medium text-green-800 mb-2">
-                                Competitive Advantages
-                              </h5>
-                              <ul className="list-disc list-inside space-y-1">
-                                {section.data.differentiators.map(
-                                  (item: string, index: number) => (
-                                    <li
-                                      key={index}
-                                      className="text-sm text-gray-700"
-                                    >
-                                      {item}
-                                    </li>
-                                  )
-                                )}
-                              </ul>
-                            </div>
-                          )}
+                          {'differentiators' in section.data &&
+                            section.data.differentiators?.length > 0 && (
+                              <div>
+                                <h5 className="font-medium text-green-800 mb-2">
+                                  Competitive Advantages
+                                </h5>
+                                <ul className="list-disc list-inside space-y-1">
+                                  {section.data.differentiators.map(
+                                    (item: string, index: number) => (
+                                      <li
+                                        key={index}
+                                        className="text-sm text-gray-700"
+                                      >
+                                        {item}
+                                      </li>
+                                    )
+                                  )}
+                                </ul>
+                              </div>
+                            )}
                         </div>
                       )}
 
                       {section.key === 'growth' && (
                         <div className="space-y-3">
                           <div
-                            className={`p-3 rounded-lg ${getScoreBackground(section.data.score)}`}
+                            className={`p-3 rounded-lg ${'score' in section.data ? getScoreBackground(section.data.score) : ''}`}
                           >
                             <div className="flex justify-between items-center mb-2">
                               <span className="font-medium text-gray-900">
                                 Growth Score
                               </span>
                               <span
-                                className={`text-lg font-bold ${getScoreColor(section.data.score)}`}
+                                className={`text-lg font-bold ${'score' in section.data ? getScoreColor(section.data.score) : ''}`}
                               >
-                                {section.data.score}/100
+                                {'score' in section.data && section.data.score}
+                                /100
                               </span>
                             </div>
                           </div>
-                          {section.data.opportunities?.length > 0 && (
-                            <div>
-                              <h5 className="font-medium text-purple-800 mb-2">
-                                Opportunities
-                              </h5>
-                              <ul className="list-disc list-inside space-y-1">
-                                {section.data.opportunities.map(
-                                  (item: string, index: number) => (
-                                    <li
-                                      key={index}
-                                      className="text-sm text-gray-700"
-                                    >
-                                      {item}
-                                    </li>
-                                  )
-                                )}
-                              </ul>
-                            </div>
-                          )}
+                          {'opportunities' in section.data &&
+                            section.data.opportunities?.length > 0 && (
+                              <div>
+                                <h5 className="font-medium text-purple-800 mb-2">
+                                  Opportunities
+                                </h5>
+                                <ul className="list-disc list-inside space-y-1">
+                                  {section.data.opportunities.map(
+                                    (item: string, index: number) => (
+                                      <li
+                                        key={index}
+                                        className="text-sm text-gray-700"
+                                      >
+                                        {item}
+                                      </li>
+                                    )
+                                  )}
+                                </ul>
+                              </div>
+                            )}
                         </div>
                       )}
 

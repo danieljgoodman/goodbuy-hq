@@ -9,7 +9,7 @@ async function createTestUsers() {
   try {
     // Create test business owner
     const businessOwnerExists = await prisma.user.findUnique({
-      where: { email: 'testowner@goodbuyhq.com' }
+      where: { email: 'testowner@goodbuyhq.com' },
     })
 
     if (!businessOwnerExists) {
@@ -24,17 +24,20 @@ async function createTestUsers() {
           status: 'ACTIVE',
           hashedPassword,
           company: 'Test Business Solutions',
-          bio: 'Test business owner for marketplace testing'
-        }
+          bio: 'Test business owner for marketplace testing',
+        },
       })
       console.log('✅ Created test business owner:', testOwner.email)
     } else {
-      console.log('✅ Test business owner already exists:', businessOwnerExists.email)
+      console.log(
+        '✅ Test business owner already exists:',
+        businessOwnerExists.email
+      )
     }
 
     // Create test buyer
     const buyerExists = await prisma.user.findUnique({
-      where: { email: 'testbuyer@goodbuyhq.com' }
+      where: { email: 'testbuyer@goodbuyhq.com' },
     })
 
     if (!buyerExists) {
@@ -49,8 +52,8 @@ async function createTestUsers() {
           status: 'ACTIVE',
           hashedPassword,
           company: 'Investment Group LLC',
-          bio: 'Test buyer for marketplace testing'
-        }
+          bio: 'Test buyer for marketplace testing',
+        },
       })
       console.log('✅ Created test buyer:', testBuyer.email)
     } else {
@@ -61,7 +64,6 @@ async function createTestUsers() {
     console.log('\nLogin credentials:')
     console.log('Business Owner: testowner@goodbuyhq.com / TestOwner123!')
     console.log('Buyer: testbuyer@goodbuyhq.com / TestBuyer123!')
-
   } catch (error) {
     console.error('Error creating test users:', error)
   } finally {

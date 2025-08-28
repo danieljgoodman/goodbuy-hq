@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
-import { authOptions } from '../../../auth/[...nextauth]/route'
+import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 
 interface RouteContext {
@@ -27,20 +27,20 @@ export async function GET(request: NextRequest, { params }: RouteContext) {
                 id: true,
                 name: true,
                 email: true,
-                userType: true
-              }
-            }
-          }
+                userType: true,
+              },
+            },
+          },
         },
         user: {
           select: {
             id: true,
             name: true,
             email: true,
-            userType: true
-          }
-        }
-      }
+            userType: true,
+          },
+        },
+      },
     })
 
     if (!inquiry) {
@@ -48,8 +48,8 @@ export async function GET(request: NextRequest, { params }: RouteContext) {
     }
 
     // Check if user has access (business owner or inquirer)
-    const hasAccess = 
-      inquiry.business.owner.id === session.user.id || 
+    const hasAccess =
+      inquiry.business.owner.id === session.user.id ||
       inquiry.user?.id === session.user.id
 
     if (!hasAccess) {
@@ -83,10 +83,10 @@ export async function PATCH(request: NextRequest, { params }: RouteContext) {
       include: {
         business: {
           select: {
-            ownerId: true
-          }
-        }
-      }
+            ownerId: true,
+          },
+        },
+      },
     })
 
     if (!inquiry) {
@@ -99,11 +99,11 @@ export async function PATCH(request: NextRequest, { params }: RouteContext) {
 
     // Update inquiry
     const updateData: any = {}
-    
+
     if (typeof isRead === 'boolean') {
       updateData.isRead = isRead
     }
-    
+
     if (typeof isArchived === 'boolean') {
       updateData.isArchived = isArchived
     }
@@ -116,18 +116,18 @@ export async function PATCH(request: NextRequest, { params }: RouteContext) {
           select: {
             id: true,
             title: true,
-            slug: true
-          }
+            slug: true,
+          },
         },
         user: {
           select: {
             id: true,
             name: true,
             email: true,
-            userType: true
-          }
-        }
-      }
+            userType: true,
+          },
+        },
+      },
     })
 
     return NextResponse.json(updatedInquiry)
@@ -154,10 +154,10 @@ export async function DELETE(request: NextRequest, { params }: RouteContext) {
       include: {
         business: {
           select: {
-            ownerId: true
-          }
-        }
-      }
+            ownerId: true,
+          },
+        },
+      },
     })
 
     if (!inquiry) {
@@ -171,9 +171,9 @@ export async function DELETE(request: NextRequest, { params }: RouteContext) {
     // Soft delete by archiving
     await prisma.inquiry.update({
       where: { id: params.inquiryId },
-      data: { 
-        isArchived: true 
-      }
+      data: {
+        isArchived: true,
+      },
     })
 
     return NextResponse.json({ success: true })

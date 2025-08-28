@@ -10,7 +10,7 @@ const createMessageSchema = z.object({
     .enum(['text', 'file', 'meeting_invite', 'system'])
     .default('text'),
   replyToId: z.string().cuid().optional(),
-  metadata: z.record(z.unknown()).optional(),
+  metadata: z.record(z.string(), z.unknown()).optional(),
 })
 
 // GET /api/communications/threads/[threadId]/messages - Get messages in a thread
@@ -192,7 +192,7 @@ export async function POST(
           content: validatedData.content,
           messageType: validatedData.messageType,
           replyToId: validatedData.replyToId,
-          metadata: validatedData.metadata,
+          metadata: validatedData.metadata as any,
           status: 'SENT',
         },
         include: {

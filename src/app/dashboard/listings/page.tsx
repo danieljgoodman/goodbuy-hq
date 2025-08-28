@@ -1,5 +1,5 @@
 import { getServerSession } from 'next-auth'
-import { authOptions } from '../../api/auth/[...nextauth]/route'
+import { authOptions } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import { prisma } from '@/lib/prisma'
 import ListingDashboardClient from './listing-dashboard-client'
@@ -11,26 +11,29 @@ export default async function ListingDashboardPage() {
     redirect('/auth/signin?callbackUrl=/dashboard/listings')
   }
 
-  if (session.user.userType !== 'BUSINESS_OWNER' && session.user.userType !== 'ADMIN') {
+  if (
+    session.user.userType !== 'BUSINESS_OWNER' &&
+    session.user.userType !== 'ADMIN'
+  ) {
     redirect('/dashboard?error=insufficient_permissions')
   }
 
   // Fetch user's business listings with related data
   const businesses = await prisma.business.findMany({
     where: {
-      ownerId: session.user.id
+      ownerId: session.user.id,
     },
     include: {
       images_rel: {
         where: { isPrimary: true },
-        take: 1
+        take: 1,
       },
       _count: {
         select: {
           favorites: true,
           inquiries: true,
-          views: true
-        }
+          views: true,
+        },
       },
       inquiries: {
         where: { isRead: false },
@@ -42,11 +45,11 @@ export default async function ListingDashboardPage() {
           contactName: true,
           contactEmail: true,
           createdAt: true,
-          isRead: true
-        }
-      }
+          isRead: true,
+        },
+      },
     },
-    orderBy: { updatedAt: 'desc' }
+    orderBy: { updatedAt: 'desc' },
   })
 
   // Convert Decimal fields to numbers for client component
@@ -59,7 +62,9 @@ export default async function ListingDashboardPage() {
     ebitda: business.ebitda ? Number(business.ebitda) : null,
     grossMargin: business.grossMargin ? Number(business.grossMargin) : null,
     netMargin: business.netMargin ? Number(business.netMargin) : null,
-    monthlyRevenue: business.monthlyRevenue ? Number(business.monthlyRevenue) : null,
+    monthlyRevenue: business.monthlyRevenue
+      ? Number(business.monthlyRevenue)
+      : null,
     yearlyGrowth: business.yearlyGrowth ? Number(business.yearlyGrowth) : null,
     inventory: business.inventory ? Number(business.inventory) : null,
     equipment: business.equipment ? Number(business.equipment) : null,
@@ -68,4 +73,5 @@ export default async function ListingDashboardPage() {
     liabilities: business.liabilities ? Number(business.liabilities) : null,
   }))
 
-  return <ListingDashboardClient businesses={businessesData} />
+  return <ListingDashboardClient businesses={businessesData as any} />
+}

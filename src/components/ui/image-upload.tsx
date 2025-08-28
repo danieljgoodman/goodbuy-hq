@@ -40,11 +40,11 @@ export default function ImageUpload({
 
   const handleFileSelect = (files: FileList | null) => {
     if (!files || files.length === 0) return
-    
+
     const fileArray = Array.from(files)
     const remainingSlots = maxImages - images.length
     const filesToUpload = fileArray.slice(0, remainingSlots)
-    
+
     if (filesToUpload.length > 0) {
       uploadFiles(filesToUpload)
     }
@@ -60,7 +60,7 @@ export default function ImageUpload({
         formData.append('file', file)
         formData.append('folder', folder)
         formData.append('quality', quality.toString())
-        
+
         if (resize) {
           formData.append('resize', JSON.stringify(resize))
         }
@@ -97,9 +97,12 @@ export default function ImageUpload({
       }
 
       // Also try to delete from server
-      await fetch(`/api/upload/images?publicId=${encodeURIComponent(publicId)}`, {
-        method: 'DELETE',
-      })
+      await fetch(
+        `/api/upload/images?publicId=${encodeURIComponent(publicId)}`,
+        {
+          method: 'DELETE',
+        }
+      )
 
       const newImages = images.filter(img => img.publicId !== publicId)
       setImages(newImages)
@@ -122,9 +125,9 @@ export default function ImageUpload({
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault()
     setDragOver(false)
-    
+
     if (disabled) return
-    
+
     const files = e.dataTransfer.files
     handleFileSelect(files)
   }
@@ -144,9 +147,10 @@ export default function ImageUpload({
         <div
           className={`
             border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors
-            ${dragOver
-              ? 'border-primary-500 bg-primary-50'
-              : 'border-secondary-300 hover:border-secondary-400'
+            ${
+              dragOver
+                ? 'border-primary-500 bg-primary-50'
+                : 'border-secondary-300 hover:border-secondary-400'
             }
             ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
           `}
@@ -160,11 +164,11 @@ export default function ImageUpload({
             type="file"
             multiple
             accept="image/*"
-            onChange={(e) => handleFileSelect(e.target.files)}
+            onChange={e => handleFileSelect(e.target.files)}
             className="hidden"
             disabled={disabled}
           />
-          
+
           {uploading ? (
             <div className="flex flex-col items-center">
               <Loader2 className="w-8 h-8 text-primary-500 animate-spin mb-2" />
@@ -177,7 +181,8 @@ export default function ImageUpload({
                 Drop images here or click to upload
               </p>
               <p className="text-xs text-secondary-500">
-                PNG, JPG, WebP up to 10MB each ({maxImages - images.length} remaining)
+                PNG, JPG, WebP up to 10MB each ({maxImages - images.length}{' '}
+                remaining)
               </p>
             </div>
           )}
@@ -196,7 +201,7 @@ export default function ImageUpload({
                   className="w-full h-full object-cover"
                 />
               </div>
-              
+
               {/* Remove Button */}
               {!disabled && (
                 <button
@@ -215,10 +220,12 @@ export default function ImageUpload({
                   <span>{formatFileSize(image.size)}</span>
                 </div>
                 {image.width && image.height && (
-                  <div>{image.width} × {image.height}</div>
+                  <div>
+                    {image.width} × {image.height}
+                  </div>
                 )}
               </div>
-              
+
               {/* Primary Image Indicator */}
               {index === 0 && (
                 <div className="absolute top-2 left-2 bg-primary-500 text-white text-xs px-2 py-1 rounded">

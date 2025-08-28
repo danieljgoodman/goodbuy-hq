@@ -12,11 +12,8 @@ interface BusinessDetailPageProps {
 async function getBusiness(slug: string) {
   const business = await prisma.business.findFirst({
     where: {
-      OR: [
-        { slug: slug },
-        { id: slug }
-      ],
-      status: 'ACTIVE'
+      OR: [{ slug: slug }, { id: slug }],
+      status: 'ACTIVE',
     },
     include: {
       owner: {
@@ -27,42 +24,42 @@ async function getBusiness(slug: string) {
           image: true,
           company: true,
           bio: true,
-          createdAt: true
-        }
+          createdAt: true,
+        },
       },
       images_rel: {
-        orderBy: { orderIndex: 'asc' }
+        orderBy: { orderIndex: 'asc' },
       },
       documents_rel: {
         where: {
-          accessLevel: { not: 'owner_only' }
-        }
+          accessLevel: { not: 'owner_only' },
+        },
       },
       evaluations: {
         where: {
           status: 'COMPLETED',
-          isPublic: true
+          isPublic: true,
         },
         include: {
           evaluator: {
             select: {
               id: true,
               name: true,
-              userType: true
-            }
-          }
+              userType: true,
+            },
+          },
         },
         orderBy: { completedAt: 'desc' },
-        take: 1
+        take: 1,
       },
       _count: {
         select: {
           favorites: true,
           inquiries: true,
-          views: true
-        }
-      }
-    }
+          views: true,
+        },
+      },
+    },
   })
 
   if (!business) {
@@ -70,25 +67,29 @@ async function getBusiness(slug: string) {
   }
 
   // Increment view count
-  await prisma.businessView.create({
-    data: {
-      businessId: business.id,
-      ipAddress: '127.0.0.1', // Would get from request in real app
-      userAgent: 'Server-Side Render'
-    }
-  }).catch(() => {
-    // Ignore errors for view tracking
-  })
+  await prisma.businessView
+    .create({
+      data: {
+        businessId: business.id,
+        ipAddress: '127.0.0.1', // Would get from request in real app
+        userAgent: 'Server-Side Render',
+      },
+    })
+    .catch(() => {
+      // Ignore errors for view tracking
+    })
 
   return business
 }
 
-export async function generateMetadata({ params }: BusinessDetailPageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: BusinessDetailPageProps): Promise<Metadata> {
   const business = await getBusiness(params.slug)
 
   if (!business) {
     return {
-      title: 'Business Not Found'
+      title: 'Business Not Found',
     }
   }
 
@@ -96,15 +97,17 @@ export async function generateMetadata({ params }: BusinessDetailPageProps): Pro
 
   return {
     title: `${business.title} - Business for Sale | GoodBuy HQ`,
-    description: business.description.substring(0, 160) + (business.description.length > 160 ? '...' : ''),
+    description:
+      business.description.substring(0, 160) +
+      (business.description.length > 160 ? '...' : ''),
     keywords: [
       business.title,
       business.category,
       'business for sale',
       business.city,
       business.state,
-      business.industry
-    ].filter(Boolean),
+      business.industry,
+    ].filter(Boolean) as string[],
     openGraph: {
       title: business.title,
       description: business.description,
@@ -116,11 +119,13 @@ export async function generateMetadata({ params }: BusinessDetailPageProps): Pro
       title: business.title,
       description: business.description,
       images: primaryImage ? [primaryImage] : [],
-    }
+    },
   }
 }
 
-export default async function BusinessDetailPage({ params }: BusinessDetailPageProps) {
+export default async function BusinessDetailPage({
+  params,
+}: BusinessDetailPageProps) {
   const business = await getBusiness(params.slug)
 
   if (!business) {
@@ -130,6 +135,7 @@ export default async function BusinessDetailPage({ params }: BusinessDetailPageP
   // Convert Decimal fields to numbers for the client component
   const businessData = {
     ...business,
+    category: business.category || undefined,
     askingPrice: business.askingPrice ? Number(business.askingPrice) : null,
     revenue: business.revenue ? Number(business.revenue) : null,
     profit: business.profit ? Number(business.profit) : null,
@@ -137,7 +143,9 @@ export default async function BusinessDetailPage({ params }: BusinessDetailPageP
     ebitda: business.ebitda ? Number(business.ebitda) : null,
     grossMargin: business.grossMargin ? Number(business.grossMargin) : null,
     netMargin: business.netMargin ? Number(business.netMargin) : null,
-    monthlyRevenue: business.monthlyRevenue ? Number(business.monthlyRevenue) : null,
+    monthlyRevenue: business.monthlyRevenue
+      ? Number(business.monthlyRevenue)
+      : null,
     yearlyGrowth: business.yearlyGrowth ? Number(business.yearlyGrowth) : null,
     inventory: business.inventory ? Number(business.inventory) : null,
     equipment: business.equipment ? Number(business.equipment) : null,
@@ -146,5 +154,5 @@ export default async function BusinessDetailPage({ params }: BusinessDetailPageP
     liabilities: business.liabilities ? Number(business.liabilities) : null,
   }
 
-  return <BusinessDetailClient business={businessData} />
+  return <BusinessDetailClient business={businessData as any} />
 }

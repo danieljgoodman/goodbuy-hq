@@ -553,7 +553,7 @@ export async function sendNewInquiryNotification(
   inquiryId: string
 ) {
   const inquiryUrl = `${process.env.NEXTAUTH_URL}/dashboard/inquiries?id=${inquiryId}`
-  
+
   const htmlContent = `
     <!DOCTYPE html>
     <html>

@@ -114,7 +114,7 @@ export async function PATCH(request: NextRequest) {
       status: validatedData.status.toUpperCase(),
     }
 
-    if (validatedData.status === 'read') {
+    if (validatedData.status === 'READ') {
       updateData.readAt = new Date()
     } else if (validatedData.status === 'dismissed') {
       updateData.dismissedAt = new Date()

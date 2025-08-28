@@ -1,5 +1,5 @@
 import { getServerSession } from 'next-auth'
-import { authOptions } from '../api/auth/[...nextauth]/route'
+import { authOptions } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import BusinessListingForm from '@/components/forms/business-listing-form'
 
@@ -10,7 +10,10 @@ export default async function SellPage() {
     redirect('/auth/signin?callbackUrl=/sell')
   }
 
-  if (session.user.userType !== 'BUSINESS_OWNER' && session.user.userType !== 'ADMIN') {
+  if (
+    session.user.userType !== 'BUSINESS_OWNER' &&
+    session.user.userType !== 'ADMIN'
+  ) {
     redirect('/dashboard?error=insufficient_permissions')
   }
 
@@ -24,9 +27,9 @@ export default async function SellPage() {
               List Your Business for Sale
             </h1>
             <p className="text-xl text-secondary-600 max-w-3xl mx-auto">
-              Create a comprehensive listing to attract qualified buyers. Our platform 
-              connects you with serious investors and entrepreneurs looking for 
-              opportunities like yours.
+              Create a comprehensive listing to attract qualified buyers. Our
+              platform connects you with serious investors and entrepreneurs
+              looking for opportunities like yours.
             </p>
           </div>
         </div>
@@ -44,43 +47,55 @@ export default async function SellPage() {
             <h2 className="text-2xl font-bold text-secondary-900 mb-8 text-center">
               Tips for a Successful Listing
             </h2>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center">
                 <div className="w-12 h-12 bg-primary-500 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-white font-bold text-xl">1</span>
                 </div>
-                <h3 className="font-semibold text-secondary-900 mb-2">Complete Information</h3>
+                <h3 className="font-semibold text-secondary-900 mb-2">
+                  Complete Information
+                </h3>
                 <p className="text-secondary-600 text-sm">
-                  Provide detailed financial and operational information to build buyer confidence.
+                  Provide detailed financial and operational information to
+                  build buyer confidence.
                 </p>
               </div>
-              
+
               <div className="text-center">
                 <div className="w-12 h-12 bg-primary-500 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-white font-bold text-xl">2</span>
                 </div>
-                <h3 className="font-semibold text-secondary-900 mb-2">High-Quality Photos</h3>
+                <h3 className="font-semibold text-secondary-900 mb-2">
+                  High-Quality Photos
+                </h3>
                 <p className="text-secondary-600 text-sm">
-                  Upload professional photos of your business, storefront, and key assets.
+                  Upload professional photos of your business, storefront, and
+                  key assets.
                 </p>
               </div>
-              
+
               <div className="text-center">
                 <div className="w-12 h-12 bg-primary-500 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-white font-bold text-xl">3</span>
                 </div>
-                <h3 className="font-semibold text-secondary-900 mb-2">Honest Pricing</h3>
+                <h3 className="font-semibold text-secondary-900 mb-2">
+                  Honest Pricing
+                </h3>
                 <p className="text-secondary-600 text-sm">
-                  Set a realistic asking price based on your business metrics and market value.
+                  Set a realistic asking price based on your business metrics
+                  and market value.
                 </p>
               </div>
             </div>
-            
+
             <div className="mt-12 p-6 bg-white rounded-lg shadow-sm">
-              <h3 className="font-semibold text-secondary-900 mb-4">Need Help?</h3>
+              <h3 className="font-semibold text-secondary-900 mb-4">
+                Need Help?
+              </h3>
               <p className="text-secondary-600 mb-4">
-                Our team is here to help you create the perfect listing. Contact us if you need:
+                Our team is here to help you create the perfect listing. Contact
+                us if you need:
               </p>
               <ul className="list-disc list-inside text-secondary-600 space-y-1 mb-4">
                 <li>Professional business valuation</li>

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
-import { authOptions } from '../../auth/[...nextauth]/route'
+import { authOptions } from '@/lib/auth'
 import { writeFile, mkdir } from 'fs/promises'
 import { join } from 'path'
 import { v4 as uuidv4 } from 'uuid'
@@ -35,8 +35,9 @@ export async function POST(request: NextRequest) {
     // Validate file type
     if (!ALLOWED_DOCUMENT_TYPES.includes(file.type)) {
       return NextResponse.json(
-        { 
-          error: 'Invalid file type. Only PDF, Word, Excel, and text files are allowed.' 
+        {
+          error:
+            'Invalid file type. Only PDF, Word, Excel, and text files are allowed.',
         },
         { status: 400 }
       )
@@ -51,7 +52,13 @@ export async function POST(request: NextRequest) {
     }
 
     // Create upload directory
-    const uploadDir = join(process.cwd(), 'public', 'uploads', folder, session.user.id)
+    const uploadDir = join(
+      process.cwd(),
+      'public',
+      'uploads',
+      folder,
+      session.user.id
+    )
     await mkdir(uploadDir, { recursive: true })
 
     // Generate unique filename
@@ -105,10 +112,16 @@ export async function DELETE(request: NextRequest) {
     // Delete file (basic implementation - in production you'd want more security checks)
     const fs = await import('fs/promises')
     const path = await import('path')
-    
-    const uploadDir = path.join(process.cwd(), 'public', 'uploads', folder, session.user.id)
+
+    const uploadDir = path.join(
+      process.cwd(),
+      'public',
+      'uploads',
+      folder,
+      session.user.id
+    )
     const files = await fs.readdir(uploadDir).catch(() => [])
-    
+
     for (const file of files) {
       if (file.startsWith(fileId)) {
         await fs.unlink(path.join(uploadDir, file))

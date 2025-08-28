@@ -43,9 +43,12 @@ class CloudinaryProvider implements StorageProvider {
     }
   }
 
-  async upload(file: File | Buffer, options?: UploadOptions): Promise<UploadResult> {
+  async upload(
+    file: File | Buffer,
+    options?: UploadOptions
+  ): Promise<UploadResult> {
     const cloudinary = await import('cloudinary').then(m => m.v2)
-    
+
     cloudinary.config({
       cloud_name: this.cloudName,
       api_key: this.apiKey,
@@ -54,25 +57,25 @@ class CloudinaryProvider implements StorageProvider {
 
     const buffer = file instanceof File ? await file.arrayBuffer() : file
     const filename = options?.filename || uuidv4()
-    
+
     const uploadOptions: any = {
       public_id: filename,
       folder: options?.folder || 'goodbuy-hq',
       resource_type: 'auto',
-      transformation: []
+      transformation: [],
     }
 
     if (options?.resize) {
       uploadOptions.transformation.push({
         width: options.resize.width,
         height: options.resize.height,
-        crop: 'fill'
+        crop: 'fill',
       })
     }
 
     if (options?.quality) {
       uploadOptions.transformation.push({
-        quality: options.quality
+        quality: options.quality,
       })
     }
 
@@ -91,7 +94,7 @@ class CloudinaryProvider implements StorageProvider {
       height: 200,
       crop: 'fill',
       quality: 'auto',
-      format: 'webp'
+      format: 'webp',
     })
 
     return {
@@ -101,13 +104,13 @@ class CloudinaryProvider implements StorageProvider {
       width: result.width,
       height: result.height,
       format: result.format,
-      size: result.bytes
+      size: result.bytes,
     }
   }
 
   async delete(publicId: string): Promise<void> {
     const cloudinary = await import('cloudinary').then(m => m.v2)
-    
+
     cloudinary.config({
       cloud_name: this.cloudName,
       api_key: this.apiKey,
@@ -121,14 +124,14 @@ class CloudinaryProvider implements StorageProvider {
     // Extract public_id from Cloudinary URL
     const match = url.match(/\/upload\/(?:v\d+\/)?(.+)\.[^.]+$/)
     if (!match) return url
-    
+
     const cloudinary = require('cloudinary').v2
     return cloudinary.url(match[1], {
       width,
       height,
       crop: 'fill',
       quality: 'auto',
-      format: 'webp'
+      format: 'webp',
     })
   }
 }
@@ -151,9 +154,12 @@ class S3Provider implements StorageProvider {
     }
   }
 
-  async upload(file: File | Buffer, options?: UploadOptions): Promise<UploadResult> {
+  async upload(
+    file: File | Buffer,
+    options?: UploadOptions
+  ): Promise<UploadResult> {
     const { S3Client, PutObjectCommand } = await import('@aws-sdk/client-s3')
-    
+
     const s3Client = new S3Client({
       region: this.region,
       credentials: {
@@ -162,7 +168,8 @@ class S3Provider implements StorageProvider {
       },
     })
 
-    const buffer = file instanceof File ? Buffer.from(await file.arrayBuffer()) : file
+    const buffer =
+      file instanceof File ? Buffer.from(await file.arrayBuffer()) : file
     const filename = options?.filename || uuidv4()
     const folder = options?.folder || 'goodbuy-hq'
     const key = `${folder}/${filename}`
@@ -176,9 +183,13 @@ class S3Provider implements StorageProvider {
       let pipeline = sharp.default(buffer)
 
       if (options?.resize) {
-        pipeline = pipeline.resize(options.resize.width, options.resize.height, {
-          fit: 'cover'
-        })
+        pipeline = pipeline.resize(
+          options.resize.width,
+          options.resize.height,
+          {
+            fit: 'cover',
+          }
+        )
       }
 
       if (options?.quality) {
@@ -205,7 +216,7 @@ class S3Provider implements StorageProvider {
         width: info.info.width,
         height: info.info.height,
         format: info.info.format,
-        size: info.info.size
+        size: info.info.size,
       }
     }
 
@@ -219,7 +230,7 @@ class S3Provider implements StorageProvider {
     await s3Client.send(command)
 
     const url = `https://${this.bucketName}.s3.${this.region}.amazonaws.com/${key}`
-    
+
     // Generate thumbnail (would require separate upload in real implementation)
     const thumbnailUrl = url // Simplified for now
 
@@ -230,13 +241,13 @@ class S3Provider implements StorageProvider {
       width: metadata.width,
       height: metadata.height,
       format: metadata.format,
-      size: metadata.size
+      size: metadata.size,
     }
   }
 
   async delete(publicId: string): Promise<void> {
     const { S3Client, DeleteObjectCommand } = await import('@aws-sdk/client-s3')
-    
+
     const s3Client = new S3Client({
       region: this.region,
       credentials: {
@@ -268,11 +279,15 @@ class LocalProvider implements StorageProvider {
     this.uploadDir = process.env.LOCAL_UPLOAD_DIR || './public/uploads'
   }
 
-  async upload(file: File | Buffer, options?: UploadOptions): Promise<UploadResult> {
+  async upload(
+    file: File | Buffer,
+    options?: UploadOptions
+  ): Promise<UploadResult> {
     const fs = await import('fs/promises')
     const path = await import('path')
-    
-    const buffer = file instanceof File ? Buffer.from(await file.arrayBuffer()) : file
+
+    const buffer =
+      file instanceof File ? Buffer.from(await file.arrayBuffer()) : file
     const filename = options?.filename || uuidv4()
     const folder = options?.folder || 'goodbuy-hq'
     const ext = 'jpg'
@@ -292,9 +307,13 @@ class LocalProvider implements StorageProvider {
         let pipeline = sharp.default(buffer)
 
         if (options?.resize) {
-          pipeline = pipeline.resize(options.resize.width, options.resize.height, {
-            fit: 'cover'
-          })
+          pipeline = pipeline.resize(
+            options.resize.width,
+            options.resize.height,
+            {
+              fit: 'cover',
+            }
+          )
         }
 
         if (options?.quality) {
@@ -307,7 +326,7 @@ class LocalProvider implements StorageProvider {
           width: info.info.width,
           height: info.info.height,
           format: info.info.format,
-          size: info.info.size
+          size: info.info.size,
         }
       } catch (error) {
         console.warn('Sharp not available, using original image:', error)
@@ -322,12 +341,16 @@ class LocalProvider implements StorageProvider {
     // Generate thumbnail
     try {
       const sharp = await import('sharp')
-      const thumbnailBuffer = await sharp.default(processedBuffer)
+      const thumbnailBuffer = await sharp
+        .default(processedBuffer)
         .resize(300, 200, { fit: 'cover' })
         .jpeg({ quality: 80 })
         .toBuffer()
-      
-      await fs.writeFile(path.join(this.uploadDir, `${folder}/${filename}_thumb.${ext}`), thumbnailBuffer)
+
+      await fs.writeFile(
+        path.join(this.uploadDir, `${folder}/${filename}_thumb.${ext}`),
+        thumbnailBuffer
+      )
     } catch (error) {
       console.warn('Could not generate thumbnail:', error)
     }
@@ -339,19 +362,19 @@ class LocalProvider implements StorageProvider {
       width: metadata.width,
       height: metadata.height,
       format: metadata.format,
-      size: metadata.size
+      size: metadata.size,
     }
   }
 
   async delete(publicId: string): Promise<void> {
     const fs = await import('fs/promises')
     const path = await import('path')
-    
+
     const fullPath = path.join(this.uploadDir, publicId)
-    
+
     try {
       await fs.unlink(fullPath)
-      
+
       // Also try to delete thumbnail
       const thumbPath = fullPath.replace(/\.(jpg|png|webp)$/, '_thumb.$1')
       await fs.unlink(thumbPath).catch(() => {}) // Ignore if doesn't exist

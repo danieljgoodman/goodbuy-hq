@@ -3,17 +3,17 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
-import { 
-  Building2, 
-  MapPin, 
-  DollarSign, 
-  Users, 
+import {
+  Building2,
+  MapPin,
+  DollarSign,
+  Users,
   Calendar,
   FileText,
   Camera,
   Save,
   Eye,
-  Send
+  Send,
 } from 'lucide-react'
 import ImageUpload from '../ui/image-upload'
 
@@ -23,18 +23,18 @@ interface BusinessFormData {
   description: string
   category: string
   listingType: string
-  
+
   // Location
   address: string
   city: string
   state: string
   zipCode: string
-  
+
   // Contact
   website: string
   phone: string
   email: string
-  
+
   // Financial Information
   askingPrice: string
   revenue: string
@@ -43,33 +43,33 @@ interface BusinessFormData {
   ebitda: string
   grossMargin: string
   netMargin: string
-  
+
   // Business Details
   established: string
   employees: string
   monthlyRevenue: string
   yearlyGrowth: string
   customerBase: string
-  
+
   // Assets
   inventory: string
   equipment: string
   realEstate: string
   totalAssets: string
   liabilities: string
-  
+
   // Operations
   hoursOfOperation: string
   daysOpen: string[]
   seasonality: string
   competition: string
-  
+
   // Sale Details
   reasonForSelling: string
   timeframe: string
   negotiations: string
   financing: string
-  
+
   // Images and Documents
   images: any[]
   documents: any[]
@@ -87,7 +87,7 @@ const BUSINESS_CATEGORIES = [
   'AUTOMOTIVE',
   'ENTERTAINMENT',
   'EDUCATION',
-  'OTHER'
+  'OTHER',
 ]
 
 const LISTING_TYPES = [
@@ -95,17 +95,17 @@ const LISTING_TYPES = [
   'ASSET_SALE',
   'FRANCHISE',
   'PARTNERSHIP',
-  'INVESTMENT'
+  'INVESTMENT',
 ]
 
 const DAYS_OF_WEEK = [
   'Monday',
-  'Tuesday', 
+  'Tuesday',
   'Wednesday',
   'Thursday',
   'Friday',
   'Saturday',
-  'Sunday'
+  'Sunday',
 ]
 
 export default function BusinessListingForm() {
@@ -151,7 +151,7 @@ export default function BusinessListingForm() {
     negotiations: '',
     financing: '',
     images: [],
-    documents: []
+    documents: [],
   })
 
   const steps = [
@@ -202,8 +202,8 @@ export default function BusinessListingForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...formData,
-          status: 'DRAFT'
-        })
+          status: 'DRAFT',
+        }),
       })
 
       if (!response.ok) {
@@ -228,8 +228,8 @@ export default function BusinessListingForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...formData,
-          status: 'UNDER_REVIEW'
-        })
+          status: 'UNDER_REVIEW',
+        }),
       })
 
       if (!response.ok) {
@@ -259,7 +259,7 @@ export default function BusinessListingForm() {
               <input
                 type="text"
                 value={formData.title}
-                onChange={(e) => updateFormData({ title: e.target.value })}
+                onChange={e => updateFormData({ title: e.target.value })}
                 className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 placeholder="Enter an attractive business title"
               />
@@ -271,7 +271,7 @@ export default function BusinessListingForm() {
               </label>
               <textarea
                 value={formData.description}
-                onChange={(e) => updateFormData({ description: e.target.value })}
+                onChange={e => updateFormData({ description: e.target.value })}
                 rows={5}
                 className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 placeholder="Provide a detailed description of your business, its operations, and what makes it unique..."
@@ -285,13 +285,14 @@ export default function BusinessListingForm() {
                 </label>
                 <select
                   value={formData.category}
-                  onChange={(e) => updateFormData({ category: e.target.value })}
+                  onChange={e => updateFormData({ category: e.target.value })}
                   className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 >
                   <option value="">Select Category</option>
                   {BUSINESS_CATEGORIES.map(cat => (
                     <option key={cat} value={cat}>
-                      {cat.charAt(0) + cat.slice(1).toLowerCase().replace('_', ' ')}
+                      {cat.charAt(0) +
+                        cat.slice(1).toLowerCase().replace('_', ' ')}
                     </option>
                   ))}
                 </select>
@@ -303,12 +304,15 @@ export default function BusinessListingForm() {
                 </label>
                 <select
                   value={formData.listingType}
-                  onChange={(e) => updateFormData({ listingType: e.target.value })}
+                  onChange={e =>
+                    updateFormData({ listingType: e.target.value })
+                  }
                   className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 >
                   {LISTING_TYPES.map(type => (
                     <option key={type} value={type}>
-                      {type.charAt(0) + type.slice(1).toLowerCase().replace('_', ' ')}
+                      {type.charAt(0) +
+                        type.slice(1).toLowerCase().replace('_', ' ')}
                     </option>
                   ))}
                 </select>
@@ -327,7 +331,7 @@ export default function BusinessListingForm() {
               <input
                 type="text"
                 value={formData.address}
-                onChange={(e) => updateFormData({ address: e.target.value })}
+                onChange={e => updateFormData({ address: e.target.value })}
                 className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 placeholder="123 Main Street"
               />
@@ -341,7 +345,7 @@ export default function BusinessListingForm() {
                 <input
                   type="text"
                   value={formData.city}
-                  onChange={(e) => updateFormData({ city: e.target.value })}
+                  onChange={e => updateFormData({ city: e.target.value })}
                   className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder="City"
                 />
@@ -354,7 +358,7 @@ export default function BusinessListingForm() {
                 <input
                   type="text"
                   value={formData.state}
-                  onChange={(e) => updateFormData({ state: e.target.value })}
+                  onChange={e => updateFormData({ state: e.target.value })}
                   className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder="State"
                 />
@@ -367,7 +371,7 @@ export default function BusinessListingForm() {
                 <input
                   type="text"
                   value={formData.zipCode}
-                  onChange={(e) => updateFormData({ zipCode: e.target.value })}
+                  onChange={e => updateFormData({ zipCode: e.target.value })}
                   className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder="12345"
                 />
@@ -382,7 +386,7 @@ export default function BusinessListingForm() {
                 <input
                   type="url"
                   value={formData.website}
-                  onChange={(e) => updateFormData({ website: e.target.value })}
+                  onChange={e => updateFormData({ website: e.target.value })}
                   className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder="https://example.com"
                 />
@@ -395,7 +399,7 @@ export default function BusinessListingForm() {
                 <input
                   type="tel"
                   value={formData.phone}
-                  onChange={(e) => updateFormData({ phone: e.target.value })}
+                  onChange={e => updateFormData({ phone: e.target.value })}
                   className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder="(555) 123-4567"
                 />
@@ -408,7 +412,7 @@ export default function BusinessListingForm() {
                 <input
                   type="email"
                   value={formData.email}
-                  onChange={(e) => updateFormData({ email: e.target.value })}
+                  onChange={e => updateFormData({ email: e.target.value })}
                   className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder="contact@business.com"
                 />
@@ -428,7 +432,9 @@ export default function BusinessListingForm() {
                 <input
                   type="number"
                   value={formData.askingPrice}
-                  onChange={(e) => updateFormData({ askingPrice: e.target.value })}
+                  onChange={e =>
+                    updateFormData({ askingPrice: e.target.value })
+                  }
                   className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder="0"
                 />
@@ -441,7 +447,7 @@ export default function BusinessListingForm() {
                 <input
                   type="number"
                   value={formData.revenue}
-                  onChange={(e) => updateFormData({ revenue: e.target.value })}
+                  onChange={e => updateFormData({ revenue: e.target.value })}
                   className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder="0"
                 />
@@ -456,7 +462,7 @@ export default function BusinessListingForm() {
                 <input
                   type="number"
                   value={formData.profit}
-                  onChange={(e) => updateFormData({ profit: e.target.value })}
+                  onChange={e => updateFormData({ profit: e.target.value })}
                   className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder="0"
                 />
@@ -469,7 +475,7 @@ export default function BusinessListingForm() {
                 <input
                   type="number"
                   value={formData.cashFlow}
-                  onChange={(e) => updateFormData({ cashFlow: e.target.value })}
+                  onChange={e => updateFormData({ cashFlow: e.target.value })}
                   className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder="0"
                 />
@@ -484,7 +490,7 @@ export default function BusinessListingForm() {
                 <input
                   type="number"
                   value={formData.ebitda}
-                  onChange={(e) => updateFormData({ ebitda: e.target.value })}
+                  onChange={e => updateFormData({ ebitda: e.target.value })}
                   className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder="0"
                 />
@@ -497,7 +503,9 @@ export default function BusinessListingForm() {
                 <input
                   type="number"
                   value={formData.monthlyRevenue}
-                  onChange={(e) => updateFormData({ monthlyRevenue: e.target.value })}
+                  onChange={e =>
+                    updateFormData({ monthlyRevenue: e.target.value })
+                  }
                   className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder="0"
                 />
@@ -514,7 +522,9 @@ export default function BusinessListingForm() {
                   step="0.1"
                   max="100"
                   value={formData.grossMargin}
-                  onChange={(e) => updateFormData({ grossMargin: e.target.value })}
+                  onChange={e =>
+                    updateFormData({ grossMargin: e.target.value })
+                  }
                   className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder="0.0"
                 />
@@ -529,7 +539,7 @@ export default function BusinessListingForm() {
                   step="0.1"
                   max="100"
                   value={formData.netMargin}
-                  onChange={(e) => updateFormData({ netMargin: e.target.value })}
+                  onChange={e => updateFormData({ netMargin: e.target.value })}
                   className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder="0.0"
                 />
@@ -551,7 +561,9 @@ export default function BusinessListingForm() {
                   min="1800"
                   max={new Date().getFullYear()}
                   value={formData.established}
-                  onChange={(e) => updateFormData({ established: e.target.value })}
+                  onChange={e =>
+                    updateFormData({ established: e.target.value })
+                  }
                   className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder="2020"
                 />
@@ -564,7 +576,7 @@ export default function BusinessListingForm() {
                 <input
                   type="number"
                   value={formData.employees}
-                  onChange={(e) => updateFormData({ employees: e.target.value })}
+                  onChange={e => updateFormData({ employees: e.target.value })}
                   className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder="5"
                 />
@@ -577,7 +589,9 @@ export default function BusinessListingForm() {
                 <input
                   type="number"
                   value={formData.customerBase}
-                  onChange={(e) => updateFormData({ customerBase: e.target.value })}
+                  onChange={e =>
+                    updateFormData({ customerBase: e.target.value })
+                  }
                   className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder="1000"
                 />
@@ -596,9 +610,10 @@ export default function BusinessListingForm() {
                     onClick={() => handleDayToggle(day)}
                     className={`
                       px-3 py-1 rounded-lg text-sm font-medium transition-colors
-                      ${formData.daysOpen.includes(day)
-                        ? 'bg-primary-500 text-white'
-                        : 'bg-secondary-100 text-secondary-700 hover:bg-secondary-200'
+                      ${
+                        formData.daysOpen.includes(day)
+                          ? 'bg-primary-500 text-white'
+                          : 'bg-secondary-100 text-secondary-700 hover:bg-secondary-200'
                       }
                     `}
                   >
@@ -615,7 +630,9 @@ export default function BusinessListingForm() {
               <input
                 type="text"
                 value={formData.hoursOfOperation}
-                onChange={(e) => updateFormData({ hoursOfOperation: e.target.value })}
+                onChange={e =>
+                  updateFormData({ hoursOfOperation: e.target.value })
+                }
                 className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 placeholder="9:00 AM - 6:00 PM"
               />
@@ -627,7 +644,7 @@ export default function BusinessListingForm() {
               </label>
               <textarea
                 value={formData.seasonality}
-                onChange={(e) => updateFormData({ seasonality: e.target.value })}
+                onChange={e => updateFormData({ seasonality: e.target.value })}
                 rows={3}
                 className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 placeholder="Describe any seasonal variations in business performance..."
@@ -640,7 +657,7 @@ export default function BusinessListingForm() {
               </label>
               <textarea
                 value={formData.competition}
-                onChange={(e) => updateFormData({ competition: e.target.value })}
+                onChange={e => updateFormData({ competition: e.target.value })}
                 rows={3}
                 className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 placeholder="Describe the competitive landscape and your advantages..."
@@ -658,7 +675,9 @@ export default function BusinessListingForm() {
               </label>
               <textarea
                 value={formData.reasonForSelling}
-                onChange={(e) => updateFormData({ reasonForSelling: e.target.value })}
+                onChange={e =>
+                  updateFormData({ reasonForSelling: e.target.value })
+                }
                 rows={3}
                 className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 placeholder="Why are you selling this business?"
@@ -672,7 +691,7 @@ export default function BusinessListingForm() {
                 </label>
                 <select
                   value={formData.timeframe}
-                  onChange={(e) => updateFormData({ timeframe: e.target.value })}
+                  onChange={e => updateFormData({ timeframe: e.target.value })}
                   className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 >
                   <option value="">Select timeframe</option>
@@ -690,7 +709,9 @@ export default function BusinessListingForm() {
                 </label>
                 <select
                   value={formData.negotiations}
-                  onChange={(e) => updateFormData({ negotiations: e.target.value })}
+                  onChange={e =>
+                    updateFormData({ negotiations: e.target.value })
+                  }
                   className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 >
                   <option value="">Select option</option>
@@ -707,7 +728,7 @@ export default function BusinessListingForm() {
               </label>
               <textarea
                 value={formData.financing}
-                onChange={(e) => updateFormData({ financing: e.target.value })}
+                onChange={e => updateFormData({ financing: e.target.value })}
                 rows={3}
                 className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 placeholder="Describe available financing options (seller financing, SBA loans, etc.)"
@@ -720,12 +741,15 @@ export default function BusinessListingForm() {
         return (
           <div className="space-y-8">
             <div>
-              <h3 className="text-lg font-medium text-secondary-900 mb-4">Business Images</h3>
+              <h3 className="text-lg font-medium text-secondary-900 mb-4">
+                Business Images
+              </h3>
               <p className="text-sm text-secondary-600 mb-4">
-                Add high-quality photos of your business, storefront, interior, equipment, and products.
+                Add high-quality photos of your business, storefront, interior,
+                equipment, and products.
               </p>
               <ImageUpload
-                onUpload={(images) => updateFormData({ images })}
+                onUpload={images => updateFormData({ images })}
                 maxImages={15}
                 folder="businesses"
                 existingImages={formData.images}
@@ -733,14 +757,19 @@ export default function BusinessListingForm() {
             </div>
 
             <div>
-              <h3 className="text-lg font-medium text-secondary-900 mb-4">Business Documents</h3>
+              <h3 className="text-lg font-medium text-secondary-900 mb-4">
+                Business Documents
+              </h3>
               <p className="text-sm text-secondary-600 mb-4">
-                Upload financial statements, tax returns, and other relevant documents. These will be shared with qualified buyers.
+                Upload financial statements, tax returns, and other relevant
+                documents. These will be shared with qualified buyers.
               </p>
               {/* Document upload component would go here */}
               <div className="border-2 border-dashed border-secondary-300 rounded-lg p-8 text-center">
                 <FileText className="w-8 h-8 text-secondary-400 mx-auto mb-2" />
-                <p className="text-secondary-600">Document upload coming soon</p>
+                <p className="text-secondary-600">
+                  Document upload coming soon
+                </p>
               </div>
             </div>
           </div>
@@ -754,7 +783,9 @@ export default function BusinessListingForm() {
   if (!session) {
     return (
       <div className="text-center py-8">
-        <p className="text-secondary-600">Please sign in to create a business listing.</p>
+        <p className="text-secondary-600">
+          Please sign in to create a business listing.
+        </p>
       </div>
     )
   }
@@ -774,9 +805,10 @@ export default function BusinessListingForm() {
               <div
                 className={`
                   flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium
-                  ${step.id <= currentStep
-                    ? 'bg-primary-500 text-white'
-                    : 'bg-secondary-200 text-secondary-600'
+                  ${
+                    step.id <= currentStep
+                      ? 'bg-primary-500 text-white'
+                      : 'bg-secondary-200 text-secondary-600'
                   }
                 `}
               >
@@ -823,9 +855,10 @@ export default function BusinessListingForm() {
             onClick={() => setCurrentStep(Math.max(1, currentStep - 1))}
             className={`
               px-4 py-2 rounded-lg font-medium
-              ${currentStep === 1
-                ? 'text-secondary-400 cursor-not-allowed'
-                : 'text-secondary-600 hover:text-secondary-800'
+              ${
+                currentStep === 1
+                  ? 'text-secondary-400 cursor-not-allowed'
+                  : 'text-secondary-600 hover:text-secondary-800'
               }
             `}
             disabled={currentStep === 1}
