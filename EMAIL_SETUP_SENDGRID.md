@@ -24,7 +24,7 @@ NEXT_PUBLIC_ENABLE_EMAIL=true
 2. **Create API Key:**
    - Navigate to Settings → API Keys
    - Click "Create API Key"
-   - Choose "Full Access" 
+   - Choose "Full Access"
    - Copy the generated key (save it securely!)
 
 3. **Domain Authentication (Optional but Recommended):**
@@ -67,6 +67,7 @@ Run with: `npx tsx scripts/test-email.ts`
 ## 4. SendGrid Dashboard Features
 
 After setup, you can monitor:
+
 - Email delivery rates
 - Open/click tracking
 - Bounce/spam reports
@@ -80,6 +81,7 @@ After setup, you can monitor:
 - **Unsubscribes**: SendGrid handles unsubscribe links automatically
 
 ## 6. Pricing (as of 2024)
+
 - **Free**: 100 emails/day forever
 - **Essentials**: $19.95/month for 50,000 emails
 - **Pro**: $89.95/month for 100,000 emails
@@ -102,5 +104,6 @@ After setup, you can monitor:
    - Upgrade plan if needed
 
 ### Support Resources:
+
 - SendGrid Documentation: https://docs.sendgrid.com
 - SMTP Integration Guide: https://docs.sendgrid.com/for-developers/sending-email/integrating-with-the-smtp-api

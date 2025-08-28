@@ -42,10 +42,7 @@ export async function GET(request: NextRequest) {
 
     const notifications = await prisma.notification.findMany({
       where: whereConditions,
-      orderBy: [
-        { priority: 'desc' },
-        { createdAt: 'desc' },
-      ],
+      orderBy: [{ priority: 'desc' }, { createdAt: 'desc' }],
       take: limit,
       skip: offset,
     })
@@ -62,10 +59,13 @@ export async function GET(request: NextRequest) {
       _count: true,
     })
 
-    const countsByStatus = counts.reduce((acc, count) => {
-      acc[count.status] = count._count
-      return acc
-    }, {} as Record<string, number>)
+    const countsByStatus = counts.reduce(
+      (acc, count) => {
+        acc[count.status] = count._count
+        return acc
+      },
+      {} as Record<string, number>
+    )
 
     return NextResponse.json({
       notifications,
@@ -168,9 +168,9 @@ export async function DELETE(request: NextRequest) {
       },
     })
 
-    return NextResponse.json({ 
-      success: true, 
-      deletedCount: result.count 
+    return NextResponse.json({
+      success: true,
+      deletedCount: result.count,
     })
   } catch (error) {
     console.error('Failed to cleanup notifications:', error)

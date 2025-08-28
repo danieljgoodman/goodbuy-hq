@@ -39,8 +39,10 @@ export class SocketServer {
 
         // Verify the JWT token (simplified approach)
         // In production, you'd want to verify the token properly
-        const decoded = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString())
-        
+        const decoded = JSON.parse(
+          Buffer.from(token.split('.')[1], 'base64').toString()
+        )
+
         if (!decoded.sub || !decoded.email) {
           return next(new Error('Invalid token'))
         }
@@ -98,19 +100,24 @@ export class SocketServer {
       })
 
       // Handle presence updates
-      socket.on('update_presence', (data: { status: 'online' | 'away' | 'busy' }) => {
-        this.broadcastPresenceUpdate(socket.userId!, data.status)
-      })
+      socket.on(
+        'update_presence',
+        (data: { status: 'online' | 'away' | 'busy' }) => {
+          this.broadcastPresenceUpdate(socket.userId!, data.status)
+        }
+      )
 
       // Handle disconnection
       socket.on('disconnect', () => {
-        console.log(`User ${socket.userEmail} disconnected from socket ${socket.id}`)
+        console.log(
+          `User ${socket.userEmail} disconnected from socket ${socket.id}`
+        )
 
         if (socket.userId) {
           const userSockets = this.connectedUsers.get(socket.userId)
           if (userSockets) {
             userSockets.delete(socket.id)
-            
+
             // If user has no more connections, mark as offline
             if (userSockets.size === 0) {
               this.connectedUsers.delete(socket.userId)
@@ -146,7 +153,10 @@ export class SocketServer {
     }
   }
 
-  private broadcastPresenceUpdate(userId: string, status: 'online' | 'away' | 'busy' | 'offline') {
+  private broadcastPresenceUpdate(
+    userId: string,
+    status: 'online' | 'away' | 'busy' | 'offline'
+  ) {
     this.io.emit('presence_update', {
       userId,
       status,
@@ -163,7 +173,11 @@ export class SocketServer {
     })
   }
 
-  public notifyMessageUpdated(threadId: string, messageId: string, updatedMessage: any) {
+  public notifyMessageUpdated(
+    threadId: string,
+    messageId: string,
+    updatedMessage: any
+  ) {
     this.io.to(`thread:${threadId}`).emit('message_updated', {
       threadId,
       messageId,

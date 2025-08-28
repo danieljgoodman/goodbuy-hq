@@ -84,21 +84,28 @@ export default function MessagingInterface() {
     setReplyingTo(null)
   }
 
-  const handleSendMessage = async (content: string, messageType = 'text', replyToId?: string) => {
+  const handleSendMessage = async (
+    content: string,
+    messageType = 'text',
+    replyToId?: string
+  ) => {
     if (!selectedThread) return
 
     try {
-      const response = await fetch(`/api/communications/threads/${selectedThread.id}/messages`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          content,
-          messageType,
-          replyToId,
-        }),
-      })
+      const response = await fetch(
+        `/api/communications/threads/${selectedThread.id}/messages`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            content,
+            messageType,
+            replyToId,
+          }),
+        }
+      )
 
       if (!response.ok) {
         throw new Error('Failed to send message')
@@ -127,7 +134,7 @@ export default function MessagingInterface() {
   const getThreadTitle = (thread: Thread) => {
     if (thread.subject) return thread.subject
     if (thread.business) return `Re: ${thread.business.title}`
-    
+
     const otherParticipants = thread.participants.filter(
       p => p.user.id !== session?.user?.id
     )
@@ -144,7 +151,9 @@ export default function MessagingInterface() {
         <div className="fixed inset-0 z-50 bg-black bg-opacity-50 md:hidden">
           <div className="bg-white h-full w-80 max-w-[90vw] overflow-hidden">
             <div className="p-4 border-b border-secondary-200 flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-secondary-900">Messages</h2>
+              <h2 className="text-lg font-semibold text-secondary-900">
+                Messages
+              </h2>
               <button
                 onClick={() => setIsMobileThreadListOpen(false)}
                 className="p-2 hover:bg-secondary-100 rounded-full"
@@ -167,7 +176,9 @@ export default function MessagingInterface() {
         {/* Header */}
         <div className="p-4 border-b border-secondary-200 bg-white">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-secondary-900">Messages</h2>
+            <h2 className="text-lg font-semibold text-secondary-900">
+              Messages
+            </h2>
             <div className="flex items-center space-x-2">
               <button
                 onClick={() => setShowNewMessageModal(true)}
@@ -192,7 +203,7 @@ export default function MessagingInterface() {
               type="text"
               placeholder="Search conversations..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={e => setSearchQuery(e.target.value)}
               className="w-full pl-10 pr-4 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
           </div>
@@ -228,7 +239,10 @@ export default function MessagingInterface() {
                       {getThreadTitle(selectedThread)}
                     </h3>
                     <div className="flex items-center space-x-2 text-sm text-secondary-600">
-                      <span>{selectedThread.participants.length} participant{selectedThread.participants.length !== 1 ? 's' : ''}</span>
+                      <span>
+                        {selectedThread.participants.length} participant
+                        {selectedThread.participants.length !== 1 ? 's' : ''}
+                      </span>
                       {selectedThread.business && (
                         <>
                           <span>•</span>
@@ -271,12 +285,13 @@ export default function MessagingInterface() {
               <div className="w-24 h-24 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Search className="w-12 h-12 text-primary-600" />
               </div>
-              
+
               <h3 className="text-xl font-semibold text-secondary-900 mb-2">
                 Welcome to Messages
               </h3>
               <p className="text-secondary-600 mb-6">
-                Select a conversation from the sidebar to start messaging, or create a new conversation.
+                Select a conversation from the sidebar to start messaging, or
+                create a new conversation.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3 justify-center">

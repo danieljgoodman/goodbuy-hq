@@ -1,15 +1,15 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from 'next/server'
 
 export async function GET() {
-  const response = NextResponse.json({ message: 'Session cleared' });
-  
+  const response = NextResponse.json({ message: 'Session cleared' })
+
   // Clear NextAuth session cookies
-  response.cookies.delete('next-auth.session-token');
-  response.cookies.delete('__Secure-next-auth.session-token');
-  response.cookies.delete('next-auth.csrf-token');
-  response.cookies.delete('__Secure-next-auth.csrf-token');
-  response.cookies.delete('next-auth.callback-url');
-  response.cookies.delete('__Secure-next-auth.callback-url');
-  
-  return response;
+  response.cookies.delete('next-auth.session-token')
+  response.cookies.delete('__Secure-next-auth.session-token')
+  response.cookies.delete('next-auth.csrf-token')
+  response.cookies.delete('__Secure-next-auth.csrf-token')
+  response.cookies.delete('next-auth.callback-url')
+  response.cookies.delete('__Secure-next-auth.callback-url')
+
+  return response
 }

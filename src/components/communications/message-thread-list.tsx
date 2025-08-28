@@ -2,7 +2,13 @@
 
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
-import { MessageCircle, Users, Calendar, File, MoreVertical } from 'lucide-react'
+import {
+  MessageCircle,
+  Users,
+  Calendar,
+  File,
+  MoreVertical,
+} from 'lucide-react'
 import { formatDistanceToNow } from 'date-fns'
 
 interface ThreadParticipant {
@@ -50,7 +56,10 @@ interface MessageThreadListProps {
   selectedThreadId?: string
 }
 
-export default function MessageThreadList({ onThreadSelect, selectedThreadId }: MessageThreadListProps) {
+export default function MessageThreadList({
+  onThreadSelect,
+  selectedThreadId,
+}: MessageThreadListProps) {
   const { data: session } = useSession()
   const [threads, setThreads] = useState<Thread[]>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -64,7 +73,7 @@ export default function MessageThreadList({ onThreadSelect, selectedThreadId }: 
     try {
       setIsLoading(true)
       const response = await fetch('/api/communications/threads')
-      
+
       if (!response.ok) {
         throw new Error('Failed to fetch threads')
       }
@@ -81,7 +90,7 @@ export default function MessageThreadList({ onThreadSelect, selectedThreadId }: 
   const getThreadTitle = (thread: Thread) => {
     if (thread.subject) return thread.subject
     if (thread.business) return `Re: ${thread.business.title}`
-    
+
     // Create title from participants
     const otherParticipants = thread.participants.filter(
       p => p.user.id !== session?.user?.id
@@ -95,7 +104,7 @@ export default function MessageThreadList({ onThreadSelect, selectedThreadId }: 
   const getLastMessagePreview = (thread: Thread) => {
     if (thread.messages.length === 0) return 'No messages yet'
     const lastMessage = thread.messages[0]
-    return lastMessage.content.length > 50 
+    return lastMessage.content.length > 50
       ? lastMessage.content.substring(0, 50) + '...'
       : lastMessage.content
   }
@@ -127,7 +136,7 @@ export default function MessageThreadList({ onThreadSelect, selectedThreadId }: 
     return (
       <div className="p-4 text-center">
         <p className="text-error-600 mb-4">{error}</p>
-        <button 
+        <button
           onClick={fetchThreads}
           className="btn-primary px-4 py-2 rounded-lg"
         >
@@ -150,19 +159,20 @@ export default function MessageThreadList({ onThreadSelect, selectedThreadId }: 
           </p>
         </div>
       ) : (
-        threads.map((thread) => {
+        threads.map(thread => {
           const lastSender = getLastSender(thread)
           const isSelected = selectedThreadId === thread.id
-          
+
           return (
             <div
               key={thread.id}
               onClick={() => onThreadSelect(thread)}
               className={`
                 flex items-start space-x-3 p-4 rounded-lg cursor-pointer transition-colors
-                ${isSelected 
-                  ? 'bg-primary-50 border-l-4 border-primary-500' 
-                  : 'hover:bg-secondary-50'
+                ${
+                  isSelected
+                    ? 'bg-primary-50 border-l-4 border-primary-500'
+                    : 'hover:bg-secondary-50'
                 }
               `}
             >
@@ -182,10 +192,12 @@ export default function MessageThreadList({ onThreadSelect, selectedThreadId }: 
               {/* Thread Info */}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between mb-1">
-                  <h3 className={`
+                  <h3
+                    className={`
                     text-sm font-medium truncate
                     ${thread.unreadCount > 0 ? 'text-secondary-900' : 'text-secondary-700'}
-                  `}>
+                  `}
+                  >
                     {getThreadTitle(thread)}
                   </h3>
                   <div className="flex items-center space-x-2">
@@ -195,7 +207,9 @@ export default function MessageThreadList({ onThreadSelect, selectedThreadId }: 
                       </span>
                     )}
                     <span className="text-xs text-secondary-500">
-                      {formatDistanceToNow(new Date(thread.lastMessageAt), { addSuffix: true })}
+                      {formatDistanceToNow(new Date(thread.lastMessageAt), {
+                        addSuffix: true,
+                      })}
                     </span>
                   </div>
                 </div>
@@ -203,13 +217,18 @@ export default function MessageThreadList({ onThreadSelect, selectedThreadId }: 
                 <div className="flex items-center space-x-2">
                   {lastSender && (
                     <span className="text-xs text-secondary-600 font-medium">
-                      {lastSender.id === session?.user?.id ? 'You' : lastSender.name}:
+                      {lastSender.id === session?.user?.id
+                        ? 'You'
+                        : lastSender.name}
+                      :
                     </span>
                   )}
-                  <p className={`
+                  <p
+                    className={`
                     text-sm truncate
                     ${thread.unreadCount > 0 ? 'text-secondary-900 font-medium' : 'text-secondary-600'}
-                  `}>
+                  `}
+                  >
                     {getLastMessagePreview(thread)}
                   </p>
                 </div>

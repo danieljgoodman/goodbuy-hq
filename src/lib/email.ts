@@ -177,7 +177,7 @@ export async function sendNewMessageNotification(
   threadId: string
 ) {
   const threadUrl = `${process.env.NEXTAUTH_URL}/messages/${threadId}`
-  
+
   const htmlContent = `
     <!DOCTYPE html>
     <html>
@@ -250,7 +250,7 @@ export async function sendMeetingInvitation(
   const meetingUrl = `${process.env.NEXTAUTH_URL}/meetings/${meetingId}`
   const startTime = scheduledStart.toLocaleString()
   const endTime = scheduledEnd.toLocaleString()
-  
+
   const htmlContent = `
     <!DOCTYPE html>
     <html>
@@ -331,7 +331,7 @@ export async function sendMeetingReminder(
 ) {
   const meetingUrl = `${process.env.NEXTAUTH_URL}/meetings/${meetingId}`
   const startTime = scheduledStart.toLocaleString()
-  
+
   const htmlContent = `
     <!DOCTYPE html>
     <html>
@@ -401,7 +401,7 @@ export async function sendDocumentSharedNotification(
   documentId: string
 ) {
   const documentUrl = `${process.env.NEXTAUTH_URL}/documents/${documentId}`
-  
+
   const htmlContent = `
     <!DOCTYPE html>
     <html>
@@ -468,7 +468,7 @@ export async function sendDailyDigest(
   newDocuments: number
 ) {
   const dashboardUrl = `${process.env.NEXTAUTH_URL}/dashboard`
-  
+
   const htmlContent = `
     <!DOCTYPE html>
     <html>
@@ -538,6 +538,104 @@ export async function sendDailyDigest(
     })
   } catch (error) {
     console.error('Failed to send daily digest:', error)
+    throw error
+  }
+}
+
+export async function sendNewInquiryNotification(
+  recipientEmail: string,
+  recipientName: string,
+  inquirerName: string,
+  inquirerEmail: string,
+  businessTitle: string,
+  inquirySubject: string,
+  inquiryMessage: string,
+  inquiryId: string
+) {
+  const inquiryUrl = `${process.env.NEXTAUTH_URL}/dashboard/inquiries?id=${inquiryId}`
+  
+  const htmlContent = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <title>New Business Inquiry - GoodBuy HQ</title>
+      <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f8fafc; }
+        .container { max-width: 600px; margin: 0 auto; background-color: white; }
+        .header { background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%); padding: 30px 20px; text-align: center; }
+        .header h1 { color: white; margin: 0; font-size: 24px; font-weight: bold; }
+        .content { padding: 30px 20px; }
+        .inquiry-box { background-color: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #10b981; }
+        .inquiry-details { background-color: white; padding: 15px; border-radius: 6px; margin: 10px 0; }
+        .button { display: inline-block; background-color: #10b981; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 600; margin: 20px 0; }
+        .tips-box { background-color: #fef3c7; border: 1px solid #f59e0b; border-radius: 6px; padding: 15px; margin: 20px 0; }
+        .footer { background-color: #f1f5f9; padding: 20px; text-align: center; color: #64748b; font-size: 14px; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <h1>🔔 New Business Inquiry</h1>
+        </div>
+        <div class="content">
+          <h2>Great news, ${recipientName}!</h2>
+          <p>You've received a new inquiry for your business listing <strong>"${businessTitle}"</strong>.</p>
+          
+          <div class="inquiry-box">
+            <h3 style="margin-top: 0; color: #1f2937;">📩 Inquiry Details</h3>
+            <div class="inquiry-details">
+              <p><strong>From:</strong> ${inquirerName}</p>
+              <p><strong>Email:</strong> ${inquirerEmail}</p>
+              <p><strong>Subject:</strong> ${inquirySubject}</p>
+              <div style="margin: 15px 0;">
+                <strong>Message:</strong>
+                <div style="margin-top: 8px; padding: 12px; background: #f9fafb; border-radius: 4px; font-style: italic;">
+                  "${inquiryMessage.replace(/\n/g, '<br>')}"
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div style="text-align: center;">
+            <a href="${inquiryUrl}" class="button">View & Respond to Inquiry</a>
+          </div>
+          
+          <div class="tips-box">
+            <h4 style="margin: 0 0 10px 0; color: #92400e;">📈 Pro Tips for Success:</h4>
+            <ul style="margin: 0; padding-left: 20px; color: #92400e;">
+              <li>Respond within 2-4 hours for best results</li>
+              <li>Ask qualifying questions about budget and timeline</li>
+              <li>Offer to schedule a call or meeting</li>
+              <li>Share additional documents for serious buyers</li>
+            </ul>
+          </div>
+          
+          <p style="color: #6b7280; font-size: 14px;">
+            💡 <strong>Remember:</strong> Quick responses lead to better conversion rates. Strike while the iron is hot!
+          </p>
+          
+          <p>Best of luck with your sale!</p>
+          <p>The GoodBuy HQ Team</p>
+        </div>
+        <div class="footer">
+          <p>&copy; 2024 GoodBuy HQ. All rights reserved.</p>
+          <p>To manage your notification preferences, <a href="${process.env.NEXTAUTH_URL}/settings/notifications">click here</a>.</p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `
+
+  try {
+    await transporter.sendMail({
+      from: `"GoodBuy HQ" <${process.env.SMTP_USER}>`,
+      to: recipientEmail,
+      subject: `🔔 New Inquiry: ${businessTitle}`,
+      html: htmlContent,
+    })
+  } catch (error) {
+    console.error('Failed to send inquiry notification:', error)
     throw error
   }
 }

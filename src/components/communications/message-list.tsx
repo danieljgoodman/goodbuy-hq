@@ -3,7 +3,14 @@
 import { useState, useEffect, useRef } from 'react'
 import { useSession } from 'next-auth/react'
 import { formatDistanceToNow, format } from 'date-fns'
-import { MoreVertical, Reply, Edit, Trash2, Check, CheckCheck } from 'lucide-react'
+import {
+  MoreVertical,
+  Reply,
+  Edit,
+  Trash2,
+  Check,
+  CheckCheck,
+} from 'lucide-react'
 
 interface MessageAttachment {
   id: string
@@ -61,11 +68,11 @@ interface MessageListProps {
   onDeleteMessage?: (messageId: string) => void
 }
 
-export default function MessageList({ 
-  threadId, 
-  onReplyToMessage, 
-  onEditMessage, 
-  onDeleteMessage 
+export default function MessageList({
+  threadId,
+  onReplyToMessage,
+  onEditMessage,
+  onDeleteMessage,
 }: MessageListProps) {
   const { data: session } = useSession()
   const [messages, setMessages] = useState<Message[]>([])
@@ -92,8 +99,10 @@ export default function MessageList({
   const fetchMessages = async () => {
     try {
       setIsLoading(true)
-      const response = await fetch(`/api/communications/threads/${threadId}/messages`)
-      
+      const response = await fetch(
+        `/api/communications/threads/${threadId}/messages`
+      )
+
       if (!response.ok) {
         throw new Error('Failed to fetch messages')
       }
@@ -111,31 +120,32 @@ export default function MessageList({
     if (!editContent.trim()) return
 
     try {
-      const response = await fetch(`/api/communications/messages/${messageId}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          content: editContent.trim(),
-        }),
-      })
+      const response = await fetch(
+        `/api/communications/messages/${messageId}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            content: editContent.trim(),
+          }),
+        }
+      )
 
       if (!response.ok) {
         throw new Error('Failed to edit message')
       }
 
       const updatedMessage = await response.json()
-      
-      setMessages(prev => 
-        prev.map(msg => 
-          msg.id === messageId ? updatedMessage : msg
-        )
+
+      setMessages(prev =>
+        prev.map(msg => (msg.id === messageId ? updatedMessage : msg))
       )
-      
+
       setEditingMessageId(null)
       setEditContent('')
-      
+
       onEditMessage?.(messageId, editContent.trim())
     } catch (error) {
       console.error('Failed to edit message:', error)
@@ -146,9 +156,12 @@ export default function MessageList({
     if (!confirm('Are you sure you want to delete this message?')) return
 
     try {
-      const response = await fetch(`/api/communications/messages/${messageId}`, {
-        method: 'DELETE',
-      })
+      const response = await fetch(
+        `/api/communications/messages/${messageId}`,
+        {
+          method: 'DELETE',
+        }
+      )
 
       if (!response.ok) {
         throw new Error('Failed to delete message')
@@ -204,7 +217,7 @@ export default function MessageList({
       <div className="flex-1 flex items-center justify-center">
         <div className="text-center">
           <p className="text-error-600 mb-4">{error}</p>
-          <button 
+          <button
             onClick={fetchMessages}
             className="btn-primary px-4 py-2 rounded-lg"
           >
@@ -231,10 +244,11 @@ export default function MessageList({
       ) : (
         messages.map((message, index) => {
           const isCurrentUser = message.sender.id === session?.user?.id
-          const showDate = index === 0 || 
-            new Date(message.createdAt).toDateString() !== 
-            new Date(messages[index - 1].createdAt).toDateString()
-          
+          const showDate =
+            index === 0 ||
+            new Date(message.createdAt).toDateString() !==
+              new Date(messages[index - 1].createdAt).toDateString()
+
           return (
             <div key={message.id}>
               {/* Date Separator */}
@@ -247,11 +261,15 @@ export default function MessageList({
               )}
 
               {/* Message */}
-              <div className={`flex ${isCurrentUser ? 'justify-end' : 'justify-start'}`}>
-                <div className={`
+              <div
+                className={`flex ${isCurrentUser ? 'justify-end' : 'justify-start'}`}
+              >
+                <div
+                  className={`
                   max-w-xs lg:max-w-md xl:max-w-lg
                   ${isCurrentUser ? 'order-2' : 'order-1'}
-                `}>
+                `}
+                >
                   {/* Reply Context */}
                   {message.replyTo && (
                     <div className="mb-2 px-3 py-2 bg-secondary-100 rounded-lg border-l-4 border-secondary-300">
@@ -265,13 +283,16 @@ export default function MessageList({
                   )}
 
                   {/* Message Bubble */}
-                  <div className={`
+                  <div
+                    className={`
                     px-4 py-2 rounded-lg
-                    ${isCurrentUser 
-                      ? 'bg-primary-500 text-white' 
-                      : 'bg-white border border-secondary-200'
+                    ${
+                      isCurrentUser
+                        ? 'bg-primary-500 text-white'
+                        : 'bg-white border border-secondary-200'
                     }
-                  `}>
+                  `}
+                  >
                     {/* Sender Name (for group chats) */}
                     {!isCurrentUser && (
                       <p className="text-xs font-medium text-secondary-600 mb-1">
@@ -284,7 +305,7 @@ export default function MessageList({
                       <div className="space-y-2">
                         <textarea
                           value={editContent}
-                          onChange={(e) => setEditContent(e.target.value)}
+                          onChange={e => setEditContent(e.target.value)}
                           className="w-full p-2 border border-secondary-300 rounded text-secondary-900 resize-none"
                           rows={2}
                         />
@@ -305,7 +326,9 @@ export default function MessageList({
                       </div>
                     ) : (
                       <>
-                        <p className={`text-sm ${isCurrentUser ? 'text-white' : 'text-secondary-900'}`}>
+                        <p
+                          className={`text-sm ${isCurrentUser ? 'text-white' : 'text-secondary-900'}`}
+                        >
                           {message.content}
                         </p>
 
@@ -317,30 +340,38 @@ export default function MessageList({
                         )}
 
                         {/* Attachments */}
-                        {message.attachments && message.attachments.length > 0 && (
-                          <div className="mt-2 space-y-1">
-                            {message.attachments.map((attachment) => (
-                              <div
-                                key={attachment.id}
-                                className={`
+                        {message.attachments &&
+                          message.attachments.length > 0 && (
+                            <div className="mt-2 space-y-1">
+                              {message.attachments.map(attachment => (
+                                <div
+                                  key={attachment.id}
+                                  className={`
                                   p-2 rounded border text-xs
-                                  ${isCurrentUser 
-                                    ? 'bg-primary-400 border-primary-300' 
-                                    : 'bg-secondary-50 border-secondary-200'
+                                  ${
+                                    isCurrentUser
+                                      ? 'bg-primary-400 border-primary-300'
+                                      : 'bg-secondary-50 border-secondary-200'
                                   }
                                 `}
-                              >
-                                <p className="font-medium">{attachment.originalName}</p>
-                                <p className="opacity-75">{formatFileSize(attachment.size)}</p>
-                              </div>
-                            ))}
-                          </div>
-                        )}
+                                >
+                                  <p className="font-medium">
+                                    {attachment.originalName}
+                                  </p>
+                                  <p className="opacity-75">
+                                    {formatFileSize(attachment.size)}
+                                  </p>
+                                </div>
+                              ))}
+                            </div>
+                          )}
 
                         {/* Edited Indicator */}
                         {message.isEdited && (
                           <p className="text-xs opacity-75 mt-1">
-                            edited {formatDistanceToNow(new Date(message.editedAt!))} ago
+                            edited{' '}
+                            {formatDistanceToNow(new Date(message.editedAt!))}{' '}
+                            ago
                           </p>
                         )}
                       </>
@@ -354,16 +385,17 @@ export default function MessageList({
                             onClick={() => onReplyToMessage?.(message)}
                             className={`
                               text-xs p-1 rounded-full transition-colors
-                              ${isCurrentUser 
-                                ? 'text-primary-100 hover:bg-primary-400' 
-                                : 'text-secondary-500 hover:bg-secondary-100'
+                              ${
+                                isCurrentUser
+                                  ? 'text-primary-100 hover:bg-primary-400'
+                                  : 'text-secondary-500 hover:bg-secondary-100'
                               }
                             `}
                             title="Reply"
                           >
                             <Reply className="w-3 h-3" />
                           </button>
-                          
+
                           {isCurrentUser && (
                             <>
                               <button
@@ -399,10 +431,12 @@ export default function MessageList({
                   </div>
 
                   {/* Timestamp */}
-                  <p className={`
+                  <p
+                    className={`
                     text-xs text-secondary-500 mt-1
                     ${isCurrentUser ? 'text-right' : 'text-left'}
-                  `}>
+                  `}
+                  >
                     {format(new Date(message.createdAt), 'h:mm a')}
                   </p>
                 </div>
@@ -422,7 +456,7 @@ export default function MessageList({
           )
         })
       )}
-      
+
       <div ref={messagesEndRef} />
     </div>
   )

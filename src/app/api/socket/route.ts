@@ -6,9 +6,9 @@ import { initializeSocketServer, getSocketServer } from '@/lib/socket-server'
 // In a real implementation, you'd need to set up a custom server or use a different approach
 
 export async function GET(request: NextRequest) {
-  return NextResponse.json({ 
+  return NextResponse.json({
     message: 'Socket.io server initialization endpoint',
-    status: 'WebSocket support requires custom server setup'
+    status: 'WebSocket support requires custom server setup',
   })
 }
 
@@ -30,24 +30,21 @@ export async function POST(request: NextRequest) {
       case 'broadcast_message':
         socketServer.notifyNewMessage(data.threadId, data.message)
         break
-      
+
       case 'broadcast_notification':
         socketServer.notifyNewNotification(data.userId, data.notification)
         break
-      
+
       case 'broadcast_meeting_invitation':
         socketServer.notifyMeetingInvitation(data.userIds, data.meeting)
         break
-      
+
       case 'broadcast_document_shared':
         socketServer.notifyDocumentShared(data.threadId, data.document)
         break
-      
+
       default:
-        return NextResponse.json(
-          { error: 'Unknown action' },
-          { status: 400 }
-        )
+        return NextResponse.json({ error: 'Unknown action' }, { status: 400 })
     }
 
     return NextResponse.json({ success: true })

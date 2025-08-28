@@ -121,21 +121,29 @@ export function BusinessEvaluationForm() {
     }
   }
 
-  const convertToBusinessData = (formData: Partial<EvaluationFormData>): BusinessData => {
+  const convertToBusinessData = (
+    formData: Partial<EvaluationFormData>
+  ): BusinessData => {
     return {
       businessName: formData.basicInfo?.companyName || '',
       industry: formData.basicInfo?.industry || '',
       description: formData.basicInfo?.description || '',
       annualRevenue: formData.financialData?.revenue || 0,
-      monthlyExpenses: formData.financialData?.operatingExpenses ? formData.financialData.operatingExpenses / 12 : 0,
+      monthlyExpenses: formData.financialData?.operatingExpenses
+        ? formData.financialData.operatingExpenses / 12
+        : 0,
       employees: formData.basicInfo?.employees || 0,
-      yearsInOperation: formData.basicInfo?.foundingYear ? new Date().getFullYear() - formData.basicInfo.foundingYear : 0,
+      yearsInOperation: formData.basicInfo?.foundingYear
+        ? new Date().getFullYear() - formData.basicInfo.foundingYear
+        : 0,
       location: formData.basicInfo?.location || '',
       businessType: formData.basicInfo?.businessType || '',
       assets: formData.financialData?.totalAssets || 0,
       liabilities: formData.financialData?.totalLiabilities || 0,
-      monthlyProfit: formData.financialData?.netIncome ? formData.financialData.netIncome / 12 : 0,
-    };
+      monthlyProfit: formData.financialData?.netIncome
+        ? formData.financialData.netIncome / 12
+        : 0,
+    }
   }
 
   const handleNext = async () => {
@@ -227,8 +235,8 @@ export function BusinessEvaluationForm() {
         )
       case 'results':
         return valuationResult ? (
-          <ValuationResults 
-            result={valuationResult} 
+          <ValuationResults
+            result={valuationResult}
             businessData={convertToBusinessData(formState.data)}
           />
         ) : (

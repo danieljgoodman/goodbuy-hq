@@ -1,10 +1,10 @@
 import { prisma } from './prisma'
-import { 
-  sendNewMessageNotification, 
-  sendMeetingInvitation, 
+import {
+  sendNewMessageNotification,
+  sendMeetingInvitation,
   sendMeetingReminder,
   sendDocumentSharedNotification,
-  sendDailyDigest 
+  sendDailyDigest,
 } from './email'
 import { NotificationType, MessageStatus } from '@prisma/client'
 
@@ -69,7 +69,7 @@ export class CommunicationService {
           thread: {
             include: {
               participants: {
-                where: { 
+                where: {
                   isActive: true,
                   allowDirectMessages: true,
                 },
@@ -102,7 +102,9 @@ export class CommunicationService {
           userId: user.id,
           type: 'MESSAGE',
           title: `New message from ${message.sender.name}`,
-          message: message.content.substring(0, 100) + (message.content.length > 100 ? '...' : ''),
+          message:
+            message.content.substring(0, 100) +
+            (message.content.length > 100 ? '...' : ''),
           actionUrl: `/messages/${message.threadId}`,
           relatedId: messageId,
           relatedType: 'message',
@@ -200,7 +202,7 @@ export class CommunicationService {
   static async processMeetingReminders() {
     try {
       const now = new Date()
-      
+
       // Get reminders that are due to be sent
       const dueReminders = await prisma.meetingReminder.findMany({
         where: {
@@ -252,7 +254,7 @@ export class CommunicationService {
         // Mark reminder as sent
         await prisma.meetingReminder.update({
           where: { id: reminder.id },
-          data: { 
+          data: {
             isSent: true,
             sentAt: now,
           },
@@ -364,60 +366,61 @@ export class CommunicationService {
       for (const user of users) {
         try {
           // Get user's stats from yesterday
-          const [unreadMessages, upcomingMeetings, newDocuments] = await Promise.all([
-            // Unread messages count
-            prisma.message.count({
-              where: {
-                thread: {
-                  participants: {
-                    some: {
-                      userId: user.id,
-                      isActive: true,
+          const [unreadMessages, upcomingMeetings, newDocuments] =
+            await Promise.all([
+              // Unread messages count
+              prisma.message.count({
+                where: {
+                  thread: {
+                    participants: {
+                      some: {
+                        userId: user.id,
+                        isActive: true,
+                      },
                     },
                   },
-                },
-                NOT: { senderId: user.id },
-                readReceipts: {
-                  none: { userId: user.id },
-                },
-              },
-            }),
-            
-            // Upcoming meetings in next 7 days
-            prisma.meeting.count({
-              where: {
-                OR: [
-                  { organizerId: user.id },
-                  {
-                    attendees: {
-                      some: { userId: user.id },
-                    },
-                  },
-                ],
-                scheduledStart: {
-                  gte: new Date(),
-                  lte: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-                },
-                status: { in: ['SCHEDULED', 'CONFIRMED'] },
-              },
-            }),
-            
-            // New documents shared yesterday
-            prisma.sharedDocument.count({
-              where: {
-                createdAt: { gte: yesterday },
-                thread: {
-                  participants: {
-                    some: {
-                      userId: user.id,
-                      isActive: true,
-                    },
+                  NOT: { senderId: user.id },
+                  readReceipts: {
+                    none: { userId: user.id },
                   },
                 },
-                NOT: { uploaderId: user.id },
-              },
-            }),
-          ])
+              }),
+
+              // Upcoming meetings in next 7 days
+              prisma.meeting.count({
+                where: {
+                  OR: [
+                    { organizerId: user.id },
+                    {
+                      attendees: {
+                        some: { userId: user.id },
+                      },
+                    },
+                  ],
+                  scheduledStart: {
+                    gte: new Date(),
+                    lte: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+                  },
+                  status: { in: ['SCHEDULED', 'CONFIRMED'] },
+                },
+              }),
+
+              // New documents shared yesterday
+              prisma.sharedDocument.count({
+                where: {
+                  createdAt: { gte: yesterday },
+                  thread: {
+                    participants: {
+                      some: {
+                        userId: user.id,
+                        isActive: true,
+                      },
+                    },
+                  },
+                  NOT: { uploaderId: user.id },
+                },
+              }),
+            ])
 
           // Only send digest if there's something to report
           if (unreadMessages > 0 || upcomingMeetings > 0 || newDocuments > 0) {

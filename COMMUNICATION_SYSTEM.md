@@ -27,6 +27,7 @@ The system uses the following Prisma models:
 ### API Endpoints
 
 #### Messaging
+
 - `GET /api/communications/threads` - List user's conversations
 - `POST /api/communications/threads` - Create new conversation
 - `GET /api/communications/threads/[threadId]` - Get thread details
@@ -38,29 +39,34 @@ The system uses the following Prisma models:
 - `DELETE /api/communications/messages/[messageId]` - Delete message
 
 #### Document Sharing
+
 - `GET /api/communications/documents` - List accessible documents
 - `POST /api/communications/documents` - Upload document
 - `GET /api/communications/documents/[documentId]` - Download document
 - `DELETE /api/communications/documents/[documentId]` - Delete document
 
 #### Meeting Scheduling
+
 - `GET /api/communications/meetings` - List user's meetings
 - `POST /api/communications/meetings` - Schedule meeting
 - `PATCH /api/communications/meetings/[meetingId]` - Update meeting
 - `DELETE /api/communications/meetings/[meetingId]` - Cancel meeting
 
 #### Notifications
+
 - `GET /api/communications/notifications` - Get notifications
 - `PATCH /api/communications/notifications` - Mark as read/dismissed
 - `DELETE /api/communications/notifications` - Cleanup old notifications
 
 #### Preferences
+
 - `GET /api/communications/preferences` - Get user preferences
 - `PUT /api/communications/preferences` - Update preferences
 
 ### Security Features
 
 #### Data Protection
+
 - All sensitive data encrypted at rest
 - File uploads scanned for malware
 - Access logs for audit compliance
@@ -68,12 +74,14 @@ The system uses the following Prisma models:
 - GDPR-compliant data handling
 
 #### Access Controls
+
 - Thread-based permissions
 - Document access levels (Public, Private, Shared)
 - Meeting invitation controls
 - Direct message permissions
 
 #### Audit Trail
+
 - Complete communication logs
 - Document access tracking
 - User action monitoring
@@ -82,12 +90,14 @@ The system uses the following Prisma models:
 ## Frontend Components
 
 ### Core Components
+
 - `MessagingInterface` - Main chat interface
 - `MessageThreadList` - Conversation list sidebar
 - `MessageList` - Message display with replies and reactions
 - `MessageInput` - Rich text input with attachments and emoji
 
 ### Features
+
 - **Mobile-responsive design** - Optimized for all screen sizes
 - **Real-time messaging** - WebSocket integration for instant updates
 - **Rich text support** - Emoji, @mentions, file attachments
@@ -99,12 +109,14 @@ The system uses the following Prisma models:
 ## Email Notifications
 
 ### Templates
+
 - New message notifications
 - Meeting invitations and reminders
 - Document sharing notifications
 - Daily digest summaries
 
 ### Smart Delivery
+
 - User preference respect
 - Digest frequency control (daily/weekly/never)
 - Selective notification types
@@ -113,6 +125,7 @@ The system uses the following Prisma models:
 ## WebSocket Integration
 
 ### Real-time Features
+
 - Instant message delivery
 - Typing indicators
 - Presence status (online/away/busy)
@@ -120,6 +133,7 @@ The system uses the following Prisma models:
 - Meeting reminders
 
 ### Socket Events
+
 - `new_message` - New message received
 - `message_updated` - Message edited
 - `message_deleted` - Message removed
@@ -151,15 +165,19 @@ const response = await fetch('/api/communications/threads', {
 
 ```typescript
 // Send message in existing thread
-const response = await fetch(`/api/communications/threads/${threadId}/messages`, {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    content: 'Thank you for your interest. I would be happy to discuss this further.',
-    messageType: 'text',
-    replyToId: 'message-123' // Optional: reply to specific message
-  })
-})
+const response = await fetch(
+  `/api/communications/threads/${threadId}/messages`,
+  {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      content:
+        'Thank you for your interest. I would be happy to discuss this further.',
+      messageType: 'text',
+      replyToId: 'message-123', // Optional: reply to specific message
+    }),
+  }
+)
 ```
 
 ### Scheduling a Meeting
@@ -176,8 +194,8 @@ const response = await fetch('/api/communications/meetings', {
     scheduledStart: '2024-01-15T10:00:00Z',
     scheduledEnd: '2024-01-15T11:00:00Z',
     location: 'Virtual Meeting',
-    attendeeIds: ['user-456', 'user-789']
-  })
+    attendeeIds: ['user-456', 'user-789'],
+  }),
 })
 ```
 
@@ -187,16 +205,19 @@ const response = await fetch('/api/communications/meetings', {
 // Upload and share document
 const formData = new FormData()
 formData.append('file', file)
-formData.append('metadata', JSON.stringify({
-  threadId: 'thread-123',
-  description: 'Financial statements for review',
-  accessLevel: 'SHARED',
-  category: 'financial'
-}))
+formData.append(
+  'metadata',
+  JSON.stringify({
+    threadId: 'thread-123',
+    description: 'Financial statements for review',
+    accessLevel: 'SHARED',
+    category: 'financial',
+  })
+)
 
 const response = await fetch('/api/communications/documents', {
   method: 'POST',
-  body: formData
+  body: formData,
 })
 ```
 
@@ -222,6 +243,7 @@ DATABASE_URL=postgresql://user:password@localhost/goodbuy_hq
 ### User Preferences
 
 Users can configure:
+
 - Email notification preferences
 - Message read receipts visibility
 - Online status sharing
@@ -232,18 +254,21 @@ Users can configure:
 ## Performance Optimizations
 
 ### Database
+
 - Indexed queries for fast message retrieval
 - Pagination for large conversation lists
 - Efficient read receipt tracking
 - Background cleanup of old data
 
 ### Frontend
+
 - Virtual scrolling for large message lists
 - Optimistic UI updates
 - Debounced typing indicators
 - Lazy loading of attachments
 
 ### Caching
+
 - Thread list caching
 - Message pagination
 - User presence caching
@@ -252,18 +277,21 @@ Users can configure:
 ## Compliance & Privacy
 
 ### GDPR Compliance
+
 - Right to data export
 - Right to deletion
 - Privacy by design
 - Consent management
 
 ### Data Retention
+
 - Messages: Indefinite (user controlled)
 - Documents: User controlled with expiration
 - Audit logs: 6 months
 - Notifications: 30 days after dismissal
 
 ### Security
+
 - End-to-end encryption for sensitive documents
 - Secure file upload validation
 - XSS and CSRF protection
@@ -272,6 +300,7 @@ Users can configure:
 ## Future Enhancements
 
 ### Planned Features
+
 - Voice message support
 - Video call integration
 - Advanced document collaboration
@@ -280,6 +309,7 @@ Users can configure:
 - Mobile app development
 
 ### Integration Opportunities
+
 - CRM system integration
 - Calendar synchronization
 - Third-party document providers
@@ -289,6 +319,7 @@ Users can configure:
 ## Maintenance
 
 ### Regular Tasks
+
 - Database cleanup of old records
 - Email template updates
 - Security patch management
@@ -296,6 +327,7 @@ Users can configure:
 - User feedback collection
 
 ### Monitoring
+
 - Message delivery rates
 - Email notification success
 - WebSocket connection health

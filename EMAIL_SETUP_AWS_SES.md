@@ -21,6 +21,7 @@ AWS_REGION=us-east-1
 ## 2. AWS SES Setup Steps
 
 ### Step 1: AWS Account Setup
+
 1. **Create/Login to AWS Account:**
    - Go to https://aws.amazon.com
    - Navigate to AWS Console → Simple Email Service (SES)
@@ -30,22 +31,25 @@ AWS_REGION=us-east-1
    - Common choices: us-east-1, us-west-2, eu-west-1
 
 ### Step 2: Verify Email Addresses
+
 1. **In SES Console:**
-   - Go to "Verified identities" 
+   - Go to "Verified identities"
    - Click "Create identity"
    - Choose "Email address"
    - Enter your sender email (e.g., noreply@yourdomain.com)
    - Check email and click verification link
 
 ### Step 3: Domain Verification (Recommended)
+
 1. **Verify Your Domain:**
    - Go to "Verified identities" → "Create identity"
-   - Choose "Domain" 
+   - Choose "Domain"
    - Enter your domain (e.g., yourdomain.com)
    - Add DNS records provided by AWS
    - Wait for verification (up to 72 hours)
 
 ### Step 4: SMTP Credentials
+
 1. **Create SMTP Credentials:**
    - Go to "SMTP settings"
    - Click "Create SMTP credentials"
@@ -53,12 +57,15 @@ AWS_REGION=us-east-1
    - Use these for SMTP_USER and SMTP_PASSWORD
 
 ### Step 5: Production Access (Important!)
+
 AWS SES starts in "Sandbox Mode":
+
 - Limited to verified email addresses only
 - 200 emails/day maximum
 - 1 email/second rate
 
 **Request Production Access:**
+
 1. Go to "Account dashboard"
 2. Click "Request production access"
 3. Fill out the form:
@@ -70,12 +77,13 @@ AWS SES starts in "Sandbox Mode":
 ## 3. Advanced SES Setup
 
 ### Configuration Sets (Optional)
+
 ```typescript
 // lib/ses-config.ts
-import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses"
+import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses'
 
 const sesClient = new SESClient({
-  region: process.env.AWS_REGION || "us-east-1",
+  region: process.env.AWS_REGION || 'us-east-1',
   credentials: {
     accessKeyId: process.env.SMTP_USER!,
     secretAccessKey: process.env.SMTP_PASSWORD!,
@@ -98,7 +106,7 @@ export async function sendEmailViaSES(
         Text: { Data: textContent || '' },
       },
     },
-    ConfigurationSetName: "goodbuy-hq-emails", // Optional
+    ConfigurationSetName: 'goodbuy-hq-emails', // Optional
   })
 
   return await sesClient.send(command)
@@ -106,6 +114,7 @@ export async function sendEmailViaSES(
 ```
 
 ### Install AWS SDK (Optional)
+
 ```bash
 npm install @aws-sdk/client-ses --legacy-peer-deps
 ```
@@ -113,13 +122,17 @@ npm install @aws-sdk/client-ses --legacy-peer-deps
 ## 4. Monitoring & Analytics
 
 ### CloudWatch Metrics
+
 AWS SES provides metrics for:
+
 - Delivery attempts
 - Bounces and complaints
 - Reputation metrics
 
 ### Event Publishing
+
 Configure SES to publish events to:
+
 - CloudWatch Logs
 - SNS topics
 - Kinesis streams
@@ -127,11 +140,13 @@ Configure SES to publish events to:
 ## 5. Cost Comparison
 
 ### AWS SES Pricing (as of 2024)
+
 - **Free Tier**: 62,000 emails/month for first 12 months
 - **After free tier**: $0.10 per 1,000 emails
 - **Data transfer**: $0.12 per GB
 
 ### Monthly Examples:
+
 - 10,000 emails: ~$1.00/month
 - 100,000 emails: ~$10.00/month
 - 1,000,000 emails: ~$100/month
@@ -139,6 +154,7 @@ Configure SES to publish events to:
 ## 6. Production Best Practices
 
 ### Bounce and Complaint Handling
+
 ```typescript
 // lib/ses-webhooks.ts
 export async function handleSESWebhook(event: any) {
@@ -146,21 +162,22 @@ export async function handleSESWebhook(event: any) {
     // Remove bounced email from database
     await prisma.user.update({
       where: { email: event.bounce.bouncedRecipients[0].emailAddress },
-      data: { emailValid: false }
+      data: { emailValid: false },
     })
   }
-  
+
   if (event.eventType === 'complaint') {
     // Handle spam complaints
     await prisma.user.update({
       where: { email: event.complaint.complainedRecipients[0].emailAddress },
-      data: { emailOptOut: true }
+      data: { emailOptOut: true },
     })
   }
 }
 ```
 
 ### Reputation Management
+
 - Monitor bounce rates (keep < 5%)
 - Monitor complaint rates (keep < 0.1%)
 - Implement double opt-in for newsletters
@@ -169,17 +186,16 @@ export async function handleSESWebhook(event: any) {
 ## 7. Security Considerations
 
 ### IAM Permissions
+
 Create dedicated IAM user with minimal permissions:
+
 ```json
 {
   "Version": "2012-10-17",
   "Statement": [
     {
       "Effect": "Allow",
-      "Action": [
-        "ses:SendEmail",
-        "ses:SendRawEmail"
-      ],
+      "Action": ["ses:SendEmail", "ses:SendRawEmail"],
       "Resource": "*"
     }
   ]
@@ -187,6 +203,7 @@ Create dedicated IAM user with minimal permissions:
 ```
 
 ### Environment Security
+
 - Never commit AWS credentials to code
 - Use AWS Secrets Manager in production
 - Rotate credentials regularly
@@ -194,6 +211,7 @@ Create dedicated IAM user with minimal permissions:
 ## 8. Testing SES Setup
 
 Create test script:
+
 ```typescript
 // scripts/test-ses.ts
 import { sendVerificationEmail } from '@/lib/email'

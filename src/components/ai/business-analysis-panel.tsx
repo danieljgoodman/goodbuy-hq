@@ -1,98 +1,104 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Brain, 
-  Sparkles, 
-  TrendingUp, 
-  Shield, 
-  Target, 
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import {
+  Brain,
+  Sparkles,
+  TrendingUp,
+  Shield,
+  Target,
   Lightbulb,
   ChevronDown,
   ChevronUp,
-  Loader2
-} from 'lucide-react';
-import type { BusinessData } from '@/types/business';
-import type { BusinessAnalysis } from '@/lib/business-analysis-agent';
+  Loader2,
+} from 'lucide-react'
+import type { BusinessData } from '@/types/business'
+import type { BusinessAnalysis } from '@/lib/business-analysis-agent'
 
 interface BusinessAnalysisPanelProps {
-  businessData: BusinessData;
-  onAnalysisComplete?: (analysis: BusinessAnalysis) => void;
+  businessData: BusinessData
+  onAnalysisComplete?: (analysis: BusinessAnalysis) => void
 }
 
-export default function BusinessAnalysisPanel({ 
-  businessData, 
-  onAnalysisComplete 
+export default function BusinessAnalysisPanel({
+  businessData,
+  onAnalysisComplete,
 }: BusinessAnalysisPanelProps) {
-  const [analysis, setAnalysis] = useState<BusinessAnalysis | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set());
+  const [analysis, setAnalysis] = useState<BusinessAnalysis | null>(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [expandedSections, setExpandedSections] = useState<Set<string>>(
+    new Set()
+  )
 
   const toggleSection = (section: string) => {
-    const newExpanded = new Set(expandedSections);
+    const newExpanded = new Set(expandedSections)
     if (newExpanded.has(section)) {
-      newExpanded.delete(section);
+      newExpanded.delete(section)
     } else {
-      newExpanded.add(section);
+      newExpanded.add(section)
     }
-    setExpandedSections(newExpanded);
-  };
+    setExpandedSections(newExpanded)
+  }
 
   const analyzeBusinesss = async () => {
     if (!businessData.businessName || !businessData.industry) {
-      setError('Business name and industry are required for analysis');
-      return;
+      setError('Business name and industry are required for analysis')
+      return
     }
 
-    setLoading(true);
-    setError(null);
+    setLoading(true)
+    setError(null)
 
     try {
       const response = await fetch('/api/business-analysis', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(businessData)
-      });
+        body: JSON.stringify(businessData),
+      })
 
-      const data = await response.json();
+      const data = await response.json()
 
       if (!response.ok) {
-        throw new Error(data.error || 'Analysis failed');
+        throw new Error(data.error || 'Analysis failed')
       }
 
-      setAnalysis(data.analysis);
-      onAnalysisComplete?.(data.analysis);
+      setAnalysis(data.analysis)
+      onAnalysisComplete?.(data.analysis)
     } catch (error: any) {
-      setError(error.message || 'Failed to analyze business');
+      setError(error.message || 'Failed to analyze business')
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const getScoreColor = (score: number) => {
-    if (score >= 80) return 'text-green-600';
-    if (score >= 60) return 'text-blue-600';
-    if (score >= 40) return 'text-yellow-600';
-    return 'text-red-600';
-  };
+    if (score >= 80) return 'text-green-600'
+    if (score >= 60) return 'text-blue-600'
+    if (score >= 40) return 'text-yellow-600'
+    return 'text-red-600'
+  }
 
   const getScoreBackground = (score: number) => {
-    if (score >= 80) return 'bg-green-100';
-    if (score >= 60) return 'bg-blue-100';
-    if (score >= 40) return 'bg-yellow-100';
-    return 'bg-red-100';
-  };
+    if (score >= 80) return 'bg-green-100'
+    if (score >= 60) return 'bg-blue-100'
+    if (score >= 40) return 'bg-yellow-100'
+    return 'bg-red-100'
+  }
 
   const getRiskColor = (level: string) => {
     switch (level) {
-      case 'low': return 'text-green-600 bg-green-100';
-      case 'medium': return 'text-yellow-600 bg-yellow-100';
-      case 'high': return 'text-red-600 bg-red-100';
-      default: return 'text-gray-600 bg-gray-100';
+      case 'low':
+        return 'text-green-600 bg-green-100'
+      case 'medium':
+        return 'text-yellow-600 bg-yellow-100'
+      case 'high':
+        return 'text-red-600 bg-red-100'
+      default:
+        return 'text-gray-600 bg-gray-100'
     }
-  };
+  }
 
   return (
     <motion.div
@@ -150,7 +156,9 @@ export default function BusinessAnalysisPanel({
           >
             {/* Summary */}
             <div className="bg-white rounded-lg p-4 border border-gray-200">
-              <h4 className="font-semibold text-gray-900 mb-2">Executive Summary</h4>
+              <h4 className="font-semibold text-gray-900 mb-2">
+                Executive Summary
+              </h4>
               <p className="text-gray-700">{analysis.summary}</p>
             </div>
 
@@ -159,9 +167,13 @@ export default function BusinessAnalysisPanel({
               <div className="bg-white rounded-lg p-4 border border-gray-200">
                 <div className="flex items-center gap-2 mb-2">
                   <TrendingUp className="w-4 h-4 text-green-600" />
-                  <span className="text-sm font-medium text-gray-600">Financial Health</span>
+                  <span className="text-sm font-medium text-gray-600">
+                    Financial Health
+                  </span>
                 </div>
-                <div className={`text-2xl font-bold ${getScoreColor(analysis.financialHealth.score)}`}>
+                <div
+                  className={`text-2xl font-bold ${getScoreColor(analysis.financialHealth.score)}`}
+                >
                   {analysis.financialHealth.score}/100
                 </div>
               </div>
@@ -169,9 +181,13 @@ export default function BusinessAnalysisPanel({
               <div className="bg-white rounded-lg p-4 border border-gray-200">
                 <div className="flex items-center gap-2 mb-2">
                   <Target className="w-4 h-4 text-blue-600" />
-                  <span className="text-sm font-medium text-gray-600">Market Position</span>
+                  <span className="text-sm font-medium text-gray-600">
+                    Market Position
+                  </span>
                 </div>
-                <div className={`text-2xl font-bold ${getScoreColor(analysis.marketPosition.competitiveness)}`}>
+                <div
+                  className={`text-2xl font-bold ${getScoreColor(analysis.marketPosition.competitiveness)}`}
+                >
                   {analysis.marketPosition.competitiveness}/100
                 </div>
               </div>
@@ -179,9 +195,13 @@ export default function BusinessAnalysisPanel({
               <div className="bg-white rounded-lg p-4 border border-gray-200">
                 <div className="flex items-center gap-2 mb-2">
                   <Shield className="w-4 h-4 text-purple-600" />
-                  <span className="text-sm font-medium text-gray-600">Risk Level</span>
+                  <span className="text-sm font-medium text-gray-600">
+                    Risk Level
+                  </span>
                 </div>
-                <div className={`px-3 py-1 rounded-full text-sm font-medium ${getRiskColor(analysis.riskAssessment.level)}`}>
+                <div
+                  className={`px-3 py-1 rounded-full text-sm font-medium ${getRiskColor(analysis.riskAssessment.level)}`}
+                >
                   {analysis.riskAssessment.level.toUpperCase()}
                 </div>
               </div>
@@ -194,38 +214,45 @@ export default function BusinessAnalysisPanel({
                 title: 'Financial Analysis',
                 icon: TrendingUp,
                 data: analysis.financialHealth,
-                color: 'green'
+                color: 'green',
               },
               {
                 key: 'market',
                 title: 'Market Position',
                 icon: Target,
                 data: analysis.marketPosition,
-                color: 'blue'
+                color: 'blue',
               },
               {
                 key: 'growth',
                 title: 'Growth Potential',
                 icon: Sparkles,
                 data: analysis.growthPotential,
-                color: 'purple'
+                color: 'purple',
               },
               {
                 key: 'recommendations',
                 title: 'AI Recommendations',
                 icon: Lightbulb,
                 data: analysis.recommendations,
-                color: 'yellow'
-              }
-            ].map((section) => (
-              <motion.div key={section.key} className="bg-white rounded-lg border border-gray-200">
+                color: 'yellow',
+              },
+            ].map(section => (
+              <motion.div
+                key={section.key}
+                className="bg-white rounded-lg border border-gray-200"
+              >
                 <button
                   onClick={() => toggleSection(section.key)}
                   className="w-full p-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors"
                 >
                   <div className="flex items-center gap-3">
-                    <section.icon className={`w-5 h-5 text-${section.color}-600`} />
-                    <span className="font-medium text-gray-900">{section.title}</span>
+                    <section.icon
+                      className={`w-5 h-5 text-${section.color}-600`}
+                    />
+                    <span className="font-medium text-gray-900">
+                      {section.title}
+                    </span>
                   </div>
                   {expandedSections.has(section.key) ? (
                     <ChevronUp className="w-4 h-4 text-gray-500" />
@@ -246,21 +273,39 @@ export default function BusinessAnalysisPanel({
                         <div className="space-y-3">
                           {section.data.strengths?.length > 0 && (
                             <div>
-                              <h5 className="font-medium text-green-800 mb-2">Strengths</h5>
+                              <h5 className="font-medium text-green-800 mb-2">
+                                Strengths
+                              </h5>
                               <ul className="list-disc list-inside space-y-1">
-                                {section.data.strengths.map((item: string, index: number) => (
-                                  <li key={index} className="text-sm text-gray-700">{item}</li>
-                                ))}
+                                {section.data.strengths.map(
+                                  (item: string, index: number) => (
+                                    <li
+                                      key={index}
+                                      className="text-sm text-gray-700"
+                                    >
+                                      {item}
+                                    </li>
+                                  )
+                                )}
                               </ul>
                             </div>
                           )}
                           {section.data.concerns?.length > 0 && (
                             <div>
-                              <h5 className="font-medium text-red-800 mb-2">Concerns</h5>
+                              <h5 className="font-medium text-red-800 mb-2">
+                                Concerns
+                              </h5>
                               <ul className="list-disc list-inside space-y-1">
-                                {section.data.concerns.map((item: string, index: number) => (
-                                  <li key={index} className="text-sm text-gray-700">{item}</li>
-                                ))}
+                                {section.data.concerns.map(
+                                  (item: string, index: number) => (
+                                    <li
+                                      key={index}
+                                      className="text-sm text-gray-700"
+                                    >
+                                      {item}
+                                    </li>
+                                  )
+                                )}
                               </ul>
                             </div>
                           )}
@@ -270,16 +315,29 @@ export default function BusinessAnalysisPanel({
                       {section.key === 'market' && (
                         <div className="space-y-3">
                           <div>
-                            <h5 className="font-medium text-blue-800 mb-2">Market Share</h5>
-                            <p className="text-sm text-gray-700">{section.data.marketShare}</p>
+                            <h5 className="font-medium text-blue-800 mb-2">
+                              Market Share
+                            </h5>
+                            <p className="text-sm text-gray-700">
+                              {section.data.marketShare}
+                            </p>
                           </div>
                           {section.data.differentiators?.length > 0 && (
                             <div>
-                              <h5 className="font-medium text-green-800 mb-2">Competitive Advantages</h5>
+                              <h5 className="font-medium text-green-800 mb-2">
+                                Competitive Advantages
+                              </h5>
                               <ul className="list-disc list-inside space-y-1">
-                                {section.data.differentiators.map((item: string, index: number) => (
-                                  <li key={index} className="text-sm text-gray-700">{item}</li>
-                                ))}
+                                {section.data.differentiators.map(
+                                  (item: string, index: number) => (
+                                    <li
+                                      key={index}
+                                      className="text-sm text-gray-700"
+                                    >
+                                      {item}
+                                    </li>
+                                  )
+                                )}
                               </ul>
                             </div>
                           )}
@@ -288,21 +346,36 @@ export default function BusinessAnalysisPanel({
 
                       {section.key === 'growth' && (
                         <div className="space-y-3">
-                          <div className={`p-3 rounded-lg ${getScoreBackground(section.data.score)}`}>
+                          <div
+                            className={`p-3 rounded-lg ${getScoreBackground(section.data.score)}`}
+                          >
                             <div className="flex justify-between items-center mb-2">
-                              <span className="font-medium text-gray-900">Growth Score</span>
-                              <span className={`text-lg font-bold ${getScoreColor(section.data.score)}`}>
+                              <span className="font-medium text-gray-900">
+                                Growth Score
+                              </span>
+                              <span
+                                className={`text-lg font-bold ${getScoreColor(section.data.score)}`}
+                              >
                                 {section.data.score}/100
                               </span>
                             </div>
                           </div>
                           {section.data.opportunities?.length > 0 && (
                             <div>
-                              <h5 className="font-medium text-purple-800 mb-2">Opportunities</h5>
+                              <h5 className="font-medium text-purple-800 mb-2">
+                                Opportunities
+                              </h5>
                               <ul className="list-disc list-inside space-y-1">
-                                {section.data.opportunities.map((item: string, index: number) => (
-                                  <li key={index} className="text-sm text-gray-700">{item}</li>
-                                ))}
+                                {section.data.opportunities.map(
+                                  (item: string, index: number) => (
+                                    <li
+                                      key={index}
+                                      className="text-sm text-gray-700"
+                                    >
+                                      {item}
+                                    </li>
+                                  )
+                                )}
                               </ul>
                             </div>
                           )}
@@ -311,19 +384,32 @@ export default function BusinessAnalysisPanel({
 
                       {section.key === 'recommendations' && (
                         <div className="space-y-4">
-                          {['immediate', 'shortTerm', 'longTerm'].map((timeframe) => (
-                            <div key={timeframe}>
-                              <h5 className="font-medium text-yellow-800 mb-2 capitalize">
-                                {timeframe === 'shortTerm' ? 'Short Term' : 
-                                 timeframe === 'longTerm' ? 'Long Term' : timeframe} Actions
-                              </h5>
-                              <ul className="list-disc list-inside space-y-1">
-                                {(section.data as any)[timeframe]?.map((item: string, index: number) => (
-                                  <li key={index} className="text-sm text-gray-700">{item}</li>
-                                ))}
-                              </ul>
-                            </div>
-                          ))}
+                          {['immediate', 'shortTerm', 'longTerm'].map(
+                            timeframe => (
+                              <div key={timeframe}>
+                                <h5 className="font-medium text-yellow-800 mb-2 capitalize">
+                                  {timeframe === 'shortTerm'
+                                    ? 'Short Term'
+                                    : timeframe === 'longTerm'
+                                      ? 'Long Term'
+                                      : timeframe}{' '}
+                                  Actions
+                                </h5>
+                                <ul className="list-disc list-inside space-y-1">
+                                  {(section.data as any)[timeframe]?.map(
+                                    (item: string, index: number) => (
+                                      <li
+                                        key={index}
+                                        className="text-sm text-gray-700"
+                                      >
+                                        {item}
+                                      </li>
+                                    )
+                                  )}
+                                </ul>
+                              </div>
+                            )
+                          )}
                         </div>
                       )}
                     </motion.div>
@@ -335,5 +421,5 @@ export default function BusinessAnalysisPanel({
         )}
       </AnimatePresence>
     </motion.div>
-  );
+  )
 }

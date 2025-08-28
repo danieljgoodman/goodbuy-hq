@@ -1,54 +1,54 @@
-'use client';
+'use client'
 
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { TrendingUp, DollarSign, Zap, RotateCcw } from 'lucide-react';
+import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
+import { TrendingUp, DollarSign, Zap, RotateCcw } from 'lucide-react'
 
 interface UsageStats {
-  totalTokens: number;
-  estimatedCost: number;
-  costPerToken: number;
-  lastUpdated: string;
+  totalTokens: number
+  estimatedCost: number
+  costPerToken: number
+  lastUpdated: string
 }
 
 export default function CostMonitor() {
-  const [stats, setStats] = useState<UsageStats | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [stats, setStats] = useState<UsageStats | null>(null)
+  const [loading, setLoading] = useState(true)
 
   const fetchStats = async () => {
     try {
-      const response = await fetch('/api/ai-usage');
-      const data = await response.json();
-      
+      const response = await fetch('/api/ai-usage')
+      const data = await response.json()
+
       if (data.success) {
-        setStats(data.usage);
+        setStats(data.usage)
       }
     } catch (error) {
-      console.error('Failed to fetch AI usage stats:', error);
+      console.error('Failed to fetch AI usage stats:', error)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const resetStats = async () => {
     try {
       const response = await fetch('/api/ai-usage', {
-        method: 'DELETE'
-      });
-      
+        method: 'DELETE',
+      })
+
       if (response.ok) {
-        await fetchStats();
+        await fetchStats()
       }
     } catch (error) {
-      console.error('Failed to reset stats:', error);
+      console.error('Failed to reset stats:', error)
     }
-  };
+  }
 
   useEffect(() => {
-    fetchStats();
-    const interval = setInterval(fetchStats, 30000); // Refresh every 30 seconds
-    return () => clearInterval(interval);
-  }, []);
+    fetchStats()
+    const interval = setInterval(fetchStats, 30000) // Refresh every 30 seconds
+    return () => clearInterval(interval)
+  }, [])
 
   if (loading) {
     return (
@@ -61,11 +61,11 @@ export default function CostMonitor() {
           </div>
         </div>
       </div>
-    );
+    )
   }
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl border border-blue-200 p-6"
@@ -75,7 +75,7 @@ export default function CostMonitor() {
           <Zap className="w-5 h-5 text-blue-600" />
           AI Usage Monitor
         </h3>
-        
+
         <button
           onClick={resetStats}
           className="p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-100 rounded-lg transition-colors"
@@ -87,39 +87,45 @@ export default function CostMonitor() {
 
       {stats ? (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <motion.div 
+          <motion.div
             whileHover={{ scale: 1.02 }}
             className="bg-white rounded-lg p-4 border border-gray-200"
           >
             <div className="flex items-center gap-2 mb-2">
               <TrendingUp className="w-4 h-4 text-green-600" />
-              <span className="text-sm font-medium text-gray-600">Tokens Used</span>
+              <span className="text-sm font-medium text-gray-600">
+                Tokens Used
+              </span>
             </div>
             <div className="text-2xl font-bold text-gray-900">
               {stats.totalTokens.toLocaleString()}
             </div>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             whileHover={{ scale: 1.02 }}
             className="bg-white rounded-lg p-4 border border-gray-200"
           >
             <div className="flex items-center gap-2 mb-2">
               <DollarSign className="w-4 h-4 text-blue-600" />
-              <span className="text-sm font-medium text-gray-600">Estimated Cost</span>
+              <span className="text-sm font-medium text-gray-600">
+                Estimated Cost
+              </span>
             </div>
             <div className="text-2xl font-bold text-gray-900">
               ${stats.estimatedCost.toFixed(4)}
             </div>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             whileHover={{ scale: 1.02 }}
             className="bg-white rounded-lg p-4 border border-gray-200"
           >
             <div className="flex items-center gap-2 mb-2">
               <Zap className="w-4 h-4 text-purple-600" />
-              <span className="text-sm font-medium text-gray-600">Avg Cost/Token</span>
+              <span className="text-sm font-medium text-gray-600">
+                Avg Cost/Token
+              </span>
             </div>
             <div className="text-2xl font-bold text-gray-900">
               ${stats.costPerToken.toFixed(6)}
@@ -144,5 +150,5 @@ export default function CostMonitor() {
         </div>
       )}
     </motion.div>
-  );
+  )
 }

@@ -13,8 +13,21 @@ export default withAuth(
       '/auth/signup',
       '/auth/verify',
       '/auth/error',
+      '/marketplace',
+      '/business',
+      '/calculator',
+      '/pricing',
+      '/about',
+      '/contact',
     ]
+    // Check for exact matches first
     if (publicRoutes.includes(pathname)) {
+      return NextResponse.next()
+    }
+    
+    // Check for public path patterns
+    const publicPathPatterns = ['/marketplace', '/business']
+    if (publicPathPatterns.some(pattern => pathname.startsWith(pattern))) {
       return NextResponse.next()
     }
 
@@ -56,8 +69,21 @@ export default withAuth(
           '/auth/signup',
           '/auth/verify',
           '/auth/error',
+          '/marketplace',
+          '/business',
+          '/calculator',
+          '/pricing',
+          '/about',
+          '/contact',
         ]
+        // Check for exact matches first
         if (publicRoutes.includes(pathname)) {
+          return true
+        }
+        
+        // Check for public path patterns
+        const publicPathPatterns = ['/marketplace', '/business']
+        if (publicPathPatterns.some(pattern => pathname.startsWith(pattern))) {
           return true
         }
 
@@ -73,11 +99,12 @@ export const config = {
     /*
      * Match all request paths except for the ones starting with:
      * - api/auth (NextAuth.js routes)
+     * - api/businesses (public marketplace API)
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      * - public files (public folder)
      */
-    '/((?!api/auth|_next/static|_next/image|favicon.ico|public).*)',
+    '/((?!api/auth|api/businesses|_next/static|_next/image|favicon.ico|public).*)',
   ],
 }

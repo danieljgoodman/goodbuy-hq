@@ -6,7 +6,9 @@ import { z } from 'zod'
 
 const createMessageSchema = z.object({
   content: z.string().min(1).max(10000),
-  messageType: z.enum(['text', 'file', 'meeting_invite', 'system']).default('text'),
+  messageType: z
+    .enum(['text', 'file', 'meeting_invite', 'system'])
+    .default('text'),
   replyToId: z.string().cuid().optional(),
   metadata: z.record(z.unknown()).optional(),
 })
@@ -47,10 +49,12 @@ export async function GET(
         threadId,
         ...(before && {
           createdAt: {
-            lt: (await prisma.message.findUnique({
-              where: { id: before },
-              select: { createdAt: true },
-            }))?.createdAt,
+            lt: (
+              await prisma.message.findUnique({
+                where: { id: before },
+                select: { createdAt: true },
+              })
+            )?.createdAt,
           },
         }),
       },
@@ -97,9 +101,10 @@ export async function GET(
 
     // Mark messages as read for the current user
     const unreadMessageIds = messages
-      .filter(msg => 
-        msg.senderId !== session.user.id && 
-        !msg.readReceipts.some(receipt => receipt.userId === session.user.id)
+      .filter(
+        msg =>
+          msg.senderId !== session.user.id &&
+          !msg.readReceipts.some(receipt => receipt.userId === session.user.id)
       )
       .map(msg => msg.id)
 
@@ -153,7 +158,10 @@ export async function POST(
     }
 
     // Check participant's direct message permissions
-    if (!participant.allowDirectMessages && validatedData.messageType === 'text') {
+    if (
+      !participant.allowDirectMessages &&
+      validatedData.messageType === 'text'
+    ) {
       return NextResponse.json(
         { error: 'Direct messages not allowed for this user' },
         { status: 403 }
@@ -175,7 +183,7 @@ export async function POST(
     }
 
     // Create message and update thread in a transaction
-    const result = await prisma.$transaction(async (tx) => {
+    const result = await prisma.$transaction(async tx => {
       // Create the message
       const message = await tx.message.create({
         data: {

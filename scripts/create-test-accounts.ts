@@ -18,7 +18,7 @@ async function createTestAccounts() {
         company: 'Johnson Tech Solutions',
         position: 'CEO & Founder',
         bio: 'Successful tech entrepreneur with 15 years of experience. Looking to sell my profitable SaaS business.',
-        password: 'Seller123!'
+        password: 'Seller123!',
       },
       {
         email: 'buyer@goodbuyhq.com',
@@ -29,7 +29,7 @@ async function createTestAccounts() {
         company: 'Chen Ventures',
         position: 'Principal Investor',
         bio: 'Investment professional specializing in technology acquisitions. Looking for established businesses.',
-        password: 'Buyer123!'
+        password: 'Buyer123!',
       },
       {
         email: 'broker@goodbuyhq.com',
@@ -40,8 +40,8 @@ async function createTestAccounts() {
         company: 'Elite Business Brokerage',
         position: 'Senior Business Broker',
         bio: 'Certified business broker with expertise in middle-market transactions.',
-        password: 'Broker123!'
-      }
+        password: 'Broker123!',
+      },
     ]
 
     const createdAccounts = []
@@ -49,7 +49,7 @@ async function createTestAccounts() {
     for (const account of testAccounts) {
       // Check if user already exists
       const existingUser = await prisma.user.findUnique({
-        where: { email: account.email }
+        where: { email: account.email },
       })
 
       if (existingUser) {
@@ -75,7 +75,7 @@ async function createTestAccounts() {
           company: account.company,
           position: account.position,
           bio: account.bio,
-        }
+        },
       })
 
       // Create communication preferences
@@ -90,25 +90,30 @@ async function createTestAccounts() {
           showReadReceipts: true,
           showOnlineStatus: true,
           allowDirectMessages: true,
-        }
+        },
       })
 
-      console.log(`✅ Created ${account.name} (${account.email}) - ${account.userType}`)
+      console.log(
+        `✅ Created ${account.name} (${account.email}) - ${account.userType}`
+      )
       createdAccounts.push(user)
     }
 
     // Create a sample business listing
-    const seller = createdAccounts.find(u => u.userType === UserType.BUSINESS_OWNER)
+    const seller = createdAccounts.find(
+      u => u.userType === UserType.BUSINESS_OWNER
+    )
     if (seller) {
       const existingBusiness = await prisma.business.findFirst({
-        where: { ownerId: seller.id }
+        where: { ownerId: seller.id },
       })
 
       if (!existingBusiness) {
         const business = await prisma.business.create({
           data: {
             title: 'TechFlow SaaS Platform',
-            description: 'Profitable B2B SaaS platform serving 500+ enterprise clients with $2M ARR. Fully automated operations with strong recurring revenue model.',
+            description:
+              'Profitable B2B SaaS platform serving 500+ enterprise clients with $2M ARR. Fully automated operations with strong recurring revenue model.',
             industry: 'Technology',
             location: 'Austin, TX',
             website: 'https://techflow-saas.example.com',
@@ -121,9 +126,11 @@ async function createTestAccounts() {
             featured: true,
             ownerId: seller.id,
             slug: 'techflow-saas-platform',
-            metaTitle: 'TechFlow SaaS Platform - Profitable B2B Software Business',
-            metaDescription: 'Established B2B SaaS platform with $2M ARR and 500+ enterprise clients. Fully automated operations.',
-          }
+            metaTitle:
+              'TechFlow SaaS Platform - Profitable B2B Software Business',
+            metaDescription:
+              'Established B2B SaaS platform with $2M ARR and 500+ enterprise clients. Fully automated operations.',
+          },
         })
 
         console.log(`✅ Created sample business listing: ${business.title}`)
@@ -132,15 +139,31 @@ async function createTestAccounts() {
 
     console.log('\n🎉 Test Accounts Setup Complete!')
     console.log('\n📋 Test Account Credentials:')
-    console.log('┌─────────────────────┬──────────────────────────┬─────────────────┬─────────────────┐')
-    console.log('│ Role                │ Email                    │ Password        │ User Type       │')
-    console.log('├─────────────────────┼──────────────────────────┼─────────────────┼─────────────────┤')
-    console.log('│ Business Owner      │ seller@goodbuyhq.com     │ Seller123!      │ BUSINESS_OWNER  │')
-    console.log('│ Buyer/Investor      │ buyer@goodbuyhq.com      │ Buyer123!       │ BUYER           │')
-    console.log('│ Business Broker     │ broker@goodbuyhq.com     │ Broker123!      │ BROKER          │')
-    console.log('│ System Admin        │ test@goodbuyhq.com       │ Test123456!     │ ADMIN           │')
-    console.log('└─────────────────────┴──────────────────────────┴─────────────────┴─────────────────┘')
-    
+    console.log(
+      '┌─────────────────────┬──────────────────────────┬─────────────────┬─────────────────┐'
+    )
+    console.log(
+      '│ Role                │ Email                    │ Password        │ User Type       │'
+    )
+    console.log(
+      '├─────────────────────┼──────────────────────────┼─────────────────┼─────────────────┤'
+    )
+    console.log(
+      '│ Business Owner      │ seller@goodbuyhq.com     │ Seller123!      │ BUSINESS_OWNER  │'
+    )
+    console.log(
+      '│ Buyer/Investor      │ buyer@goodbuyhq.com      │ Buyer123!       │ BUYER           │'
+    )
+    console.log(
+      '│ Business Broker     │ broker@goodbuyhq.com     │ Broker123!      │ BROKER          │'
+    )
+    console.log(
+      '│ System Admin        │ test@goodbuyhq.com       │ Test123456!     │ ADMIN           │'
+    )
+    console.log(
+      '└─────────────────────┴──────────────────────────┴─────────────────┴─────────────────┘'
+    )
+
     console.log('\n🔗 Access URLs:')
     console.log('• Main Application: http://localhost:3000')
     console.log('• Sign In: http://localhost:3000/auth/signin')
@@ -153,7 +176,6 @@ async function createTestAccounts() {
     console.log('3. Schedule meeting between buyer and seller')
     console.log('4. Test real-time messaging in two browser windows')
     console.log('5. Test mobile interface on phone browser')
-
   } catch (error) {
     console.error('❌ Error creating test accounts:', error)
     throw error
@@ -168,15 +190,17 @@ async function createSampleConversation() {
     console.log('\n💬 Creating Sample Conversation...')
 
     const seller = await prisma.user.findUnique({
-      where: { email: 'seller@goodbuyhq.com' }
+      where: { email: 'seller@goodbuyhq.com' },
     })
     const buyer = await prisma.user.findUnique({
-      where: { email: 'buyer@goodbuyhq.com' }
+      where: { email: 'buyer@goodbuyhq.com' },
     })
     const business = await prisma.business.findFirst()
 
     if (!seller || !buyer || !business) {
-      console.log('⚠️ Skipping sample conversation - missing accounts or business')
+      console.log(
+        '⚠️ Skipping sample conversation - missing accounts or business'
+      )
       return
     }
 
@@ -185,9 +209,9 @@ async function createSampleConversation() {
       where: {
         businessId: business.id,
         participants: {
-          some: { userId: seller.id }
-        }
-      }
+          some: { userId: seller.id },
+        },
+      },
     })
 
     if (existingThread) {
@@ -200,7 +224,7 @@ async function createSampleConversation() {
       data: {
         subject: `Inquiry about ${business.title}`,
         businessId: business.id,
-      }
+      },
     })
 
     // Add participants
@@ -215,8 +239,8 @@ async function createSampleConversation() {
           threadId: thread.id,
           userId: seller.id,
           isAdmin: false,
-        }
-      ]
+        },
+      ],
     })
 
     // Create sample messages
@@ -224,18 +248,18 @@ async function createSampleConversation() {
       {
         content: `Hi Sarah, I'm very interested in your TechFlow SaaS platform. The $2M ARR and 500+ enterprise clients look impressive. Could you share more details about the revenue breakdown and customer retention rates?`,
         senderId: buyer.id,
-        createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000) // 2 days ago
+        createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
       },
       {
         content: `Hello Michael! Thank you for your interest. I'd be happy to share those details. Our revenue is 85% from annual contracts with a 95% retention rate. The customer base spans manufacturing, logistics, and professional services. Would you like to schedule a call to discuss further?`,
         senderId: seller.id,
-        createdAt: new Date(Date.now() - 1.5 * 24 * 60 * 60 * 1000) // 1.5 days ago
+        createdAt: new Date(Date.now() - 1.5 * 24 * 60 * 60 * 1000), // 1.5 days ago
       },
       {
         content: `That's excellent retention! Yes, I'd love to schedule a call. I'm also interested in seeing the financial statements and customer contracts if possible. What's your availability this week?`,
         senderId: buyer.id,
-        createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000) // 1 day ago
-      }
+        createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), // 1 day ago
+      },
     ]
 
     for (const msg of messages) {
@@ -246,18 +270,17 @@ async function createSampleConversation() {
           content: msg.content,
           status: 'SENT',
           createdAt: msg.createdAt,
-        }
+        },
       })
     }
 
     // Update thread lastMessageAt
     await prisma.communicationThread.update({
       where: { id: thread.id },
-      data: { lastMessageAt: messages[messages.length - 1].createdAt }
+      data: { lastMessageAt: messages[messages.length - 1].createdAt },
     })
 
     console.log('✅ Sample conversation created with 3 messages')
-
   } catch (error) {
     console.error('❌ Error creating sample conversation:', error)
   }
@@ -268,10 +291,12 @@ if (require.main === module) {
   createTestAccounts()
     .then(() => createSampleConversation())
     .then(() => {
-      console.log('\n🚀 Ready for testing! Login with any of the accounts above.')
+      console.log(
+        '\n🚀 Ready for testing! Login with any of the accounts above.'
+      )
       process.exit(0)
     })
-    .catch((error) => {
+    .catch(error => {
       console.error('Setup failed:', error)
       process.exit(1)
     })

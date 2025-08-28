@@ -28,7 +28,10 @@ interface ValuationResultsProps {
   businessData?: BusinessData
 }
 
-export function ValuationResults({ result, businessData }: ValuationResultsProps) {
+export function ValuationResults({
+  result,
+  businessData,
+}: ValuationResultsProps) {
   const [activeTab, setActiveTab] = useState<
     'overview' | 'methods' | 'metrics' | 'recommendations' | 'ai-analysis'
   >('overview')
@@ -69,7 +72,9 @@ export function ValuationResults({ result, businessData }: ValuationResultsProps
     { key: 'methods', label: 'Valuation Methods', icon: BarChart3 },
     { key: 'metrics', label: 'Key Metrics', icon: PieChart },
     { key: 'recommendations', label: 'Recommendations', icon: TrendingUp },
-    ...(businessData ? [{ key: 'ai-analysis', label: 'AI Analysis', icon: Brain }] : []),
+    ...(businessData
+      ? [{ key: 'ai-analysis', label: 'AI Analysis', icon: Brain }]
+      : []),
   ]
 
   return (

@@ -4,7 +4,11 @@ import { useState, useRef, KeyboardEvent } from 'react'
 import { Send, Paperclip, Smile, AtSign, Calendar } from 'lucide-react'
 
 interface MessageInputProps {
-  onSendMessage: (content: string, messageType?: string, replyToId?: string) => Promise<void>
+  onSendMessage: (
+    content: string,
+    messageType?: string,
+    replyToId?: string
+  ) => Promise<void>
   isLoading?: boolean
   placeholder?: string
   threadId: string
@@ -16,13 +20,13 @@ interface MessageInputProps {
   onCancelReply?: () => void
 }
 
-export default function MessageInput({ 
-  onSendMessage, 
-  isLoading = false, 
-  placeholder = "Type a message...",
+export default function MessageInput({
+  onSendMessage,
+  isLoading = false,
+  placeholder = 'Type a message...',
   threadId,
   replyingTo,
-  onCancelReply
+  onCancelReply,
 }: MessageInputProps) {
   const [message, setMessage] = useState('')
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
@@ -35,7 +39,7 @@ export default function MessageInput({
       await onSendMessage(message.trim(), 'text', replyingTo?.id)
       setMessage('')
       onCancelReply?.()
-      
+
       // Reset textarea height
       if (textareaRef.current) {
         textareaRef.current.style.height = 'auto'
@@ -72,11 +76,12 @@ export default function MessageInput({
 
     const start = textarea.selectionStart
     const end = textarea.selectionEnd
-    const newMessage = message.substring(0, start) + emoji + message.substring(end)
-    
+    const newMessage =
+      message.substring(0, start) + emoji + message.substring(end)
+
     setMessage(newMessage)
     setShowEmojiPicker(false)
-    
+
     // Restore cursor position
     setTimeout(() => {
       textarea.focus()
@@ -94,7 +99,8 @@ export default function MessageInput({
           <div className="flex items-center justify-between">
             <div className="flex-1 min-w-0">
               <p className="text-xs text-secondary-600 mb-1">
-                Replying to <span className="font-medium">{replyingTo.senderName}</span>
+                Replying to{' '}
+                <span className="font-medium">{replyingTo.senderName}</span>
               </p>
               <p className="text-sm text-secondary-700 truncate">
                 {replyingTo.content}
@@ -117,7 +123,7 @@ export default function MessageInput({
             <textarea
               ref={textareaRef}
               value={message}
-              onChange={(e) => setMessage(e.target.value)}
+              onChange={e => setMessage(e.target.value)}
               onInput={handleInput}
               onKeyPress={handleKeyPress}
               placeholder={placeholder}
@@ -167,7 +173,7 @@ export default function MessageInput({
                 {showEmojiPicker && (
                   <div className="absolute bottom-full right-0 mb-2 bg-white border border-secondary-200 rounded-lg shadow-lg p-2 z-10">
                     <div className="grid grid-cols-4 gap-1">
-                      {commonEmojis.map((emoji) => (
+                      {commonEmojis.map(emoji => (
                         <button
                           key={emoji}
                           onClick={() => insertEmoji(emoji)}
@@ -189,9 +195,10 @@ export default function MessageInput({
             disabled={!message.trim() || isLoading}
             className={`
               p-3 rounded-lg transition-colors
-              ${message.trim() && !isLoading
-                ? 'bg-primary-500 hover:bg-primary-600 text-white'
-                : 'bg-secondary-200 text-secondary-400 cursor-not-allowed'
+              ${
+                message.trim() && !isLoading
+                  ? 'bg-primary-500 hover:bg-primary-600 text-white'
+                  : 'bg-secondary-200 text-secondary-400 cursor-not-allowed'
               }
             `}
             title="Send message (Enter)"
@@ -211,7 +218,9 @@ export default function MessageInput({
         {/* Character Count */}
         {message.length > 9000 && (
           <div className="text-right mt-2">
-            <span className={`text-xs ${message.length > 10000 ? 'text-error-600' : 'text-secondary-500'}`}>
+            <span
+              className={`text-xs ${message.length > 10000 ? 'text-error-600' : 'text-secondary-500'}`}
+            >
               {message.length}/10000
             </span>
           </div>
@@ -220,7 +229,7 @@ export default function MessageInput({
 
       {/* Click outside to close emoji picker */}
       {showEmojiPicker && (
-        <div 
+        <div
           className="fixed inset-0 z-0"
           onClick={() => setShowEmojiPicker(false)}
         />

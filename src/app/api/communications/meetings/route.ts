@@ -26,7 +26,9 @@ const updateMeetingSchema = z.object({
   scheduledStart: z.string().datetime().optional(),
   scheduledEnd: z.string().datetime().optional(),
   location: z.string().max(500).optional(),
-  status: z.enum(['SCHEDULED', 'CONFIRMED', 'CANCELLED', 'COMPLETED', 'RESCHEDULED']).optional(),
+  status: z
+    .enum(['SCHEDULED', 'CONFIRMED', 'CANCELLED', 'COMPLETED', 'RESCHEDULED'])
+    .optional(),
 })
 
 // GET /api/communications/meetings - Get user's meetings
@@ -125,7 +127,11 @@ export async function GET(request: NextRequest) {
 
       return {
         ...meeting,
-        userStatus: userAttendance?.status || (meeting.organizerId === session.user.id ? 'organizer' : 'not_invited'),
+        userStatus:
+          userAttendance?.status ||
+          (meeting.organizerId === session.user.id
+            ? 'organizer'
+            : 'not_invited'),
         userNotes: userAttendance?.notes || null,
       }
     })
@@ -180,7 +186,11 @@ export async function POST(request: NextRequest) {
         },
       })
 
-      if (!participant || !participant.isActive || !participant.allowMeetingInvites) {
+      if (
+        !participant ||
+        !participant.isActive ||
+        !participant.allowMeetingInvites
+      ) {
         return NextResponse.json(
           { error: 'Thread not found or meeting invites not allowed' },
           { status: 403 }
@@ -204,7 +214,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Create meeting in a transaction
-    const meeting = await prisma.$transaction(async (tx) => {
+    const meeting = await prisma.$transaction(async tx => {
       // Create the meeting
       const newMeeting = await tx.meeting.create({
         data: {

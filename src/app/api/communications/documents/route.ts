@@ -135,10 +135,7 @@ export async function POST(request: NextRequest) {
     const metadataJson = formData.get('metadata') as string
 
     if (!file) {
-      return NextResponse.json(
-        { error: 'No file provided' },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: 'No file provided' }, { status: 400 })
     }
 
     // Parse metadata
@@ -216,7 +213,7 @@ export async function POST(request: NextRequest) {
     await writeFile(filePath, buffer)
 
     // Create database record
-    const document = await prisma.$transaction(async (tx) => {
+    const document = await prisma.$transaction(async tx => {
       const doc = await tx.sharedDocument.create({
         data: {
           threadId: validatedData.threadId,
@@ -230,7 +227,9 @@ export async function POST(request: NextRequest) {
           accessLevel: validatedData.accessLevel,
           category: validatedData.category,
           tags: validatedData.tags,
-          expiresAt: validatedData.expiresAt ? new Date(validatedData.expiresAt) : null,
+          expiresAt: validatedData.expiresAt
+            ? new Date(validatedData.expiresAt)
+            : null,
           maxDownloads: validatedData.maxDownloads,
           isScanned: false, // TODO: Implement virus scanning
         },

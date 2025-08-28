@@ -81,7 +81,7 @@ export async function GET(request: NextRequest) {
 
     // Get unread message counts for each thread
     const threadsWithUnreadCounts = await Promise.all(
-      threads.map(async (thread) => {
+      threads.map(async thread => {
         const unreadCount = await prisma.message.count({
           where: {
             threadId: thread.id,
@@ -153,7 +153,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Create the thread and initial message in a transaction
-    const result = await prisma.$transaction(async (tx) => {
+    const result = await prisma.$transaction(async tx => {
       // Create the communication thread
       const thread = await tx.communicationThread.create({
         data: {
@@ -164,7 +164,7 @@ export async function POST(request: NextRequest) {
 
       // Add participants
       const participantData = [
-        ...validatedData.participantIds.map((userId) => ({
+        ...validatedData.participantIds.map(userId => ({
           threadId: thread.id,
           userId,
           isAdmin: userId === session.user.id,

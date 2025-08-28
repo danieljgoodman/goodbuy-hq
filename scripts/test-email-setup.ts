@@ -1,8 +1,8 @@
-import { 
+import {
   sendVerificationEmail,
   sendNewMessageNotification,
   sendMeetingInvitation,
-  sendDailyDigest 
+  sendDailyDigest,
 } from '../src/lib/email'
 
 async function testEmailSetup() {
@@ -33,7 +33,7 @@ async function testEmailSetup() {
       testName,
       'Jane Smith',
       'Business Discussion Meeting',
-      'Let\'s discuss the business opportunity in detail',
+      "Let's discuss the business opportunity in detail",
       new Date(Date.now() + 24 * 60 * 60 * 1000), // Tomorrow
       new Date(Date.now() + 25 * 60 * 60 * 1000), // Tomorrow + 1 hour
       'Virtual Meeting Room',
@@ -45,19 +45,22 @@ async function testEmailSetup() {
     await sendDailyDigest(testEmail, testName, 3, 2, 1)
     console.log('✅ Daily digest email sent successfully!\n')
 
-    console.log('🎉 All email tests passed! Your email service is properly configured.')
+    console.log(
+      '🎉 All email tests passed! Your email service is properly configured.'
+    )
     console.log('\n📋 Next Steps:')
     console.log('1. Check your email inbox for all 4 test emails')
     console.log('2. Verify the emails look correct and links work')
     console.log('3. Update email templates in src/lib/email.ts if needed')
     console.log('4. Configure user email preferences in the app')
-
   } catch (error) {
     console.error('❌ Email test failed:', error)
     console.log('\n🔧 Troubleshooting:')
     console.log('1. Check your SMTP configuration in .env.local')
     console.log('2. Verify your email service credentials')
-    console.log('3. Check if email service is enabled: NEXT_PUBLIC_ENABLE_EMAIL=true')
+    console.log(
+      '3. Check if email service is enabled: NEXT_PUBLIC_ENABLE_EMAIL=true'
+    )
     console.log('4. Review the email setup guides in the project root')
   }
 }

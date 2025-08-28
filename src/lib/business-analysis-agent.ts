@@ -1,36 +1,36 @@
-import { openaiService } from './openai';
-import type { BusinessData } from '@/types/business';
+import { openaiService } from './openai'
+import type { BusinessData } from '@/types/business'
 
 export interface BusinessAnalysis {
   financialHealth: {
-    score: number;
-    trends: string[];
-    strengths: string[];
-    concerns: string[];
-  };
+    score: number
+    trends: string[]
+    strengths: string[]
+    concerns: string[]
+  }
   marketPosition: {
-    competitiveness: number;
-    marketShare: string;
-    differentiators: string[];
-    threats: string[];
-  };
+    competitiveness: number
+    marketShare: string
+    differentiators: string[]
+    threats: string[]
+  }
   growthPotential: {
-    score: number;
-    opportunities: string[];
-    scalability: string;
-    timeline: string;
-  };
+    score: number
+    opportunities: string[]
+    scalability: string
+    timeline: string
+  }
   riskAssessment: {
-    level: 'low' | 'medium' | 'high';
-    factors: string[];
-    mitigation: string[];
-  };
+    level: 'low' | 'medium' | 'high'
+    factors: string[]
+    mitigation: string[]
+  }
   recommendations: {
-    immediate: string[];
-    shortTerm: string[];
-    longTerm: string[];
-  };
-  summary: string;
+    immediate: string[]
+    shortTerm: string[]
+    longTerm: string[]
+  }
+  summary: string
 }
 
 export class BusinessAnalysisAgent {
@@ -96,7 +96,7 @@ ANALYSIS GUIDELINES:
 7. If data is limited, clearly state assumptions made
 
 Respond ONLY with valid JSON - no additional text or formatting.
-    `.trim();
+    `.trim()
   }
 
   private createEnhancementPrompt(description: string): string {
@@ -117,60 +117,62 @@ ENHANCEMENT REQUIREMENTS:
 
 RESPOND WITH:
 Enhanced description only - no additional formatting or explanation.
-    `.trim();
+    `.trim()
   }
 
   async analyzeBusinessComprehensively(
     businessData: BusinessData
   ): Promise<BusinessAnalysis> {
     try {
-      const prompt = this.createAnalysisPrompt(businessData);
-      
+      const prompt = this.createAnalysisPrompt(businessData)
+
       const response = await openaiService.generateCompletion(prompt, {
         model: 'gpt-4',
         maxTokens: 2000,
-        temperature: 0.3
-      });
+        temperature: 0.3,
+      })
 
-      const content = typeof response === 'object' && 'choices' in response
-        ? response.choices[0]?.message?.content
-        : '';
+      const content =
+        typeof response === 'object' && 'choices' in response
+          ? response.choices[0]?.message?.content
+          : ''
 
       if (!content) {
-        throw new Error('No analysis content received from AI');
+        throw new Error('No analysis content received from AI')
       }
 
       try {
-        return JSON.parse(content) as BusinessAnalysis;
+        return JSON.parse(content) as BusinessAnalysis
       } catch (parseError) {
-        console.error('Failed to parse AI response:', content);
-        throw new Error('Invalid analysis format received from AI');
+        console.error('Failed to parse AI response:', content)
+        throw new Error('Invalid analysis format received from AI')
       }
     } catch (error) {
-      console.error('Business analysis failed:', error);
-      
-      return this.getFallbackAnalysis(businessData);
+      console.error('Business analysis failed:', error)
+
+      return this.getFallbackAnalysis(businessData)
     }
   }
 
   async enhanceBusinessDescription(description: string): Promise<string> {
     try {
-      const prompt = this.createEnhancementPrompt(description);
-      
+      const prompt = this.createEnhancementPrompt(description)
+
       const response = await openaiService.generateCompletion(prompt, {
         model: 'gpt-4',
         maxTokens: 300,
-        temperature: 0.7
-      });
+        temperature: 0.7,
+      })
 
-      const enhancedDescription = typeof response === 'object' && 'choices' in response
-        ? response.choices[0]?.message?.content?.trim()
-        : '';
+      const enhancedDescription =
+        typeof response === 'object' && 'choices' in response
+          ? response.choices[0]?.message?.content?.trim()
+          : ''
 
-      return enhancedDescription || description;
+      return enhancedDescription || description
     } catch (error) {
-      console.error('Description enhancement failed:', error);
-      return description;
+      console.error('Description enhancement failed:', error)
+      return description
     }
   }
 
@@ -179,62 +181,75 @@ Enhanced description only - no additional formatting or explanation.
     onChunk: (chunk: string) => void
   ): Promise<void> {
     try {
-      const prompt = this.createAnalysisPrompt(businessData);
-      
+      const prompt = this.createAnalysisPrompt(businessData)
+
       const stream = await openaiService.generateStreamingCompletion(prompt, {
         model: 'gpt-4',
         maxTokens: 2000,
-        temperature: 0.3
-      });
+        temperature: 0.3,
+      })
 
       for await (const chunk of stream) {
-        const content = chunk.choices[0]?.delta?.content || '';
+        const content = chunk.choices[0]?.delta?.content || ''
         if (content) {
-          onChunk(content);
+          onChunk(content)
         }
       }
     } catch (error) {
-      console.error('Streaming analysis failed:', error);
-      onChunk('Analysis failed. Please try again.');
+      console.error('Streaming analysis failed:', error)
+      onChunk('Analysis failed. Please try again.')
     }
   }
 
   private getFallbackAnalysis(businessData: BusinessData): BusinessAnalysis {
-    const hasRevenue = businessData.annualRevenue && businessData.annualRevenue > 0;
-    const hasExpenses = businessData.monthlyExpenses && businessData.monthlyExpenses > 0;
-    
+    const hasRevenue =
+      businessData.annualRevenue && businessData.annualRevenue > 0
+    const hasExpenses =
+      businessData.monthlyExpenses && businessData.monthlyExpenses > 0
+
     return {
       financialHealth: {
         score: hasRevenue ? 65 : 40,
-        trends: hasRevenue ? ['Revenue data available for analysis'] : ['Limited financial data available'],
-        strengths: hasRevenue ? ['Generating revenue'] : ['Business concept established'],
-        concerns: ['Limited data available for comprehensive analysis']
+        trends: hasRevenue
+          ? ['Revenue data available for analysis']
+          : ['Limited financial data available'],
+        strengths: hasRevenue
+          ? ['Generating revenue']
+          : ['Business concept established'],
+        concerns: ['Limited data available for comprehensive analysis'],
       },
       marketPosition: {
         competitiveness: 50,
         marketShare: 'Unable to determine without additional market data',
         differentiators: ['Requires detailed market research'],
-        threats: ['Competitive analysis needed']
+        threats: ['Competitive analysis needed'],
       },
       growthPotential: {
         score: 50,
         opportunities: ['Market research needed to identify opportunities'],
         scalability: 'Assessment requires more detailed business information',
-        timeline: 'Timeline depends on market conditions and execution'
+        timeline: 'Timeline depends on market conditions and execution',
       },
       riskAssessment: {
         level: 'medium' as const,
         factors: ['Limited data for comprehensive risk assessment'],
-        mitigation: ['Gather more detailed business and market data']
+        mitigation: ['Gather more detailed business and market data'],
       },
       recommendations: {
-        immediate: ['Collect comprehensive business metrics', 'Conduct market research'],
-        shortTerm: ['Develop detailed business plan', 'Analyze competitive landscape'],
-        longTerm: ['Strategic planning based on market insights']
+        immediate: [
+          'Collect comprehensive business metrics',
+          'Conduct market research',
+        ],
+        shortTerm: [
+          'Develop detailed business plan',
+          'Analyze competitive landscape',
+        ],
+        longTerm: ['Strategic planning based on market insights'],
       },
-      summary: 'Analysis limited by available data. Recommend gathering comprehensive business metrics and market research for detailed evaluation.'
-    };
+      summary:
+        'Analysis limited by available data. Recommend gathering comprehensive business metrics and market research for detailed evaluation.',
+    }
   }
 }
 
-export const businessAnalysisAgent = new BusinessAnalysisAgent();
+export const businessAnalysisAgent = new BusinessAnalysisAgent()

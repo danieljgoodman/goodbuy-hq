@@ -175,6 +175,12 @@ export function Header() {
               Calculator
             </Link>
             <Link
+              href="/marketplace"
+              className="text-secondary-600 hover:text-primary-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-md px-3 py-2"
+            >
+              Marketplace
+            </Link>
+            <Link
               href="/pricing"
               className="text-secondary-600 hover:text-primary-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-md px-3 py-2"
             >
@@ -296,6 +302,13 @@ export function Header() {
                     Growth Score
                   </Link>
                 </div>
+                <Link
+                  href="/marketplace"
+                  className="block px-4 py-2 text-secondary-600 hover:text-primary-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-inset rounded-md mx-2"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Marketplace
+                </Link>
                 <Link
                   href="/pricing"
                   className="block px-4 py-2 text-secondary-600 hover:text-primary-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-inset rounded-md mx-2"

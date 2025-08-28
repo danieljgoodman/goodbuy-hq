@@ -14,8 +14,14 @@ const updatePreferencesSchema = z.object({
   showOnlineStatus: z.boolean().optional(),
   allowDirectMessages: z.boolean().optional(),
   defaultMeetingLength: z.number().int().min(15).max(480).optional(), // 15 minutes to 8 hours
-  workingHoursStart: z.string().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/).optional(), // HH:MM format
-  workingHoursEnd: z.string().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/).optional(),
+  workingHoursStart: z
+    .string()
+    .regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/)
+    .optional(), // HH:MM format
+  workingHoursEnd: z
+    .string()
+    .regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/)
+    .optional(),
   timezone: z.string().optional(),
   shareContactInfo: z.boolean().optional(),
   allowPublicProfile: z.boolean().optional(),

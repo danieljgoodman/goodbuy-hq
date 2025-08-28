@@ -51,11 +51,15 @@ export async function PATCH(
 
     // Only message sender can edit their own messages
     if (message.senderId !== session.user.id) {
-      return NextResponse.json({ error: 'Insufficient permissions' }, { status: 403 })
+      return NextResponse.json(
+        { error: 'Insufficient permissions' },
+        { status: 403 }
+      )
     }
 
     // Don't allow editing messages older than 24 hours
-    const hoursSinceCreated = (Date.now() - message.createdAt.getTime()) / (1000 * 60 * 60)
+    const hoursSinceCreated =
+      (Date.now() - message.createdAt.getTime()) / (1000 * 60 * 60)
     if (hoursSinceCreated > 24) {
       return NextResponse.json(
         { error: 'Messages can only be edited within 24 hours of creation' },
@@ -178,7 +182,10 @@ export async function DELETE(
     // Only message sender or thread admin can delete messages
     const participant = message.thread.participants[0]
     if (message.senderId !== session.user.id && !participant.isAdmin) {
-      return NextResponse.json({ error: 'Insufficient permissions' }, { status: 403 })
+      return NextResponse.json(
+        { error: 'Insufficient permissions' },
+        { status: 403 }
+      )
     }
 
     // Soft delete - mark as deleted but keep record for audit

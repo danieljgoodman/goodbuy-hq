@@ -74,10 +74,7 @@ export async function GET(
     return NextResponse.json(thread)
   } catch (error) {
     console.error('Failed to get thread:', error)
-    return NextResponse.json(
-      { error: 'Failed to get thread' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'Failed to get thread' }, { status: 500 })
   }
 }
 
@@ -112,7 +109,10 @@ export async function PATCH(
 
     // Only admins can update thread properties (except archiving)
     if ('subject' in validatedData && !participant.isAdmin) {
-      return NextResponse.json({ error: 'Insufficient permissions' }, { status: 403 })
+      return NextResponse.json(
+        { error: 'Insufficient permissions' },
+        { status: 403 }
+      )
     }
 
     const updatedThread = await prisma.communicationThread.update({

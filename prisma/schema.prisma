@@ -31,8 +31,35 @@ enum BusinessStatus {
   DRAFT
   ACTIVE
   UNDER_REVIEW
+  REJECTED
   SOLD
   ARCHIVED
+  EXPIRED
+}
+
+// Business Category
+enum BusinessCategory {
+  RESTAURANT
+  RETAIL
+  ECOMMERCE
+  TECHNOLOGY
+  MANUFACTURING
+  SERVICES
+  HEALTHCARE
+  REAL_ESTATE
+  AUTOMOTIVE
+  ENTERTAINMENT
+  EDUCATION
+  OTHER
+}
+
+// Listing Type
+enum ListingType {
+  BUSINESS_SALE
+  ASSET_SALE
+  FRANCHISE
+  PARTNERSHIP
+  INVESTMENT
 }
 
 // Evaluation Status
@@ -93,6 +120,10 @@ model User {
   // Email verification
   verificationTokens VerificationToken[]
   
+  // Marketplace relations
+  businessViews     BusinessView[]
+  savedSearches     SavedSearch[]
+  
   @@map("users")
 }
 
@@ -133,34 +164,92 @@ model Business {
   id          String         @id @default(cuid())
   title       String
   description String
+  
+  // Business details
   industry    String?
-  location    String?
+  category    BusinessCategory?
+  listingType ListingType    @default(BUSINESS_SALE)
+  
+  // Location information
+  address     String?
+  city        String?
+  state       String?
+  zipCode     String?
+  country     String         @default("US")
+  location    String?        // Combined location for search
+  latitude    Float?
+  longitude   Float?
+  
+  // Contact information
   website     String?
+  phone       String?
+  email       String?
   
   // Financial information
   askingPrice     Decimal?
   revenue         Decimal?
   profit          Decimal?
+  cashFlow        Decimal?
+  ebitda          Decimal?
+  grossMargin     Float?
+  netMargin       Float?
+  
+  // Business metrics
   established     DateTime?
   employees       Int?
+  monthlyRevenue  Decimal?
+  yearlyGrowth    Float?
+  customerBase    Int?
+  
+  // Inventory and assets
+  inventory       Decimal?
+  equipment       Decimal?
+  realEstate      Decimal?
+  totalAssets     Decimal?
+  liabilities     Decimal?
+  
+  // Operating details
+  hoursOfOperation String?
+  daysOpen        String[]
+  seasonality     String?
+  competition     String?
+  
+  // Reason for sale
+  reasonForSelling String?
+  timeframe       String?
+  negotiations    String?
+  financing       String?
   
   // Status and metadata
   status          BusinessStatus @default(DRAFT)
   featured        Boolean        @default(false)
+  priority        Int            @default(0)
+  viewCount       Int            @default(0)
+  inquiryCount    Int            @default(0)
+  
+  // Admin fields
+  adminNotes      String?
+  rejectionReason String?
+  reviewedAt      DateTime?
+  reviewedBy      String?
   
   // Media
-  images          String[]
-  documents       String[]
+  images          String[]       // URLs to images
+  documents       String[]       // URLs to documents
+  virtualTour     String?        // URL to virtual tour
   
   // SEO
   slug            String?        @unique
   metaTitle       String?
   metaDescription String?
+  keywords        String[]
   
   // Timestamps
   createdAt       DateTime       @default(now())
   updatedAt       DateTime       @updatedAt
   publishedAt     DateTime?
+  expiresAt       DateTime?
+  lastViewedAt    DateTime?
   
   // Relations
   ownerId         String
@@ -168,6 +257,9 @@ model Business {
   evaluations     Evaluation[]
   favorites       Favorite[]
   inquiries       Inquiry[]
+  images_rel      BusinessImage[]
+  documents_rel   BusinessDocument[]
+  views           BusinessView[]
   communicationThreads CommunicationThread[]
   
   @@map("businesses")
@@ -638,6 +730,105 @@ model CommunicationAuditLog {
   user        User     @relation(fields: [userId], references: [id])
   
   @@map("communication_audit_logs")
+}
+
+// Business Images
+model BusinessImage {
+  id          String   @id @default(cuid())
+  businessId  String
+  url         String
+  thumbnailUrl String?
+  alt         String?
+  caption     String?
+  isPrimary   Boolean  @default(false)
+  orderIndex  Int      @default(0)
+  
+  // Image metadata
+  originalName String?
+  size        Int?
+  width       Int?
+  height      Int?
+  format      String?
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  business    Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  
+  @@map("business_images")
+}
+
+// Business Documents
+model BusinessDocument {
+  id          String   @id @default(cuid())
+  businessId  String
+  name        String
+  description String?
+  url         String
+  type        String   // financial_statement, tax_return, lease_agreement, etc.
+  size        Int?
+  mimeType    String?
+  isConfidential Boolean @default(true)
+  requiresNDA    Boolean @default(false)
+  
+  // Access control
+  accessLevel String   @default("owner_only") // owner_only, inquired_buyers, public
+  downloadCount Int    @default(0)
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  business    Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  
+  @@map("business_documents")
+}
+
+// Business Views (Analytics)
+model BusinessView {
+  id          String   @id @default(cuid())
+  businessId  String
+  userId      String?
+  ipAddress   String?
+  userAgent   String?
+  referrer    String?
+  
+  // View details
+  sessionId   String?
+  duration    Int?     // seconds spent viewing
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  
+  // Relations
+  business    Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  user        User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  
+  @@map("business_views")
+}
+
+// Saved Searches
+model SavedSearch {
+  id          String   @id @default(cuid())
+  userId      String
+  name        String
+  query       Json     // Search parameters
+  
+  // Notification settings
+  emailAlerts Boolean  @default(false)
+  lastAlertSent DateTime?
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("saved_searches")
 }
 
 // Email verification tokens

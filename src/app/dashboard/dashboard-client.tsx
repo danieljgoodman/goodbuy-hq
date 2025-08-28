@@ -19,6 +19,9 @@ import {
   Star,
   ArrowUpRight,
   Calendar,
+  Store,
+  Plus,
+  Search,
 } from 'lucide-react'
 import CostMonitor from '@/components/ai/cost-monitor'
 
@@ -195,6 +198,39 @@ export default function DashboardClient({
 
   const stats = getStatsForUserType()
 
+  const getQuickActionsForUserType = () => {
+    switch (session.user.userType) {
+      case UserType.BUSINESS_OWNER:
+        return [
+          { label: 'Create Listing', icon: Plus, color: 'blue', href: '/marketplace/create' },
+          { label: 'My Listings', icon: Building, color: 'green', href: '/dashboard/listings' },
+          { label: 'Browse Marketplace', icon: Store, color: 'purple', href: '/marketplace' },
+          { label: 'Generate Report', icon: BarChart3, color: 'orange', href: '/calculator' },
+        ]
+      case UserType.BUYER:
+        return [
+          { label: 'Browse Businesses', icon: Search, color: 'blue', href: '/marketplace' },
+          { label: 'Saved Businesses', icon: Heart, color: 'red', href: '/dashboard/saved' },
+          { label: 'My Inquiries', icon: MessageSquare, color: 'green', href: '/dashboard/inquiries' },
+          { label: 'Valuation Tool', icon: Brain, color: 'purple', href: '/calculator' },
+        ]
+      case UserType.BROKER:
+        return [
+          { label: 'Client Listings', icon: Building, color: 'blue', href: '/dashboard/listings' },
+          { label: 'Browse Marketplace', icon: Store, color: 'green', href: '/marketplace' },
+          { label: 'Create Evaluation', icon: Brain, color: 'purple', href: '/calculator' },
+          { label: 'Generate Report', icon: BarChart3, color: 'orange', href: '/reports' },
+        ]
+      default:
+        return [
+          { label: 'Browse Marketplace', icon: Store, color: 'blue', href: '/marketplace' },
+          { label: 'Valuation Tool', icon: Brain, color: 'green', href: '/calculator' },
+          { label: 'Schedule Call', icon: Calendar, color: 'purple', href: '/contact' },
+          { label: 'Generate Report', icon: BarChart3, color: 'orange', href: '/calculator' },
+        ]
+    }
+  }
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 flex items-center justify-center">
@@ -349,6 +385,69 @@ export default function DashboardClient({
           })}
         </div>
 
+        {/* Marketplace Navigation Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.6 }}
+          className="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl shadow-lg p-6 text-white"
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-2xl font-bold mb-2 flex items-center gap-2">
+                <Store className="w-7 h-7" />
+                Business Marketplace
+              </h3>
+              <p className="text-blue-100 mb-4">
+                {session.user.userType === UserType.BUSINESS_OWNER
+                  ? 'List your business for sale or browse investment opportunities'
+                  : session.user.userType === UserType.BUYER
+                  ? 'Discover profitable businesses for sale across various industries'
+                  : 'Explore business opportunities and manage client listings'}
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => window.location.href = '/marketplace'}
+                  className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg font-medium transition-colors duration-200 backdrop-blur-sm"
+                >
+                  Browse Marketplace
+                </motion.button>
+                {session.user.userType === UserType.BUSINESS_OWNER && (
+                  <>
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => window.location.href = '/marketplace/create'}
+                      className="px-4 py-2 bg-white text-blue-600 hover:bg-blue-50 rounded-lg font-medium transition-colors duration-200"
+                    >
+                      Create Listing
+                    </motion.button>
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => window.location.href = '/dashboard/listings'}
+                      className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg font-medium transition-colors duration-200 backdrop-blur-sm"
+                    >
+                      Manage Listings
+                    </motion.button>
+                  </>
+                )}
+              </div>
+            </div>
+            <div className="hidden lg:block">
+              <motion.div
+                className="w-24 h-24 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-sm"
+                whileHover={{ rotate: 10, scale: 1.05 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+              >
+                <Building className="w-12 h-12 text-white" />
+              </motion.div>
+            </div>
+          </div>
+        </motion.div>
+
         {/* Data Visualization Section */}
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Chart Card */}
@@ -463,12 +562,7 @@ export default function DashboardClient({
           </h3>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[
-              { label: 'New Valuation', icon: Brain, color: 'blue' },
-              { label: 'Upload Documents', icon: Building, color: 'green' },
-              { label: 'Schedule Call', icon: Calendar, color: 'purple' },
-              { label: 'Generate Report', icon: BarChart3, color: 'orange' },
-            ].map((action, index) => {
+            {getQuickActionsForUserType().map((action, index) => {
               const IconComponent = action.icon
               return (
                 <motion.button
@@ -478,7 +572,8 @@ export default function DashboardClient({
                   transition={{ delay: 0.7 + index * 0.05, duration: 0.3 }}
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
-                  className="flex flex-col items-center gap-3 p-4 rounded-xl border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-200"
+                  onClick={() => action.href && (window.location.href = action.href)}
+                  className="flex flex-col items-center gap-3 p-4 rounded-xl border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-200 cursor-pointer"
                 >
                   <div
                     className={`w-12 h-12 bg-gradient-to-br from-${action.color}-500 to-${action.color}-600 rounded-lg flex items-center justify-center shadow-sm`}
