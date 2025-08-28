@@ -11,6 +11,7 @@ import {
   BarChart3,
   PieChart,
   Target,
+  Brain,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { ValuationResult } from '@/types/valuation'
@@ -19,14 +20,17 @@ import { exportToPDF } from '@/lib/pdf-export'
 import { EvaluationStorage } from '@/lib/evaluation-storage'
 import { ValuationChart } from './valuation-chart'
 import { MetricsChart } from './metrics-chart'
+import BusinessAnalysisPanel from '@/components/ai/business-analysis-panel'
+import type { BusinessData } from '@/types/business'
 
 interface ValuationResultsProps {
   result: ValuationResult
+  businessData?: BusinessData
 }
 
-export function ValuationResults({ result }: ValuationResultsProps) {
+export function ValuationResults({ result, businessData }: ValuationResultsProps) {
   const [activeTab, setActiveTab] = useState<
-    'overview' | 'methods' | 'metrics' | 'recommendations'
+    'overview' | 'methods' | 'metrics' | 'recommendations' | 'ai-analysis'
   >('overview')
   const [isSaving, setIsSaving] = useState(false)
   const [isExporting, setIsExporting] = useState(false)
@@ -65,6 +69,7 @@ export function ValuationResults({ result }: ValuationResultsProps) {
     { key: 'methods', label: 'Valuation Methods', icon: BarChart3 },
     { key: 'metrics', label: 'Key Metrics', icon: PieChart },
     { key: 'recommendations', label: 'Recommendations', icon: TrendingUp },
+    ...(businessData ? [{ key: 'ai-analysis', label: 'AI Analysis', icon: Brain }] : []),
   ]
 
   return (
@@ -318,6 +323,12 @@ export function ValuationResults({ result }: ValuationResultsProps) {
               </p>
             )}
           </div>
+        </div>
+      )}
+
+      {activeTab === 'ai-analysis' && businessData && (
+        <div>
+          <BusinessAnalysisPanel businessData={businessData} />
         </div>
       )}
 

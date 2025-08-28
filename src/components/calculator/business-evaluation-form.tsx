@@ -27,6 +27,7 @@ import { FinancialDataForm } from './forms/financial-data-form'
 import { BusinessDetailsForm } from './forms/business-details-form'
 import { ValuationResults } from './valuation-results'
 import { ValuationEngine } from '@/lib/valuation-engine'
+import type { BusinessData } from '@/types/business'
 
 const FORM_STEPS: {
   key: FormStep
@@ -120,6 +121,23 @@ export function BusinessEvaluationForm() {
     }
   }
 
+  const convertToBusinessData = (formData: Partial<EvaluationFormData>): BusinessData => {
+    return {
+      businessName: formData.basicInfo?.companyName || '',
+      industry: formData.basicInfo?.industry || '',
+      description: formData.basicInfo?.description || '',
+      annualRevenue: formData.financialData?.revenue || 0,
+      monthlyExpenses: formData.financialData?.operatingExpenses ? formData.financialData.operatingExpenses / 12 : 0,
+      employees: formData.basicInfo?.employees || 0,
+      yearsInOperation: formData.basicInfo?.foundingYear ? new Date().getFullYear() - formData.basicInfo.foundingYear : 0,
+      location: formData.basicInfo?.location || '',
+      businessType: formData.basicInfo?.businessType || '',
+      assets: formData.financialData?.totalAssets || 0,
+      liabilities: formData.financialData?.totalLiabilities || 0,
+      monthlyProfit: formData.financialData?.netIncome ? formData.financialData.netIncome / 12 : 0,
+    };
+  }
+
   const handleNext = async () => {
     if (!validateCurrentStep()) {
       setFormState(prev => ({
@@ -209,7 +227,10 @@ export function BusinessEvaluationForm() {
         )
       case 'results':
         return valuationResult ? (
-          <ValuationResults result={valuationResult} />
+          <ValuationResults 
+            result={valuationResult} 
+            businessData={convertToBusinessData(formState.data)}
+          />
         ) : (
           <div className="text-center p-8">
             <div className="animate-spin w-8 h-8 border-2 border-primary-600 border-t-transparent rounded-full mx-auto mb-4" />

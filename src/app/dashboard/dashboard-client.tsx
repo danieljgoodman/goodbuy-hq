@@ -20,6 +20,7 @@ import {
   ArrowUpRight,
   Calendar,
 } from 'lucide-react'
+import CostMonitor from '@/components/ai/cost-monitor'
 
 interface DashboardClientProps {
   session: any
@@ -491,6 +492,15 @@ export default function DashboardClient({
               )
             })}
           </div>
+        </motion.div>
+
+        {/* AI Cost Monitor */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.6 }}
+        >
+          <CostMonitor />
         </motion.div>
       </div>
     </div>
