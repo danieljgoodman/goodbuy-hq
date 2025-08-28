@@ -9,7 +9,10 @@ export default async function BrokerDashboardPage() {
   const user = await getCurrentUser()
 
   // Only allow brokers and admins
-  if (session.user.userType !== UserType.BROKER && session.user.userType !== UserType.ADMIN) {
+  if (
+    session.user.userType !== UserType.BROKER &&
+    session.user.userType !== UserType.ADMIN
+  ) {
     redirect('/dashboard')
   }
 
@@ -64,7 +67,7 @@ export default async function BrokerDashboardPage() {
 
   // Calculate metrics
   const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
-  
+
   const recentEvaluations = await prisma.evaluation.count({
     where: {
       evaluatorId: user?.id || '',
@@ -72,9 +75,11 @@ export default async function BrokerDashboardPage() {
     },
   })
 
-  const totalCommissionValue = businesses
-    .filter((b: any) => b.status === 'SOLD')
-    .reduce((sum: number, b: any) => sum + (Number(b.askingPrice) || 0), 0) * 0.05 // Assume 5% commission
+  const totalCommissionValue =
+    businesses
+      .filter((b: any) => b.status === 'SOLD')
+      .reduce((sum: number, b: any) => sum + (Number(b.askingPrice) || 0), 0) *
+    0.05 // Assume 5% commission
 
   const analytics = {
     totalClients: businesses.length,

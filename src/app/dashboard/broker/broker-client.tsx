@@ -142,12 +142,14 @@ export default function BrokerDashboardClient({
   }
 
   // Calculate performance metrics
-  const averageScore = evaluations.length > 0
-    ? evaluations.reduce((sum, e) => sum + (e.overallScore || 0), 0) / evaluations.length
-    : 0
+  const averageScore =
+    evaluations.length > 0
+      ? evaluations.reduce((sum, e) => sum + (e.overallScore || 0), 0) /
+        evaluations.length
+      : 0
 
   const recentActivity = [
-    ...businesses.flatMap(business => 
+    ...businesses.flatMap(business =>
       business.evaluations.slice(0, 1).map(evaluation => ({
         id: `evaluation-${evaluation.id}`,
         type: 'evaluation',
@@ -157,7 +159,7 @@ export default function BrokerDashboardClient({
         businessId: business.id,
       }))
     ),
-    ...businesses.flatMap(business => 
+    ...businesses.flatMap(business =>
       business.inquiries.slice(0, 1).map(inquiry => ({
         id: `inquiry-${inquiry.id}`,
         type: 'inquiry',
@@ -168,7 +170,10 @@ export default function BrokerDashboardClient({
       }))
     ),
   ]
-    .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+    .sort(
+      (a, b) =>
+        new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+    )
     .slice(0, 5)
 
   if (isLoading) {
@@ -205,7 +210,8 @@ export default function BrokerDashboardClient({
               Broker Dashboard
             </h1>
             <p className="text-lg text-slate-600">
-              Welcome back, {user.firstName || user.name || 'Broker'}! Manage your clients and evaluations.
+              Welcome back, {user.firstName || user.name || 'Broker'}! Manage
+              your clients and evaluations.
             </p>
           </div>
           <motion.div
@@ -241,9 +247,15 @@ export default function BrokerDashboardClient({
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-slate-600">Active Clients</p>
-                <p className="text-3xl font-bold text-slate-900">{analytics.totalClients}</p>
-                <p className="text-sm text-slate-500">{analytics.activeListings} active listings</p>
+                <p className="text-sm font-medium text-slate-600">
+                  Active Clients
+                </p>
+                <p className="text-3xl font-bold text-slate-900">
+                  {analytics.totalClients}
+                </p>
+                <p className="text-sm text-slate-500">
+                  {analytics.activeListings} active listings
+                </p>
               </div>
               <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center shadow-md">
                 <Users className="w-6 h-6 text-white" />
@@ -259,11 +271,17 @@ export default function BrokerDashboardClient({
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-slate-600">Evaluations</p>
+                <p className="text-sm font-medium text-slate-600">
+                  Evaluations
+                </p>
                 <div className="flex items-baseline gap-2">
-                  <p className="text-3xl font-bold text-slate-900">{analytics.totalEvaluations}</p>
+                  <p className="text-3xl font-bold text-slate-900">
+                    {analytics.totalEvaluations}
+                  </p>
                   {analytics.recentEvaluations > 0 && (
-                    <p className="text-sm text-green-600">+{analytics.recentEvaluations} this month</p>
+                    <p className="text-sm text-green-600">
+                      +{analytics.recentEvaluations} this month
+                    </p>
                   )}
                 </div>
               </div>
@@ -281,8 +299,12 @@ export default function BrokerDashboardClient({
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-slate-600">Completed Deals</p>
-                <p className="text-3xl font-bold text-slate-900">{analytics.completedDeals}</p>
+                <p className="text-sm font-medium text-slate-600">
+                  Completed Deals
+                </p>
+                <p className="text-3xl font-bold text-slate-900">
+                  {analytics.completedDeals}
+                </p>
                 <p className="text-sm text-slate-500">Total transactions</p>
               </div>
               <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center shadow-md">
@@ -299,8 +321,12 @@ export default function BrokerDashboardClient({
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-slate-600">Commission Value</p>
-                <p className="text-3xl font-bold text-slate-900">{formatPrice(analytics.totalCommissionValue)}</p>
+                <p className="text-sm font-medium text-slate-600">
+                  Commission Value
+                </p>
+                <p className="text-3xl font-bold text-slate-900">
+                  {formatPrice(analytics.totalCommissionValue)}
+                </p>
                 <p className="text-sm text-slate-500">Estimated earnings</p>
               </div>
               <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center shadow-md">
@@ -329,7 +355,9 @@ export default function BrokerDashboardClient({
                   {averageScore.toFixed(0)}
                 </span>
               </div>
-              <p className="text-sm font-medium text-slate-900">Average Evaluation Score</p>
+              <p className="text-sm font-medium text-slate-900">
+                Average Evaluation Score
+              </p>
               <p className="text-xs text-slate-500">Out of 100</p>
             </div>
 
@@ -339,14 +367,21 @@ export default function BrokerDashboardClient({
                   {analytics.activeListings}
                 </span>
               </div>
-              <p className="text-sm font-medium text-slate-900">Active Listings</p>
+              <p className="text-sm font-medium text-slate-900">
+                Active Listings
+              </p>
               <p className="text-xs text-slate-500">Currently live</p>
             </div>
 
             <div className="text-center">
               <div className="w-20 h-20 bg-gradient-to-br from-purple-100 to-purple-200 rounded-full flex items-center justify-center mx-auto mb-3">
                 <span className="text-2xl font-bold text-purple-700">
-                  {((analytics.completedDeals / Math.max(analytics.totalClients, 1)) * 100).toFixed(0)}%
+                  {(
+                    (analytics.completedDeals /
+                      Math.max(analytics.totalClients, 1)) *
+                    100
+                  ).toFixed(0)}
+                  %
                 </span>
               </div>
               <p className="text-sm font-medium text-slate-900">Success Rate</p>
@@ -366,10 +401,22 @@ export default function BrokerDashboardClient({
             <nav className="flex space-x-8 px-6">
               {[
                 { id: 'overview', label: 'Overview', count: '' },
-                { id: 'clients', label: 'Client Listings', count: businesses.length },
-                { id: 'evaluations', label: 'Evaluations', count: evaluations.length },
-                { id: 'activity', label: 'Recent Activity', count: recentActivity.length },
-              ].map((tab) => (
+                {
+                  id: 'clients',
+                  label: 'Client Listings',
+                  count: businesses.length,
+                },
+                {
+                  id: 'evaluations',
+                  label: 'Evaluations',
+                  count: evaluations.length,
+                },
+                {
+                  id: 'activity',
+                  label: 'Recent Activity',
+                  count: recentActivity.length,
+                },
+              ].map(tab => (
                 <button
                   key={tab.id}
                   onClick={() => setSelectedTab(tab.id)}
@@ -403,10 +450,18 @@ export default function BrokerDashboardClient({
                       </h4>
                       <div className="space-y-3">
                         {businesses
-                          .sort((a, b) => (b._count.views + b._count.inquiries) - (a._count.views + a._count.inquiries))
+                          .sort(
+                            (a, b) =>
+                              b._count.views +
+                              b._count.inquiries -
+                              (a._count.views + a._count.inquiries)
+                          )
                           .slice(0, 5)
                           .map((business, index) => (
-                            <div key={business.id} className="flex items-center gap-3 p-3 bg-slate-50 rounded-lg">
+                            <div
+                              key={business.id}
+                              className="flex items-center gap-3 p-3 bg-slate-50 rounded-lg"
+                            >
                               <div className="w-12 h-8 bg-slate-200 rounded overflow-hidden flex-shrink-0">
                                 {business.images_rel[0]?.url ? (
                                   <img
@@ -421,9 +476,12 @@ export default function BrokerDashboardClient({
                                 )}
                               </div>
                               <div className="flex-1">
-                                <p className="font-medium text-slate-900 text-sm">{business.title}</p>
+                                <p className="font-medium text-slate-900 text-sm">
+                                  {business.title}
+                                </p>
                                 <p className="text-xs text-slate-500">
-                                  {business._count.views} views • {business._count.inquiries} inquiries
+                                  {business._count.views} views •{' '}
+                                  {business._count.inquiries} inquiries
                                 </p>
                               </div>
                               <div className="text-right">
@@ -432,8 +490,7 @@ export default function BrokerDashboardClient({
                                 </p>
                               </div>
                             </div>
-                          ))
-                        }
+                          ))}
                       </div>
                     </div>
 
@@ -444,14 +501,21 @@ export default function BrokerDashboardClient({
                       </h4>
                       <div className="space-y-3">
                         {evaluations.slice(0, 5).map((evaluation, index) => {
-                          const statusConfig = getStatusConfig(evaluation.status)
+                          const statusConfig = getStatusConfig(
+                            evaluation.status
+                          )
                           return (
-                            <div key={evaluation.id} className="flex items-center gap-3 p-3 bg-slate-50 rounded-lg">
+                            <div
+                              key={evaluation.id}
+                              className="flex items-center gap-3 p-3 bg-slate-50 rounded-lg"
+                            >
                               <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
                                 <Brain className="w-5 h-5 text-blue-600" />
                               </div>
                               <div className="flex-1">
-                                <p className="font-medium text-slate-900 text-sm">{evaluation.title}</p>
+                                <p className="font-medium text-slate-900 text-sm">
+                                  {evaluation.title}
+                                </p>
                                 <p className="text-xs text-slate-500">
                                   {evaluation.business.title}
                                 </p>
@@ -462,7 +526,9 @@ export default function BrokerDashboardClient({
                                     {evaluation.overallScore}/100
                                   </p>
                                 )}
-                                <span className={`text-xs px-2 py-1 rounded ${statusConfig.bg} ${statusConfig.color}`}>
+                                <span
+                                  className={`text-xs px-2 py-1 rounded ${statusConfig.bg} ${statusConfig.color}`}
+                                >
                                   {statusConfig.label}
                                 </span>
                               </div>
@@ -524,8 +590,12 @@ export default function BrokerDashboardClient({
 
                               <div className="flex-1">
                                 <div className="flex items-center gap-2 mb-2">
-                                  <h4 className="font-semibold text-slate-900">{business.title}</h4>
-                                  <span className={`text-xs px-2 py-1 rounded ${statusConfig.bg} ${statusConfig.color}`}>
+                                  <h4 className="font-semibold text-slate-900">
+                                    {business.title}
+                                  </h4>
+                                  <span
+                                    className={`text-xs px-2 py-1 rounded ${statusConfig.bg} ${statusConfig.color}`}
+                                  >
                                     {statusConfig.label}
                                   </span>
                                   {business.featured && (
@@ -556,7 +626,11 @@ export default function BrokerDashboardClient({
                                   {formatPrice(business.askingPrice)}
                                 </p>
                                 <p className="text-xs text-slate-500">
-                                  Updated {formatDistanceToNow(new Date(business.createdAt), { addSuffix: true })}
+                                  Updated{' '}
+                                  {formatDistanceToNow(
+                                    new Date(business.createdAt),
+                                    { addSuffix: true }
+                                  )}
                                 </p>
                               </div>
                             </div>
@@ -625,7 +699,9 @@ export default function BrokerDashboardClient({
                                   {evaluation.business.title}
                                 </p>
                               </div>
-                              <span className={`text-xs px-2 py-1 rounded ${statusConfig.bg} ${statusConfig.color}`}>
+                              <span
+                                className={`text-xs px-2 py-1 rounded ${statusConfig.bg} ${statusConfig.color}`}
+                              >
                                 {statusConfig.label}
                               </span>
                             </div>
@@ -633,15 +709,19 @@ export default function BrokerDashboardClient({
                             {evaluation.overallScore && (
                               <div className="mb-3">
                                 <div className="flex items-center justify-between mb-1">
-                                  <span className="text-xs text-slate-500">Overall Score</span>
+                                  <span className="text-xs text-slate-500">
+                                    Overall Score
+                                  </span>
                                   <span className="text-sm font-medium text-slate-900">
                                     {evaluation.overallScore}/100
                                   </span>
                                 </div>
                                 <div className="w-full bg-slate-100 rounded-full h-2">
-                                  <div 
+                                  <div
                                     className="bg-gradient-to-r from-blue-500 to-green-500 h-2 rounded-full"
-                                    style={{ width: `${evaluation.overallScore}%` }}
+                                    style={{
+                                      width: `${evaluation.overallScore}%`,
+                                    }}
                                   />
                                 </div>
                               </div>
@@ -649,7 +729,10 @@ export default function BrokerDashboardClient({
 
                             <div className="flex items-center justify-between text-xs text-slate-500">
                               <span>
-                                {formatDistanceToNow(new Date(evaluation.createdAt), { addSuffix: true })}
+                                {formatDistanceToNow(
+                                  new Date(evaluation.createdAt),
+                                  { addSuffix: true }
+                                )}
                               </span>
                               {evaluation.estimatedValue && (
                                 <span className="font-medium text-slate-700">
@@ -668,7 +751,8 @@ export default function BrokerDashboardClient({
                         No evaluations yet
                       </h4>
                       <p className="text-slate-600 mb-6">
-                        Create your first business evaluation to provide professional insights.
+                        Create your first business evaluation to provide
+                        professional insights.
                       </p>
                       <button
                         onClick={() => router.push('/calculator')}
@@ -703,9 +787,13 @@ export default function BrokerDashboardClient({
                           transition={{ delay: index * 0.05, duration: 0.4 }}
                           className="flex items-start gap-4 p-4 bg-slate-50 rounded-lg"
                         >
-                          <div className={`w-2 h-2 rounded-full mt-3 flex-shrink-0 ${
-                            activity.type === 'evaluation' ? 'bg-blue-500' : 'bg-green-500'
-                          }`} />
+                          <div
+                            className={`w-2 h-2 rounded-full mt-3 flex-shrink-0 ${
+                              activity.type === 'evaluation'
+                                ? 'bg-blue-500'
+                                : 'bg-green-500'
+                            }`}
+                          />
                           <div className="flex-1">
                             <p className="font-medium text-slate-900 mb-1">
                               {activity.title}
@@ -714,7 +802,10 @@ export default function BrokerDashboardClient({
                               {activity.description}
                             </p>
                             <p className="text-xs text-slate-500">
-                              {formatDistanceToNow(new Date(activity.timestamp), { addSuffix: true })}
+                              {formatDistanceToNow(
+                                new Date(activity.timestamp),
+                                { addSuffix: true }
+                              )}
                             </p>
                           </div>
                         </motion.div>
@@ -746,10 +837,30 @@ export default function BrokerDashboardClient({
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { label: 'New Evaluation', icon: Brain, color: 'blue', href: '/calculator' },
-              { label: 'Add Client Listing', icon: Plus, color: 'green', href: '/marketplace/create' },
-              { label: 'Browse Marketplace', icon: Building2, color: 'purple', href: '/marketplace' },
-              { label: 'Generate Report', icon: FileText, color: 'orange', href: '/reports' },
+              {
+                label: 'New Evaluation',
+                icon: Brain,
+                color: 'blue',
+                href: '/calculator',
+              },
+              {
+                label: 'Add Client Listing',
+                icon: Plus,
+                color: 'green',
+                href: '/marketplace/create',
+              },
+              {
+                label: 'Browse Marketplace',
+                icon: Building2,
+                color: 'purple',
+                href: '/marketplace',
+              },
+              {
+                label: 'Generate Report',
+                icon: FileText,
+                color: 'orange',
+                href: '/reports',
+              },
             ].map((action, index) => {
               const IconComponent = action.icon
               return (
@@ -763,7 +874,9 @@ export default function BrokerDashboardClient({
                   onClick={() => router.push(action.href)}
                   className="flex flex-col items-center gap-3 p-4 rounded-xl border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-200 cursor-pointer"
                 >
-                  <div className={`w-12 h-12 bg-gradient-to-br from-${action.color}-500 to-${action.color}-600 rounded-lg flex items-center justify-center shadow-sm`}>
+                  <div
+                    className={`w-12 h-12 bg-gradient-to-br from-${action.color}-500 to-${action.color}-600 rounded-lg flex items-center justify-center shadow-sm`}
+                  >
                     <IconComponent className="w-6 h-6 text-white" />
                   </div>
                   <span className="text-sm font-medium text-slate-700 text-center">

@@ -9,7 +9,10 @@ export default async function BuyerDashboardPage() {
   const user = await getCurrentUser()
 
   // Only allow buyers and admins
-  if (session.user.userType !== UserType.BUYER && session.user.userType !== UserType.ADMIN) {
+  if (
+    session.user.userType !== UserType.BUYER &&
+    session.user.userType !== UserType.ADMIN
+  ) {
     redirect('/dashboard')
   }
 
@@ -97,7 +100,7 @@ export default async function BuyerDashboardPage() {
 
   // Calculate user activity metrics
   const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
-  
+
   const recentFavorites = await prisma.favorite.count({
     where: {
       userId: user?.id || '',
@@ -151,12 +154,15 @@ export default async function BuyerDashboardPage() {
     .filter((price: any): price is number => price !== null)
     .map((price: any) => Number(price))
 
-  const averagePreferredPrice = validPrices.length > 0
-    ? validPrices.reduce((sum, price) => sum + price, 0) / validPrices.length
-    : 0
+  const averagePreferredPrice =
+    validPrices.length > 0
+      ? validPrices.reduce((sum, price) => sum + price, 0) / validPrices.length
+      : 0
 
-  const minPreferredPrice = validPrices.length > 0 ? Math.min(...validPrices) : 0
-  const maxPreferredPrice = validPrices.length > 0 ? Math.max(...validPrices) : 0
+  const minPreferredPrice =
+    validPrices.length > 0 ? Math.min(...validPrices) : 0
+  const maxPreferredPrice =
+    validPrices.length > 0 ? Math.max(...validPrices) : 0
 
   const analytics = {
     totalFavorites: favorites.length,

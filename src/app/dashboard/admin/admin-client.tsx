@@ -126,7 +126,11 @@ export default function AdminDashboardClient({
   const getStatusConfig = (status: string) => {
     switch (status) {
       case 'ACTIVE':
-        return { color: 'text-green-600', bg: 'bg-green-100', icon: CheckCircle }
+        return {
+          color: 'text-green-600',
+          bg: 'bg-green-100',
+          icon: CheckCircle,
+        }
       case 'UNDER_REVIEW':
         return { color: 'text-yellow-600', bg: 'bg-yellow-100', icon: Clock }
       case 'DRAFT':
@@ -143,11 +147,19 @@ export default function AdminDashboardClient({
   const getUserTypeConfig = (userType: string) => {
     switch (userType) {
       case 'BUSINESS_OWNER':
-        return { label: 'Business Owner', color: 'text-blue-600', bg: 'bg-blue-100' }
+        return {
+          label: 'Business Owner',
+          color: 'text-blue-600',
+          bg: 'bg-blue-100',
+        }
       case 'BUYER':
         return { label: 'Buyer', color: 'text-green-600', bg: 'bg-green-100' }
       case 'BROKER':
-        return { label: 'Broker', color: 'text-purple-600', bg: 'bg-purple-100' }
+        return {
+          label: 'Broker',
+          color: 'text-purple-600',
+          bg: 'bg-purple-100',
+        }
       case 'ADMIN':
         return { label: 'Admin', color: 'text-red-600', bg: 'bg-red-100' }
       default:
@@ -197,7 +209,8 @@ export default function AdminDashboardClient({
               Admin Dashboard
             </h1>
             <p className="text-lg text-slate-600">
-              Welcome back, {user.firstName || user.name || 'Admin'}! Monitor and manage your platform.
+              Welcome back, {user.firstName || user.name || 'Admin'}! Monitor
+              and manage your platform.
             </p>
           </div>
           <motion.div
@@ -233,12 +246,20 @@ export default function AdminDashboardClient({
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-slate-600">Total Users</p>
+                <p className="text-sm font-medium text-slate-600">
+                  Total Users
+                </p>
                 <div className="flex items-baseline gap-2">
-                  <p className="text-3xl font-bold text-slate-900">{analytics.totals.users.toLocaleString()}</p>
-                  <div className={`flex items-center text-sm ${
-                    analytics.growth.users >= 0 ? 'text-green-600' : 'text-red-600'
-                  }`}>
+                  <p className="text-3xl font-bold text-slate-900">
+                    {analytics.totals.users.toLocaleString()}
+                  </p>
+                  <div
+                    className={`flex items-center text-sm ${
+                      analytics.growth.users >= 0
+                        ? 'text-green-600'
+                        : 'text-red-600'
+                    }`}
+                  >
                     {analytics.growth.users >= 0 ? (
                       <ArrowUpRight className="w-3 h-3 mr-1" />
                     ) : (
@@ -262,12 +283,20 @@ export default function AdminDashboardClient({
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-slate-600">Total Businesses</p>
+                <p className="text-sm font-medium text-slate-600">
+                  Total Businesses
+                </p>
                 <div className="flex items-baseline gap-2">
-                  <p className="text-3xl font-bold text-slate-900">{analytics.totals.businesses.toLocaleString()}</p>
-                  <div className={`flex items-center text-sm ${
-                    analytics.growth.businesses >= 0 ? 'text-green-600' : 'text-red-600'
-                  }`}>
+                  <p className="text-3xl font-bold text-slate-900">
+                    {analytics.totals.businesses.toLocaleString()}
+                  </p>
+                  <div
+                    className={`flex items-center text-sm ${
+                      analytics.growth.businesses >= 0
+                        ? 'text-green-600'
+                        : 'text-red-600'
+                    }`}
+                  >
                     {analytics.growth.businesses >= 0 ? (
                       <ArrowUpRight className="w-3 h-3 mr-1" />
                     ) : (
@@ -291,8 +320,12 @@ export default function AdminDashboardClient({
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-slate-600">Total Inquiries</p>
-                <p className="text-3xl font-bold text-slate-900">{analytics.totals.inquiries.toLocaleString()}</p>
+                <p className="text-sm font-medium text-slate-600">
+                  Total Inquiries
+                </p>
+                <p className="text-3xl font-bold text-slate-900">
+                  {analytics.totals.inquiries.toLocaleString()}
+                </p>
                 <p className="text-sm text-slate-500">Platform activity</p>
               </div>
               <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center shadow-md">
@@ -309,8 +342,12 @@ export default function AdminDashboardClient({
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-slate-600">Total Evaluations</p>
-                <p className="text-3xl font-bold text-slate-900">{analytics.totals.evaluations.toLocaleString()}</p>
+                <p className="text-sm font-medium text-slate-600">
+                  Total Evaluations
+                </p>
+                <p className="text-3xl font-bold text-slate-900">
+                  {analytics.totals.evaluations.toLocaleString()}
+                </p>
                 <p className="text-sm text-slate-500">AI assessments</p>
               </div>
               <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center shadow-md">
@@ -350,7 +387,8 @@ export default function AdminDashboardClient({
 
           <div className="space-y-4">
             {last7Days.map((item, index) => {
-              const totalActivity = item.newUsers + item.newBusinesses + item.newInquiries
+              const totalActivity =
+                item.newUsers + item.newBusinesses + item.newInquiries
               return (
                 <motion.div
                   key={item.date}
@@ -367,20 +405,35 @@ export default function AdminDashboardClient({
                       <motion.div
                         className="bg-blue-500 rounded-full"
                         initial={{ width: 0 }}
-                        animate={{ width: `${(item.newUsers / maxActivity) * 100}%` }}
-                        transition={{ delay: 0.8 + index * 0.05, duration: 0.6 }}
+                        animate={{
+                          width: `${(item.newUsers / maxActivity) * 100}%`,
+                        }}
+                        transition={{
+                          delay: 0.8 + index * 0.05,
+                          duration: 0.6,
+                        }}
                       />
                       <motion.div
                         className="bg-green-500"
                         initial={{ width: 0 }}
-                        animate={{ width: `${(item.newBusinesses / maxActivity) * 100}%` }}
-                        transition={{ delay: 0.8 + index * 0.05, duration: 0.6 }}
+                        animate={{
+                          width: `${(item.newBusinesses / maxActivity) * 100}%`,
+                        }}
+                        transition={{
+                          delay: 0.8 + index * 0.05,
+                          duration: 0.6,
+                        }}
                       />
                       <motion.div
                         className="bg-purple-500"
                         initial={{ width: 0 }}
-                        animate={{ width: `${(item.newInquiries / maxActivity) * 100}%` }}
-                        transition={{ delay: 0.8 + index * 0.05, duration: 0.6 }}
+                        animate={{
+                          width: `${(item.newInquiries / maxActivity) * 100}%`,
+                        }}
+                        transition={{
+                          delay: 0.8 + index * 0.05,
+                          duration: 0.6,
+                        }}
                       />
                     </div>
                   </div>
@@ -404,10 +457,18 @@ export default function AdminDashboardClient({
             <nav className="flex space-x-8 px-6">
               {[
                 { id: 'overview', label: 'Overview', count: '' },
-                { id: 'users', label: 'Recent Users', count: recentUsers.length },
-                { id: 'businesses', label: 'Pending Review', count: recentBusinesses.length },
+                {
+                  id: 'users',
+                  label: 'Recent Users',
+                  count: recentUsers.length,
+                },
+                {
+                  id: 'businesses',
+                  label: 'Pending Review',
+                  count: recentBusinesses.length,
+                },
                 { id: 'analytics', label: 'Analytics', count: '' },
-              ].map((tab) => (
+              ].map(tab => (
                 <button
                   key={tab.id}
                   onClick={() => setSelectedTab(tab.id)}
@@ -436,59 +497,85 @@ export default function AdminDashboardClient({
                   <div className="grid md:grid-cols-2 gap-8">
                     {/* User Distribution */}
                     <div>
-                      <h4 className="text-lg font-semibold text-slate-900 mb-4">User Distribution</h4>
+                      <h4 className="text-lg font-semibold text-slate-900 mb-4">
+                        User Distribution
+                      </h4>
                       <div className="space-y-3">
-                        {analytics.distributions.userTypes.map((userType, index) => {
-                          const config = getUserTypeConfig(userType.type)
-                          const percentage = (userType.count / analytics.totals.users) * 100
-                          return (
-                            <div key={userType.type} className="flex items-center gap-3">
-                              <span className={`text-sm px-2 py-1 rounded ${config.bg} ${config.color}`}>
-                                {config.label}
-                              </span>
-                              <div className="flex-1 bg-slate-100 rounded-full h-2 overflow-hidden">
-                                <motion.div
-                                  className="h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full"
-                                  initial={{ width: 0 }}
-                                  animate={{ width: `${percentage}%` }}
-                                  transition={{ delay: 0.7 + index * 0.1, duration: 0.6 }}
-                                />
+                        {analytics.distributions.userTypes.map(
+                          (userType, index) => {
+                            const config = getUserTypeConfig(userType.type)
+                            const percentage =
+                              (userType.count / analytics.totals.users) * 100
+                            return (
+                              <div
+                                key={userType.type}
+                                className="flex items-center gap-3"
+                              >
+                                <span
+                                  className={`text-sm px-2 py-1 rounded ${config.bg} ${config.color}`}
+                                >
+                                  {config.label}
+                                </span>
+                                <div className="flex-1 bg-slate-100 rounded-full h-2 overflow-hidden">
+                                  <motion.div
+                                    className="h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full"
+                                    initial={{ width: 0 }}
+                                    animate={{ width: `${percentage}%` }}
+                                    transition={{
+                                      delay: 0.7 + index * 0.1,
+                                      duration: 0.6,
+                                    }}
+                                  />
+                                </div>
+                                <span className="text-sm text-slate-600 w-12 text-right">
+                                  {userType.count}
+                                </span>
                               </div>
-                              <span className="text-sm text-slate-600 w-12 text-right">
-                                {userType.count}
-                              </span>
-                            </div>
-                          )
-                        })}
+                            )
+                          }
+                        )}
                       </div>
                     </div>
 
                     {/* Business Status Distribution */}
                     <div>
-                      <h4 className="text-lg font-semibold text-slate-900 mb-4">Business Status</h4>
+                      <h4 className="text-lg font-semibold text-slate-900 mb-4">
+                        Business Status
+                      </h4>
                       <div className="space-y-3">
-                        {analytics.distributions.businessStatuses.map((status, index) => {
-                          const config = getStatusConfig(status.status)
-                          const percentage = (status.count / analytics.totals.businesses) * 100
-                          return (
-                            <div key={status.status} className="flex items-center gap-3">
-                              <span className={`text-sm px-2 py-1 rounded ${config.bg} ${config.color}`}>
-                                {status.status.replace('_', ' ')}
-                              </span>
-                              <div className="flex-1 bg-slate-100 rounded-full h-2 overflow-hidden">
-                                <motion.div
-                                  className="h-full bg-gradient-to-r from-green-500 to-emerald-600 rounded-full"
-                                  initial={{ width: 0 }}
-                                  animate={{ width: `${percentage}%` }}
-                                  transition={{ delay: 0.7 + index * 0.1, duration: 0.6 }}
-                                />
+                        {analytics.distributions.businessStatuses.map(
+                          (status, index) => {
+                            const config = getStatusConfig(status.status)
+                            const percentage =
+                              (status.count / analytics.totals.businesses) * 100
+                            return (
+                              <div
+                                key={status.status}
+                                className="flex items-center gap-3"
+                              >
+                                <span
+                                  className={`text-sm px-2 py-1 rounded ${config.bg} ${config.color}`}
+                                >
+                                  {status.status.replace('_', ' ')}
+                                </span>
+                                <div className="flex-1 bg-slate-100 rounded-full h-2 overflow-hidden">
+                                  <motion.div
+                                    className="h-full bg-gradient-to-r from-green-500 to-emerald-600 rounded-full"
+                                    initial={{ width: 0 }}
+                                    animate={{ width: `${percentage}%` }}
+                                    transition={{
+                                      delay: 0.7 + index * 0.1,
+                                      duration: 0.6,
+                                    }}
+                                  />
+                                </div>
+                                <span className="text-sm text-slate-600 w-12 text-right">
+                                  {status.count}
+                                </span>
                               </div>
-                              <span className="text-sm text-slate-600 w-12 text-right">
-                                {status.count}
-                              </span>
-                            </div>
-                          )
-                        })}
+                            )
+                          }
+                        )}
                       </div>
                     </div>
                   </div>
@@ -530,27 +617,38 @@ export default function AdminDashboardClient({
                           >
                             <div className="flex items-center gap-4">
                               <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-white font-semibold">
-                                {(user.firstName?.[0] || user.name?.[0] || user.email[0]).toUpperCase()}
+                                {(
+                                  user.firstName?.[0] ||
+                                  user.name?.[0] ||
+                                  user.email[0]
+                                ).toUpperCase()}
                               </div>
                               <div>
                                 <p className="font-medium text-slate-900">
-                                  {user.firstName && user.lastName 
+                                  {user.firstName && user.lastName
                                     ? `${user.firstName} ${user.lastName}`
-                                    : user.name || user.email
-                                  }
+                                    : user.name || user.email}
                                 </p>
-                                <p className="text-sm text-slate-600">{user.email}</p>
+                                <p className="text-sm text-slate-600">
+                                  {user.email}
+                                </p>
                               </div>
                             </div>
                             <div className="flex items-center gap-3">
-                              <span className={`text-xs px-2 py-1 rounded ${userTypeConfig.bg} ${userTypeConfig.color}`}>
+                              <span
+                                className={`text-xs px-2 py-1 rounded ${userTypeConfig.bg} ${userTypeConfig.color}`}
+                              >
                                 {userTypeConfig.label}
                               </span>
-                              <span className={`text-xs px-2 py-1 rounded ${statusConfig.bg} ${statusConfig.color}`}>
+                              <span
+                                className={`text-xs px-2 py-1 rounded ${statusConfig.bg} ${statusConfig.color}`}
+                              >
                                 {user.status}
                               </span>
                               <span className="text-xs text-slate-500">
-                                {formatDistanceToNow(new Date(user.createdAt), { addSuffix: true })}
+                                {formatDistanceToNow(new Date(user.createdAt), {
+                                  addSuffix: true,
+                                })}
                               </span>
                               <button className="p-1 text-slate-400 hover:text-slate-600 transition-colors">
                                 <MoreHorizontal className="w-4 h-4" />
@@ -617,8 +715,12 @@ export default function AdminDashboardClient({
 
                             <div className="flex-1">
                               <div className="flex items-center gap-2 mb-2">
-                                <h4 className="font-semibold text-slate-900">{business.title}</h4>
-                                <span className={`text-xs px-2 py-1 rounded ${statusConfig.bg} ${statusConfig.color}`}>
+                                <h4 className="font-semibold text-slate-900">
+                                  {business.title}
+                                </h4>
+                                <span
+                                  className={`text-xs px-2 py-1 rounded ${statusConfig.bg} ${statusConfig.color}`}
+                                >
                                   {business.status.replace('_', ' ')}
                                 </span>
                               </div>
@@ -627,10 +729,15 @@ export default function AdminDashboardClient({
                               </p>
                               <div className="flex items-center gap-4 text-xs text-slate-500">
                                 <span>
-                                  Owner: {business.owner.firstName || business.owner.email}
+                                  Owner:{' '}
+                                  {business.owner.firstName ||
+                                    business.owner.email}
                                 </span>
                                 <span>
-                                  {formatDistanceToNow(new Date(business.createdAt), { addSuffix: true })}
+                                  {formatDistanceToNow(
+                                    new Date(business.createdAt),
+                                    { addSuffix: true }
+                                  )}
                                 </span>
                               </div>
                             </div>
@@ -658,7 +765,9 @@ export default function AdminDashboardClient({
                   ) : (
                     <div className="text-center py-12">
                       <Building2 className="w-16 h-16 text-slate-400 mx-auto mb-4" />
-                      <p className="text-slate-500">No businesses pending review</p>
+                      <p className="text-slate-500">
+                        No businesses pending review
+                      </p>
                     </div>
                   )}
                 </motion.div>
@@ -675,16 +784,25 @@ export default function AdminDashboardClient({
                   <h3 className="text-lg font-semibold text-slate-900 mb-6">
                     Platform Analytics
                   </h3>
-                  
+
                   <div className="grid md:grid-cols-3 gap-6">
                     <div className="text-center">
                       <div className="w-20 h-20 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full flex items-center justify-center mx-auto mb-3">
                         <span className="text-2xl font-bold text-blue-700">
-                          {((analytics.totals.inquiries / Math.max(analytics.totals.businesses, 1)) * 100).toFixed(0)}%
+                          {(
+                            (analytics.totals.inquiries /
+                              Math.max(analytics.totals.businesses, 1)) *
+                            100
+                          ).toFixed(0)}
+                          %
                         </span>
                       </div>
-                      <p className="text-sm font-medium text-slate-900">Engagement Rate</p>
-                      <p className="text-xs text-slate-500">Inquiries per business</p>
+                      <p className="text-sm font-medium text-slate-900">
+                        Engagement Rate
+                      </p>
+                      <p className="text-xs text-slate-500">
+                        Inquiries per business
+                      </p>
                     </div>
 
                     <div className="text-center">
@@ -693,18 +811,29 @@ export default function AdminDashboardClient({
                           {formatChange(analytics.growth.users)}
                         </span>
                       </div>
-                      <p className="text-sm font-medium text-slate-900">User Growth</p>
+                      <p className="text-sm font-medium text-slate-900">
+                        User Growth
+                      </p>
                       <p className="text-xs text-slate-500">Last 30 days</p>
                     </div>
 
                     <div className="text-center">
                       <div className="w-20 h-20 bg-gradient-to-br from-purple-100 to-purple-200 rounded-full flex items-center justify-center mx-auto mb-3">
                         <span className="text-2xl font-bold text-purple-700">
-                          {((analytics.totals.evaluations / Math.max(analytics.totals.businesses, 1)) * 100).toFixed(0)}%
+                          {(
+                            (analytics.totals.evaluations /
+                              Math.max(analytics.totals.businesses, 1)) *
+                            100
+                          ).toFixed(0)}
+                          %
                         </span>
                       </div>
-                      <p className="text-sm font-medium text-slate-900">Evaluation Rate</p>
-                      <p className="text-xs text-slate-500">Businesses evaluated</p>
+                      <p className="text-sm font-medium text-slate-900">
+                        Evaluation Rate
+                      </p>
+                      <p className="text-xs text-slate-500">
+                        Businesses evaluated
+                      </p>
                     </div>
                   </div>
                 </motion.div>

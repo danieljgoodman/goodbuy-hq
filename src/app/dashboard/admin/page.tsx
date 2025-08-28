@@ -28,7 +28,7 @@ export default async function AdminDashboardPage() {
     prisma.business.count(),
     prisma.inquiry.count(),
     prisma.evaluation.count(),
-    
+
     // Recent users (last 30 days)
     prisma.user.findMany({
       where: {
@@ -49,7 +49,7 @@ export default async function AdminDashboardPage() {
       orderBy: { createdAt: 'desc' },
       take: 10,
     }),
-    
+
     // Recent businesses (pending review)
     prisma.business.findMany({
       where: {
@@ -73,14 +73,16 @@ export default async function AdminDashboardPage() {
       orderBy: { updatedAt: 'desc' },
       take: 10,
     }),
-    
+
     // System activity (recent actions)
-    prisma.$queryRaw<Array<{
-      date: string;
-      new_users: number;
-      new_businesses: number;
-      new_inquiries: number;
-    }>>`
+    prisma.$queryRaw<
+      Array<{
+        date: string
+        new_users: number
+        new_businesses: number
+        new_inquiries: number
+      }>
+    >`
       SELECT 
         DATE(created_at) as date,
         COUNT(CASE WHEN table_name = 'users' THEN 1 END)::int as new_users,
@@ -96,7 +98,7 @@ export default async function AdminDashboardPage() {
       GROUP BY DATE(created_at)
       ORDER BY date DESC
       LIMIT 30
-    `
+    `,
   ])
 
   // Calculate user type distribution
@@ -124,11 +126,11 @@ export default async function AdminDashboardPage() {
   })
 
   const previousPeriodUsers = await prisma.user.count({
-    where: { 
-      createdAt: { 
-        gte: sixtyDaysAgo, 
-        lt: thirtyDaysAgo 
-      } 
+    where: {
+      createdAt: {
+        gte: sixtyDaysAgo,
+        lt: thirtyDaysAgo,
+      },
     },
   })
 
@@ -137,11 +139,11 @@ export default async function AdminDashboardPage() {
   })
 
   const previousPeriodBusinesses = await prisma.business.count({
-    where: { 
-      createdAt: { 
-        gte: sixtyDaysAgo, 
-        lt: thirtyDaysAgo 
-      } 
+    where: {
+      createdAt: {
+        gte: sixtyDaysAgo,
+        lt: thirtyDaysAgo,
+      },
     },
   })
 
@@ -153,12 +155,21 @@ export default async function AdminDashboardPage() {
       evaluations: totalEvaluations,
     },
     growth: {
-      users: previousPeriodUsers === 0 
-        ? (currentPeriodUsers > 0 ? 100 : 0)
-        : ((currentPeriodUsers - previousPeriodUsers) / previousPeriodUsers) * 100,
-      businesses: previousPeriodBusinesses === 0 
-        ? (currentPeriodBusinesses > 0 ? 100 : 0)
-        : ((currentPeriodBusinesses - previousPeriodBusinesses) / previousPeriodBusinesses) * 100,
+      users:
+        previousPeriodUsers === 0
+          ? currentPeriodUsers > 0
+            ? 100
+            : 0
+          : ((currentPeriodUsers - previousPeriodUsers) / previousPeriodUsers) *
+            100,
+      businesses:
+        previousPeriodBusinesses === 0
+          ? currentPeriodBusinesses > 0
+            ? 100
+            : 0
+          : ((currentPeriodBusinesses - previousPeriodBusinesses) /
+              previousPeriodBusinesses) *
+            100,
     },
     distributions: {
       userTypes: userTypeStats.map((stat: any) => ({

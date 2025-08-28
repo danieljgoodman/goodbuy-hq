@@ -27,7 +27,13 @@ import {
   Edit3,
   MoreHorizontal,
 } from 'lucide-react'
-import { formatDistanceToNow, format, subDays, startOfDay, endOfDay } from 'date-fns'
+import {
+  formatDistanceToNow,
+  format,
+  subDays,
+  startOfDay,
+  endOfDay,
+} from 'date-fns'
 
 interface Business {
   id: string
@@ -122,21 +128,29 @@ export default function BusinessOwnerDashboardClient({
   const activeListings = businesses.filter(b => b.status === 'ACTIVE').length
   const draftListings = businesses.filter(b => b.status === 'DRAFT').length
   const totalViews = businesses.reduce((sum, b) => sum + b._count.views, 0)
-  const totalInquiries = businesses.reduce((sum, b) => sum + b._count.inquiries, 0)
-  const totalFavorites = businesses.reduce((sum, b) => sum + b._count.favorites, 0)
-  const unreadInquiries = businesses.reduce(
-    (sum, b) => sum + b.inquiries.filter(i => !i.isRead).length, 
+  const totalInquiries = businesses.reduce(
+    (sum, b) => sum + b._count.inquiries,
     0
   )
-  const averageValue = businesses.length > 0
-    ? businesses
-        .filter(b => b.askingPrice)
-        .reduce((sum, b) => sum + (b.askingPrice || 0), 0) / businesses.filter(b => b.askingPrice).length
-    : 0
+  const totalFavorites = businesses.reduce(
+    (sum, b) => sum + b._count.favorites,
+    0
+  )
+  const unreadInquiries = businesses.reduce(
+    (sum, b) => sum + b.inquiries.filter(i => !i.isRead).length,
+    0
+  )
+  const averageValue =
+    businesses.length > 0
+      ? businesses
+          .filter(b => b.askingPrice)
+          .reduce((sum, b) => sum + (b.askingPrice || 0), 0) /
+        businesses.filter(b => b.askingPrice).length
+      : 0
 
   // Get recent activity
   const recentActivity = [
-    ...businesses.flatMap(business => 
+    ...businesses.flatMap(business =>
       business.inquiries.slice(0, 2).map(inquiry => ({
         id: `inquiry-${inquiry.id}`,
         type: 'inquiry',
@@ -147,7 +161,7 @@ export default function BusinessOwnerDashboardClient({
         isUnread: !inquiry.isRead,
       }))
     ),
-    ...businesses.flatMap(business => 
+    ...businesses.flatMap(business =>
       business.evaluations.slice(0, 1).map(evaluation => ({
         id: `evaluation-${evaluation.id}`,
         type: 'evaluation',
@@ -159,13 +173,17 @@ export default function BusinessOwnerDashboardClient({
       }))
     ),
   ]
-    .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+    .sort(
+      (a, b) =>
+        new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+    )
     .slice(0, 5)
 
   // Prepare chart data for the last 30 days
   const last30Days = Array.from({ length: 30 }, (_, i) => {
     const date = format(subDays(new Date(), 29 - i), 'yyyy-MM-dd')
-    const viewsForDay = analytics.dailyViews.find(d => d.date === date)?.views || 0
+    const viewsForDay =
+      analytics.dailyViews.find(d => d.date === date)?.views || 0
     return {
       date: format(subDays(new Date(), 29 - i), 'MMM dd'),
       views: viewsForDay,
@@ -208,7 +226,8 @@ export default function BusinessOwnerDashboardClient({
               Business Owner Dashboard
             </h1>
             <p className="text-lg text-slate-600">
-              Welcome back, {user.firstName || user.name || 'Business Owner'}! Manage your listings and track performance.
+              Welcome back, {user.firstName || user.name || 'Business Owner'}!
+              Manage your listings and track performance.
             </p>
           </div>
           <motion.div
@@ -237,9 +256,13 @@ export default function BusinessOwnerDashboardClient({
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-slate-600">Active Listings</p>
+                <p className="text-sm font-medium text-slate-600">
+                  Active Listings
+                </p>
                 <div className="flex items-baseline gap-2">
-                  <p className="text-3xl font-bold text-slate-900">{activeListings}</p>
+                  <p className="text-3xl font-bold text-slate-900">
+                    {activeListings}
+                  </p>
                   <p className="text-sm text-slate-500">of {totalListings}</p>
                 </div>
               </div>
@@ -257,12 +280,20 @@ export default function BusinessOwnerDashboardClient({
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-slate-600">Total Views</p>
+                <p className="text-sm font-medium text-slate-600">
+                  Total Views
+                </p>
                 <div className="flex items-baseline gap-2">
-                  <p className="text-3xl font-bold text-slate-900">{analytics.currentPeriodViews.toLocaleString()}</p>
-                  <div className={`flex items-center text-sm ${
-                    analytics.viewsChange >= 0 ? 'text-green-600' : 'text-red-600'
-                  }`}>
+                  <p className="text-3xl font-bold text-slate-900">
+                    {analytics.currentPeriodViews.toLocaleString()}
+                  </p>
+                  <div
+                    className={`flex items-center text-sm ${
+                      analytics.viewsChange >= 0
+                        ? 'text-green-600'
+                        : 'text-red-600'
+                    }`}
+                  >
                     {analytics.viewsChange >= 0 ? (
                       <ArrowUpRight className="w-3 h-3 mr-1" />
                     ) : (
@@ -288,7 +319,9 @@ export default function BusinessOwnerDashboardClient({
               <div>
                 <p className="text-sm font-medium text-slate-600">Inquiries</p>
                 <div className="flex items-baseline gap-2">
-                  <p className="text-3xl font-bold text-slate-900">{analytics.currentPeriodInquiries}</p>
+                  <p className="text-3xl font-bold text-slate-900">
+                    {analytics.currentPeriodInquiries}
+                  </p>
                   {unreadInquiries > 0 && (
                     <div className="bg-red-100 text-red-700 text-xs px-2 py-1 rounded-full">
                       {unreadInquiries} new
@@ -311,7 +344,9 @@ export default function BusinessOwnerDashboardClient({
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-slate-600">Avg. Value</p>
-                <p className="text-3xl font-bold text-slate-900">{formatPrice(averageValue)}</p>
+                <p className="text-3xl font-bold text-slate-900">
+                  {formatPrice(averageValue)}
+                </p>
               </div>
               <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center shadow-md">
                 <DollarSign className="w-6 h-6 text-white" />
@@ -334,9 +369,11 @@ export default function BusinessOwnerDashboardClient({
                 <BarChart3 className="w-5 h-5 text-blue-600" />
                 Views Trend (30 days)
               </h3>
-              <div className={`flex items-center gap-1 text-sm ${
-                analytics.viewsChange >= 0 ? 'text-green-600' : 'text-red-600'
-              }`}>
+              <div
+                className={`flex items-center gap-1 text-sm ${
+                  analytics.viewsChange >= 0 ? 'text-green-600' : 'text-red-600'
+                }`}
+              >
                 <TrendingUp className="w-4 h-4" />
                 {formatChange(analytics.viewsChange)} vs last period
               </div>
@@ -358,7 +395,9 @@ export default function BusinessOwnerDashboardClient({
                     <motion.div
                       className="h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full"
                       initial={{ width: 0 }}
-                      animate={{ width: `${Math.max((item.views / maxViews) * 100, 2)}%` }}
+                      animate={{
+                        width: `${Math.max((item.views / maxViews) * 100, 2)}%`,
+                      }}
                       transition={{ delay: 0.8 + index * 0.05, duration: 0.6 }}
                     />
                   </div>
@@ -384,36 +423,44 @@ export default function BusinessOwnerDashboardClient({
 
             <div className="space-y-4">
               <AnimatePresence>
-                {recentActivity.length > 0 ? recentActivity.map((activity, index) => (
-                  <motion.div
-                    key={activity.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.7 + index * 0.05, duration: 0.4 }}
-                    whileHover={{ x: 4 }}
-                    className="flex items-start gap-4 p-3 rounded-xl hover:bg-slate-50/50 transition-colors duration-200"
-                  >
-                    <div className={`w-2 h-2 rounded-full mt-3 flex-shrink-0 ${
-                      activity.type === 'inquiry' ? 'bg-purple-500' : 'bg-blue-500'
-                    } ${activity.isUnread ? 'animate-pulse' : ''}`} />
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-slate-900 mb-1">
-                        {activity.title}
-                        {activity.isUnread && (
-                          <span className="bg-red-100 text-red-700 text-xs px-2 py-0.5 rounded-full ml-2">
-                            New
-                          </span>
-                        )}
-                      </p>
-                      <p className="text-sm text-slate-600 mb-2">
-                        {activity.description}
-                      </p>
-                      <p className="text-xs text-slate-500">
-                        {formatDistanceToNow(new Date(activity.timestamp), { addSuffix: true })}
-                      </p>
-                    </div>
-                  </motion.div>
-                )) : (
+                {recentActivity.length > 0 ? (
+                  recentActivity.map((activity, index) => (
+                    <motion.div
+                      key={activity.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.7 + index * 0.05, duration: 0.4 }}
+                      whileHover={{ x: 4 }}
+                      className="flex items-start gap-4 p-3 rounded-xl hover:bg-slate-50/50 transition-colors duration-200"
+                    >
+                      <div
+                        className={`w-2 h-2 rounded-full mt-3 flex-shrink-0 ${
+                          activity.type === 'inquiry'
+                            ? 'bg-purple-500'
+                            : 'bg-blue-500'
+                        } ${activity.isUnread ? 'animate-pulse' : ''}`}
+                      />
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-slate-900 mb-1">
+                          {activity.title}
+                          {activity.isUnread && (
+                            <span className="bg-red-100 text-red-700 text-xs px-2 py-0.5 rounded-full ml-2">
+                              New
+                            </span>
+                          )}
+                        </p>
+                        <p className="text-sm text-slate-600 mb-2">
+                          {activity.description}
+                        </p>
+                        <p className="text-xs text-slate-500">
+                          {formatDistanceToNow(new Date(activity.timestamp), {
+                            addSuffix: true,
+                          })}
+                        </p>
+                      </div>
+                    </motion.div>
+                  ))
+                ) : (
                   <div className="text-center py-8">
                     <Activity className="w-12 h-12 text-slate-400 mx-auto mb-3" />
                     <p className="text-slate-500">No recent activity</p>
@@ -448,10 +495,30 @@ export default function BusinessOwnerDashboardClient({
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { label: 'Create Listing', icon: Plus, color: 'blue', href: '/marketplace/create' },
-              { label: 'My Listings', icon: Building2, color: 'green', href: '/dashboard/listings' },
-              { label: 'Manage Inquiries', icon: MessageCircle, color: 'purple', href: '/dashboard/inquiries' },
-              { label: 'Performance Analytics', icon: BarChart3, color: 'orange', href: '/dashboard/analytics' },
+              {
+                label: 'Create Listing',
+                icon: Plus,
+                color: 'blue',
+                href: '/marketplace/create',
+              },
+              {
+                label: 'My Listings',
+                icon: Building2,
+                color: 'green',
+                href: '/dashboard/listings',
+              },
+              {
+                label: 'Manage Inquiries',
+                icon: MessageCircle,
+                color: 'purple',
+                href: '/dashboard/inquiries',
+              },
+              {
+                label: 'Performance Analytics',
+                icon: BarChart3,
+                color: 'orange',
+                href: '/dashboard/analytics',
+              },
             ].map((action, index) => {
               const IconComponent = action.icon
               return (
@@ -465,7 +532,9 @@ export default function BusinessOwnerDashboardClient({
                   onClick={() => router.push(action.href)}
                   className="flex flex-col items-center gap-3 p-4 rounded-xl border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-200 cursor-pointer"
                 >
-                  <div className={`w-12 h-12 bg-gradient-to-br from-${action.color}-500 to-${action.color}-600 rounded-lg flex items-center justify-center shadow-sm`}>
+                  <div
+                    className={`w-12 h-12 bg-gradient-to-br from-${action.color}-500 to-${action.color}-600 rounded-lg flex items-center justify-center shadow-sm`}
+                  >
                     <IconComponent className="w-6 h-6 text-white" />
                   </div>
                   <span className="text-sm font-medium text-slate-700 text-center">
@@ -500,7 +569,12 @@ export default function BusinessOwnerDashboardClient({
           <div className="space-y-4">
             {businesses.length > 0 ? (
               businesses
-                .sort((a, b) => (b._count.views + b._count.inquiries) - (a._count.views + a._count.inquiries))
+                .sort(
+                  (a, b) =>
+                    b._count.views +
+                    b._count.inquiries -
+                    (a._count.views + a._count.inquiries)
+                )
                 .slice(0, 3)
                 .map((business, index) => (
                   <motion.div
@@ -511,7 +585,9 @@ export default function BusinessOwnerDashboardClient({
                     whileHover={{ x: 4 }}
                     className="flex items-center gap-4 p-4 rounded-xl hover:bg-slate-50/50 transition-colors duration-200 cursor-pointer"
                     onClick={() => {
-                      const slug = business.slug || `${business.title.toLowerCase().replace(/[^a-z0-9]/g, '-')}-${business.id.slice(-8)}`
+                      const slug =
+                        business.slug ||
+                        `${business.title.toLowerCase().replace(/[^a-z0-9]/g, '-')}-${business.id.slice(-8)}`
                       router.push(`/business/${slug}`)
                     }}
                   >
@@ -558,9 +634,13 @@ export default function BusinessOwnerDashboardClient({
                       <p className="font-semibold text-slate-900">
                         {formatPrice(business.askingPrice)}
                       </p>
-                      <p className={`text-sm flex items-center gap-1 ${
-                        business.status === 'ACTIVE' ? 'text-green-600' : 'text-slate-500'
-                      }`}>
+                      <p
+                        className={`text-sm flex items-center gap-1 ${
+                          business.status === 'ACTIVE'
+                            ? 'text-green-600'
+                            : 'text-slate-500'
+                        }`}
+                      >
                         <CheckCircle className="w-3 h-3" />
                         {business.status}
                       </p>

@@ -165,7 +165,11 @@ export default function BuyerDashboardClient({
       case 'ACTIVE':
         return { color: 'text-green-600', bg: 'bg-green-100', label: 'Active' }
       case 'UNDER_REVIEW':
-        return { color: 'text-yellow-600', bg: 'bg-yellow-100', label: 'Under Review' }
+        return {
+          color: 'text-yellow-600',
+          bg: 'bg-yellow-100',
+          label: 'Under Review',
+        }
       case 'SOLD':
         return { color: 'text-blue-600', bg: 'bg-blue-100', label: 'Sold' }
       default:
@@ -221,7 +225,8 @@ export default function BuyerDashboardClient({
               Buyer Dashboard
             </h1>
             <p className="text-lg text-slate-600">
-              Welcome back, {user.firstName || user.name || 'Buyer'}! Discover your next business opportunity.
+              Welcome back, {user.firstName || user.name || 'Buyer'}! Discover
+              your next business opportunity.
             </p>
           </div>
           <motion.div
@@ -250,11 +255,17 @@ export default function BuyerDashboardClient({
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-slate-600">Saved Businesses</p>
+                <p className="text-sm font-medium text-slate-600">
+                  Saved Businesses
+                </p>
                 <div className="flex items-baseline gap-2">
-                  <p className="text-3xl font-bold text-slate-900">{analytics.totalFavorites}</p>
+                  <p className="text-3xl font-bold text-slate-900">
+                    {analytics.totalFavorites}
+                  </p>
                   {analytics.recentActivity.favorites > 0 && (
-                    <p className="text-sm text-green-600">+{analytics.recentActivity.favorites} this month</p>
+                    <p className="text-sm text-green-600">
+                      +{analytics.recentActivity.favorites} this month
+                    </p>
                   )}
                 </div>
               </div>
@@ -272,11 +283,17 @@ export default function BuyerDashboardClient({
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-slate-600">Active Inquiries</p>
+                <p className="text-sm font-medium text-slate-600">
+                  Active Inquiries
+                </p>
                 <div className="flex items-baseline gap-2">
-                  <p className="text-3xl font-bold text-slate-900">{analytics.totalInquiries}</p>
+                  <p className="text-3xl font-bold text-slate-900">
+                    {analytics.totalInquiries}
+                  </p>
                   {analytics.recentActivity.inquiries > 0 && (
-                    <p className="text-sm text-blue-600">+{analytics.recentActivity.inquiries} this month</p>
+                    <p className="text-sm text-blue-600">
+                      +{analytics.recentActivity.inquiries} this month
+                    </p>
                   )}
                 </div>
               </div>
@@ -294,8 +311,12 @@ export default function BuyerDashboardClient({
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-slate-600">Recent Views</p>
-                <p className="text-3xl font-bold text-slate-900">{analytics.recentActivity.views}</p>
+                <p className="text-sm font-medium text-slate-600">
+                  Recent Views
+                </p>
+                <p className="text-3xl font-bold text-slate-900">
+                  {analytics.recentActivity.views}
+                </p>
               </div>
               <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center shadow-md">
                 <Eye className="w-6 h-6 text-white" />
@@ -311,7 +332,9 @@ export default function BuyerDashboardClient({
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-slate-600">Avg. Interest</p>
+                <p className="text-sm font-medium text-slate-600">
+                  Avg. Interest
+                </p>
                 <p className="text-3xl font-bold text-slate-900">
                   {formatPrice(analytics.preferences.priceRange.average)}
                 </p>
@@ -338,7 +361,9 @@ export default function BuyerDashboardClient({
           <div className="grid md:grid-cols-2 gap-8">
             {/* Category Preferences */}
             <div>
-              <h4 className="text-sm font-medium text-slate-600 mb-4">Favorite Categories</h4>
+              <h4 className="text-sm font-medium text-slate-600 mb-4">
+                Favorite Categories
+              </h4>
               {analytics.preferences.categories.length > 0 ? (
                 <div className="space-y-3">
                   {analytics.preferences.categories.map((category, index) => (
@@ -356,8 +381,13 @@ export default function BuyerDashboardClient({
                         <motion.div
                           className="h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full"
                           initial={{ width: 0 }}
-                          animate={{ width: `${(category.count / Math.max(...analytics.preferences.categories.map(c => c.count))) * 100}%` }}
-                          transition={{ delay: 0.8 + index * 0.1, duration: 0.6 }}
+                          animate={{
+                            width: `${(category.count / Math.max(...analytics.preferences.categories.map(c => c.count))) * 100}%`,
+                          }}
+                          transition={{
+                            delay: 0.8 + index * 0.1,
+                            duration: 0.6,
+                          }}
                         />
                       </div>
                       <span className="w-8 text-sm text-slate-600 text-right">
@@ -367,13 +397,18 @@ export default function BuyerDashboardClient({
                   ))}
                 </div>
               ) : (
-                <p className="text-slate-500 text-sm">No category preferences yet. Start saving businesses to see patterns!</p>
+                <p className="text-slate-500 text-sm">
+                  No category preferences yet. Start saving businesses to see
+                  patterns!
+                </p>
               )}
             </div>
 
             {/* Price Range */}
             <div>
-              <h4 className="text-sm font-medium text-slate-600 mb-4">Price Range Interest</h4>
+              <h4 className="text-sm font-medium text-slate-600 mb-4">
+                Price Range Interest
+              </h4>
               {analytics.preferences.priceRange.average > 0 ? (
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
@@ -385,7 +420,8 @@ export default function BuyerDashboardClient({
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-slate-600">Range</span>
                     <span className="font-medium text-slate-900">
-                      {formatPrice(analytics.preferences.priceRange.min)} - {formatPrice(analytics.preferences.priceRange.max)}
+                      {formatPrice(analytics.preferences.priceRange.min)} -{' '}
+                      {formatPrice(analytics.preferences.priceRange.max)}
                     </span>
                   </div>
                   <div className="bg-slate-100 rounded-full h-2 overflow-hidden">
@@ -393,7 +429,10 @@ export default function BuyerDashboardClient({
                   </div>
                 </div>
               ) : (
-                <p className="text-slate-500 text-sm">No price preferences yet. Save some businesses to see your range!</p>
+                <p className="text-slate-500 text-sm">
+                  No price preferences yet. Save some businesses to see your
+                  range!
+                </p>
               )}
             </div>
           </div>
@@ -409,11 +448,27 @@ export default function BuyerDashboardClient({
           <div className="border-b border-slate-200">
             <nav className="flex space-x-8 px-6">
               {[
-                { id: 'favorites', label: 'Saved Businesses', count: favorites.length },
-                { id: 'inquiries', label: 'My Inquiries', count: inquiries.length },
-                { id: 'searches', label: 'Saved Searches', count: savedSearches.length },
-                { id: 'recent', label: 'Recently Viewed', count: recentViews.length },
-              ].map((tab) => (
+                {
+                  id: 'favorites',
+                  label: 'Saved Businesses',
+                  count: favorites.length,
+                },
+                {
+                  id: 'inquiries',
+                  label: 'My Inquiries',
+                  count: inquiries.length,
+                },
+                {
+                  id: 'searches',
+                  label: 'Saved Searches',
+                  count: savedSearches.length,
+                },
+                {
+                  id: 'recent',
+                  label: 'Recently Viewed',
+                  count: recentViews.length,
+                },
+              ].map(tab => (
                 <button
                   key={tab.id}
                   onClick={() => setSelectedTab(tab.id)}
@@ -454,7 +509,9 @@ export default function BuyerDashboardClient({
                   {favorites.length > 0 ? (
                     <div className="grid md:grid-cols-2 gap-6">
                       {favorites.map((favorite, index) => {
-                        const statusConfig = getStatusConfig(favorite.business.status)
+                        const statusConfig = getStatusConfig(
+                          favorite.business.status
+                        )
                         return (
                           <motion.div
                             key={favorite.id}
@@ -462,7 +519,12 @@ export default function BuyerDashboardClient({
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: index * 0.1, duration: 0.4 }}
                             className="bg-white rounded-xl border border-slate-200 hover:border-slate-300 transition-all duration-200 overflow-hidden group cursor-pointer"
-                            onClick={() => handleBusinessClick(favorite.business.id, favorite.business.slug)}
+                            onClick={() =>
+                              handleBusinessClick(
+                                favorite.business.id,
+                                favorite.business.slug
+                              )
+                            }
                           >
                             <div className="aspect-video bg-slate-200 overflow-hidden">
                               {favorite.business.images_rel[0]?.url ? (
@@ -489,7 +551,7 @@ export default function BuyerDashboardClient({
                                   </p>
                                 </div>
                                 <button
-                                  onClick={(e) => {
+                                  onClick={e => {
                                     e.stopPropagation()
                                     handleRemoveFavorite(favorite.id)
                                   }}
@@ -504,10 +566,15 @@ export default function BuyerDashboardClient({
                                 <div className="flex items-center gap-2">
                                   {favorite.business.category && (
                                     <span className="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded">
-                                      {favorite.business.category.replace('_', ' ')}
+                                      {favorite.business.category.replace(
+                                        '_',
+                                        ' '
+                                      )}
                                     </span>
                                   )}
-                                  <span className={`text-xs px-2 py-1 rounded ${statusConfig.bg} ${statusConfig.color}`}>
+                                  <span
+                                    className={`text-xs px-2 py-1 rounded ${statusConfig.bg} ${statusConfig.color}`}
+                                  >
                                     {statusConfig.label}
                                   </span>
                                 </div>
@@ -518,15 +585,21 @@ export default function BuyerDashboardClient({
 
                               <div className="flex items-center justify-between text-xs text-slate-500">
                                 <span>
-                                  {favorite.business.city && favorite.business.state && (
-                                    <>
-                                      <MapPin className="w-3 h-3 inline mr-1" />
-                                      {favorite.business.city}, {favorite.business.state}
-                                    </>
-                                  )}
+                                  {favorite.business.city &&
+                                    favorite.business.state && (
+                                      <>
+                                        <MapPin className="w-3 h-3 inline mr-1" />
+                                        {favorite.business.city},{' '}
+                                        {favorite.business.state}
+                                      </>
+                                    )}
                                 </span>
                                 <span>
-                                  Saved {formatDistanceToNow(new Date(favorite.createdAt), { addSuffix: true })}
+                                  Saved{' '}
+                                  {formatDistanceToNow(
+                                    new Date(favorite.createdAt),
+                                    { addSuffix: true }
+                                  )}
                                 </span>
                               </div>
                             </div>
@@ -571,7 +644,9 @@ export default function BuyerDashboardClient({
                   {inquiries.length > 0 ? (
                     <div className="space-y-4">
                       {inquiries.map((inquiry, index) => {
-                        const statusConfig = getStatusConfig(inquiry.business.status)
+                        const statusConfig = getStatusConfig(
+                          inquiry.business.status
+                        )
                         return (
                           <motion.div
                             key={inquiry.id}
@@ -599,11 +674,16 @@ export default function BuyerDashboardClient({
                                   <span>
                                     Business: {inquiry.business.title}
                                   </span>
-                                  <span className={`px-2 py-1 rounded ${statusConfig.bg} ${statusConfig.color}`}>
+                                  <span
+                                    className={`px-2 py-1 rounded ${statusConfig.bg} ${statusConfig.color}`}
+                                  >
                                     {statusConfig.label}
                                   </span>
                                   <span>
-                                    {formatDistanceToNow(new Date(inquiry.createdAt), { addSuffix: true })}
+                                    {formatDistanceToNow(
+                                      new Date(inquiry.createdAt),
+                                      { addSuffix: true }
+                                    )}
                                   </span>
                                 </div>
                               </div>
@@ -612,7 +692,12 @@ export default function BuyerDashboardClient({
                                   {formatPrice(inquiry.business.askingPrice)}
                                 </p>
                                 <button
-                                  onClick={() => handleBusinessClick(inquiry.business.id, inquiry.business.slug)}
+                                  onClick={() =>
+                                    handleBusinessClick(
+                                      inquiry.business.id,
+                                      inquiry.business.slug
+                                    )
+                                  }
                                   className="text-sm text-blue-600 hover:text-blue-700 transition-colors"
                                 >
                                   View Business
@@ -686,7 +771,11 @@ export default function BuyerDashboardClient({
                                 )}
                               </div>
                               <p className="text-xs text-slate-500">
-                                Created {formatDistanceToNow(new Date(search.createdAt), { addSuffix: true })}
+                                Created{' '}
+                                {formatDistanceToNow(
+                                  new Date(search.createdAt),
+                                  { addSuffix: true }
+                                )}
                               </p>
                             </div>
                             <div className="flex items-center gap-2">
@@ -708,7 +797,8 @@ export default function BuyerDashboardClient({
                         No saved searches
                       </h4>
                       <p className="text-slate-600 mb-6">
-                        Save your search criteria to get notified of new matches.
+                        Save your search criteria to get notified of new
+                        matches.
                       </p>
                       <button
                         onClick={() => router.push('/marketplace')}
@@ -769,7 +859,9 @@ export default function BuyerDashboardClient({
                                 {formatPrice(view.business.askingPrice)}
                               </span>
                               <span className="text-xs text-slate-500">
-                                {formatDistanceToNow(new Date(view.createdAt), { addSuffix: true })}
+                                {formatDistanceToNow(new Date(view.createdAt), {
+                                  addSuffix: true,
+                                })}
                               </span>
                             </div>
                           </div>
@@ -813,10 +905,30 @@ export default function BuyerDashboardClient({
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { label: 'Browse Businesses', icon: Search, color: 'blue', href: '/marketplace' },
-              { label: 'Valuation Tool', icon: BarChart3, color: 'green', href: '/calculator' },
-              { label: 'My Inquiries', icon: MessageCircle, color: 'purple', href: '/dashboard/buyer?tab=inquiries' },
-              { label: 'Investment Criteria', icon: Target, color: 'orange', href: '/dashboard/preferences' },
+              {
+                label: 'Browse Businesses',
+                icon: Search,
+                color: 'blue',
+                href: '/marketplace',
+              },
+              {
+                label: 'Valuation Tool',
+                icon: BarChart3,
+                color: 'green',
+                href: '/calculator',
+              },
+              {
+                label: 'My Inquiries',
+                icon: MessageCircle,
+                color: 'purple',
+                href: '/dashboard/buyer?tab=inquiries',
+              },
+              {
+                label: 'Investment Criteria',
+                icon: Target,
+                color: 'orange',
+                href: '/dashboard/preferences',
+              },
             ].map((action, index) => {
               const IconComponent = action.icon
               return (
@@ -830,7 +942,9 @@ export default function BuyerDashboardClient({
                   onClick={() => router.push(action.href)}
                   className="flex flex-col items-center gap-3 p-4 rounded-xl border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-200 cursor-pointer"
                 >
-                  <div className={`w-12 h-12 bg-gradient-to-br from-${action.color}-500 to-${action.color}-600 rounded-lg flex items-center justify-center shadow-sm`}>
+                  <div
+                    className={`w-12 h-12 bg-gradient-to-br from-${action.color}-500 to-${action.color}-600 rounded-lg flex items-center justify-center shadow-sm`}
+                  >
                     <IconComponent className="w-6 h-6 text-white" />
                   </div>
                   <span className="text-sm font-medium text-slate-700 text-center">

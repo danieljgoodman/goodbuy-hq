@@ -9,7 +9,10 @@ export default async function BusinessOwnerDashboardPage() {
   const user = await getCurrentUser()
 
   // Only allow business owners and admins
-  if (session.user.userType !== UserType.BUSINESS_OWNER && session.user.userType !== UserType.ADMIN) {
+  if (
+    session.user.userType !== UserType.BUSINESS_OWNER &&
+    session.user.userType !== UserType.ADMIN
+  ) {
     redirect('/dashboard')
   }
 
@@ -126,16 +129,25 @@ export default async function BusinessOwnerDashboardPage() {
       date: item.date,
       views: Number(item.views),
     })),
-    viewsChange: previousPeriodViews === 0 
-      ? currentPeriodViews > 0 ? 100 : 0
-      : ((currentPeriodViews - previousPeriodViews) / previousPeriodViews) * 100,
-    inquiriesChange: previousPeriodInquiries === 0 
-      ? currentPeriodInquiries > 0 ? 100 : 0
-      : ((currentPeriodInquiries - previousPeriodInquiries) / previousPeriodInquiries) * 100,
+    viewsChange:
+      previousPeriodViews === 0
+        ? currentPeriodViews > 0
+          ? 100
+          : 0
+        : ((currentPeriodViews - previousPeriodViews) / previousPeriodViews) *
+          100,
+    inquiriesChange:
+      previousPeriodInquiries === 0
+        ? currentPeriodInquiries > 0
+          ? 100
+          : 0
+        : ((currentPeriodInquiries - previousPeriodInquiries) /
+            previousPeriodInquiries) *
+          100,
   }
 
   return (
-    <BusinessOwnerDashboardClient 
+    <BusinessOwnerDashboardClient
       user={user}
       businesses={businesses as any}
       analytics={analytics}
