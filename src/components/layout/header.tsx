@@ -11,6 +11,12 @@ import {
   CreditCard,
   HelpCircle,
   Building,
+  Calculator,
+  TrendingUp,
+  BarChart3,
+  Target,
+  Sparkles,
+  ArrowRight,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { motion } from 'framer-motion'
@@ -49,32 +55,35 @@ const navigationItems = [
       {
         title: 'Business Calculator',
         href: '/calculator',
-        description: 'Calculate your business value with AI-powered analysis',
-        icon: Building,
+        description: 'Calculate your business value with AI-powered analysis and comprehensive metrics',
+        icon: Calculator,
+        featured: true,
+        badge: 'Popular',
       },
       {
         title: 'AI Valuation',
         href: '/ai-valuation',
-        description: 'Get comprehensive AI-driven business valuation',
-        icon: Building,
+        description: 'Get comprehensive AI-driven business valuation with market insights',
+        icon: Sparkles,
+        badge: 'New',
       },
       {
         title: 'Financial Health',
         href: '/financial-health',
-        description: 'Analyze your business financial performance',
-        icon: Building,
+        description: 'Analyze your business financial performance and identify growth opportunities',
+        icon: BarChart3,
       },
       {
         title: 'Market Analysis',
         href: '/market-analysis',
-        description: 'Understand your market position and opportunities',
-        icon: Building,
+        description: 'Understand your market position with competitive intelligence',
+        icon: Target,
       },
       {
         title: 'Growth Score',
         href: '/growth-score',
-        description: 'Measure your business growth potential',
-        icon: Building,
+        description: 'Measure your business growth potential and scalability metrics',
+        icon: TrendingUp,
       },
     ],
   },
@@ -135,37 +144,52 @@ export function Header() {
                 {/* Services Dropdown */}
                 {navigationItems.map(item => (
                   <NavigationMenuItem key={item.title}>
-                    <NavigationMenuTrigger className="text-secondary-600 hover:text-primary-600 focus:text-primary-600">
+                    <NavigationMenuTrigger className="text-secondary-600 hover:text-primary-600 focus:text-primary-600 hover:shadow-sm">
                       {item.title}
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
-                      <div className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                        <div className="row-span-3">
-                          <NavigationMenuLink asChild>
-                            <a
-                              className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                              href="/services"
-                            >
-                              <Building className="h-6 w-6" />
-                              <div className="mb-2 mt-4 text-lg font-medium">
-                                Business Services
-                              </div>
-                              <p className="text-sm leading-tight text-muted-foreground">
-                                Comprehensive tools and analysis for business
-                                valuation, growth, and market insights.
-                              </p>
-                            </a>
-                          </NavigationMenuLink>
+                      <div className="w-[420px] lg:w-[600px] p-0">
+                        <div className="grid lg:grid-cols-[280px_1fr] gap-0">
+                          {/* Featured Section */}
+                          <div className="p-6 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border-r border-border/50">
+                            <NavigationMenuLink asChild>
+                              <a
+                                className="group flex h-full w-full select-none flex-col justify-between rounded-lg bg-gradient-to-br from-primary/20 to-primary/10 p-6 no-underline outline-none transition-all duration-300 hover:from-primary/30 hover:to-primary/15 hover:shadow-lg hover:scale-[1.02] focus:shadow-lg focus:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-primary/30 focus:ring-offset-2"
+                                href="/services"
+                              >
+                                <div className="space-y-2">
+                                  <div className="flex items-center justify-between">
+                                    <Building className="h-6 w-6 text-primary" />
+                                    <ArrowRight className="h-4 w-4 text-primary/60 group-hover:text-primary group-hover:translate-x-1 transition-all duration-300" />
+                                  </div>
+                                  <div className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
+                                    Business Services
+                                  </div>
+                                </div>
+                                <p className="text-sm leading-relaxed text-muted-foreground group-hover:text-foreground/80 transition-colors">
+                                  Comprehensive AI-powered tools for business valuation, growth analysis, and market insights.
+                                </p>
+                              </a>
+                            </NavigationMenuLink>
+                          </div>
+                          
+                          {/* Services Grid */}
+                          <div className="p-6">
+                            <div className="space-y-1">
+                              {item.items.map(service => (
+                                <ServiceItem
+                                  key={service.title}
+                                  title={service.title}
+                                  href={service.href}
+                                  description={service.description}
+                                  icon={service.icon}
+                                  badge={service.badge}
+                                  featured={service.featured}
+                                />
+                              ))}
+                            </div>
+                          </div>
                         </div>
-                        {item.items.map(service => (
-                          <ListItem
-                            key={service.title}
-                            title={service.title}
-                            href={service.href}
-                          >
-                            {service.description}
-                          </ListItem>
-                        ))}
                       </div>
                     </NavigationMenuContent>
                   </NavigationMenuItem>
@@ -176,7 +200,7 @@ export function Header() {
                   <NavigationMenuItem key={item.title}>
                     <NavigationMenuLink
                       href={item.href}
-                      className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium text-secondary-600 hover:text-primary-600 focus:text-primary-600 transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+                      className="group inline-flex h-9 w-max items-center justify-center rounded-lg bg-background px-4 py-2 text-sm font-medium text-secondary-600 hover:text-primary-600 focus:text-primary-600 transition-all duration-200 hover:bg-accent hover:text-accent-foreground hover:shadow-sm focus:bg-accent focus:text-accent-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
                     >
                       {item.title}
                     </NavigationMenuLink>
@@ -393,7 +417,63 @@ export function Header() {
   )
 }
 
-// Helper component for navigation menu items
+// Enhanced service item component
+const ServiceItem = React.forwardRef<
+  React.ElementRef<'a'>,
+  React.ComponentPropsWithoutRef<'a'> & {
+    title: string
+    description: string
+    icon: React.ComponentType<any>
+    badge?: string
+    featured?: boolean
+  }
+>(({ className, title, description, icon: Icon, badge, featured, ...props }, ref) => {
+  return (
+    <NavigationMenuLink asChild>
+      <a
+        ref={ref}
+        className={cn(
+          'group flex items-start space-x-4 rounded-lg p-3 no-underline outline-none transition-all duration-200 hover:bg-accent/60 hover:shadow-sm focus:bg-accent focus:outline-none focus:ring-2 focus:ring-primary/20 focus:ring-offset-1',
+          featured && 'bg-primary/5 hover:bg-primary/10',
+          className
+        )}
+        {...props}
+      >
+        <div className={cn(
+          'flex h-10 w-10 shrink-0 items-center justify-center rounded-lg transition-all duration-300',
+          featured 
+            ? 'bg-primary/20 text-primary group-hover:bg-primary/30 group-hover:scale-110' 
+            : 'bg-muted text-muted-foreground group-hover:bg-primary/20 group-hover:text-primary group-hover:scale-105'
+        )}>
+          <Icon className="h-5 w-5" />
+        </div>
+        <div className="flex-1 space-y-1">
+          <div className="flex items-center space-x-2">
+            <div className="text-sm font-medium leading-none group-hover:text-primary transition-colors">
+              {title}
+            </div>
+            {badge && (
+              <span className={cn(
+                'rounded-full px-2 py-0.5 text-xs font-medium transition-colors',
+                badge === 'New' && 'bg-green-100 text-green-700',
+                badge === 'Popular' && 'bg-blue-100 text-blue-700'
+              )}>
+                {badge}
+              </span>
+            )}
+          </div>
+          <p className="text-xs leading-relaxed text-muted-foreground group-hover:text-foreground/80 transition-colors">
+            {description}
+          </p>
+        </div>
+        <ArrowRight className="h-4 w-4 text-muted-foreground/40 group-hover:text-primary group-hover:translate-x-1 transition-all duration-300" />
+      </a>
+    </NavigationMenuLink>
+  )
+})
+ServiceItem.displayName = 'ServiceItem'
+
+// Helper component for navigation menu items (keeping for backward compatibility)
 const ListItem = React.forwardRef<
   React.ElementRef<'a'>,
   React.ComponentPropsWithoutRef<'a'>
@@ -404,7 +484,7 @@ const ListItem = React.forwardRef<
         <a
           ref={ref}
           className={cn(
-            'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
+            'block select-none space-y-1 rounded-lg p-3 leading-none no-underline outline-none transition-all duration-200 hover:bg-accent/60 hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:ring-2 focus:ring-primary/20 focus:ring-offset-1',
             className
           )}
           {...props}

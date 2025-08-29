@@ -26,67 +26,67 @@
     --radius: 0.5rem;
 
     /* === ENHANCED BUSINESS COLOR PALETTE === */
-
+    
     /* Trust & Security Colors */
-    --trust: 210 100% 95%; /* Light trust blue background */
+    --trust: 210 100% 95%;           /* Light trust blue background */
     --trust-foreground: 210 100% 20%; /* Dark trust blue text */
-    --verified: 142 76% 36%; /* Verified green #10b981 */
+    --verified: 142 76% 36%;         /* Verified green #10b981 */
     --verified-foreground: 210 40% 98%;
-    --security: 217 91% 33%; /* Security blue (matches primary) */
+    --security: 217 91% 33%;         /* Security blue (matches primary) */
     --security-foreground: 210 40% 98%;
-
+    
     /* Status Colors - Enhanced */
-    --success: 158 64% 52%; /* #10b981 - Growth/Success Green */
+    --success: 158 64% 52%;          /* #10b981 - Growth/Success Green */
     --success-foreground: 210 40% 98%;
-    --success-light: 158 64% 95%; /* Light success background */
-    --warning: 25 95% 53%; /* #f59e0b - Warning Amber */
+    --success-light: 158 64% 95%;    /* Light success background */
+    --warning: 25 95% 53%;           /* #f59e0b - Warning Amber */
     --warning-foreground: 25 95% 15%;
-    --warning-light: 25 95% 95%; /* Light warning background */
-    --error: 0 84% 60%; /* Error red */
+    --warning-light: 25 95% 95%;     /* Light warning background */
+    --error: 0 84% 60%;              /* Error red */
     --error-foreground: 210 40% 98%;
-    --error-light: 0 84% 95%; /* Light error background */
-
+    --error-light: 0 84% 95%;        /* Light error background */
+    
     /* Business Status Colors */
-    --pending: 45 93% 47%; /* #eab308 - Pending yellow */
+    --pending: 45 93% 47%;           /* #eab308 - Pending yellow */
     --pending-foreground: 45 93% 15%;
     --pending-light: 45 93% 95%;
-    --approved: 142 76% 36%; /* #10b981 - Approved green */
+    --approved: 142 76% 36%;         /* #10b981 - Approved green */
     --approved-foreground: 210 40% 98%;
     --approved-light: 142 76% 95%;
-    --declined: 0 84% 60%; /* #dc2626 - Declined red */
+    --declined: 0 84% 60%;           /* #dc2626 - Declined red */
     --declined-foreground: 210 40% 98%;
     --declined-light: 0 84% 95%;
-
+    
     /* Premium & Pricing Colors */
-    --premium: 45 100% 51%; /* #fbbf24 - Premium gold */
+    --premium: 45 100% 51%;          /* #fbbf24 - Premium gold */
     --premium-foreground: 45 100% 15%;
     --premium-light: 45 100% 95%;
-    --price: 217 91% 33%; /* Price blue (matches primary) */
+    --price: 217 91% 33%;            /* Price blue (matches primary) */
     --price-foreground: 210 40% 98%;
     --price-light: 217 91% 95%;
-
+    
     /* Neutral Warm Colors */
-    --neutral-warm: 25 5% 45%; /* #737373 - Warm neutral text */
+    --neutral-warm: 25 5% 45%;       /* #737373 - Warm neutral text */
     --neutral-warm-light: 25 5% 95%; /* Light warm neutral background */
-    --neutral-cool: 220 8.9% 46.1%; /* Cool neutral (matches muted-foreground) */
-
+    --neutral-cool: 220 8.9% 46.1%;  /* Cool neutral (matches muted-foreground) */
+    
     /* Data Visualization Colors */
-    --chart-1: 12 76% 61%; /* #f97316 - Orange */
-    --chart-2: 173 58% 39%; /* #0891b2 - Cyan */
-    --chart-3: 197 37% 24%; /* #164e63 - Dark cyan */
-    --chart-4: 43 74% 66%; /* #facc15 - Yellow */
-    --chart-5: 27 87% 67%; /* #fb7185 - Pink */
-    --chart-revenue: 158 64% 52%; /* Revenue green */
-    --chart-profit: 142 76% 36%; /* Profit dark green */
-    --chart-loss: 0 84% 60%; /* Loss red */
-    --chart-growth: 217 91% 33%; /* Growth blue */
-
+    --chart-1: 12 76% 61%;           /* #f97316 - Orange */
+    --chart-2: 173 58% 39%;          /* #0891b2 - Cyan */
+    --chart-3: 197 37% 24%;          /* #164e63 - Dark cyan */
+    --chart-4: 43 74% 66%;           /* #facc15 - Yellow */
+    --chart-5: 27 87% 67%;           /* #fb7185 - Pink */
+    --chart-revenue: 158 64% 52%;    /* Revenue green */
+    --chart-profit: 142 76% 36%;     /* Profit dark green */
+    --chart-loss: 0 84% 60%;         /* Loss red */
+    --chart-growth: 217 91% 33%;     /* Growth blue */
+    
     /* Interactive States */
-    --hover: 217 91% 28%; /* Darker primary for hover */
-    --active: 217 91% 25%; /* Even darker for active */
-    --focus: 217 91% 33% / 0.2; /* Focus ring with opacity */
+    --hover: 217 91% 28%;            /* Darker primary for hover */
+    --active: 217 91% 25%;           /* Even darker for active */
+    --focus: 217 91% 33% / 0.2;      /* Focus ring with opacity */
     --disabled: 220 8.9% 46.1% / 0.5; /* Disabled state */
-
+    
     /* Gradient Stops */
     --gradient-primary-start: 217 91% 33%;
     --gradient-primary-end: 217 91% 45%;
@@ -104,7 +104,7 @@
     --card-foreground: 210 40% 98%;
     --popover: 224 71.4% 4.1%;
     --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%; /* Lighter blue for dark mode */
+    --primary: 217.2 91.2% 59.8%;    /* Lighter blue for dark mode */
     --primary-foreground: 222.2 84% 4.9%;
     --secondary: 215 27.9% 16.9%;
     --secondary-foreground: 210 40% 98%;
@@ -148,119 +148,119 @@
   .trust-indicator {
     @apply bg-trust text-trust-foreground;
   }
-
+  
   .verified-badge {
     @apply bg-verified text-verified-foreground;
   }
-
+  
   .security-badge {
     @apply bg-security text-security-foreground;
   }
-
+  
   /* Status utilities */
   .status-success {
     @apply bg-success-light text-success border border-success/20;
   }
-
+  
   .status-warning {
     @apply bg-warning-light text-warning-foreground border border-warning/20;
   }
-
+  
   .status-error {
     @apply bg-error-light text-error-foreground border border-error/20;
   }
-
+  
   .status-pending {
     @apply bg-pending-light text-pending-foreground border border-pending/20;
   }
-
+  
   .status-approved {
     @apply bg-approved-light text-approved-foreground border border-approved/20;
   }
-
+  
   .status-declined {
     @apply bg-declined-light text-declined-foreground border border-declined/20;
   }
-
+  
   /* Premium styling */
   .premium-badge {
     @apply bg-premium text-premium-foreground border border-premium/30;
   }
-
+  
   .premium-gradient {
     @apply bg-gradient-to-r from-premium to-yellow-400;
   }
-
+  
   /* Trust gradients */
   .trust-gradient {
     @apply bg-gradient-to-r from-trust to-secondary;
   }
-
+  
   .primary-gradient {
     @apply bg-gradient-to-r from-primary to-blue-500;
   }
-
+  
   .success-gradient {
     @apply bg-gradient-to-r from-success to-green-400;
   }
-
+  
   /* Interactive state utilities */
   .interactive-hover {
     @apply hover:bg-hover hover:text-white transition-colors duration-200;
   }
-
+  
   .interactive-focus {
     @apply focus:ring-2 focus:ring-focus focus:ring-offset-2 focus:outline-none;
   }
-
+  
   .interactive-disabled {
     @apply disabled:opacity-50 disabled:cursor-not-allowed disabled:text-disabled;
   }
-
+  
   /* Business card styling */
   .business-card {
     @apply bg-card border border-border rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200;
   }
-
+  
   .business-card-featured {
     @apply border-premium/30 bg-gradient-to-br from-premium-light to-card;
   }
-
+  
   /* Price display */
   .price-display {
     @apply text-price font-bold text-2xl;
   }
-
+  
   .price-small {
     @apply text-price font-semibold text-lg;
   }
-
+  
   /* Revenue/financial colors */
   .revenue-positive {
     @apply text-success;
   }
-
+  
   .revenue-negative {
     @apply text-error;
   }
-
+  
   .revenue-neutral {
     @apply text-neutral-warm;
   }
-
+  
   /* Chart colors */
   .chart-revenue {
     color: hsl(var(--chart-revenue));
   }
-
+  
   .chart-profit {
     color: hsl(var(--chart-profit));
   }
-
+  
   .chart-growth {
     color: hsl(var(--chart-growth));
   }
-
+  
   .chart-loss {
     color: hsl(var(--chart-loss));
   }
@@ -272,52 +272,52 @@
   .btn-trust {
     @apply bg-trust hover:bg-trust/90 text-trust-foreground border border-trust/30;
   }
-
+  
   .btn-verified {
     @apply bg-verified hover:bg-verified/90 text-verified-foreground;
   }
-
+  
   .btn-premium {
     @apply bg-premium hover:bg-premium/90 text-premium-foreground border border-premium/30;
   }
-
+  
   /* Business status indicators */
   .status-indicator {
     @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
   }
-
+  
   .status-indicator-success {
     @apply status-indicator bg-success-light text-success border border-success/20;
   }
-
+  
   .status-indicator-warning {
     @apply status-indicator bg-warning-light text-warning-foreground border border-warning/20;
   }
-
+  
   .status-indicator-error {
     @apply status-indicator bg-error-light text-error-foreground border border-error/20;
   }
-
+  
   /* Trust section styling */
   .trust-section {
     @apply bg-gradient-to-r from-trust to-secondary p-6 rounded-lg border border-trust/20;
   }
-
+  
   /* Featured business card */
   .business-card-premium {
     @apply relative overflow-hidden border-2 border-premium/30;
   }
-
+  
   .business-card-premium::before {
     content: '';
     @apply absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-premium to-yellow-400;
   }
-
+  
   /* Verification badges */
   .verification-badge {
     @apply inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-verified-light text-verified border border-verified/20;
   }
-
+  
   /* Security indicators */
   .security-indicator {
     @apply flex items-center gap-2 px-3 py-2 bg-security-light text-security rounded-lg border border-security/20;
@@ -347,11 +347,11 @@
   .price-display {
     @apply text-xl;
   }
-
+  
   .business-card {
     @apply shadow-none border-l-4 border-l-primary;
   }
-
+  
   .trust-section {
     @apply p-4;
   }

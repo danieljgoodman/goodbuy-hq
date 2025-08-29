@@ -101,33 +101,33 @@ const testimonials = [
 ]
 
 const stats = [
-  { 
-    value: '10,000+', 
+  {
+    value: '10,000+',
     label: 'Businesses Valued',
     icon: Users,
-    color: 'from-purple-500 to-indigo-600',
-    description: 'Companies trust our AI'
+    color: 'from-primary to-primary/80',
+    description: 'Companies trust our AI',
   },
-  { 
-    value: '95%', 
+  {
+    value: '95%',
     label: 'Accuracy Rate',
     icon: Award,
-    color: 'from-emerald-500 to-green-600',
-    description: 'Precision you can rely on'
+    color: 'from-primary to-primary/70',
+    description: 'Precision you can rely on',
   },
-  { 
-    value: '$2.8B', 
+  {
+    value: '$2.8B',
     label: 'Total Value Analyzed',
     icon: DollarSign,
-    color: 'from-amber-500 to-orange-600',
-    description: 'Enterprise-grade scale'
+    color: 'from-primary/90 to-primary',
+    description: 'Enterprise-grade scale',
   },
-  { 
-    value: '4.9/5', 
+  {
+    value: '4.9/5',
     label: 'User Rating',
     icon: Star,
-    color: 'from-rose-500 to-pink-600',
-    description: 'Loved by professionals'
+    color: 'from-primary/80 to-primary/60',
+    description: 'Loved by professionals',
   },
 ]
 
@@ -135,25 +135,37 @@ export function Testimonials() {
   return (
     <section className="relative py-20 lg:py-28 overflow-hidden">
       {/* Background with gradient and pattern */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-purple-50/30 to-indigo-50/30" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,theme(colors.purple.100),transparent_50%),radial-gradient(circle_at_70%_80%,theme(colors.indigo.100),transparent_50%)]" />
-      
+      <div className="absolute inset-0 bg-gradient-to-br from-background via-secondary/30 to-muted/30" />
+      <div className="absolute inset-0 bg-gradient-radial from-primary/10 via-transparent to-transparent" />
+
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-4xl mx-auto mb-20">
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-purple-100 to-indigo-100 border border-purple-200/50 backdrop-blur-sm mb-8">
-            <Award className="w-4 h-4 text-purple-600 mr-2" />
-            <span className="text-sm font-medium text-purple-700">Trusted by Industry Leaders</span>
+          {/* Badge - On its own line with proper spacing */}
+          <div className="flex justify-center mb-6">
+            <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-secondary to-accent border border-border/50 backdrop-blur-sm shadow-sm hover:shadow-md transition-all duration-300">
+              <Award className="w-5 h-5 text-primary mr-3" />
+              <span className="text-sm font-semibold text-primary tracking-wide">
+                Trusted by Industry Leaders
+              </span>
+            </div>
           </div>
-          
-          <h2 className="hero-title text-4xl sm:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-foreground via-purple-900 to-indigo-900 bg-clip-text text-transparent text-gradient mb-8">
-            What Our Users Say
-          </h2>
-          
-          <p className="text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-            Join thousands of business owners, investors, and advisors who rely on our 
-            AI-powered platform for accurate business valuations and strategic insights.
-          </p>
+
+          {/* Main Title - Improved typography and spacing */}
+          <div className="mb-8">
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold bg-gradient-to-r from-foreground via-primary to-primary/80 bg-clip-text text-transparent leading-tight tracking-tight">
+              What Our Users Say
+            </h2>
+          </div>
+
+          {/* Description - Enhanced readability */}
+          <div className="max-w-3xl mx-auto">
+            <p className="text-xl sm:text-2xl text-muted-foreground leading-relaxed font-light">
+              Join thousands of business owners, investors, and advisors who rely
+              on our AI-powered platform for accurate business valuations and
+              strategic insights.
+            </p>
+          </div>
         </div>
 
         {/* Enhanced Stats Section */}
@@ -164,38 +176,42 @@ export function Testimonials() {
               <Card
                 key={stat.label}
                 className={cn(
-                  "group relative overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-500",
-                  "bg-white/80 backdrop-blur-sm hover:bg-white/90",
-                  "animate-fade-in hover:scale-105"
+                  'group relative overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-500',
+                  'bg-card/90 backdrop-blur-sm hover:bg-card/95',
+                  'animate-fade-in hover:scale-105'
                 )}
                 style={{ animationDelay: `${index * 150}ms` }}
               >
                 {/* Gradient background overlay */}
-                <div className={cn(
-                  "absolute inset-0 bg-gradient-to-br opacity-5 group-hover:opacity-10 transition-opacity",
-                  stat.color
-                )} />
-                
+                <div
+                  className={cn(
+                    'absolute inset-0 bg-gradient-to-br opacity-5 group-hover:opacity-10 transition-opacity',
+                    stat.color
+                  )}
+                />
+
                 <CardContent className="p-6 text-center relative z-10">
                   {/* Icon */}
-                  <div className={cn(
-                    "inline-flex items-center justify-center w-14 h-14 rounded-xl mb-4",
-                    "bg-gradient-to-br shadow-lg group-hover:shadow-xl transition-all duration-300",
-                    stat.color
-                  )}>
+                  <div
+                    className={cn(
+                      'inline-flex items-center justify-center w-14 h-14 rounded-xl mb-4',
+                      'bg-gradient-to-br shadow-lg group-hover:shadow-xl transition-all duration-300',
+                      stat.color
+                    )}
+                  >
                     <Icon className="w-7 h-7 text-white" />
                   </div>
-                  
+
                   {/* Value */}
                   <div className="text-3xl lg:text-4xl font-bold text-foreground mb-2 group-hover:scale-110 transition-transform duration-300">
                     {stat.value}
                   </div>
-                  
+
                   {/* Label */}
                   <div className="text-sm font-semibold text-foreground mb-1">
                     {stat.label}
                   </div>
-                  
+
                   {/* Description */}
                   <div className="text-xs text-muted-foreground">
                     {stat.description}
@@ -212,22 +228,22 @@ export function Testimonials() {
             <Card
               key={testimonial.id}
               className={cn(
-                "group relative overflow-hidden border-0 shadow-lg hover:shadow-2xl",
-                "transition-all duration-500 animate-fade-in hover:scale-[1.02]",
-                "bg-white/90 backdrop-blur-sm hover:bg-white/95"
+                'group relative overflow-hidden border-0 shadow-lg hover:shadow-2xl',
+                'transition-all duration-500 animate-fade-in hover:scale-[1.02]',
+                'bg-card/90 backdrop-blur-sm hover:bg-card/95'
               )}
               style={{ animationDelay: `${(index + 4) * 100}ms` }}
             >
               {/* Gradient border effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-200 via-indigo-200 to-purple-200 opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 blur-sm" />
-              
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-secondary to-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 blur-sm" />
+
               <CardHeader className="relative">
                 <div className="flex items-start justify-between mb-4">
                   {/* Quote Icon with gradient */}
                   <div className="relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-lg blur-lg opacity-20 group-hover:opacity-30 transition-opacity" />
-                    <div className="relative bg-gradient-to-br from-purple-100 to-indigo-100 p-3 rounded-lg">
-                      <Quote className="w-6 h-6 text-purple-600" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary to-primary/80 rounded-lg blur-lg opacity-20 group-hover:opacity-30 transition-opacity" />
+                    <div className="relative bg-gradient-to-br from-secondary to-accent p-3 rounded-lg">
+                      <Quote className="w-6 h-6 text-primary" />
                     </div>
                   </div>
 
@@ -249,19 +265,19 @@ export function Testimonials() {
                 </blockquote>
 
                 {/* Enhanced Metrics Card */}
-                <div className="relative overflow-hidden rounded-xl p-5 mb-6 bg-gradient-to-br from-purple-50 via-white to-indigo-50 border border-purple-100/50">
-                  <div className="absolute inset-0 bg-gradient-to-br from-purple-100/20 to-indigo-100/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="relative overflow-hidden rounded-xl p-5 mb-6 bg-gradient-to-br from-secondary via-card to-accent border border-border/50">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="relative z-10">
                     <div className="flex items-center justify-between">
                       <div>
-                        <div className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+                        <div className="text-3xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
                           {testimonial.metrics.value}
                         </div>
                         <div className="text-sm font-medium text-muted-foreground">
                           {testimonial.metrics.label}
                         </div>
                       </div>
-                      <TrendingUp className="w-8 h-8 text-purple-400" />
+                      <TrendingUp className="w-8 h-8 text-primary/60" />
                     </div>
                   </div>
                 </div>
@@ -272,9 +288,9 @@ export function Testimonials() {
                 <div className="flex items-center w-full">
                   {/* Enhanced Avatar */}
                   <div className="relative mr-4">
-                    <div className="absolute inset-0 bg-gradient-to-br from-purple-400 to-indigo-500 rounded-full blur-sm opacity-30 group-hover:opacity-50 transition-opacity scale-110" />
-                    <div className="relative w-14 h-14 bg-gradient-to-br from-purple-500 via-purple-600 to-indigo-600 rounded-full flex items-center justify-center shadow-lg">
-                      <span className="text-white font-bold text-lg tracking-wider">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary to-primary/80 rounded-full blur-sm opacity-30 group-hover:opacity-50 transition-opacity scale-110" />
+                    <div className="relative w-14 h-14 bg-gradient-to-br from-primary via-primary/90 to-primary/80 rounded-full flex items-center justify-center shadow-lg">
+                      <span className="text-primary-foreground font-bold text-lg tracking-wider">
                         {testimonial.name
                           .split(' ')
                           .map(n => n[0])
@@ -282,7 +298,7 @@ export function Testimonials() {
                       </span>
                     </div>
                   </div>
-                  
+
                   {/* Author Info */}
                   <div className="flex-1">
                     <CardTitle className="text-lg font-bold text-foreground mb-1">
@@ -305,70 +321,72 @@ export function Testimonials() {
         <div className="text-center mt-20">
           <Card className="relative overflow-hidden border-0 shadow-2xl max-w-5xl mx-auto group hover:shadow-3xl transition-all duration-700">
             {/* Animated gradient background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-600 via-indigo-600 to-purple-700 opacity-95" />
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 via-transparent to-indigo-500/20 animate-pulse" />
-            
+            <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/90 to-primary/80 opacity-95" />
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-transparent to-primary/30 animate-pulse" />
+
             {/* Background pattern */}
             <div className="absolute inset-0 opacity-10">
               <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl" />
               <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full translate-x-1/2 translate-y-1/2 blur-3xl" />
             </div>
-            
+
             <CardContent className="relative z-10 p-10 lg:p-16 text-center">
               {/* Badge */}
-              <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 mb-8">
-                <Star className="w-4 h-4 text-white mr-2" />
-                <span className="text-sm font-medium text-white">Join 10,000+ Success Stories</span>
+              <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary-foreground/20 backdrop-blur-sm border border-primary-foreground/30 mb-8">
+                <Star className="w-4 h-4 text-primary-foreground mr-2" />
+                <span className="text-sm font-medium text-primary-foreground">
+                  Join 10,000+ Success Stories
+                </span>
               </div>
-              
+
               {/* Title with gradient text */}
-              <CardTitle className="text-3xl lg:text-5xl font-bold text-white mb-6 leading-tight">
+              <CardTitle className="text-3xl lg:text-5xl font-bold text-primary-foreground mb-6 leading-tight">
                 Ready to Transform Your{' '}
-                <span className="bg-gradient-to-r from-amber-200 to-yellow-200 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">
                   Business Story?
                 </span>
               </CardTitle>
-              
+
               {/* Description */}
-              <CardDescription className="text-xl text-white/90 mb-10 max-w-3xl mx-auto leading-relaxed">
+              <CardDescription className="text-xl text-primary-foreground/90 mb-10 max-w-3xl mx-auto leading-relaxed">
                 Get your business valued by AI in minutes and discover insights
-                that could transform your company's future. Join thousands of successful
-                entrepreneurs who trust our platform.
+                that could transform your company's future. Join thousands of
+                successful entrepreneurs who trust our platform.
               </CardDescription>
-              
+
               {/* Enhanced CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-                <Button 
+                <Button
                   size="lg"
                   className={cn(
-                    "px-10 py-4 text-lg font-semibold",
-                    "bg-white text-purple-700 hover:bg-white/95",
-                    "shadow-xl hover:shadow-2xl",
-                    "transform hover:scale-105 transition-all duration-300",
-                    "border-2 border-white/50 hover:border-white"
+                    'px-10 py-4 text-lg font-semibold',
+                    'bg-primary-foreground text-primary hover:bg-primary-foreground/95',
+                    'shadow-xl hover:shadow-2xl',
+                    'transform hover:scale-105 transition-all duration-300',
+                    'border-2 border-primary-foreground/50 hover:border-primary-foreground'
                   )}
                 >
                   Start Your Free Valuation
                   <TrendingUp className="ml-2 w-5 h-5" />
                 </Button>
-                
+
                 <Button
                   variant="outline"
                   size="lg"
                   className={cn(
-                    "px-10 py-4 text-lg font-semibold",
-                    "bg-transparent text-white border-2 border-white/50",
-                    "hover:bg-white/10 hover:border-white",
-                    "backdrop-blur-sm transform hover:scale-105",
-                    "transition-all duration-300 shadow-lg hover:shadow-xl"
+                    'px-10 py-4 text-lg font-semibold',
+                    'bg-transparent text-primary-foreground border-2 border-primary-foreground/50',
+                    'hover:bg-primary-foreground/10 hover:border-primary-foreground',
+                    'backdrop-blur-sm transform hover:scale-105',
+                    'transition-all duration-300 shadow-lg hover:shadow-xl'
                   )}
                 >
                   View Sample Report
                 </Button>
               </div>
-              
+
               {/* Trust indicators */}
-              <div className="flex flex-wrap justify-center items-center gap-6 text-white/80 text-sm">
+              <div className="flex flex-wrap justify-center items-center gap-6 text-primary-foreground/80 text-sm">
                 <div className="flex items-center">
                   <Award className="w-4 h-4 mr-2" />
                   No credit card required

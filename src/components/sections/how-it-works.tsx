@@ -1,6 +1,15 @@
 'use client'
 
-import { Upload, Brain, FileText, ArrowRight, Shield, Zap, Target, CheckCircle2 } from 'lucide-react'
+import {
+  Upload,
+  Brain,
+  FileText,
+  ArrowRight,
+  Shield,
+  Zap,
+  Target,
+  CheckCircle2,
+} from 'lucide-react'
 
 const steps = [
   {
@@ -60,13 +69,15 @@ export function HowItWorks() {
             <Zap className="w-4 h-4" />
             Simple 3-Step Process
           </div>
-          
+
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-foreground">
             How It Works
           </h2>
-          
+
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Get your business valued in three simple steps. Our AI-powered platform makes professional business valuation accessible to everyone.
+            Get your business valued in three simple steps. Our AI-powered
+            platform makes professional business valuation accessible to
+            everyone.
           </p>
         </div>
 
@@ -83,7 +94,7 @@ export function HowItWorks() {
           <div className="grid lg:grid-cols-3 gap-12 lg:gap-8">
             {steps.map((step, index) => {
               const IconComponent = step.icon
-              
+
               return (
                 <div key={step.step} className="relative group">
                   {/* Mobile connection line */}
@@ -107,7 +118,7 @@ export function HowItWorks() {
                       <h3 className="text-2xl font-bold text-foreground">
                         {step.title}
                       </h3>
-                      
+
                       <p className="text-muted-foreground text-lg leading-relaxed">
                         {step.description}
                       </p>
@@ -115,7 +126,10 @@ export function HowItWorks() {
                       {/* Features list */}
                       <div className="space-y-3 pt-4">
                         {step.features.map((feature, idx) => (
-                          <div key={idx} className="flex items-center gap-3 text-sm text-muted-foreground justify-center lg:justify-start">
+                          <div
+                            key={idx}
+                            className="flex items-center gap-3 text-sm text-muted-foreground justify-center lg:justify-start"
+                          >
                             <CheckCircle2 className="w-4 h-4 text-primary flex-shrink-0" />
                             <span>{feature}</span>
                           </div>
@@ -136,7 +150,9 @@ export function HowItWorks() {
               <div className="w-2 h-2 bg-primary rounded-full animate-ping"></div>
               <div className="absolute inset-0 w-2 h-2 bg-primary rounded-full"></div>
             </div>
-            <span className="text-sm font-medium text-foreground">Complete analysis in under 5 minutes</span>
+            <span className="text-sm font-medium text-foreground">
+              Complete analysis in under 5 minutes
+            </span>
             <Zap className="w-4 h-4 text-primary" />
           </div>
         </div>
@@ -148,15 +164,16 @@ export function HowItWorks() {
               <Target className="w-4 h-4" />
               Ready to Start?
             </div>
-            
+
             <h3 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
               Get Your Business Valuation Now
             </h3>
-            
+
             <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Join thousands of business owners who trust our AI-powered valuation platform. Start your free analysis today.
+              Join thousands of business owners who trust our AI-powered
+              valuation platform. Start your free analysis today.
             </p>
-            
+
             {/* Trust indicators */}
             <div className="flex flex-wrap justify-center items-center gap-8 mb-8 text-sm text-muted-foreground">
               <div className="flex items-center gap-2">
@@ -179,7 +196,7 @@ export function HowItWorks() {
                 <span>Start Free Analysis</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform duration-200" />
               </button>
-              
+
               <button className="px-8 py-4 border-2 border-border hover:border-primary text-foreground hover:text-primary rounded-xl font-semibold transition-colors duration-200">
                 Schedule Demo
               </button>

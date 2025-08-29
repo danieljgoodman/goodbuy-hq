@@ -42,7 +42,7 @@ const config: Config = {
           DEFAULT: 'var(--card)',
           foreground: 'var(--card-foreground)',
         },
-        // Business-specific colors
+        // Business-specific colors - Enhanced OKLCH Integration
         success: {
           DEFAULT: 'var(--success)',
           foreground: 'var(--success-foreground)',
@@ -50,6 +50,25 @@ const config: Config = {
         warning: {
           DEFAULT: 'var(--warning)',
           foreground: 'var(--warning-foreground)',
+        },
+        // Chart colors from OKLCH system
+        chart: {
+          '1': 'var(--chart-1)',
+          '2': 'var(--chart-2)',
+          '3': 'var(--chart-3)',
+          '4': 'var(--chart-4)',
+          '5': 'var(--chart-5)',
+        },
+        // Sidebar colors from OKLCH system
+        sidebar: {
+          DEFAULT: 'var(--sidebar)',
+          foreground: 'var(--sidebar-foreground)',
+          primary: 'var(--sidebar-primary)',
+          'primary-foreground': 'var(--sidebar-primary-foreground)',
+          accent: 'var(--sidebar-accent)',
+          'accent-foreground': 'var(--sidebar-accent-foreground)',
+          border: 'var(--sidebar-border)',
+          ring: 'var(--sidebar-ring)',
         },
         // Goodbuy brand colors
         goodbuy: {
@@ -59,18 +78,20 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-sans)', 'Inter', 'system-ui', 'sans-serif'],
+        serif: ['var(--font-serif)', 'Merriweather', 'serif'], 
+        mono: ['var(--font-mono)', 'JetBrains Mono', 'Consolas', 'Monaco', 'monospace'],
         display: ['Lexend', 'Inter', 'system-ui', 'sans-serif'], // For headings
-        mono: ['JetBrains Mono', 'Consolas', 'Monaco', 'monospace'],
       },
       spacing: {
         '18': '4.5rem',
         '88': '22rem',
       },
       borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
+        lg: 'var(--radius-lg)',
+        md: 'var(--radius-md)', 
+        sm: 'var(--radius-sm)',
+        xl: 'var(--radius-xl)',
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',

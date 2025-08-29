@@ -64,7 +64,7 @@ export function Newsletter() {
 
   if (isSubmitted) {
     return (
-      <section 
+      <section
         className="relative py-20 lg:py-28 overflow-hidden"
         style={{
           background: `
@@ -73,7 +73,7 @@ export function Newsletter() {
               color-mix(in srgb, hsl(var(--success)) 5%, hsl(var(--background))) 50%,
               hsl(var(--background)) 100%
             )
-          `
+          `,
         }}
       >
         {/* Background Pattern */}
@@ -86,19 +86,21 @@ export function Newsletter() {
           <div className="business-card h-full bg-gradient-to-br from-card via-card to-success/5 backdrop-blur-sm border border-border/50 rounded-3xl p-8 lg:p-12 shadow-2xl">
             {/* Success Icon */}
             <div className="relative mb-8 flex justify-center">
-              <div 
+              <div
                 className="relative w-20 h-20 rounded-2xl shadow-xl flex items-center justify-center"
                 style={{
-                  background: 'linear-gradient(135deg, hsl(var(--success)) 0%, color-mix(in srgb, hsl(var(--success)) 80%, transparent) 100%)',
+                  background:
+                    'linear-gradient(135deg, hsl(var(--success)) 0%, color-mix(in srgb, hsl(var(--success)) 80%, transparent) 100%)',
                 }}
               >
                 <Check className="w-10 h-10 text-white" />
-                
+
                 {/* Glow Effect */}
-                <div 
+                <div
                   className="absolute inset-0 rounded-2xl opacity-50 blur-xl"
                   style={{
-                    background: 'linear-gradient(135deg, hsl(var(--success)) 0%, color-mix(in srgb, hsl(var(--success)) 80%, transparent) 100%)',
+                    background:
+                      'linear-gradient(135deg, hsl(var(--success)) 0%, color-mix(in srgb, hsl(var(--success)) 80%, transparent) 100%)',
                   }}
                 ></div>
               </div>
@@ -133,7 +135,7 @@ export function Newsletter() {
   }
 
   return (
-    <section 
+    <section
       className="relative py-20 lg:py-32 overflow-hidden"
       style={{
         background: `
@@ -142,7 +144,7 @@ export function Newsletter() {
             color-mix(in srgb, hsl(var(--primary)) 3%, hsl(var(--background))) 50%,
             hsl(var(--background)) 100%
           )
-        `
+        `,
       }}
       aria-labelledby="newsletter-title"
     >
@@ -163,8 +165,8 @@ export function Newsletter() {
                 <Mail className="w-4 h-4" />
                 <span>Join 25,000+ Business Leaders</span>
               </div>
-              
-              <h2 
+
+              <h2
                 id="newsletter-title"
                 className="hero-title text-4xl sm:text-5xl lg:text-6xl font-bold mb-8"
               >
@@ -175,7 +177,7 @@ export function Newsletter() {
                   Business Game
                 </span>
               </h2>
-              
+
               <p className="text-xl text-muted-foreground leading-relaxed max-w-xl">
                 Get exclusive insights, market trends, and valuation tips
                 delivered straight to your inbox. Join thousands of business
@@ -191,13 +193,13 @@ export function Newsletter() {
                   <div
                     key={benefit.title}
                     className="group flex items-start space-x-4"
-                    style={{ 
-                      animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
+                    style={{
+                      animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`,
                     }}
                   >
                     {/* Enhanced Icon */}
                     <div className="relative">
-                      <div 
+                      <div
                         className="w-12 h-12 rounded-xl shadow-lg flex items-center justify-center transform transition-all duration-300 group-hover:scale-110 group-hover:rotate-3"
                         style={{
                           background: `linear-gradient(135deg, ${benefit.color.split(' ')[0].replace('from-', '')} 0%, ${benefit.color.split(' ')[1].replace('to-', '')} 100%)`,
@@ -205,16 +207,16 @@ export function Newsletter() {
                       >
                         <IconComponent className="w-6 h-6 text-white" />
                       </div>
-                      
+
                       {/* Glow Effect */}
-                      <div 
+                      <div
                         className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-lg"
                         style={{
                           background: `linear-gradient(135deg, ${benefit.color.split(' ')[0].replace('from-', '')} 0%, ${benefit.color.split(' ')[1].replace('to-', '')} 100%)`,
                         }}
                       ></div>
                     </div>
-                    
+
                     <div className="flex-1">
                       <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors duration-300">
                         {benefit.title}
@@ -243,8 +245,12 @@ export function Newsletter() {
                 ))}
               </div>
               <div>
-                <div className="text-foreground font-semibold">Join 25,000+ subscribers</div>
-                <div className="text-muted-foreground text-xs">Growing community of business leaders</div>
+                <div className="text-foreground font-semibold">
+                  Join 25,000+ subscribers
+                </div>
+                <div className="text-muted-foreground text-xs">
+                  Growing community of business leaders
+                </div>
               </div>
             </div>
           </div>
@@ -259,7 +265,7 @@ export function Newsletter() {
                   <Award className="w-4 h-4" />
                   Premium Access
                 </div>
-                
+
                 <h3 className="text-3xl font-bold text-foreground mb-3 bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent">
                   Get Started Today
                 </h3>
@@ -292,11 +298,11 @@ export function Newsletter() {
                   type="submit"
                   disabled={isLoading || !email}
                   className={cn(
-                    "professional-cta w-full h-14 text-lg font-semibold",
-                    "bg-gradient-to-r from-primary to-purple-600",
-                    "hover:from-primary/90 hover:to-purple-600/90",
-                    "shadow-xl hover:shadow-2xl transform hover:scale-[1.02]",
-                    "transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                    'professional-cta w-full h-14 text-lg font-semibold',
+                    'bg-gradient-to-r from-primary to-purple-600',
+                    'hover:from-primary/90 hover:to-purple-600/90',
+                    'shadow-xl hover:shadow-2xl transform hover:scale-[1.02]',
+                    'transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none'
                   )}
                 >
                   {isLoading ? (
@@ -318,33 +324,41 @@ export function Newsletter() {
                 <div className="grid grid-cols-3 gap-4 text-center">
                   <div className="flex flex-col items-center">
                     <CheckCircle2 className="w-5 h-5 text-success mb-2" />
-                    <span className="text-xs font-medium text-muted-foreground">No spam ever</span>
+                    <span className="text-xs font-medium text-muted-foreground">
+                      No spam ever
+                    </span>
                   </div>
                   <div className="flex flex-col items-center">
                     <Shield className="w-5 h-5 text-primary mb-2" />
-                    <span className="text-xs font-medium text-muted-foreground">Privacy protected</span>
+                    <span className="text-xs font-medium text-muted-foreground">
+                      Privacy protected
+                    </span>
                   </div>
                   <div className="flex flex-col items-center">
                     <Zap className="w-5 h-5 text-amber-500 mb-2" />
-                    <span className="text-xs font-medium text-muted-foreground">Unsubscribe anytime</span>
+                    <span className="text-xs font-medium text-muted-foreground">
+                      Unsubscribe anytime
+                    </span>
                   </div>
                 </div>
               </div>
 
               {/* Premium Features List */}
               <div className="mt-8 space-y-3">
-                <div className="text-sm font-semibold text-foreground mb-4">What you'll get:</div>
+                <div className="text-sm font-semibold text-foreground mb-4">
+                  What you'll get:
+                </div>
                 {[
                   'Weekly market insights & trends',
                   'Exclusive case studies & guides',
                   'Early access to new features',
-                  'Priority customer support'
+                  'Priority customer support',
                 ].map((feature, index) => (
                   <div
                     key={feature}
                     className="flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground transition-colors duration-300"
-                    style={{ 
-                      animationDelay: `${index * 0.1}s`
+                    style={{
+                      animationDelay: `${index * 0.1}s`,
                     }}
                   >
                     <Star className="w-4 h-4 text-primary fill-current" />
@@ -356,8 +370,14 @@ export function Newsletter() {
 
             {/* Enhanced Decorative Elements */}
             <div className="absolute -top-6 -right-6 w-24 h-24 bg-gradient-to-br from-primary/30 to-purple-600/30 rounded-full opacity-60 blur-2xl animate-pulse"></div>
-            <div className="absolute -bottom-6 -left-6 w-20 h-20 bg-gradient-to-br from-purple-500/30 to-indigo-600/30 rounded-full opacity-40 blur-2xl animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-            <div className="absolute top-1/2 -right-2 w-16 h-16 bg-gradient-to-br from-indigo-500/20 to-primary/20 rounded-full opacity-50 blur-xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+            <div
+              className="absolute -bottom-6 -left-6 w-20 h-20 bg-gradient-to-br from-purple-500/30 to-indigo-600/30 rounded-full opacity-40 blur-2xl animate-pulse"
+              style={{ animationDelay: '0.5s' }}
+            ></div>
+            <div
+              className="absolute top-1/2 -right-2 w-16 h-16 bg-gradient-to-br from-indigo-500/20 to-primary/20 rounded-full opacity-50 blur-xl animate-pulse"
+              style={{ animationDelay: '1s' }}
+            ></div>
           </div>
         </div>
 

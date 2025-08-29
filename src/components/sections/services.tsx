@@ -100,7 +100,7 @@ const services = [
 
 export function Services() {
   return (
-    <section 
+    <section
       className="relative py-20 lg:py-32 overflow-hidden"
       style={{
         background: `
@@ -109,7 +109,7 @@ export function Services() {
             color-mix(in srgb, hsl(var(--primary)) 5%, hsl(var(--background))) 50%,
             hsl(var(--background)) 100%
           )
-        `
+        `,
       }}
       aria-labelledby="services-title"
     >
@@ -127,8 +127,8 @@ export function Services() {
             AI-Powered Solutions
             <Sparkles className="w-4 h-4" />
           </div>
-          
-          <h2 
+
+          <h2
             id="services-title"
             className="hero-title text-4xl sm:text-5xl lg:text-6xl font-bold mb-6"
           >
@@ -137,7 +137,7 @@ export function Services() {
               Business Intelligence
             </span>
           </h2>
-          
+
           <p className="text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
             Revolutionary AI platform that transforms raw business data into
             actionable insights, providing unprecedented visibility into your
@@ -154,16 +154,18 @@ export function Services() {
               <div
                 key={service.title}
                 className="group relative"
-                style={{ 
-                  animation: `fadeInUp 0.8s ease-out ${index * 0.2}s both`
+                style={{
+                  animation: `fadeInUp 0.8s ease-out ${index * 0.2}s both`,
                 }}
               >
                 {/* Service Card */}
-                <Card className={cn(
-                  "relative overflow-hidden border-0 shadow-lg hover:shadow-2xl",
-                  "transition-all duration-500 animate-fade-in hover:scale-[1.02] h-full",
-                  "bg-card/90 backdrop-blur-sm hover:bg-card/95"
-                )}>
+                <Card
+                  className={cn(
+                    'relative overflow-hidden border-0 shadow-lg hover:shadow-2xl',
+                    'transition-all duration-500 animate-fade-in hover:scale-[1.02] h-full',
+                    'bg-card/90 backdrop-blur-sm hover:bg-card/95'
+                  )}
+                >
                   {/* Premium Badge */}
                   {service.premium && (
                     <div className="absolute top-4 right-4 z-10">
@@ -174,25 +176,31 @@ export function Services() {
                   )}
 
                   {/* Gradient border effect */}
-                  <div className={cn(
-                    "absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 blur-sm",
-                    service.gradient
-                  )} />
+                  <div
+                    className={cn(
+                      'absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 blur-sm',
+                      service.gradient
+                    )}
+                  />
 
                   <CardContent className="relative p-6">
                     {/* Icon with enhanced styling */}
                     <div className="relative mb-6">
-                      <div className={cn(
-                        "w-16 h-16 rounded-2xl flex items-center justify-center shadow-xl group-hover:shadow-2xl transition-all duration-300",
-                        service.iconBg
-                      )}>
-                        <IconComponent className="w-8 h-8 text-white" />
-                        
-                        {/* Icon glow effect */}
-                        <div className={cn(
-                          "absolute inset-0 rounded-2xl blur-xl opacity-30 group-hover:opacity-60 transition-opacity duration-500 -z-10",
+                      <div
+                        className={cn(
+                          'w-16 h-16 rounded-2xl flex items-center justify-center shadow-xl group-hover:shadow-2xl transition-all duration-300',
                           service.iconBg
-                        )} />
+                        )}
+                      >
+                        <IconComponent className="w-8 h-8 text-white" />
+
+                        {/* Icon glow effect */}
+                        <div
+                          className={cn(
+                            'absolute inset-0 rounded-2xl blur-xl opacity-30 group-hover:opacity-60 transition-opacity duration-500 -z-10',
+                            service.iconBg
+                          )}
+                        />
                       </div>
                     </div>
 
@@ -209,10 +217,12 @@ export function Services() {
                       <div className="relative overflow-hidden rounded-xl p-4 bg-gradient-to-br from-primary/5 via-card to-purple-50/30 border border-primary/10">
                         <div className="flex items-center justify-between">
                           <div>
-                            <div className={cn(
-                              "text-2xl font-bold bg-gradient-to-r bg-clip-text text-transparent",
-                              service.gradient
-                            )}>
+                            <div
+                              className={cn(
+                                'text-2xl font-bold bg-gradient-to-r bg-clip-text text-transparent',
+                                service.gradient
+                              )}
+                            >
                               {service.metric.value}
                             </div>
                             <div className="text-xs font-medium text-muted-foreground">
@@ -229,8 +239,8 @@ export function Services() {
                           <div
                             key={feature}
                             className="flex items-center text-sm text-muted-foreground group-hover:text-foreground transition-colors duration-300"
-                            style={{ 
-                              animationDelay: `${(index * 0.2) + (featureIndex * 0.1)}s`
+                            style={{
+                              animationDelay: `${index * 0.2 + featureIndex * 0.1}s`,
                             }}
                           >
                             <CheckCircle2 className="w-4 h-4 text-success mr-3 flex-shrink-0" />
@@ -255,10 +265,12 @@ export function Services() {
                   </CardFooter>
 
                   {/* Bottom Gradient Accent */}
-                  <div className={cn(
-                    "absolute bottom-0 left-0 right-0 h-1 rounded-b-lg bg-gradient-to-r opacity-0 group-hover:opacity-100 transition-opacity duration-500",
-                    service.gradient
-                  )} />
+                  <div
+                    className={cn(
+                      'absolute bottom-0 left-0 right-0 h-1 rounded-b-lg bg-gradient-to-r opacity-0 group-hover:opacity-100 transition-opacity duration-500',
+                      service.gradient
+                    )}
+                  />
                 </Card>
               </div>
             )
@@ -270,22 +282,23 @@ export function Services() {
           <div className="relative overflow-hidden business-card bg-gradient-to-br from-card via-card to-primary/5 rounded-3xl border border-border/50 p-10 shadow-2xl max-w-4xl mx-auto">
             {/* Background Accent */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-primary/10 to-transparent rounded-full blur-3xl"></div>
-            
+
             <div className="relative text-center">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-6 border border-primary/20">
                 <Sparkles className="w-4 h-4" />
                 Ready to Transform Your Business?
               </div>
-              
+
               <h3 className="text-3xl lg:text-4xl font-bold text-foreground mb-4 bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent">
                 Start Your AI-Powered Journey
               </h3>
-              
+
               <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
-                Join thousands of businesses using our AI platform to unlock hidden value, 
-                optimize operations, and accelerate growth with data-driven insights.
+                Join thousands of businesses using our AI platform to unlock
+                hidden value, optimize operations, and accelerate growth with
+                data-driven insights.
               </p>
-              
+
               {/* Trust Indicators */}
               <div className="flex flex-wrap justify-center items-center gap-6 mb-8 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
@@ -305,8 +318,8 @@ export function Services() {
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-6">
                 <Link href="/auth/signup">
-                  <Button 
-                    size="lg" 
+                  <Button
+                    size="lg"
                     className="professional-cta group px-10 py-4 bg-gradient-to-r from-primary to-primary/90 text-primary-foreground rounded-xl font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center gap-2"
                   >
                     <Sparkles className="w-5 h-5" />
@@ -314,7 +327,7 @@ export function Services() {
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
                   </Button>
                 </Link>
-                
+
                 <Button
                   variant="outline"
                   size="lg"
