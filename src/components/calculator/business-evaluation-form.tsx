@@ -129,12 +129,16 @@ export function BusinessEvaluationForm() {
       industry: formData.basicInfo?.industry || '',
       description: formData.basicInfo?.description || '',
       annualRevenue: formData.financialData?.annualRevenue || 0,
-      monthlyExpenses: formData.financialData?.operatingExpenses
-        ? formData.financialData.operatingExpenses / 12
-        : 0,
-      employees: formData.basicInfo?.employees || 0,
-      yearsInOperation: formData.basicInfo?.foundingYear
-        ? new Date().getFullYear() - formData.basicInfo.foundingYear
+      monthlyExpenses:
+        formData.financialData?.annualRevenue &&
+        formData.financialData?.grossProfit
+          ? (formData.financialData.annualRevenue -
+              formData.financialData.grossProfit) /
+            12
+          : 0,
+      employees: formData.basicInfo?.employeeCount || 0,
+      yearsInOperation: formData.basicInfo?.foundedYear
+        ? new Date().getFullYear() - formData.basicInfo.foundedYear
         : 0,
       location: formData.basicInfo?.location || '',
       businessType: formData.basicInfo?.businessType || '',

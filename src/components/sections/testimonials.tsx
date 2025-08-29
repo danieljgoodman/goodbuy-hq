@@ -1,6 +1,16 @@
 'use client'
 
 import { Star, Quote } from 'lucide-react'
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 
 const testimonials = [
   {
@@ -130,86 +140,98 @@ export function Testimonials() {
         {/* Testimonials Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {testimonials.map((testimonial, index) => (
-            <div
+            <Card
               key={testimonial.id}
-              className="bg-white rounded-2xl border border-secondary-200 p-8 hover:shadow-xl transition-shadow duration-300 animate-fade-in"
+              className="hover:shadow-xl transition-shadow duration-300 animate-fade-in"
               style={{ animationDelay: `${index * 150}ms` }}
             >
-              {/* Quote Icon */}
-              <div className="mb-6">
-                <Quote className="w-8 h-8 text-primary-300" />
-              </div>
+              <CardHeader>
+                <div className="flex items-start justify-between">
+                  {/* Quote Icon */}
+                  <Quote className="w-8 h-8 text-primary-300" />
 
-              {/* Rating */}
-              <div className="flex items-center mb-4">
-                {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className="w-4 h-4 text-warning-400 fill-current"
-                  />
-                ))}
-              </div>
-
-              {/* Quote */}
-              <blockquote className="text-secondary-700 leading-relaxed mb-6">
-                "{testimonial.quote}"
-              </blockquote>
-
-              {/* Metrics */}
-              <div className="bg-gradient-to-r from-primary-50 to-accent-50 rounded-lg p-4 mb-6">
-                <div className="text-2xl font-bold text-secondary-900">
-                  {testimonial.metrics.value}
+                  {/* Rating */}
+                  <div className="flex items-center">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className="w-4 h-4 text-warning-400 fill-current"
+                      />
+                    ))}
+                  </div>
                 </div>
-                <div className="text-sm text-secondary-600">
-                  {testimonial.metrics.label}
-                </div>
-              </div>
+              </CardHeader>
 
-              {/* Author */}
-              <div className="flex items-center">
-                <div className="w-12 h-12 bg-gradient-to-br from-primary-100 to-primary-200 rounded-full flex items-center justify-center mr-4">
-                  <span className="text-primary-600 font-semibold text-lg">
-                    {testimonial.name
-                      .split(' ')
-                      .map(n => n[0])
-                      .join('')}
-                  </span>
-                </div>
-                <div>
-                  <div className="font-semibold text-secondary-900">
-                    {testimonial.name}
+              <CardContent>
+                {/* Quote */}
+                <blockquote className="text-secondary-700 leading-relaxed mb-6">
+                  "{testimonial.quote}"
+                </blockquote>
+
+                {/* Metrics */}
+                <div className="bg-gradient-to-r from-primary-50 to-accent-50 rounded-lg p-4 mb-6">
+                  <div className="text-2xl font-bold text-secondary-900">
+                    {testimonial.metrics.value}
                   </div>
                   <div className="text-sm text-secondary-600">
-                    {testimonial.role}, {testimonial.company}
+                    {testimonial.metrics.label}
                   </div>
                 </div>
-              </div>
-            </div>
+              </CardContent>
+
+              <CardFooter>
+                {/* Author */}
+                <div className="flex items-center w-full">
+                  <div className="w-12 h-12 bg-gradient-to-br from-primary-100 to-primary-200 rounded-full flex items-center justify-center mr-4">
+                    <span className="text-primary-600 font-semibold text-lg">
+                      {testimonial.name
+                        .split(' ')
+                        .map(n => n[0])
+                        .join('')}
+                    </span>
+                  </div>
+                  <div>
+                    <CardTitle className="text-base font-semibold text-secondary-900">
+                      {testimonial.name}
+                    </CardTitle>
+                    <CardDescription className="text-sm text-secondary-600">
+                      {testimonial.role}, {testimonial.company}
+                    </CardDescription>
+                  </div>
+                </div>
+              </CardFooter>
+            </Card>
           ))}
         </div>
 
         {/* Bottom CTA */}
         <div className="text-center mt-16">
-          <div className="bg-gradient-to-br from-primary-50 via-white to-accent-50 rounded-2xl border border-primary-200 p-8 lg:p-12 max-w-4xl mx-auto">
-            <h3 className="text-2xl lg:text-3xl font-semibold text-secondary-900 mb-4">
-              Ready to join our success stories?
-            </h3>
-            <p className="text-lg text-secondary-600 mb-8 max-w-2xl mx-auto">
-              Get your business valued by AI in minutes and discover insights
-              that could transform your company's future.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium text-lg transition-colors">
-                Start Your Free Valuation
-              </button>
-              <button className="px-8 py-4 border border-secondary-300 hover:border-primary-300 text-secondary-700 hover:text-primary-600 rounded-lg font-medium text-lg transition-colors">
-                View Sample Report
-              </button>
-            </div>
-            <p className="text-sm text-secondary-500 mt-4">
-              No credit card required • Get results in 5 minutes
-            </p>
-          </div>
+          <Card className="bg-gradient-to-br from-primary-50 via-white to-accent-50 border-primary-200 max-w-4xl mx-auto">
+            <CardContent className="p-8 lg:p-12 text-center">
+              <CardTitle className="text-2xl lg:text-3xl font-semibold text-secondary-900 mb-4">
+                Ready to join our success stories?
+              </CardTitle>
+              <CardDescription className="text-lg text-secondary-600 mb-8 max-w-2xl mx-auto">
+                Get your business valued by AI in minutes and discover insights
+                that could transform your company's future.
+              </CardDescription>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center mb-4">
+                <Button className="px-8 py-4 text-lg font-medium" size="lg">
+                  Start Your Free Valuation
+                </Button>
+                <Button
+                  variant="outline"
+                  className="px-8 py-4 text-lg font-medium border-secondary-300 hover:border-primary-300 text-secondary-700 hover:text-primary-600"
+                  size="lg"
+                >
+                  View Sample Report
+                </Button>
+              </div>
+              <p className="text-sm text-secondary-500">
+                No credit card required • Get results in 5 minutes
+              </p>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </section>

@@ -23,7 +23,17 @@ import {
   Plus,
   Search,
 } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 import CostMonitor from '@/components/ai/cost-monitor'
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
 
 interface DashboardClientProps {
   session: any
@@ -404,13 +414,11 @@ export default function DashboardClient({
               </div>
             </div>
 
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="px-6 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 shadow-md"
-            >
-              Edit Profile
-            </motion.button>
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+              <Button className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700">
+                Edit Profile
+              </Button>
+            </motion.div>
           </div>
         </motion.div>
 
@@ -427,8 +435,8 @@ export default function DashboardClient({
                 whileHover={{ y: -4 }}
                 className="relative group"
               >
-                <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-white/20 shadow-lg p-6 h-full overflow-hidden">
-                  <div className="flex items-start justify-between mb-4">
+                <Card className="backdrop-blur-sm border-white/20 shadow-lg bg-white/80 h-full overflow-hidden">
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <div
                       className={`w-12 h-12 bg-gradient-to-br from-${stat.color}-500 to-${stat.color}-600 rounded-lg flex items-center justify-center shadow-md`}
                     >
@@ -443,23 +451,26 @@ export default function DashboardClient({
                       <ArrowUpRight className="w-4 h-4 mr-1" />
                       {stat.change}
                     </motion.div>
-                  </div>
-
-                  <motion.div
-                    className="text-3xl font-bold text-slate-900 mb-2"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.3 + index * 0.1, duration: 0.4 }}
-                  >
-                    {stat.value}
-                  </motion.div>
-                  <p className="text-slate-600 text-sm">{stat.label}</p>
+                  </CardHeader>
+                  <CardContent>
+                    <motion.div
+                      className="text-3xl font-bold text-slate-900 mb-2"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.3 + index * 0.1, duration: 0.4 }}
+                    >
+                      {stat.value}
+                    </motion.div>
+                    <CardDescription className="text-slate-600">
+                      {stat.label}
+                    </CardDescription>
+                  </CardContent>
 
                   {/* Background gradient effect */}
                   <div
-                    className={`absolute inset-0 bg-gradient-to-br from-${stat.color}-500/5 to-${stat.color}-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl`}
+                    className={`absolute inset-0 bg-gradient-to-br from-${stat.color}-500/5 to-${stat.color}-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-lg`}
                   />
-                </div>
+                </Card>
               </motion.div>
             )
           })}
@@ -486,36 +497,48 @@ export default function DashboardClient({
                     : 'Explore business opportunities and manage client listings'}
               </p>
               <div className="flex flex-wrap gap-3">
-                <motion.button
+                <motion.div
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  onClick={() => (window.location.href = '/marketplace')}
-                  className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg font-medium transition-colors duration-200 backdrop-blur-sm"
                 >
-                  Browse Marketplace
-                </motion.button>
+                  <Button
+                    onClick={() => (window.location.href = '/marketplace')}
+                    variant="outline"
+                    className="bg-white/20 hover:bg-white/30 border-white/30 text-white hover:text-white backdrop-blur-sm"
+                  >
+                    Browse Marketplace
+                  </Button>
+                </motion.div>
                 {session.user.userType === UserType.BUSINESS_OWNER && (
                   <>
-                    <motion.button
+                    <motion.div
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      onClick={() =>
-                        (window.location.href = '/marketplace/create')
-                      }
-                      className="px-4 py-2 bg-white text-blue-600 hover:bg-blue-50 rounded-lg font-medium transition-colors duration-200"
                     >
-                      Create Listing
-                    </motion.button>
-                    <motion.button
+                      <Button
+                        onClick={() =>
+                          (window.location.href = '/marketplace/create')
+                        }
+                        variant="secondary"
+                        className="bg-white text-blue-600 hover:bg-blue-50 hover:text-blue-700"
+                      >
+                        Create Listing
+                      </Button>
+                    </motion.div>
+                    <motion.div
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      onClick={() =>
-                        (window.location.href = '/dashboard/listings')
-                      }
-                      className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg font-medium transition-colors duration-200 backdrop-blur-sm"
                     >
-                      Manage Listings
-                    </motion.button>
+                      <Button
+                        onClick={() =>
+                          (window.location.href = '/dashboard/listings')
+                        }
+                        variant="outline"
+                        className="bg-white/20 hover:bg-white/30 border-white/30 text-white hover:text-white backdrop-blur-sm"
+                      >
+                        Manage Listings
+                      </Button>
+                    </motion.div>
                   </>
                 )}
               </div>
@@ -539,46 +562,53 @@ export default function DashboardClient({
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
-            className="bg-white/80 backdrop-blur-sm rounded-2xl border border-white/20 shadow-lg p-6"
           >
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-semibold text-slate-900 flex items-center gap-2">
-                <BarChart3 className="w-5 h-5 text-blue-600" />
-                Performance Overview
-              </h3>
-              <div className="flex items-center gap-1 text-sm text-slate-500">
-                <TrendingUp className="w-4 h-4 text-green-500" />
-                +24% vs last month
-              </div>
-            </div>
-
-            {/* Simple Bar Chart */}
-            <div className="space-y-4">
-              {mockChartData.map((item, index) => (
-                <motion.div
-                  key={item.month}
-                  initial={{ opacity: 0, width: 0 }}
-                  animate={{ opacity: 1, width: '100%' }}
-                  transition={{ delay: 0.5 + index * 0.1, duration: 0.6 }}
-                  className="flex items-center gap-4"
-                >
-                  <span className="w-8 text-sm text-slate-600">
-                    {item.month}
-                  </span>
-                  <div className="flex-1 bg-slate-100 rounded-full h-3 overflow-hidden">
-                    <motion.div
-                      className="h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full"
-                      initial={{ width: 0 }}
-                      animate={{ width: `${(item.value / 6000) * 100}%` }}
-                      transition={{ delay: 0.7 + index * 0.1, duration: 0.8 }}
-                    />
+            <Card className="backdrop-blur-sm border-white/20 shadow-lg bg-white/80">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-xl font-semibold text-slate-900 flex items-center gap-2">
+                    <BarChart3 className="w-5 h-5 text-blue-600" />
+                    Performance Overview
+                  </CardTitle>
+                  <div className="flex items-center gap-1 text-sm text-slate-500">
+                    <TrendingUp className="w-4 h-4 text-green-500" />
+                    +24% vs last month
                   </div>
-                  <span className="w-16 text-sm text-slate-600 text-right">
-                    ${(item.value / 1000).toFixed(1)}K
-                  </span>
-                </motion.div>
-              ))}
-            </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                {/* Simple Bar Chart */}
+                <div className="space-y-4">
+                  {mockChartData.map((item, index) => (
+                    <motion.div
+                      key={item.month}
+                      initial={{ opacity: 0, width: 0 }}
+                      animate={{ opacity: 1, width: '100%' }}
+                      transition={{ delay: 0.5 + index * 0.1, duration: 0.6 }}
+                      className="flex items-center gap-4"
+                    >
+                      <span className="w-8 text-sm text-slate-600">
+                        {item.month}
+                      </span>
+                      <div className="flex-1 bg-slate-100 rounded-full h-3 overflow-hidden">
+                        <motion.div
+                          className="h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full"
+                          initial={{ width: 0 }}
+                          animate={{ width: `${(item.value / 6000) * 100}%` }}
+                          transition={{
+                            delay: 0.7 + index * 0.1,
+                            duration: 0.8,
+                          }}
+                        />
+                      </div>
+                      <span className="w-16 text-sm text-slate-600 text-right">
+                        ${(item.value / 1000).toFixed(1)}K
+                      </span>
+                    </motion.div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
           </motion.div>
 
           {/* Recent Activity Card */}
@@ -623,13 +653,15 @@ export default function DashboardClient({
               </AnimatePresence>
             </div>
 
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="w-full mt-4 py-2 text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors duration-200"
-            >
-              View all activity
-            </motion.button>
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="w-full mt-4 text-blue-600 hover:text-blue-700"
+              >
+                View all activity
+              </Button>
+            </motion.div>
           </motion.div>
         </div>
 
@@ -649,27 +681,31 @@ export default function DashboardClient({
             {getQuickActionsForUserType().map((action, index) => {
               const IconComponent = action.icon
               return (
-                <motion.button
+                <motion.div
                   key={action.label}
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.7 + index * 0.05, duration: 0.3 }}
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
-                  onClick={() =>
-                    action.href && (window.location.href = action.href)
-                  }
-                  className="flex flex-col items-center gap-3 p-4 rounded-xl border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-200 cursor-pointer"
                 >
-                  <div
-                    className={`w-12 h-12 bg-gradient-to-br from-${action.color}-500 to-${action.color}-600 rounded-lg flex items-center justify-center shadow-sm`}
+                  <Button
+                    onClick={() =>
+                      action.href && (window.location.href = action.href)
+                    }
+                    variant="outline"
+                    className="flex flex-col items-center gap-3 h-auto p-4 hover:shadow-md"
                   >
-                    <IconComponent className="w-6 h-6 text-white" />
-                  </div>
-                  <span className="text-sm font-medium text-slate-700">
-                    {action.label}
-                  </span>
-                </motion.button>
+                    <div
+                      className={`w-12 h-12 bg-gradient-to-br from-${action.color}-500 to-${action.color}-600 rounded-lg flex items-center justify-center shadow-sm`}
+                    >
+                      <IconComponent className="w-6 h-6 text-white" />
+                    </div>
+                    <span className="text-sm font-medium text-slate-700">
+                      {action.label}
+                    </span>
+                  </Button>
+                </motion.div>
               )
             })}
           </div>

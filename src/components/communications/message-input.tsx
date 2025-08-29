@@ -2,6 +2,8 @@
 
 import { useState, useRef, KeyboardEvent } from 'react'
 import { Send, Paperclip, Smile, AtSign, Calendar } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 
 interface MessageInputProps {
   onSendMessage: (
@@ -190,29 +192,32 @@ export default function MessageInput({
           </div>
 
           {/* Send Button */}
-          <button
+          <Button
             onClick={handleSubmit}
             disabled={!message.trim() || isLoading}
-            className={`
-              p-3 rounded-lg transition-colors
-              ${
-                message.trim() && !isLoading
-                  ? 'bg-primary-500 hover:bg-primary-600 text-white'
-                  : 'bg-secondary-200 text-secondary-400 cursor-not-allowed'
-              }
-            `}
+            size="icon"
+            className={cn(
+              'p-3',
+              message.trim() && !isLoading
+                ? 'bg-primary-500 hover:bg-primary-600 text-white'
+                : 'bg-secondary-200 text-secondary-400 cursor-not-allowed'
+            )}
             title="Send message (Enter)"
           >
             <Send className="w-5 h-5" />
-          </button>
+          </Button>
         </div>
 
         {/* Quick Actions */}
         <div className="flex items-center space-x-4 mt-3">
-          <button className="flex items-center space-x-2 text-sm text-secondary-600 hover:text-primary-600 transition-colors">
-            <Calendar className="w-4 h-4" />
-            <span>Schedule meeting</span>
-          </button>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-sm text-secondary-600 hover:text-primary-600 h-auto p-1"
+          >
+            <Calendar className="w-4 h-4 mr-2" />
+            Schedule meeting
+          </Button>
         </div>
 
         {/* Character Count */}

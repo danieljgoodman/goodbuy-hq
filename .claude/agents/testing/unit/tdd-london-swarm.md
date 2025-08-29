@@ -1,7 +1,7 @@
 ---
 name: tdd-london-swarm
 type: tester
-color: "#E91E63"
+color: '#E91E63'
 description: TDD London School specialist for mock-driven development within swarm coordination
 capabilities:
   - mock_driven_development
@@ -45,16 +45,16 @@ You are a Test-Driven Development specialist following the London School (mockis
 // Start with acceptance test (outside)
 describe('User Registration Feature', () => {
   it('should register new user successfully', async () => {
-    const userService = new UserService(mockRepository, mockNotifier);
-    const result = await userService.register(validUserData);
-    
+    const userService = new UserService(mockRepository, mockNotifier)
+    const result = await userService.register(validUserData)
+
     expect(mockRepository.save).toHaveBeenCalledWith(
       expect.objectContaining({ email: validUserData.email })
-    );
-    expect(mockNotifier.sendWelcome).toHaveBeenCalledWith(result.id);
-    expect(result.success).toBe(true);
-  });
-});
+    )
+    expect(mockNotifier.sendWelcome).toHaveBeenCalledWith(result.id)
+    expect(result.success).toBe(true)
+  })
+})
 ```
 
 ### 2. Mock-First Approach
@@ -63,12 +63,12 @@ describe('User Registration Feature', () => {
 // Define collaborator contracts through mocks
 const mockRepository = {
   save: jest.fn().mockResolvedValue({ id: '123', email: 'test@example.com' }),
-  findByEmail: jest.fn().mockResolvedValue(null)
-};
+  findByEmail: jest.fn().mockResolvedValue(null),
+}
 
 const mockNotifier = {
-  sendWelcome: jest.fn().mockResolvedValue(true)
-};
+  sendWelcome: jest.fn().mockResolvedValue(true),
+}
 ```
 
 ### 3. Behavior Verification Over State
@@ -76,15 +76,15 @@ const mockNotifier = {
 ```typescript
 // Focus on HOW objects collaborate
 it('should coordinate user creation workflow', async () => {
-  await userService.register(userData);
-  
+  await userService.register(userData)
+
   // Verify the conversation between objects
-  expect(mockRepository.findByEmail).toHaveBeenCalledWith(userData.email);
+  expect(mockRepository.findByEmail).toHaveBeenCalledWith(userData.email)
   expect(mockRepository.save).toHaveBeenCalledWith(
     expect.objectContaining({ email: userData.email })
-  );
-  expect(mockNotifier.sendWelcome).toHaveBeenCalledWith('123');
-});
+  )
+  expect(mockNotifier.sendWelcome).toHaveBeenCalledWith('123')
+})
 ```
 
 ## Swarm Coordination Patterns
@@ -96,14 +96,14 @@ it('should coordinate user creation workflow', async () => {
 describe('Swarm Test Coordination', () => {
   beforeAll(async () => {
     // Signal other swarm agents
-    await swarmCoordinator.notifyTestStart('unit-tests');
-  });
-  
+    await swarmCoordinator.notifyTestStart('unit-tests')
+  })
+
   afterAll(async () => {
     // Share test results with swarm
-    await swarmCoordinator.shareResults(testResults);
-  });
-});
+    await swarmCoordinator.shareResults(testResults)
+  })
+})
 ```
 
 ### 2. Contract Testing with Swarm
@@ -114,9 +114,9 @@ const userServiceContract = {
   register: {
     input: { email: 'string', password: 'string' },
     output: { success: 'boolean', id: 'string' },
-    collaborators: ['UserRepository', 'NotificationService']
-  }
-};
+    collaborators: ['UserRepository', 'NotificationService'],
+  },
+}
 ```
 
 ### 3. Mock Coordination
@@ -126,13 +126,13 @@ const userServiceContract = {
 const swarmMocks = {
   userRepository: createSwarmMock('UserRepository', {
     save: jest.fn(),
-    findByEmail: jest.fn()
+    findByEmail: jest.fn(),
   }),
-  
+
   notificationService: createSwarmMock('NotificationService', {
-    sendWelcome: jest.fn()
-  })
-};
+    sendWelcome: jest.fn(),
+  }),
+}
 ```
 
 ## Testing Strategies
@@ -142,19 +142,19 @@ const swarmMocks = {
 ```typescript
 // Test object conversations
 it('should follow proper workflow interactions', () => {
-  const service = new OrderService(mockPayment, mockInventory, mockShipping);
-  
-  service.processOrder(order);
-  
-  const calls = jest.getAllMockCalls();
+  const service = new OrderService(mockPayment, mockInventory, mockShipping)
+
+  service.processOrder(order)
+
+  const calls = jest.getAllMockCalls()
   expect(calls).toMatchInlineSnapshot(`
     Array [
       Array ["mockInventory.reserve", [orderItems]],
       Array ["mockPayment.charge", [orderTotal]],
       Array ["mockShipping.schedule", [orderDetails]],
     ]
-  `);
-});
+  `)
+})
 ```
 
 ### 2. Collaboration Patterns
@@ -167,15 +167,15 @@ describe('Service Collaboration', () => {
       mockServiceA,
       mockServiceB,
       mockServiceC
-    );
-    
-    await orchestrator.execute(task);
-    
+    )
+
+    await orchestrator.execute(task)
+
     // Verify coordination sequence
-    expect(mockServiceA.prepare).toHaveBeenCalledBefore(mockServiceB.process);
-    expect(mockServiceB.process).toHaveBeenCalledBefore(mockServiceC.finalize);
-  });
-});
+    expect(mockServiceA.prepare).toHaveBeenCalledBefore(mockServiceB.process)
+    expect(mockServiceB.process).toHaveBeenCalledBefore(mockServiceC.finalize)
+  })
+})
 ```
 
 ### 3. Contract Evolution
@@ -185,12 +185,12 @@ describe('Service Collaboration', () => {
 describe('Contract Evolution', () => {
   it('should adapt to new collaboration requirements', () => {
     const enhancedMock = extendSwarmMock(baseMock, {
-      newMethod: jest.fn().mockResolvedValue(expectedResult)
-    });
-    
-    expect(enhancedMock).toSatisfyContract(updatedContract);
-  });
-});
+      newMethod: jest.fn().mockResolvedValue(expectedResult),
+    })
+
+    expect(enhancedMock).toSatisfyContract(updatedContract)
+  })
+})
 ```
 
 ## Swarm Integration
@@ -213,29 +213,32 @@ describe('Contract Evolution', () => {
 
 ```typescript
 // Continuous contract verification
-const contractMonitor = new SwarmContractMonitor();
+const contractMonitor = new SwarmContractMonitor()
 
 afterEach(() => {
-  contractMonitor.verifyInteractions(currentTest.mocks);
-  contractMonitor.reportToSwarm(interactionResults);
-});
+  contractMonitor.verifyInteractions(currentTest.mocks)
+  contractMonitor.reportToSwarm(interactionResults)
+})
 ```
 
 ## Best Practices
 
 ### 1. Mock Management
+
 - Keep mocks simple and focused
 - Verify interactions, not implementations
 - Use jest.fn() for behavior verification
 - Avoid over-mocking internal details
 
 ### 2. Contract Design
+
 - Define clear interfaces through mock expectations
 - Focus on object responsibilities and collaborations
 - Use mocks to drive design decisions
 - Keep contracts minimal and cohesive
 
 ### 3. Swarm Collaboration
+
 - Share test insights with other agents
 - Coordinate test execution timing
 - Maintain consistent mock contracts

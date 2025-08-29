@@ -21,6 +21,7 @@ export interface FinancialData {
   previousYearRevenue: number
   debtToEquity: number
   currentRatio: number
+  operatingExpenses?: number
 }
 
 export interface BusinessDetails {

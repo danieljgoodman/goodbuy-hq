@@ -16,6 +16,16 @@ import {
   SlidersHorizontal,
 } from 'lucide-react'
 import { formatDistanceToNow } from 'date-fns'
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 
 interface Business {
   id: string
@@ -206,10 +216,10 @@ export default function MarketplacePage() {
 
     if (viewMode === 'list') {
       return (
-        <div
+        <Card
           key={business.id}
           onClick={() => handleBusinessClick(business)}
-          className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer overflow-hidden"
+          className="cursor-pointer hover:shadow-lg transition-all duration-200 overflow-hidden"
         >
           <div className="flex">
             <div className="w-64 h-48 flex-shrink-0">
@@ -220,117 +230,131 @@ export default function MarketplacePage() {
               />
             </div>
 
-            <div className="flex-1 p-6">
-              <div className="flex items-start justify-between mb-4">
-                <div>
-                  <h3 className="text-xl font-semibold text-secondary-900 mb-2">
-                    {business.title}
-                  </h3>
-                  <p className="text-secondary-600 line-clamp-2 mb-3">
-                    {business.description}
-                  </p>
+            <div className="flex-1">
+              <CardHeader className="pb-2">
+                <div className="flex items-start justify-between">
+                  <div className="flex-1 min-w-0">
+                    <CardTitle className="text-xl font-semibold text-secondary-900">
+                      {business.title}
+                    </CardTitle>
+                    <CardDescription className="line-clamp-2 mt-1">
+                      {business.description}
+                    </CardDescription>
+                  </div>
+
+                  {business.featured && (
+                    <Badge
+                      variant="secondary"
+                      className="bg-yellow-100 text-yellow-800 shrink-0"
+                    >
+                      <Star className="w-3 h-3 mr-1" />
+                      Featured
+                    </Badge>
+                  )}
                 </div>
+              </CardHeader>
 
-                {business.featured && (
-                  <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full font-medium">
-                    <Star className="w-3 h-3 inline mr-1" />
-                    Featured
-                  </span>
-                )}
-              </div>
-
-              <div className="flex items-center text-sm text-secondary-600 space-x-4 mb-4">
-                <span className="flex items-center">
-                  <Building2 className="w-4 h-4 mr-1" />
-                  {business.category &&
-                    business.category.charAt(0) +
-                      business.category
-                        .slice(1)
-                        .toLowerCase()
-                        .replace('_', ' ')}
-                </span>
-
-                {business.location && (
+              <CardContent className="pt-2">
+                <div className="flex items-center text-sm text-secondary-600 space-x-4 mb-4">
                   <span className="flex items-center">
-                    <MapPin className="w-4 h-4 mr-1" />
-                    {business.location}
-                  </span>
-                )}
-
-                {business.employees && (
-                  <span>{business.employees} employees</span>
-                )}
-              </div>
-
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-4">
-                  <span className="text-2xl font-bold text-primary-600">
-                    {formatPrice(business.askingPrice)}
+                    <Building2 className="w-4 h-4 mr-1" />
+                    {business.category &&
+                      business.category.charAt(0) +
+                        business.category
+                          .slice(1)
+                          .toLowerCase()
+                          .replace('_', ' ')}
                   </span>
 
-                  {business.revenue && (
-                    <span className="text-sm text-secondary-600">
-                      Rev: {formatPrice(business.revenue)}
+                  {business.location && (
+                    <span className="flex items-center">
+                      <MapPin className="w-4 h-4 mr-1" />
+                      {business.location}
                     </span>
+                  )}
+
+                  {business.employees && (
+                    <span>{business.employees} employees</span>
                   )}
                 </div>
 
-                <div className="flex items-center space-x-3 text-sm text-secondary-500">
-                  <span className="flex items-center">
-                    <Eye className="w-4 h-4 mr-1" />
-                    {business._count.views}
-                  </span>
-                  <span className="flex items-center">
-                    <Heart className="w-4 h-4 mr-1" />
-                    {business._count.favorites}
-                  </span>
-                  <span>
-                    {formatDistanceToNow(new Date(business.createdAt), {
-                      addSuffix: true,
-                    })}
-                  </span>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <span className="text-2xl font-bold text-primary-600">
+                      {formatPrice(business.askingPrice)}
+                    </span>
+
+                    {business.revenue && (
+                      <span className="text-sm text-secondary-600">
+                        Rev: {formatPrice(business.revenue)}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="flex items-center space-x-3 text-sm text-secondary-500">
+                    <span className="flex items-center">
+                      <Eye className="w-4 h-4 mr-1" />
+                      {business._count.views}
+                    </span>
+                    <span className="flex items-center">
+                      <Heart className="w-4 h-4 mr-1" />
+                      {business._count.favorites}
+                    </span>
+                    <span>
+                      {formatDistanceToNow(new Date(business.createdAt), {
+                        addSuffix: true,
+                      })}
+                    </span>
+                  </div>
                 </div>
-              </div>
+              </CardContent>
             </div>
           </div>
-        </div>
+        </Card>
       )
     }
 
     return (
-      <div
+      <Card
         key={business.id}
         onClick={() => handleBusinessClick(business)}
-        className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer overflow-hidden"
+        className="cursor-pointer hover:shadow-lg transition-all duration-200 overflow-hidden group"
       >
         <div className="relative">
           <img
             src={primaryImage}
             alt={business.title}
-            className="w-full h-48 object-cover"
+            className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-200"
           />
 
           {business.featured && (
-            <div className="absolute top-3 left-3 bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full font-medium">
-              <Star className="w-3 h-3 inline mr-1" />
-              Featured
+            <div className="absolute top-3 left-3">
+              <Badge className="bg-yellow-100 text-yellow-800">
+                <Star className="w-3 h-3 mr-1" />
+                Featured
+              </Badge>
             </div>
           )}
 
-          <button className="absolute top-3 right-3 w-8 h-8 bg-white/80 rounded-full flex items-center justify-center hover:bg-white transition-colors">
+          <Button
+            variant="outline"
+            size="icon"
+            className="absolute top-3 right-3 w-8 h-8 bg-white/80 backdrop-blur-sm hover:bg-white border-white/20"
+          >
             <Heart className="w-4 h-4 text-secondary-600" />
-          </button>
+          </Button>
         </div>
 
-        <div className="p-4">
-          <h3 className="text-lg font-semibold text-secondary-900 mb-2 line-clamp-1">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-lg font-semibold text-secondary-900 line-clamp-1 group-hover:text-primary-600 transition-colors">
             {business.title}
-          </h3>
-
-          <p className="text-secondary-600 text-sm line-clamp-2 mb-3">
+          </CardTitle>
+          <CardDescription className="text-sm line-clamp-2">
             {business.description}
-          </p>
+          </CardDescription>
+        </CardHeader>
 
+        <CardContent>
           <div className="flex items-center text-sm text-secondary-600 space-x-3 mb-3">
             {business.category && (
               <span className="flex items-center">
@@ -347,25 +371,25 @@ export default function MarketplacePage() {
               </span>
             )}
           </div>
+        </CardContent>
 
-          <div className="flex items-center justify-between">
-            <span className="text-xl font-bold text-primary-600">
-              {formatPrice(business.askingPrice)}
+        <CardFooter className="flex items-center justify-between">
+          <span className="text-xl font-bold text-primary-600">
+            {formatPrice(business.askingPrice)}
+          </span>
+
+          <div className="flex items-center space-x-2 text-sm text-secondary-500">
+            <span className="flex items-center">
+              <Eye className="w-4 h-4 mr-1" />
+              {business._count.views}
             </span>
-
-            <div className="flex items-center space-x-2 text-sm text-secondary-500">
-              <span className="flex items-center">
-                <Eye className="w-4 h-4 mr-1" />
-                {business._count.views}
-              </span>
-              <span className="flex items-center">
-                <Heart className="w-4 h-4 mr-1" />
-                {business._count.favorites}
-              </span>
-            </div>
+            <span className="flex items-center">
+              <Heart className="w-4 h-4 mr-1" />
+              {business._count.favorites}
+            </span>
           </div>
-        </div>
-      </div>
+        </CardFooter>
+      </Card>
     )
   }
 

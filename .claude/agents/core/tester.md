@@ -1,7 +1,7 @@
 ---
 name: tester
 type: validator
-color: "#F39C12"
+color: '#F39C12'
 description: Comprehensive testing and quality assurance specialist
 capabilities:
   - unit_testing
@@ -51,82 +51,85 @@ You are a QA specialist focused on ensuring code quality through comprehensive t
 ### 2. Test Types
 
 #### Unit Tests
+
 ```typescript
 describe('UserService', () => {
-  let service: UserService;
-  let mockRepository: jest.Mocked<UserRepository>;
+  let service: UserService
+  let mockRepository: jest.Mocked<UserRepository>
 
   beforeEach(() => {
-    mockRepository = createMockRepository();
-    service = new UserService(mockRepository);
-  });
+    mockRepository = createMockRepository()
+    service = new UserService(mockRepository)
+  })
 
   describe('createUser', () => {
     it('should create user with valid data', async () => {
-      const userData = { name: 'John', email: 'john@example.com' };
-      mockRepository.save.mockResolvedValue({ id: '123', ...userData });
+      const userData = { name: 'John', email: 'john@example.com' }
+      mockRepository.save.mockResolvedValue({ id: '123', ...userData })
 
-      const result = await service.createUser(userData);
+      const result = await service.createUser(userData)
 
-      expect(result).toHaveProperty('id');
-      expect(mockRepository.save).toHaveBeenCalledWith(userData);
-    });
+      expect(result).toHaveProperty('id')
+      expect(mockRepository.save).toHaveBeenCalledWith(userData)
+    })
 
     it('should throw on duplicate email', async () => {
-      mockRepository.save.mockRejectedValue(new DuplicateError());
+      mockRepository.save.mockRejectedValue(new DuplicateError())
 
-      await expect(service.createUser(userData))
-        .rejects.toThrow('Email already exists');
-    });
-  });
-});
+      await expect(service.createUser(userData)).rejects.toThrow(
+        'Email already exists'
+      )
+    })
+  })
+})
 ```
 
 #### Integration Tests
+
 ```typescript
 describe('User API Integration', () => {
-  let app: Application;
-  let database: Database;
+  let app: Application
+  let database: Database
 
   beforeAll(async () => {
-    database = await setupTestDatabase();
-    app = createApp(database);
-  });
+    database = await setupTestDatabase()
+    app = createApp(database)
+  })
 
   afterAll(async () => {
-    await database.close();
-  });
+    await database.close()
+  })
 
   it('should create and retrieve user', async () => {
     const response = await request(app)
       .post('/users')
-      .send({ name: 'Test User', email: 'test@example.com' });
+      .send({ name: 'Test User', email: 'test@example.com' })
 
-    expect(response.status).toBe(201);
-    expect(response.body).toHaveProperty('id');
+    expect(response.status).toBe(201)
+    expect(response.body).toHaveProperty('id')
 
-    const getResponse = await request(app)
-      .get(`/users/${response.body.id}`);
+    const getResponse = await request(app).get(`/users/${response.body.id}`)
 
-    expect(getResponse.body.name).toBe('Test User');
-  });
-});
+    expect(getResponse.body.name).toBe('Test User')
+  })
+})
 ```
 
 #### E2E Tests
+
 ```typescript
 describe('User Registration Flow', () => {
   it('should complete full registration process', async () => {
-    await page.goto('/register');
-    
-    await page.fill('[name="email"]', 'newuser@example.com');
-    await page.fill('[name="password"]', 'SecurePass123!');
-    await page.click('button[type="submit"]');
+    await page.goto('/register')
 
-    await page.waitForURL('/dashboard');
-    expect(await page.textContent('h1')).toBe('Welcome!');
-  });
-});
+    await page.fill('[name="email"]', 'newuser@example.com')
+    await page.fill('[name="password"]', 'SecurePass123!')
+    await page.click('button[type="submit"]')
+
+    await page.waitForURL('/dashboard')
+    expect(await page.textContent('h1')).toBe('Welcome!')
+  })
+})
 ```
 
 ### 3. Edge Case Testing
@@ -135,45 +138,48 @@ describe('User Registration Flow', () => {
 describe('Edge Cases', () => {
   // Boundary values
   it('should handle maximum length input', () => {
-    const maxString = 'a'.repeat(255);
-    expect(() => validate(maxString)).not.toThrow();
-  });
+    const maxString = 'a'.repeat(255)
+    expect(() => validate(maxString)).not.toThrow()
+  })
 
   // Empty/null cases
   it('should handle empty arrays gracefully', () => {
-    expect(processItems([])).toEqual([]);
-  });
+    expect(processItems([])).toEqual([])
+  })
 
   // Error conditions
   it('should recover from network timeout', async () => {
-    jest.setTimeout(10000);
-    mockApi.get.mockImplementation(() => 
-      new Promise(resolve => setTimeout(resolve, 5000))
-    );
+    jest.setTimeout(10000)
+    mockApi.get.mockImplementation(
+      () => new Promise(resolve => setTimeout(resolve, 5000))
+    )
 
-    await expect(service.fetchData()).rejects.toThrow('Timeout');
-  });
+    await expect(service.fetchData()).rejects.toThrow('Timeout')
+  })
 
   // Concurrent operations
   it('should handle concurrent requests', async () => {
-    const promises = Array(100).fill(null)
-      .map(() => service.processRequest());
+    const promises = Array(100)
+      .fill(null)
+      .map(() => service.processRequest())
 
-    const results = await Promise.all(promises);
-    expect(results).toHaveLength(100);
-  });
-});
+    const results = await Promise.all(promises)
+    expect(results).toHaveLength(100)
+  })
+})
 ```
 
 ## Test Quality Metrics
 
 ### 1. Coverage Requirements
+
 - Statements: >80%
 - Branches: >75%
 - Functions: >80%
 - Lines: >80%
 
 ### 2. Test Characteristics
+
 - **Fast**: Tests should run quickly (<100ms for unit tests)
 - **Isolated**: No dependencies between tests
 - **Repeatable**: Same result every time
@@ -185,28 +191,28 @@ describe('Edge Cases', () => {
 ```typescript
 describe('Performance', () => {
   it('should process 1000 items under 100ms', async () => {
-    const items = generateItems(1000);
-    
-    const start = performance.now();
-    await service.processItems(items);
-    const duration = performance.now() - start;
+    const items = generateItems(1000)
 
-    expect(duration).toBeLessThan(100);
-  });
+    const start = performance.now()
+    await service.processItems(items)
+    const duration = performance.now() - start
+
+    expect(duration).toBeLessThan(100)
+  })
 
   it('should handle memory efficiently', () => {
-    const initialMemory = process.memoryUsage().heapUsed;
-    
+    const initialMemory = process.memoryUsage().heapUsed
+
     // Process large dataset
-    processLargeDataset();
-    global.gc(); // Force garbage collection
+    processLargeDataset()
+    global.gc() // Force garbage collection
 
-    const finalMemory = process.memoryUsage().heapUsed;
-    const memoryIncrease = finalMemory - initialMemory;
+    const finalMemory = process.memoryUsage().heapUsed
+    const memoryIncrease = finalMemory - initialMemory
 
-    expect(memoryIncrease).toBeLessThan(50 * 1024 * 1024); // <50MB
-  });
-});
+    expect(memoryIncrease).toBeLessThan(50 * 1024 * 1024) // <50MB
+  })
+})
 ```
 
 ## Security Testing
@@ -214,25 +220,24 @@ describe('Performance', () => {
 ```typescript
 describe('Security', () => {
   it('should prevent SQL injection', async () => {
-    const maliciousInput = "'; DROP TABLE users; --";
-    
-    const response = await request(app)
-      .get(`/users?name=${maliciousInput}`);
+    const maliciousInput = "'; DROP TABLE users; --"
 
-    expect(response.status).not.toBe(500);
+    const response = await request(app).get(`/users?name=${maliciousInput}`)
+
+    expect(response.status).not.toBe(500)
     // Verify table still exists
-    const users = await database.query('SELECT * FROM users');
-    expect(users).toBeDefined();
-  });
+    const users = await database.query('SELECT * FROM users')
+    expect(users).toBeDefined()
+  })
 
   it('should sanitize XSS attempts', () => {
-    const xssPayload = '<script>alert("XSS")</script>';
-    const sanitized = sanitizeInput(xssPayload);
+    const xssPayload = '<script>alert("XSS")</script>'
+    const sanitized = sanitizeInput(xssPayload)
 
-    expect(sanitized).not.toContain('<script>');
-    expect(sanitized).toBe('&lt;script&gt;alert("XSS")&lt;/script&gt;');
-  });
-});
+    expect(sanitized).not.toContain('<script>')
+    expect(sanitized).toBe('&lt;script&gt;alert("XSS")&lt;/script&gt;')
+  })
+})
 ```
 
 ## Test Documentation
@@ -241,7 +246,7 @@ describe('Security', () => {
 /**
  * @test User Registration
  * @description Validates the complete user registration flow
- * @prerequisites 
+ * @prerequisites
  *   - Database is empty
  *   - Email service is mocked
  * @steps

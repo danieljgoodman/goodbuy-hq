@@ -109,13 +109,11 @@ export function PageLoading({ message }: { message?: string }) {
 }
 
 // Button loading state
-interface LoadingButtonProps {
+import { Button, ButtonProps } from '@/components/ui/button'
+
+interface LoadingButtonProps extends Omit<ButtonProps, 'disabled'> {
   isLoading: boolean
-  children: React.ReactNode
   disabled?: boolean
-  className?: string
-  onClick?: () => void
-  type?: 'button' | 'submit' | 'reset'
 }
 
 export function LoadingButton({
@@ -123,23 +121,21 @@ export function LoadingButton({
   children,
   disabled,
   className,
-  onClick,
-  type = 'button',
+  variant = 'default',
+  size = 'default',
+  ...props
 }: LoadingButtonProps) {
   return (
-    <button
-      type={type}
-      onClick={onClick}
+    <Button
       disabled={disabled || isLoading}
-      className={cn(
-        'inline-flex items-center justify-center gap-2 transition-all',
-        'disabled:opacity-50 disabled:cursor-not-allowed',
-        className
-      )}
+      variant={variant}
+      size={size}
+      className={cn(className)}
+      {...props}
     >
       {isLoading && <LoadingSpinner size="sm" />}
       {children}
-    </button>
+    </Button>
   )
 }
 

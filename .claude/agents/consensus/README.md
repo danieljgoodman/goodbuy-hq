@@ -9,6 +9,7 @@ This directory contains specialized agents for implementing advanced distributed
 ### Core Consensus Protocols
 
 #### 1. **Byzantine Consensus Coordinator** (`byzantine-coordinator.md`)
+
 - **Mission**: Implement Byzantine fault-tolerant consensus algorithms for secure decision-making
 - **Key Features**:
   - PBFT (Practical Byzantine Fault Tolerance) implementation
@@ -18,6 +19,7 @@ This directory contains specialized agents for implementing advanced distributed
   - DoS protection and rate limiting
 
 #### 2. **Raft Consensus Manager** (`raft-manager.md`)
+
 - **Mission**: Implement Raft consensus algorithm with leader election and log replication
 - **Key Features**:
   - Leader election with randomized timeouts
@@ -27,6 +29,7 @@ This directory contains specialized agents for implementing advanced distributed
   - Leadership transfer protocols
 
 #### 3. **Gossip Protocol Coordinator** (`gossip-coordinator.md`)
+
 - **Mission**: Implement epidemic information dissemination for scalable communication
 - **Key Features**:
   - Push/Pull/Hybrid gossip protocols
@@ -38,6 +41,7 @@ This directory contains specialized agents for implementing advanced distributed
 ### Security and Cryptography
 
 #### 4. **Security Manager** (`security-manager.md`)
+
 - **Mission**: Provide comprehensive security mechanisms for consensus protocols
 - **Key Features**:
   - Threshold cryptography and signature schemes
@@ -49,6 +53,7 @@ This directory contains specialized agents for implementing advanced distributed
 ### State Synchronization
 
 #### 5. **CRDT Synchronizer** (`crdt-synchronizer.md`)
+
 - **Mission**: Implement Conflict-free Replicated Data Types for eventual consistency
 - **Key Features**:
   - State-based and operation-based CRDTs
@@ -60,6 +65,7 @@ This directory contains specialized agents for implementing advanced distributed
 ### Performance and Optimization
 
 #### 6. **Performance Benchmarker** (`performance-benchmarker.md`)
+
 - **Mission**: Comprehensive performance analysis and optimization for consensus protocols
 - **Key Features**:
   - Throughput and latency measurement
@@ -69,6 +75,7 @@ This directory contains specialized agents for implementing advanced distributed
   - Real-time optimization recommendations
 
 #### 7. **Quorum Manager** (`quorum-manager.md`)
+
 - **Mission**: Dynamic quorum adjustment based on network conditions and fault tolerance
 - **Key Features**:
   - Network-based quorum strategies
@@ -89,20 +96,20 @@ await this.mcpTools.memory_usage({
   action: 'store',
   key: 'consensus_state',
   value: JSON.stringify(consensusData),
-  namespace: 'distributed_consensus'
-});
+  namespace: 'distributed_consensus',
+})
 
 // Performance monitoring
 await this.mcpTools.metrics_collect({
-  components: ['consensus_latency', 'throughput', 'fault_tolerance']
-});
+  components: ['consensus_latency', 'throughput', 'fault_tolerance'],
+})
 
 // Task orchestration
 await this.mcpTools.task_orchestrate({
   task: 'consensus_round',
   strategy: 'parallel',
-  priority: 'high'
-});
+  priority: 'high',
+})
 ```
 
 ### Swarm Coordination
@@ -110,7 +117,7 @@ await this.mcpTools.task_orchestrate({
 Agents coordinate with the broader swarm infrastructure:
 
 - **Node Discovery**: Integration with swarm node discovery mechanisms
-- **Health Monitoring**: Consensus participation in distributed health checks  
+- **Health Monitoring**: Consensus participation in distributed health checks
 - **Load Balancing**: Dynamic load distribution across consensus participants
 - **Fault Recovery**: Coordinated recovery from node and network failures
 
@@ -120,55 +127,62 @@ Agents coordinate with the broader swarm infrastructure:
 
 ```javascript
 // Initialize Byzantine consensus for high-security scenarios
-const byzantineConsensus = new ByzantineConsensusCoordinator('node-1', 7, 2);
-await byzantineConsensus.initializeNode();
+const byzantineConsensus = new ByzantineConsensusCoordinator('node-1', 7, 2)
+await byzantineConsensus.initializeNode()
 
 // Initialize Raft for leader-based coordination
-const raftConsensus = new RaftConsensusManager('node-1', ['node-1', 'node-2', 'node-3']);
-await raftConsensus.initialize();
+const raftConsensus = new RaftConsensusManager('node-1', [
+  'node-1',
+  'node-2',
+  'node-3',
+])
+await raftConsensus.initialize()
 
 // Initialize Gossip for scalable information dissemination
-const gossipCoordinator = new GossipProtocolCoordinator('node-1', ['seed-1', 'seed-2']);
-await gossipCoordinator.initialize();
+const gossipCoordinator = new GossipProtocolCoordinator('node-1', [
+  'seed-1',
+  'seed-2',
+])
+await gossipCoordinator.initialize()
 ```
 
 ### Security-Enhanced Consensus
 
 ```javascript
 // Add security layer to consensus protocols
-const securityManager = new SecurityManager();
-await securityManager.generateDistributedKeys(participants, threshold);
+const securityManager = new SecurityManager()
+await securityManager.generateDistributedKeys(participants, threshold)
 
 const secureConsensus = new SecureConsensusWrapper(
-  byzantineConsensus, 
+  byzantineConsensus,
   securityManager
-);
+)
 ```
 
 ### Performance Optimization
 
 ```javascript
 // Benchmark and optimize consensus performance
-const benchmarker = new ConsensusPerformanceBenchmarker();
+const benchmarker = new ConsensusPerformanceBenchmarker()
 const results = await benchmarker.runComprehensiveBenchmarks(
   ['byzantine', 'raft', 'gossip'],
   scenarios
-);
+)
 
 // Apply adaptive optimizations
-const optimizer = new AdaptiveOptimizer();
-await optimizer.optimizeBasedOnResults(results);
+const optimizer = new AdaptiveOptimizer()
+await optimizer.optimizeBasedOnResults(results)
 ```
 
 ### State Synchronization
 
 ```javascript
 // Set up CRDT-based state synchronization
-const crdtSynchronizer = new CRDTSynchronizer('node-1', replicationGroup);
-const counter = crdtSynchronizer.registerCRDT('request_counter', 'G_COUNTER');
-const userSet = crdtSynchronizer.registerCRDT('active_users', 'OR_SET');
+const crdtSynchronizer = new CRDTSynchronizer('node-1', replicationGroup)
+const counter = crdtSynchronizer.registerCRDT('request_counter', 'G_COUNTER')
+const userSet = crdtSynchronizer.registerCRDT('active_users', 'OR_SET')
 
-await crdtSynchronizer.synchronize();
+await crdtSynchronizer.synchronize()
 ```
 
 ## Advanced Features
@@ -204,18 +218,21 @@ await crdtSynchronizer.synchronize();
 ## Testing and Validation
 
 ### Consensus Correctness
+
 - **Safety Properties**: Verify agreement and validity properties
 - **Liveness Properties**: Ensure progress under normal conditions
 - **Fault Injection**: Test behavior under various failure scenarios
 - **Formal Verification**: Mathematical proofs of correctness
 
 ### Performance Testing
+
 - **Load Testing**: High-throughput consensus scenarios
 - **Latency Analysis**: End-to-end latency measurement and optimization
 - **Scalability Testing**: Performance with varying cluster sizes
 - **Resource Efficiency**: Optimize resource utilization
 
 ### Security Validation
+
 - **Penetration Testing**: Simulated attacks on consensus protocols
 - **Cryptographic Verification**: Validate security of cryptographic schemes
 - **Threat Modeling**: Analyze potential attack vectors
@@ -224,18 +241,21 @@ await crdtSynchronizer.synchronize();
 ## Deployment Considerations
 
 ### Network Requirements
+
 - **Bandwidth**: Sufficient bandwidth for consensus message traffic
 - **Latency**: Low-latency network connections between nodes
 - **Reliability**: Stable network connectivity for consensus participants
 - **Security**: Encrypted communication channels
 
 ### Resource Requirements
+
 - **CPU**: Adequate processing power for cryptographic operations
 - **Memory**: Sufficient RAM for consensus state and message buffers
 - **Storage**: Persistent storage for consensus logs and state
 - **Redundancy**: Multiple nodes for fault tolerance
 
 ### Monitoring and Observability
+
 - **Metrics Collection**: Real-time performance and health metrics
 - **Alerting**: Notifications for consensus failures or degraded performance
 - **Logging**: Comprehensive audit trails for consensus operations

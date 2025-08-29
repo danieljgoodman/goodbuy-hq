@@ -13,6 +13,15 @@ import {
   Target,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
 import { motion } from 'framer-motion'
 
 const services = [
@@ -174,17 +183,19 @@ export function Services() {
                 viewport={{ once: true }}
                 whileHover={{ y: -8 }}
               >
-                <div className="relative bg-white/80 backdrop-blur-sm rounded-2xl border border-slate-200/50 p-6 h-full shadow-lg shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 transition-all duration-500 overflow-hidden">
+                <Card className="relative backdrop-blur-sm border-slate-200/50 bg-white/80 h-full shadow-lg shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 transition-all duration-500 overflow-hidden">
                   {/* Premium Badge */}
                   {service.premium && (
                     <motion.div
-                      className="absolute top-4 right-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-bold px-2 py-1 rounded-full"
+                      className="absolute top-4 right-4 z-10"
                       initial={{ scale: 0, rotate: -10 }}
                       whileInView={{ scale: 1, rotate: 0 }}
                       transition={{ delay: 0.3 + index * 0.1, duration: 0.4 }}
                       viewport={{ once: true }}
                     >
-                      PRO
+                      <Badge className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-bold hover:from-yellow-500 hover:to-orange-600">
+                        PRO
+                      </Badge>
                     </motion.div>
                   )}
 
@@ -297,7 +308,7 @@ export function Services() {
                   {/* Floating elements on hover */}
                   <div className="absolute -top-2 -right-2 w-4 h-4 bg-gradient-to-br from-blue-400 to-purple-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-gradient-to-br from-green-400 to-blue-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                </div>
+                </Card>
               </motion.div>
             )
           })}

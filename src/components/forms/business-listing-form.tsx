@@ -16,6 +16,7 @@ import {
   Send,
 } from 'lucide-react'
 import ImageUpload from '../ui/image-upload'
+import { toastService } from '@/lib/toast'
 
 interface BusinessFormData {
   // Basic Information
@@ -211,10 +212,16 @@ export default function BusinessListingForm() {
       }
 
       const result = await response.json()
-      alert('Draft saved successfully!')
+      toastService.success(
+        'Draft Saved',
+        'Your business listing draft has been saved successfully'
+      )
     } catch (error) {
       console.error('Save error:', error)
-      alert('Failed to save draft')
+      toastService.error(
+        'Save Failed',
+        'Failed to save your business listing draft. Please try again.'
+      )
     } finally {
       setSaving(false)
     }
@@ -237,11 +244,23 @@ export default function BusinessListingForm() {
       }
 
       const result = await response.json()
-      alert('Listing submitted for review!')
+      toastService.success(
+        'Listing Submitted!',
+        'Your business listing has been submitted for review. You will be notified once it is approved.',
+        {
+          action: {
+            label: 'View Dashboard',
+            onClick: () => router.push('/dashboard/listings'),
+          },
+        }
+      )
       router.push('/dashboard/listings')
     } catch (error) {
       console.error('Submit error:', error)
-      alert('Failed to submit listing')
+      toastService.error(
+        'Submission Failed',
+        'Failed to submit your business listing. Please try again.'
+      )
     } finally {
       setSaving(false)
     }

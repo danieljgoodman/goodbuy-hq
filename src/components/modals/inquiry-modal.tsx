@@ -2,11 +2,21 @@
 
 import { useState } from 'react'
 import { useSession } from 'next-auth/react'
-import { X, Send, AlertCircle } from 'lucide-react'
+import { Send, AlertCircle } from 'lucide-react'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
+import { Button } from '@/components/ui/button'
+import { toastService } from '@/lib/toast'
 
 interface InquiryModalProps {
-  isOpen: boolean
-  onClose: () => void
+  open: boolean
+  onOpenChange: (open: boolean) => void
   business: {
     id: string
     title: string
@@ -18,8 +28,8 @@ interface InquiryModalProps {
 }
 
 export default function InquiryModal({
-  isOpen,
-  onClose,
+  open,
+  onOpenChange,
   business,
   onSuccess,
 }: InquiryModalProps) {
@@ -34,8 +44,6 @@ export default function InquiryModal({
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState(false)
-
-  if (!isOpen) return null
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -62,7 +70,7 @@ export default function InquiryModal({
       setSuccess(true)
 
       setTimeout(() => {
-        onClose()
+        onOpenChange(false)
         onSuccess?.()
         // Reset form
         setFormData({
@@ -89,51 +97,43 @@ export default function InquiryModal({
 
   if (success) {
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-        <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 text-center">
-          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Send className="w-8 h-8 text-green-600" />
+      <Dialog open={open} onOpenChange={onOpenChange}>
+        <DialogContent className="max-w-md">
+          <div className="text-center">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Send className="w-8 h-8 text-green-600" />
+            </div>
+            <DialogHeader>
+              <DialogTitle className="text-xl font-semibold text-secondary-900 mb-2">
+                Inquiry Sent Successfully!
+              </DialogTitle>
+              <DialogDescription className="text-secondary-600 mb-4">
+                Your inquiry has been sent to {business.owner.name}. They will
+                receive an email notification and should respond soon.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary-500 mx-auto"></div>
           </div>
-          <h3 className="text-xl font-semibold text-secondary-900 mb-2">
-            Inquiry Sent Successfully!
-          </h3>
-          <p className="text-secondary-600 mb-4">
-            Your inquiry has been sent to {business.owner.name}. They will
-            receive an email notification and should respond soon.
-          </p>
-          <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary-500 mx-auto"></div>
-        </div>
-      </div>
+        </DialogContent>
+      </Dialog>
     )
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-        {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-secondary-200">
-          <div>
-            <h2 className="text-xl font-semibold text-secondary-900">
-              Contact Business Owner
-            </h2>
-            <p className="text-sm text-secondary-600 mt-1">
-              Send an inquiry to {business.owner.name} about &ldquo;
-              {business.title}&rdquo;
-            </p>
-          </div>
-          <button
-            onClick={onClose}
-            className="p-2 hover:bg-secondary-100 rounded-full transition-colors"
-            disabled={isSubmitting}
-          >
-            <X className="w-5 h-5" />
-          </button>
-        </div>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle className="text-xl font-semibold text-secondary-900">
+            Contact Business Owner
+          </DialogTitle>
+          <DialogDescription className="text-sm text-secondary-600">
+            Send an inquiry to {business.owner.name} about "{business.title}"
+          </DialogDescription>
+        </DialogHeader>
 
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
           {error && (
-            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start">
+            <div className="p-4 bg-red-50 border border-red-200 rounded-lg flex items-start">
               <AlertCircle className="w-5 h-5 text-red-600 mr-3 flex-shrink-0 mt-0.5" />
               <div>
                 <h4 className="text-sm font-medium text-red-800 mb-1">Error</h4>
@@ -248,60 +248,58 @@ export default function InquiryModal({
               </h4>
               <ul className="text-sm text-blue-800 space-y-1">
                 <li>• Be specific about your interest and timeline</li>
-                <li>• Mention your budget range to show you&apos;re serious</li>
+                <li>• Mention your budget range to show you're serious</li>
                 <li>• Share relevant experience in the industry</li>
                 <li>• Ask thoughtful questions about the business</li>
                 <li>• Be professional and courteous</li>
               </ul>
             </div>
           </div>
-
-          {/* Actions */}
-          <div className="flex items-center justify-end space-x-3 mt-8 pt-6 border-t border-secondary-200">
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-6 py-2 border border-secondary-300 text-secondary-700 rounded-lg hover:bg-secondary-50 transition-colors"
-              disabled={isSubmitting}
-            >
-              Cancel
-            </button>
-
-            <button
-              type="submit"
-              disabled={
-                isSubmitting ||
-                !formData.contactName.trim() ||
-                !formData.contactEmail.trim() ||
-                !formData.message.trim() ||
-                formData.message.length < 10
-              }
-              className="flex items-center px-6 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-              {isSubmitting ? (
-                <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                  Sending...
-                </>
-              ) : (
-                <>
-                  <Send className="w-4 h-4 mr-2" />
-                  Send Inquiry
-                </>
-              )}
-            </button>
-          </div>
-
-          {/* Disclaimer */}
-          <div className="mt-4 p-3 bg-secondary-50 rounded-lg">
-            <p className="text-xs text-secondary-600">
-              By sending this inquiry, you agree to share your contact
-              information with the business owner. They will be able to contact
-              you directly via the information provided above.
-            </p>
-          </div>
         </form>
-      </div>
-    </div>
+
+        <DialogFooter className="flex items-center justify-end space-x-3">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => onOpenChange(false)}
+            disabled={isSubmitting}
+          >
+            Cancel
+          </Button>
+
+          <Button
+            type="submit"
+            disabled={
+              isSubmitting ||
+              !formData.contactName.trim() ||
+              !formData.contactEmail.trim() ||
+              !formData.message.trim() ||
+              formData.message.length < 10
+            }
+            onClick={handleSubmit}
+          >
+            {isSubmitting ? (
+              <>
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                Sending...
+              </>
+            ) : (
+              <>
+                <Send className="w-4 h-4 mr-2" />
+                Send Inquiry
+              </>
+            )}
+          </Button>
+        </DialogFooter>
+
+        <div className="p-3 bg-secondary-50 rounded-lg">
+          <p className="text-xs text-secondary-600">
+            By sending this inquiry, you agree to share your contact information
+            with the business owner. They will be able to contact you directly
+            via the information provided above.
+          </p>
+        </div>
+      </DialogContent>
+    </Dialog>
   )
 }

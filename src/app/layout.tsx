@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Providers from '@/components/providers/session-provider'
+import { ToastProvider } from '@/components/providers/toast-provider'
+import { LayoutWithCommandPalette } from '@/components/layout/layout-with-command-palette'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -92,9 +94,28 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <body className={inter.className}>
         <Providers>
-          <div className="min-h-screen bg-gradient-to-br from-secondary-50 to-primary-50">
-            {children}
-          </div>
+          <ToastProvider
+            position="top-right"
+            theme="system"
+            closeButton={true}
+            richColors={true}
+            expand={false}
+            visibleToasts={3}
+            toastOptions={{
+              duration: 4000,
+              style: {
+                background: 'var(--popover)',
+                color: 'var(--popover-foreground)',
+                border: '1px solid var(--border)',
+              },
+            }}
+          >
+            <LayoutWithCommandPalette>
+              <div className="min-h-screen bg-gradient-to-br from-secondary-50 to-primary-50">
+                {children}
+              </div>
+            </LayoutWithCommandPalette>
+          </ToastProvider>
         </Providers>
       </body>
     </html>

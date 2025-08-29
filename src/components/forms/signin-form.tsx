@@ -6,29 +6,37 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
 import { LoadingButton } from '@/components/ui/loading'
-
-const signInSchema = z.object({
-  email: z.string().email('Please enter a valid email address'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
-})
-
-type SignInFormData = z.infer<typeof signInSchema>
+import { signInSchema, type SignInFormData } from '@/lib/form-schemas'
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { Alert, AlertDescription } from '@/components/ui/alert'
+import { Eye, EyeOff, AlertCircle, Loader2 } from 'lucide-react'
+import { toastService } from '@/lib/toast'
 
 export default function SignInForm() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
   const callbackUrl = searchParams.get('callbackUrl') || '/dashboard'
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<SignInFormData>({
+  const form = useForm<SignInFormData>({
     resolver: zodResolver(signInSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+    mode: 'onBlur', // Validate on blur for better UX
   })
 
   const onSubmit = async (data: SignInFormData) => {
@@ -44,14 +52,24 @@ export default function SignInForm() {
 
       if (result?.error) {
         setError(result.error)
+        toastService.error('Sign In Failed', result.error)
+        // Focus on email field if error occurs
+        form.setFocus('email')
       } else {
+        toastService.success(
+          'Welcome Back!',
+          'Successfully signed in to your account'
+        )
         // Refresh the session and redirect
         await getSession()
         router.push(callbackUrl)
         router.refresh()
       }
     } catch (err) {
-      setError('An unexpected error occurred')
+      const errorMessage = 'An unexpected error occurred. Please try again.'
+      setError(errorMessage)
+      toastService.networkError()
+      form.setFocus('email')
     } finally {
       setIsLoading(false)
     }
@@ -62,7 +80,9 @@ export default function SignInForm() {
     try {
       await signIn(provider, { callbackUrl })
     } catch (err) {
-      setError('Failed to sign in with ' + provider)
+      const errorMessage = `Failed to sign in with ${provider}`
+      setError(errorMessage)
+      toastService.error('OAuth Sign In Failed', errorMessage)
       setIsLoading(false)
     }
   }
@@ -77,9 +97,10 @@ export default function SignInForm() {
       </div>
 
       {error && (
-        <div className="bg-error-50 border border-error-200 text-error-700 px-4 py-3 rounded-lg">
-          {error}
-        </div>
+        <Alert variant="destructive" className="mb-6">
+          <AlertCircle className="h-4 w-4" />
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
       )}
 
       {/* OAuth Providers */}
@@ -87,7 +108,9 @@ export default function SignInForm() {
         <LoadingButton
           isLoading={isLoading}
           onClick={() => handleOAuthSignIn('google')}
-          className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-secondary-300 rounded-lg hover:bg-secondary-50 transition-colors"
+          variant="outline"
+          size="lg"
+          className="w-full justify-center gap-3"
         >
           <svg className="w-5 h-5" viewBox="0 0 24 24">
             <path
@@ -113,7 +136,9 @@ export default function SignInForm() {
         <LoadingButton
           isLoading={isLoading}
           onClick={() => handleOAuthSignIn('linkedin')}
-          className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-secondary-300 rounded-lg hover:bg-secondary-50 transition-colors"
+          variant="outline"
+          size="lg"
+          className="w-full justify-center gap-3"
         >
           <svg className="w-5 h-5" fill="#0A66C2" viewBox="0 0 24 24">
             <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
@@ -134,64 +159,101 @@ export default function SignInForm() {
       </div>
 
       {/* Email/Password Form */}
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <div>
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium text-secondary-700 mb-1"
-          >
-            Email Address
-          </label>
-          <input
-            {...register('email')}
-            type="email"
-            className="input-field"
-            placeholder="Enter your email"
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email Address</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    type="email"
+                    placeholder="Enter your email"
+                    disabled={isLoading}
+                    className="h-11"
+                    aria-describedby="email-description"
+                  />
+                </FormControl>
+                <FormDescription id="email-description">
+                  Use the email address you registered with
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-          {errors.email && (
-            <p className="mt-1 text-sm text-error-600">
-              {errors.email.message}
-            </p>
-          )}
-        </div>
 
-        <div>
-          <label
-            htmlFor="password"
-            className="block text-sm font-medium text-secondary-700 mb-1"
-          >
-            Password
-          </label>
-          <input
-            {...register('password')}
-            type="password"
-            className="input-field"
-            placeholder="Enter your password"
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <div className="relative">
+                    <Input
+                      {...field}
+                      type={showPassword ? 'text' : 'password'}
+                      placeholder="Enter your password"
+                      disabled={isLoading}
+                      className="h-11 pr-10"
+                      aria-describedby="password-description"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute inset-y-0 right-0 flex items-center pr-3 text-secondary-400 hover:text-secondary-600"
+                      tabIndex={-1}
+                      aria-label={
+                        showPassword ? 'Hide password' : 'Show password'
+                      }
+                    >
+                      {showPassword ? (
+                        <EyeOff className="h-4 w-4" />
+                      ) : (
+                        <Eye className="h-4 w-4" />
+                      )}
+                    </button>
+                  </div>
+                </FormControl>
+                <FormDescription id="password-description">
+                  Enter your account password
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-          {errors.password && (
-            <p className="mt-1 text-sm text-error-600">
-              {errors.password.message}
-            </p>
-          )}
-        </div>
 
-        <div className="flex items-center justify-between">
-          <Link
-            href="/auth/forgot-password"
-            className="text-sm text-primary-600 hover:text-primary-500"
+          <div className="flex items-center justify-between">
+            <Link
+              href="/auth/forgot-password"
+              className="text-sm text-primary-600 hover:text-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-sm"
+            >
+              Forgot your password?
+            </Link>
+          </div>
+
+          <LoadingButton
+            isLoading={isLoading}
+            type="submit"
+            disabled={isLoading}
+            variant="default"
+            size="lg"
+            className="w-full"
           >
-            Forgot your password?
-          </Link>
-        </div>
-
-        <LoadingButton
-          isLoading={isLoading}
-          type="submit"
-          className="w-full btn-primary px-4 py-3 rounded-lg font-medium transition-colors focus:ring-2 focus:ring-offset-2"
-        >
-          Sign In
-        </LoadingButton>
-      </form>
+            {isLoading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Signing In...
+              </>
+            ) : (
+              'Sign In'
+            )}
+          </LoadingButton>
+        </form>
+      </Form>
 
       <div className="text-center">
         <p className="text-sm text-secondary-600">

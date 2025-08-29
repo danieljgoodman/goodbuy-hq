@@ -894,8 +894,8 @@ export default function BusinessDetailClient({
 
       {/* Inquiry Modal */}
       <InquiryModal
-        isOpen={showInquiryModal}
-        onClose={() => setShowInquiryModal(false)}
+        open={showInquiryModal}
+        onOpenChange={setShowInquiryModal}
         business={{
           id: business.id,
           title: business.title,

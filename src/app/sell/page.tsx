@@ -1,6 +1,7 @@
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { redirect } from 'next/navigation'
+import { Button } from '@/components/ui/button'
 import BusinessListingForm from '@/components/forms/business-listing-form'
 
 export default async function SellPage() {
@@ -103,9 +104,9 @@ export default async function SellPage() {
                 <li>Financial document preparation</li>
                 <li>Photography services</li>
               </ul>
-              <button className="bg-primary-500 text-white px-6 py-2 rounded-lg hover:bg-primary-600">
+              <Button className="bg-primary-500 hover:bg-primary-600">
                 Contact Support
-              </button>
+              </Button>
             </div>
           </div>
         </div>
