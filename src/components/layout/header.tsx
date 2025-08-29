@@ -246,7 +246,7 @@ export function Header() {
                   </Button>
                 </Link>
                 <Link href="/auth/signup">
-                  <Button className="bg-primary-600 hover:bg-primary-700 text-white focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                  <Button className="bg-primary hover:bg-primary/90 text-primary-foreground focus:ring-2 focus:ring-ring focus:ring-offset-2">
                     Get Started
                   </Button>
                 </Link>
@@ -375,7 +375,7 @@ export function Header() {
                       </Link>
                       <Link href="/auth/signup" className="block">
                         <Button
-                          className="w-full bg-primary-600 hover:bg-primary-700"
+                          className="w-full bg-primary hover:bg-primary/90"
                           onClick={() => setIsMobileMenuOpen(false)}
                         >
                           Get Started

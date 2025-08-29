@@ -40,9 +40,9 @@ jest.mock('@radix-ui/react-select', () => ({
     </div>
   ),
   Item: ({ children, value, className, onSelect, ...props }: any) => (
-    <div 
-      className={className} 
-      data-testid="select-item" 
+    <div
+      className={className}
+      data-testid="select-item"
       data-value={value}
       onClick={() => onSelect?.(value)}
       {...props}
@@ -58,10 +58,17 @@ jest.mock('@radix-ui/react-select', () => ({
 }))
 
 jest.mock('@radix-ui/react-tabs', () => ({
-  Root: ({ children, value, onValueChange, defaultValue, className, ...props }: any) => (
-    <div 
+  Root: ({
+    children,
+    value,
+    onValueChange,
+    defaultValue,
+    className,
+    ...props
+  }: any) => (
+    <div
       className={className}
-      data-testid="tabs-root" 
+      data-testid="tabs-root"
       data-value={value || defaultValue}
       {...props}
     >
@@ -69,14 +76,19 @@ jest.mock('@radix-ui/react-tabs', () => ({
     </div>
   ),
   List: ({ children, className, ...props }: any) => (
-    <div className={className} data-testid="tabs-list" role="tablist" {...props}>
+    <div
+      className={className}
+      data-testid="tabs-list"
+      role="tablist"
+      {...props}
+    >
       {children}
     </div>
   ),
   Trigger: ({ children, value, className, ...props }: any) => (
-    <button 
+    <button
       className={className}
-      data-testid="tabs-trigger" 
+      data-testid="tabs-trigger"
       data-value={value}
       role="tab"
       {...props}
@@ -85,9 +97,9 @@ jest.mock('@radix-ui/react-tabs', () => ({
     </button>
   ),
   Content: ({ children, value, className, ...props }: any) => (
-    <div 
+    <div
       className={className}
-      data-testid="tabs-content" 
+      data-testid="tabs-content"
       data-value={value}
       role="tabpanel"
       {...props}
@@ -99,7 +111,7 @@ jest.mock('@radix-ui/react-tabs', () => ({
 
 jest.mock('@radix-ui/react-progress', () => ({
   Root: ({ value, max = 100, className, ...props }: any) => (
-    <div 
+    <div
       className={className}
       data-testid="progress-root"
       role="progressbar"
@@ -110,7 +122,7 @@ jest.mock('@radix-ui/react-progress', () => ({
     />
   ),
   Indicator: ({ className, style, ...props }: any) => (
-    <div 
+    <div
       className={className}
       data-testid="progress-indicator"
       style={style}
@@ -124,26 +136,60 @@ jest.mock('@radix-ui/react-slot', () => ({
     if (typeof children === 'function') {
       return children(props)
     }
-    return <div data-testid="slot" {...props}>{children}</div>
+    return (
+      <div data-testid="slot" {...props}>
+        {children}
+      </div>
+    )
   },
 }))
 
 // Mock Lucide React icons
 jest.mock('lucide-react', () => {
   const icons: Record<string, any> = {}
-  
+
   // Common icons used in the app
   const iconNames = [
-    'User', 'Mail', 'Phone', 'Building', 'Settings', 'BarChart3', 'Users',
-    'Plus', 'Search', 'Filter', 'Download', 'Save', 'TrendingUp', 'AlertTriangle',
-    'CheckCircle', 'DollarSign', 'PieChart', 'Target', 'Brain', 'ChevronDown',
-    'Eye', 'EyeOff', 'Loader2', 'X', 'Check', 'ArrowRight', 'ArrowLeft',
-    'Home', 'Menu', 'Calendar', 'Star', 'Heart', 'Share', 'Edit', 'Trash2',
+    'User',
+    'Mail',
+    'Phone',
+    'Building',
+    'Settings',
+    'BarChart3',
+    'Users',
+    'Plus',
+    'Search',
+    'Filter',
+    'Download',
+    'Save',
+    'TrendingUp',
+    'AlertTriangle',
+    'CheckCircle',
+    'DollarSign',
+    'PieChart',
+    'Target',
+    'Brain',
+    'ChevronDown',
+    'Eye',
+    'EyeOff',
+    'Loader2',
+    'X',
+    'Check',
+    'ArrowRight',
+    'ArrowLeft',
+    'Home',
+    'Menu',
+    'Calendar',
+    'Star',
+    'Heart',
+    'Share',
+    'Edit',
+    'Trash2',
   ]
-  
+
   iconNames.forEach(name => {
     icons[name] = ({ className, size, ...props }: any) => (
-      <svg 
+      <svg
         className={className}
         width={size}
         height={size}
@@ -154,7 +200,7 @@ jest.mock('lucide-react', () => {
       </svg>
     )
   })
-  
+
   return icons
 })
 
@@ -180,7 +226,9 @@ jest.mock('framer-motion', () => ({
   motion: {
     div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
     span: ({ children, ...props }: any) => <span {...props}>{children}</span>,
-    button: ({ children, ...props }: any) => <button {...props}>{children}</button>,
+    button: ({ children, ...props }: any) => (
+      <button {...props}>{children}</button>
+    ),
   },
   AnimatePresence: ({ children }: any) => children,
   useAnimation: () => ({
@@ -193,29 +241,54 @@ jest.mock('framer-motion', () => ({
 // Mock Chart.js
 jest.mock('react-chartjs-2', () => ({
   Chart: ({ data, options, type, ...props }: any) => (
-    <div data-testid={`chart-${type}`} data-chart-data={JSON.stringify(data)} {...props}>
+    <div
+      data-testid={`chart-${type}`}
+      data-chart-data={JSON.stringify(data)}
+      {...props}
+    >
       Chart: {type}
     </div>
   ),
-  Line: (props: any) => <div data-testid="line-chart" {...props}>Line Chart</div>,
-  Bar: (props: any) => <div data-testid="bar-chart" {...props}>Bar Chart</div>,
-  Pie: (props: any) => <div data-testid="pie-chart" {...props}>Pie Chart</div>,
-  Doughnut: (props: any) => <div data-testid="doughnut-chart" {...props}>Doughnut Chart</div>,
+  Line: (props: any) => (
+    <div data-testid="line-chart" {...props}>
+      Line Chart
+    </div>
+  ),
+  Bar: (props: any) => (
+    <div data-testid="bar-chart" {...props}>
+      Bar Chart
+    </div>
+  ),
+  Pie: (props: any) => (
+    <div data-testid="pie-chart" {...props}>
+      Pie Chart
+    </div>
+  ),
+  Doughnut: (props: any) => (
+    <div data-testid="doughnut-chart" {...props}>
+      Doughnut Chart
+    </div>
+  ),
 }))
 
 // Mock file upload utilities
 global.File = class MockFile {
-  constructor(public name: string, public type: string) {}
+  constructor(
+    public name: string,
+    public type: string
+  ) {}
 }
 
 global.FileReader = class MockFileReader {
   result: any = null
   error: any = null
   readyState: number = 0
-  
-  onload: ((this: FileReader, ev: ProgressEvent<FileReader>) => any) | null = null
-  onerror: ((this: FileReader, ev: ProgressEvent<FileReader>) => any) | null = null
-  
+
+  onload: ((this: FileReader, ev: ProgressEvent<FileReader>) => any) | null =
+    null
+  onerror: ((this: FileReader, ev: ProgressEvent<FileReader>) => any) | null =
+    null
+
   readAsDataURL(file: Blob): void {
     setTimeout(() => {
       this.result = 'data:image/jpeg;base64,fake-base64-data'
@@ -223,7 +296,7 @@ global.FileReader = class MockFileReader {
       this.onload?.call(this, {} as any)
     }, 100)
   }
-  
+
   readAsText(file: Blob): void {
     setTimeout(() => {
       this.result = 'fake file content'
@@ -231,14 +304,16 @@ global.FileReader = class MockFileReader {
       this.onload?.call(this, {} as any)
     }, 100)
   }
-  
+
   abort(): void {
     this.readyState = 2
   }
-  
+
   addEventListener() {}
   removeEventListener() {}
-  dispatchEvent() { return true }
+  dispatchEvent() {
+    return true
+  }
 }
 
 export {}

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import {
   Search,
@@ -575,20 +575,14 @@ export default function MarketplacePage() {
                   className="px-3 py-1 border border-secondary-300 rounded text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 >
                   {SORT_OPTIONS.map(option => (
-                    <>
-                      <option
-                        key={`${option.value}-desc`}
-                        value={`${option.value}-desc`}
-                      >
+                    <React.Fragment key={option.value}>
+                      <option value={`${option.value}-desc`}>
                         {option.label} (High to Low)
                       </option>
-                      <option
-                        key={`${option.value}-asc`}
-                        value={`${option.value}-asc`}
-                      >
+                      <option value={`${option.value}-asc`}>
                         {option.label} (Low to High)
                       </option>
-                    </>
+                    </React.Fragment>
                   ))}
                 </select>
               </div>

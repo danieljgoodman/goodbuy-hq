@@ -49,7 +49,7 @@ describe('Command Palette Accessibility', () => {
 
   it('should have proper dialog structure', () => {
     render(<CommandPalette open={true} />)
-    
+
     const dialog = screen.getByRole('dialog')
     expect(dialog).toBeInTheDocument()
     expect(dialog).toHaveAttribute('aria-labelledby')
@@ -58,7 +58,7 @@ describe('Command Palette Accessibility', () => {
 
   it('should have proper combobox structure', () => {
     render(<CommandPalette open={true} />)
-    
+
     const combobox = screen.getByRole('combobox')
     expect(combobox).toBeInTheDocument()
     expect(combobox).toHaveAttribute('aria-expanded', 'true')
@@ -68,7 +68,7 @@ describe('Command Palette Accessibility', () => {
 
   it('should have proper listbox structure', () => {
     render(<CommandPalette open={true} />)
-    
+
     const listbox = screen.getByRole('listbox')
     expect(listbox).toBeInTheDocument()
     expect(listbox).toHaveAttribute('aria-orientation', 'vertical')
@@ -76,11 +76,11 @@ describe('Command Palette Accessibility', () => {
 
   it('should have proper option structure for commands', () => {
     render(<CommandPalette open={true} />)
-    
+
     // Get command items (they should have option role)
     const options = screen.getAllByRole('option')
     expect(options.length).toBeGreaterThan(0)
-    
+
     options.forEach(option => {
       expect(option).toHaveAttribute('aria-selected')
       expect(option).toHaveAttribute('id')
@@ -90,15 +90,15 @@ describe('Command Palette Accessibility', () => {
   it('should support keyboard navigation', async () => {
     const user = userEvent.setup()
     render(<CommandPalette open={true} />)
-    
+
     const combobox = screen.getByRole('combobox')
-    
+
     // Focus should be on the input
     expect(combobox).toHaveValue('')
-    
+
     // Arrow down should navigate to first option
     await user.keyboard('[ArrowDown]')
-    
+
     const options = screen.getAllByRole('option')
     if (options.length > 0) {
       // cmdk handles aria-selected internally
@@ -109,32 +109,35 @@ describe('Command Palette Accessibility', () => {
   it('should handle Enter key to select option', async () => {
     const user = userEvent.setup()
     render(<CommandPalette open={true} />)
-    
+
     const combobox = screen.getByRole('combobox')
     combobox.focus()
-    
+
     // Navigate to first option and press Enter
     await user.keyboard('[ArrowDown]')
     await user.keyboard('[Enter]')
-    
+
     // Command palette should close (dialog should be removed)
     // This is handled by the parent component
   })
 
   it('should have proper focus management', () => {
     render(<CommandPalette open={true} />)
-    
+
     const combobox = screen.getByRole('combobox')
     expect(document.activeElement).toBe(combobox)
   })
 
   it('should have proper screen reader announcements', () => {
     render(<CommandPalette open={true} />)
-    
+
     // Check for proper labels
     const searchInput = screen.getByRole('combobox')
-    expect(searchInput).toHaveAttribute('placeholder', 'Type a command or search...')
-    
+    expect(searchInput).toHaveAttribute(
+      'placeholder',
+      'Type a command or search...'
+    )
+
     // Check for group headings
     const headings = screen.getAllByRole('group')
     headings.forEach(heading => {
@@ -144,22 +147,22 @@ describe('Command Palette Accessibility', () => {
 
   it('should support screen readers for command descriptions', () => {
     render(<CommandPalette open={true} />)
-    
+
     // Commands should have descriptions for screen readers
     const homeCommand = screen.getByText('Go to Home')
     expect(homeCommand).toBeInTheDocument()
-    
+
     const homeDescription = screen.getByText('Navigate to the homepage')
     expect(homeDescription).toBeInTheDocument()
   })
 
   it('should have proper color contrast', () => {
     render(<CommandPalette open={true} />)
-    
+
     // Verify elements have proper styling classes for contrast
     const dialog = screen.getByRole('dialog')
     expect(dialog).toHaveClass('bg-popover', 'text-popover-foreground')
-    
+
     const searchInput = screen.getByRole('combobox')
     expect(searchInput).toHaveClass('text-foreground')
   })
@@ -167,26 +170,26 @@ describe('Command Palette Accessibility', () => {
   it('should be operable with keyboard only', async () => {
     const user = userEvent.setup()
     render(<CommandPalette open={true} />)
-    
+
     const combobox = screen.getByRole('combobox')
-    
+
     // Type to filter
     await user.type(combobox, 'home')
-    
+
     // Navigate with arrows
     await user.keyboard('[ArrowDown]')
     await user.keyboard('[ArrowUp]')
-    
+
     // Select with Enter
     await user.keyboard('[Enter]')
-    
+
     // All interactions should work without mouse
     expect(combobox).toHaveValue('home')
   })
 
   it('should have proper focus indicators', () => {
     render(<CommandPalette open={true} />)
-    
+
     const options = screen.getAllByRole('option')
     options.forEach(option => {
       // Should have focus styles in CSS
@@ -215,7 +218,7 @@ describe('Command Palette Trigger Accessibility', () => {
   it('should have proper button role and label', () => {
     const onToggle = jest.fn()
     render(<CommandPaletteTrigger onToggle={onToggle} variant="button" />)
-    
+
     const button = screen.getByRole('button')
     expect(button).toHaveAttribute('aria-label', 'Open command palette')
   })
@@ -223,13 +226,13 @@ describe('Command Palette Trigger Accessibility', () => {
   it('should have proper keyboard shortcuts display', () => {
     const onToggle = jest.fn()
     render(<CommandPaletteTrigger onToggle={onToggle} />)
-    
+
     // Keyboard shortcuts should be properly marked up
     const kbdElements = screen.getAllByRole('generic')
-    const kbdShortcuts = kbdElements.filter(el => 
-      el.tagName === 'KBD' || el.classList.contains('kbd')
+    const kbdShortcuts = kbdElements.filter(
+      el => el.tagName === 'KBD' || el.classList.contains('kbd')
     )
-    
+
     expect(kbdShortcuts.length).toBeGreaterThan(0)
   })
 
@@ -237,14 +240,14 @@ describe('Command Palette Trigger Accessibility', () => {
     const onToggle = jest.fn()
     const user = userEvent.setup()
     render(<CommandPaletteTrigger onToggle={onToggle} />)
-    
+
     const button = screen.getByRole('button')
     await user.tab()
     expect(button).toHaveFocus()
-    
+
     await user.keyboard('[Enter]')
     expect(onToggle).toHaveBeenCalledTimes(1)
-    
+
     await user.keyboard('[Space]')
     expect(onToggle).toHaveBeenCalledTimes(2)
   })
@@ -252,7 +255,7 @@ describe('Command Palette Trigger Accessibility', () => {
   it('should have proper focus indicators', () => {
     const onToggle = jest.fn()
     render(<CommandPaletteTrigger onToggle={onToggle} />)
-    
+
     const button = screen.getByRole('button')
     expect(button).toHaveClass('focus:outline-none', 'focus:ring-2')
   })
@@ -269,14 +272,14 @@ describe('Command Palette WCAG Compliance', () => {
         'focus-order-semantics': { enabled: true },
         'aria-required-attr': { enabled: true },
         'aria-valid-attr': { enabled: true },
-      }
+      },
     })
     expect(results).toHaveNoViolations()
   })
 
   it('should support high contrast mode', () => {
     render(<CommandPalette open={true} />)
-    
+
     // Commands should have proper contrast classes
     const commandItems = screen.getAllByRole('option')
     commandItems.forEach(item => {
@@ -296,7 +299,7 @@ describe('Command Palette WCAG Compliance', () => {
     })
 
     render(<CommandPalette open={true} />)
-    
+
     // Component should render without animation-dependent functionality
     const dialog = screen.getByRole('dialog')
     expect(dialog).toBeInTheDocument()

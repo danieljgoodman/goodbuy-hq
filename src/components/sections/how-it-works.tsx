@@ -1,15 +1,15 @@
 'use client'
 
-import { Upload, Brain, FileText, ArrowRight } from 'lucide-react'
+import { Upload, Brain, FileText, ArrowRight, Shield, Zap, Target, CheckCircle2 } from 'lucide-react'
 
 const steps = [
   {
-    step: '01',
+    step: 1,
     icon: Upload,
     title: 'Upload Your Data',
     description:
-      'Securely upload your financial statements, tax returns, and business documents. Our platform accepts multiple formats including PDF, Excel, and CSV.',
-    details: [
+      'Securely upload your financial statements, tax returns, and business documents. Our platform accepts multiple formats with bank-grade encryption.',
+    features: [
       'Bank-grade 256-bit encryption',
       'Automated data extraction',
       'Multiple file format support',
@@ -17,12 +17,12 @@ const steps = [
     ],
   },
   {
-    step: '02',
+    step: 2,
     icon: Brain,
     title: 'AI Analysis',
     description:
-      'Our advanced AI algorithms analyze your data using 200+ valuation metrics, industry benchmarks, and market conditions to build a comprehensive picture.',
-    details: [
+      'Our AI algorithms analyze your data using 200+ valuation metrics, industry benchmarks, and real-time market conditions for comprehensive insights.',
+    features: [
       'Machine learning models',
       '200+ valuation metrics',
       'Real-time market data',
@@ -30,12 +30,12 @@ const steps = [
     ],
   },
   {
-    step: '03',
+    step: 3,
     icon: FileText,
     title: 'Get Your Report',
     description:
-      'Receive a detailed valuation report with actionable insights, growth recommendations, and market positioning analysis within minutes.',
-    details: [
+      'Receive a comprehensive valuation report with actionable insights, growth recommendations, and market positioning analysis in minutes.',
+    features: [
       'Comprehensive PDF report',
       'Interactive dashboard',
       'Actionable recommendations',
@@ -46,75 +46,81 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section className="py-20 lg:py-28 bg-gradient-to-br from-secondary-50 via-white to-primary-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-secondary-900 mb-6">
+    <section className="relative py-24 overflow-hidden bg-background">
+      {/* Subtle background pattern */}
+      <div className="absolute inset-0 opacity-40">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="text-center mb-20">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-6 border border-primary/20">
+            <Zap className="w-4 h-4" />
+            Simple 3-Step Process
+          </div>
+          
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-foreground">
             How It Works
           </h2>
-          <p className="text-lg text-secondary-600 leading-relaxed">
-            Get your business valued in three simple steps. Our AI-powered
-            platform makes professional business valuation accessible to
-            everyone.
+          
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            Get your business valued in three simple steps. Our AI-powered platform makes professional business valuation accessible to everyone.
           </p>
         </div>
 
         {/* Steps */}
         <div className="relative">
-          {/* Connection Lines */}
-          <div className="hidden lg:block absolute top-24 left-1/2 transform -translate-x-1/2 w-full max-w-4xl">
-            <div className="flex justify-between px-16">
-              <ArrowRight className="w-8 h-8 text-primary-300" />
-              <ArrowRight className="w-8 h-8 text-primary-300" />
+          {/* Connection line for desktop */}
+          <div className="hidden lg:block absolute top-16 left-1/2 transform -translate-x-1/2 w-full max-w-4xl">
+            <div className="flex items-center justify-between px-24">
+              <ArrowRight className="w-6 h-6 text-muted-foreground/30" />
+              <ArrowRight className="w-6 h-6 text-muted-foreground/30" />
             </div>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-8 lg:gap-12">
+          <div className="grid lg:grid-cols-3 gap-12 lg:gap-8">
             {steps.map((step, index) => {
               const IconComponent = step.icon
-
+              
               return (
-                <div
-                  key={step.step}
-                  className="relative text-center animate-fade-in"
-                  style={{ animationDelay: `${index * 200}ms` }}
-                >
-                  {/* Step Number */}
-                  <div className="relative mb-8">
-                    <div className="w-20 h-20 mx-auto bg-gradient-to-br from-primary-500 to-primary-700 rounded-full flex items-center justify-center shadow-lg">
-                      <span className="text-2xl font-bold text-white">
-                        {step.step}
-                      </span>
-                    </div>
-                    {/* Icon overlay */}
-                    <div className="absolute -bottom-2 -right-2 w-12 h-12 bg-white rounded-full border-4 border-white shadow-lg flex items-center justify-center">
-                      <IconComponent className="w-6 h-6 text-primary-600" />
-                    </div>
-                  </div>
+                <div key={step.step} className="relative group">
+                  {/* Mobile connection line */}
+                  {index < steps.length - 1 && (
+                    <div className="lg:hidden absolute left-1/2 -translate-x-0.5 top-full mt-8 h-12 w-px bg-border"></div>
+                  )}
 
-                  {/* Content */}
-                  <div className="space-y-4">
-                    <h3 className="text-2xl font-semibold text-secondary-900">
-                      {step.title}
-                    </h3>
-                    <p className="text-secondary-600 leading-relaxed max-w-sm mx-auto">
-                      {step.description}
-                    </p>
+                  <div className="text-center">
+                    {/* Step number and icon */}
+                    <div className="relative mb-6 inline-flex">
+                      <div className="w-20 h-20 bg-card border border-border rounded-2xl flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow duration-300">
+                        <div className="absolute -top-3 -right-3 w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold">
+                          {step.step}
+                        </div>
+                        <IconComponent className="w-8 h-8 text-primary" />
+                      </div>
+                    </div>
 
-                    {/* Details */}
-                    <div className="bg-white rounded-xl border border-secondary-200 p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
-                      <ul className="space-y-3 text-left">
-                        {step.details.map(detail => (
-                          <li
-                            key={detail}
-                            className="flex items-center text-sm text-secondary-600"
-                          >
-                            <div className="w-2 h-2 bg-primary-500 rounded-full mr-3 flex-shrink-0" />
-                            {detail}
-                          </li>
+                    {/* Content */}
+                    <div className="space-y-4">
+                      <h3 className="text-2xl font-bold text-foreground">
+                        {step.title}
+                      </h3>
+                      
+                      <p className="text-muted-foreground text-lg leading-relaxed">
+                        {step.description}
+                      </p>
+
+                      {/* Features list */}
+                      <div className="space-y-3 pt-4">
+                        {step.features.map((feature, idx) => (
+                          <div key={idx} className="flex items-center gap-3 text-sm text-muted-foreground justify-center lg:justify-start">
+                            <CheckCircle2 className="w-4 h-4 text-primary flex-shrink-0" />
+                            <span>{feature}</span>
+                          </div>
                         ))}
-                      </ul>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -123,29 +129,58 @@ export function HowItWorks() {
           </div>
         </div>
 
-        {/* Time Indicator */}
-        <div className="mt-16 text-center">
-          <div className="inline-flex items-center space-x-2 bg-success-100 text-success-700 px-6 py-3 rounded-full font-medium">
-            <div className="w-3 h-3 bg-success-500 rounded-full animate-pulse" />
-            <span>Complete analysis in under 5 minutes</span>
+        {/* Time indicator */}
+        <div className="mt-20 text-center">
+          <div className="inline-flex items-center gap-3 px-6 py-3 bg-card border border-border rounded-full shadow-sm">
+            <div className="relative">
+              <div className="w-2 h-2 bg-primary rounded-full animate-ping"></div>
+              <div className="absolute inset-0 w-2 h-2 bg-primary rounded-full"></div>
+            </div>
+            <span className="text-sm font-medium text-foreground">Complete analysis in under 5 minutes</span>
+            <Zap className="w-4 h-4 text-primary" />
           </div>
         </div>
 
-        {/* Bottom CTA */}
-        <div className="text-center mt-12">
-          <div className="bg-white rounded-2xl border border-secondary-200 p-8 shadow-lg max-w-2xl mx-auto">
-            <h3 className="text-2xl font-semibold text-secondary-900 mb-4">
-              Ready to get started?
+        {/* CTA section */}
+        <div className="mt-20">
+          <div className="bg-card border border-border rounded-3xl p-12 text-center shadow-lg">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-6 border border-primary/20">
+              <Target className="w-4 h-4" />
+              Ready to Start?
+            </div>
+            
+            <h3 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
+              Get Your Business Valuation Now
             </h3>
-            <p className="text-secondary-600 mb-6">
-              Join thousands of business owners who trust our AI-powered
-              valuation platform.
+            
+            <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+              Join thousands of business owners who trust our AI-powered valuation platform. Start your free analysis today.
             </p>
+            
+            {/* Trust indicators */}
+            <div className="flex flex-wrap justify-center items-center gap-8 mb-8 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2">
+                <Shield className="w-4 h-4 text-primary" />
+                <span>Bank-level Security</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-primary" />
+                <span>99.9% Accuracy</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Zap className="w-4 h-4 text-primary" />
+                <span>5-Minute Results</span>
+              </div>
+            </div>
+
+            {/* CTA buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="px-8 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium transition-colors">
-                Start Free Analysis
+              <button className="group px-8 py-4 bg-primary text-primary-foreground rounded-xl font-semibold hover:bg-primary/90 transition-colors duration-200 flex items-center justify-center gap-2">
+                <span>Start Free Analysis</span>
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform duration-200" />
               </button>
-              <button className="px-8 py-3 border border-secondary-300 hover:border-primary-300 text-secondary-700 hover:text-primary-600 rounded-lg font-medium transition-colors">
+              
+              <button className="px-8 py-4 border-2 border-border hover:border-primary text-foreground hover:text-primary rounded-xl font-semibold transition-colors duration-200">
                 Schedule Demo
               </button>
             </div>

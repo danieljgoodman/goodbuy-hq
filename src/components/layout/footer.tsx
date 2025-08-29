@@ -190,7 +190,7 @@ export function Footer() {
             </div>
             <Link
               href="#newsletter"
-              className="inline-flex items-center px-6 py-3 bg-primary-600 hover:bg-primary-700 rounded-lg font-medium transition-colors duration-200"
+              className="inline-flex items-center px-6 py-3 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg font-medium transition-colors duration-200"
             >
               Subscribe to Newsletter
               <ArrowRight className="ml-2 w-4 h-4" />

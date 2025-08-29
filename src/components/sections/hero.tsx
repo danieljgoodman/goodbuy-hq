@@ -9,11 +9,20 @@ import {
   BarChart3,
   Star,
   Sparkles,
+  Shield,
+  CheckCircle,
+  Award,
+  Lock,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { motion } from 'framer-motion'
+import {
+  TrustIndicators,
+  TrustMetrics,
+  SecurityBadge,
+} from '@/components/ui/trust-indicators'
 
 export function Hero() {
   return (
@@ -83,10 +92,10 @@ export function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.6 }}
             >
-              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-tight tracking-tight">
+              <h1 className="hero-title text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold">
                 Transform Your Business
                 <motion.span
-                  className="block bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent"
+                  className="block bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent text-gradient hero-subtitle"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.6, duration: 0.8 }}
@@ -144,44 +153,69 @@ export function Hero() {
               </motion.div>
             </motion.div>
 
-            {/* CTA Buttons */}
+            {/* Trust-Enhanced CTA Buttons */}
             <motion.div
-              className="flex flex-col sm:flex-row gap-4"
+              className="space-y-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2, duration: 0.6 }}
             >
-              <Link href="/auth/signup">
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link href="/auth/signup">
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Button size="lg" className="professional-cta group">
+                      <Shield className="mr-2 h-4 w-4" />
+                      Start Secure AI Analysis
+                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                  </motion.div>
+                </Link>
                 <motion.div
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <Button size="lg" className="group">
-                    Start AI Analysis
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  <Button size="lg" variant="outline" className="group">
+                    <Play className="mr-2 h-4 w-4" />
+                    View Demo
                   </Button>
                 </motion.div>
-              </Link>
+              </div>
+
+              {/* Security Indicators */}
               <motion.div
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                className="flex flex-wrap items-center gap-3"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.4, duration: 0.6 }}
               >
-                <Button size="lg" variant="outline" className="group">
-                  <Play className="mr-2 h-4 w-4" />
-                  View Demo
-                </Button>
+                <div className="security-indicator">
+                  <Lock className="h-4 w-4" />
+                  <span>256-bit SSL</span>
+                </div>
+                <div className="security-indicator">
+                  <Shield className="h-4 w-4" />
+                  <span>SOC 2 Certified</span>
+                </div>
+                <div className="security-indicator">
+                  <CheckCircle className="h-4 w-4" />
+                  <span>GDPR Compliant</span>
+                </div>
               </motion.div>
             </motion.div>
 
-            {/* Social Proof */}
+            {/* Trust Metrics */}
             <motion.div
               className="pt-8 border-t"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.4, duration: 0.6 }}
             >
+              <TrustMetrics />
               <motion.div
-                className="flex items-center gap-2 mb-4"
+                className="flex items-center gap-2 justify-center mt-4"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.5, duration: 0.6 }}
@@ -195,11 +229,11 @@ export function Hero() {
                   ))}
                 </div>
                 <span className="text-sm text-muted-foreground">
-                  Trusted by 50,000+ businesses and leading investors
+                  Trusted by leading AI companies
                 </span>
               </motion.div>
               <motion.div
-                className="flex items-center gap-6 text-sm text-muted-foreground"
+                className="flex items-center justify-center gap-6 text-sm text-muted-foreground mt-2"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.6, duration: 0.6 }}

@@ -11,9 +11,11 @@ This collection provides production-ready component templates that follow GoodBu
 ### Business Components
 
 #### 1. BusinessCard
+
 Professional business listing card component for the marketplace.
 
 **Features:**
+
 - Multiple display variants (default, featured, compact, detailed)
 - Financial metrics integration
 - Action buttons for inquiries and favorites
@@ -22,7 +24,7 @@ Professional business listing card component for the marketplace.
 ```tsx
 import { BusinessCard } from '@/components/ui/templates'
 
-<BusinessCard
+;<BusinessCard
   business={businessData}
   metrics={businessMetrics}
   variant="featured"
@@ -34,9 +36,11 @@ import { BusinessCard } from '@/components/ui/templates'
 ```
 
 #### 2. EvaluationSummary
+
 Comprehensive business evaluation display with valuation and risk assessment.
 
 **Features:**
+
 - Business valuation with confidence indicators
 - Risk assessment with visual indicators
 - Financial metrics dashboard
@@ -45,7 +49,7 @@ Comprehensive business evaluation display with valuation and risk assessment.
 ```tsx
 import { EvaluationSummary } from '@/components/ui/templates'
 
-<EvaluationSummary
+;<EvaluationSummary
   business={businessData}
   metrics={businessMetrics}
   valuation={valuationData}
@@ -57,9 +61,11 @@ import { EvaluationSummary } from '@/components/ui/templates'
 ```
 
 #### 3. DealCard
+
 Business deal tracking card for the acquisition pipeline.
 
 **Features:**
+
 - Deal status tracking with visual indicators
 - Progress visualization for pipeline management
 - Priority levels with color coding
@@ -68,7 +74,7 @@ Business deal tracking card for the acquisition pipeline.
 ```tsx
 import { DealCard } from '@/components/ui/templates'
 
-<DealCard
+;<DealCard
   deal={dealData}
   variant="pipeline"
   showActions={true}
@@ -81,9 +87,11 @@ import { DealCard } from '@/components/ui/templates'
 ### Form Components
 
 #### 4. FormWrapper
+
 Dynamic form generator with validation and professional styling.
 
 **Features:**
+
 - Dynamic field generation based on configuration
 - Built-in validation with custom rules
 - Multiple layout variants (default, compact, split, modal)
@@ -123,9 +131,11 @@ const businessFields: FormField[] = [
 ### Data Components
 
 #### 5. DataTable
+
 Feature-rich data table with sorting, filtering, and pagination.
 
 **Features:**
+
 - Flexible column definitions with custom renderers
 - Built-in sorting, searching, and filtering
 - Pagination with configurable page sizes
@@ -171,9 +181,11 @@ const businessColumns: TableColumn<BusinessData>[] = [
 ### Navigation Components
 
 #### 6. NavigationHeader
+
 Professional site header with authentication and mobile support.
 
 **Features:**
+
 - Responsive design with mobile hamburger menu
 - User authentication state management
 - Notification indicators and badges
@@ -214,9 +226,11 @@ const navItems: NavigationItem[] = [
 ### Layout Components
 
 #### 7. DashboardLayout
+
 Complete dashboard layout with sidebar, stats, and content areas.
 
 **Features:**
+
 - Collapsible sidebar with nested navigation
 - Dashboard statistics/metrics cards
 - Breadcrumb navigation

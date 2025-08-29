@@ -1,19 +1,18 @@
 # 🧪 Test Environment - GoodBuy HQ
 
 ## 🌐 Development Server
-
 **Live Site**: [http://localhost:3000](http://localhost:3000)
 
 ---
 
 ## 👥 Test Account Credentials
 
-### 🏢 Business Owner Account
 
+### 🏢 Business Owner Account
 - **Email**: `testowner@goodbuyhq.com`
 - **Password**: `TestOwner123!`
 - **Dashboard**: `/dashboard/business-owner`
-- **Features**:
+- **Features**: 
   - View 3 active business listings
   - Analytics dashboard with 156 total views
   - Inquiry management (3 active inquiries)
@@ -21,7 +20,6 @@
   - Create and manage business listings
 
 ### 🛍️ Buyer Account
-
 - **Email**: `testbuyer@goodbuyhq.com`
 - **Password**: `TestBuyer123!`
 - **Dashboard**: `/dashboard/buyer`
@@ -33,7 +31,6 @@
   - Recently viewed businesses (101 total views)
 
 ### 🤝 Broker Account
-
 - **Email**: `testbroker@goodbuyhq.com`
 - **Password**: `TestBroker123!`
 - **Dashboard**: `/dashboard/broker`
@@ -44,7 +41,6 @@
   - Deal pipeline management
 
 ### 👨‍💼 Admin Account
-
 - **Email**: `testadmin@goodbuyhq.com`
 - **Password**: `TestAdmin123!`
 - **Dashboard**: `/dashboard/admin`
@@ -59,13 +55,11 @@
 ## 🗄️ Database Information
 
 ### PostgreSQL Database
-
 - **Database**: `goodbuy_hq_dev`
 - **Connection**: Available via DATABASE_URL environment variable
 - **Prisma Studio**: Background service running for database management
 
 ### Sample Data Included
-
 - ✅ **Businesses**: 6+ sample businesses with realistic data
 - ✅ **Users**: 4 test users with different roles
 - ✅ **Favorites**: Buyer has 4 saved businesses
@@ -89,7 +83,6 @@
 ## 📊 Dashboard Features to Test
 
 ### Business Owner Dashboard
-
 - [ ] View active listings (should show 3)
 - [ ] Check analytics metrics (156 views, +100% growth)
 - [ ] Review recent buyer inquiries
@@ -97,7 +90,6 @@
 - [ ] Examine top performing listings with detailed stats
 
 ### Buyer Dashboard
-
 - [ ] Browse saved businesses (4 favorites)
 - [ ] Switch between tabs (Saved, Inquiries, Searches, Recently Viewed)
 - [ ] View investment preferences and categories
@@ -105,7 +97,6 @@
 - [ ] Test saved search functionality
 
 ### Role-Based Access
-
 - [ ] Verify buyers cannot access `/dashboard/business-owner`
 - [ ] Confirm business owners cannot access `/dashboard/buyer`
 - [ ] Test proper redirection to role-specific dashboards
@@ -129,7 +120,6 @@ DATABASE_URL="postgresql://danielgoodman@localhost/goodbuy_hq_dev" npx ts-node s
 ## 📱 Mobile Testing
 
 The dashboards are fully responsive. Test on mobile by:
-
 1. Opening browser developer tools
 2. Using device emulation (iPhone, iPad, etc.)
 3. Verifying all elements stack properly
@@ -147,6 +137,6 @@ The dashboards are fully responsive. Test on mobile by:
 
 ---
 
-_Last updated: August 28, 2025_
-_Environment: Development_
-_Status: ✅ Fully Operational_
+*Last updated: August 28, 2025*
+*Environment: Development*
+*Status: ✅ Fully Operational*

@@ -38,9 +38,12 @@ describe('Toast System', () => {
 
   describe('toastService', () => {
     it('should create success toast', () => {
-      const toastId = toastService.success('Test Success', 'This is a test message')
+      const toastId = toastService.success(
+        'Test Success',
+        'This is a test message'
+      )
       expect(toastId).toBeDefined()
-      
+
       const history = toastService.getHistory()
       expect(history).toHaveLength(1)
       expect(history[0].type).toBe('success')
@@ -49,9 +52,12 @@ describe('Toast System', () => {
     })
 
     it('should create error toast', () => {
-      const toastId = toastService.error('Test Error', 'This is an error message')
+      const toastId = toastService.error(
+        'Test Error',
+        'This is an error message'
+      )
       expect(toastId).toBeDefined()
-      
+
       const history = toastService.getHistory()
       expect(history).toHaveLength(1)
       expect(history[0].type).toBe('error')
@@ -59,9 +65,12 @@ describe('Toast System', () => {
     })
 
     it('should create warning toast', () => {
-      const toastId = toastService.warning('Test Warning', 'This is a warning message')
+      const toastId = toastService.warning(
+        'Test Warning',
+        'This is a warning message'
+      )
       expect(toastId).toBeDefined()
-      
+
       const history = toastService.getHistory()
       expect(history).toHaveLength(1)
       expect(history[0].type).toBe('warning')
@@ -71,7 +80,7 @@ describe('Toast System', () => {
     it('should create info toast', () => {
       const toastId = toastService.info('Test Info', 'This is an info message')
       expect(toastId).toBeDefined()
-      
+
       const history = toastService.getHistory()
       expect(history).toHaveLength(1)
       expect(history[0].type).toBe('info')
@@ -80,9 +89,11 @@ describe('Toast System', () => {
 
     it('should create progress toast', () => {
       const mockCancel = jest.fn()
-      const toastId = toastService.progress('Test Progress', 'Processing...', { onCancel: mockCancel })
+      const toastId = toastService.progress('Test Progress', 'Processing...', {
+        onCancel: mockCancel,
+      })
       expect(toastId).toBeDefined()
-      
+
       const history = toastService.getHistory()
       expect(history).toHaveLength(1)
       expect(history[0].type).toBe('progress')
@@ -93,7 +104,7 @@ describe('Toast System', () => {
       toastService.success('Success 1')
       toastService.error('Error 1')
       toastService.warning('Warning 1')
-      
+
       const history = toastService.getHistory()
       expect(history).toHaveLength(3)
       expect(history[0].title).toBe('Warning 1') // Most recent first
@@ -104,9 +115,9 @@ describe('Toast System', () => {
     it('should clear history', () => {
       toastService.success('Success 1')
       toastService.error('Error 1')
-      
+
       expect(toastService.getHistory()).toHaveLength(2)
-      
+
       toastService.clearHistory()
       expect(toastService.getHistory()).toHaveLength(0)
     })
@@ -116,7 +127,7 @@ describe('Toast System', () => {
       for (let i = 0; i < 60; i++) {
         toastService.success(`Toast ${i}`)
       }
-      
+
       const history = toastService.getHistory()
       expect(history).toHaveLength(50)
       expect(history[0].title).toBe('Toast 59') // Most recent
@@ -125,11 +136,11 @@ describe('Toast System', () => {
 
     it('should handle business-specific toasts', () => {
       const undoAction = jest.fn()
-      
+
       toastService.businessSaved('Test Business', undoAction)
       toastService.inquirySent('Test Business')
       toastService.evaluationCompleted('Test Business', '$1M')
-      
+
       const history = toastService.getHistory()
       expect(history).toHaveLength(3)
       expect(history[2].title).toBe('Business Saved Successfully')
@@ -140,7 +151,7 @@ describe('Toast System', () => {
 
     it('should handle form validation errors', () => {
       toastService.formValidationError('Email', 'Invalid format')
-      
+
       const history = toastService.getHistory()
       expect(history).toHaveLength(1)
       expect(history[0].type).toBe('error')
@@ -150,17 +161,19 @@ describe('Toast System', () => {
 
     it('should handle API errors', () => {
       toastService.apiError('save business')
-      
+
       const history = toastService.getHistory()
       expect(history).toHaveLength(1)
       expect(history[0].type).toBe('error')
       expect(history[0].title).toBe('Operation Failed')
-      expect(history[0].description).toBe('Failed to save business. Please try again.')
+      expect(history[0].description).toBe(
+        'Failed to save business. Please try again.'
+      )
     })
 
     it('should handle network errors', () => {
       toastService.networkError()
-      
+
       const history = toastService.getHistory()
       expect(history).toHaveLength(1)
       expect(history[0].type).toBe('error')
@@ -169,10 +182,14 @@ describe('Toast System', () => {
 
     it('should update progress toast', () => {
       const toastId = toastService.progress('Initial Progress')
-      
-      toastService.updateProgress(toastId, 'Updated Progress', 'Still working...')
+
+      toastService.updateProgress(
+        toastId,
+        'Updated Progress',
+        'Still working...'
+      )
       toastService.completeProgress(toastId, 'Completed!', 'Task finished')
-      
+
       // History should still have one entry for the original toast
       const history = toastService.getHistory()
       expect(history).toHaveLength(1)
@@ -186,7 +203,7 @@ describe('Toast System', () => {
           <div data-testid="child">Test Child</div>
         </TestWrapper>
       )
-      
+
       expect(screen.getByTestId('child')).toBeInTheDocument()
     })
 
@@ -196,13 +213,13 @@ describe('Toast System', () => {
         // For testing, we'll just verify the provider doesn't crash
         return <div data-testid="context-test">Context Test</div>
       }
-      
+
       render(
         <TestWrapper>
           <TestComponent />
         </TestWrapper>
       )
-      
+
       expect(screen.getByTestId('context-test')).toBeInTheDocument()
     })
   })
@@ -214,7 +231,7 @@ describe('Toast System', () => {
           <ToastDemo />
         </TestWrapper>
       )
-      
+
       expect(screen.getByText('Business Saved')).toBeInTheDocument()
       expect(screen.getByText('Inquiry Sent')).toBeInTheDocument()
       expect(screen.getByText('Form Error')).toBeInTheDocument()
@@ -226,20 +243,20 @@ describe('Toast System', () => {
 
     it('should trigger toasts when buttons are clicked', async () => {
       const user = userEvent.setup()
-      
+
       render(
         <TestWrapper>
           <ToastDemo />
         </TestWrapper>
       )
-      
+
       // Clear any existing history
       toastService.clearHistory()
-      
+
       // Click success button
       const businessSavedBtn = screen.getByText('Business Saved')
       await user.click(businessSavedBtn)
-      
+
       // Wait for toast to be added to history
       await waitFor(() => {
         const history = toastService.getHistory()
@@ -250,32 +267,35 @@ describe('Toast System', () => {
 
     it('should handle progress toasts with completion', async () => {
       const user = userEvent.setup()
-      
+
       render(
         <TestWrapper>
           <ToastDemo />
         </TestWrapper>
       )
-      
+
       // Clear history
       toastService.clearHistory()
-      
+
       // Click file upload button
       const fileUploadBtn = screen.getByText('File Upload')
       await user.click(fileUploadBtn)
-      
+
       // Should create initial progress toast
       await waitFor(() => {
         const history = toastService.getHistory()
         expect(history).toHaveLength(1)
         expect(history[0].title).toBe('Uploading File')
       })
-      
+
       // Wait for completion (demo has 3 second timeout)
-      await waitFor(() => {
-        const history = toastService.getHistory()
-        expect(history).toHaveLength(1) // Still one entry, but completed
-      }, { timeout: 4000 })
+      await waitFor(
+        () => {
+          const history = toastService.getHistory()
+          expect(history).toHaveLength(1) // Still one entry, but completed
+        },
+        { timeout: 4000 }
+      )
     })
   })
 
@@ -286,7 +306,7 @@ describe('Toast System', () => {
           <ToastHistory />
         </TestWrapper>
       )
-      
+
       expect(screen.getByText('No notifications yet')).toBeInTheDocument()
     })
 
@@ -294,47 +314,47 @@ describe('Toast System', () => {
       // Add some toasts to history
       toastService.success('Test Success')
       toastService.error('Test Error')
-      
+
       render(
         <TestWrapper>
           <ToastHistory />
         </TestWrapper>
       )
-      
+
       expect(screen.getByText('Test Success')).toBeInTheDocument()
       expect(screen.getByText('Test Error')).toBeInTheDocument()
     })
 
     it('should show clear button when there are toasts', () => {
       toastService.success('Test Success')
-      
+
       render(
         <TestWrapper>
           <ToastHistory />
         </TestWrapper>
       )
-      
+
       const clearButton = screen.getByRole('button', { name: /trash/i })
       expect(clearButton).toBeInTheDocument()
     })
 
     it('should clear history when clear button is clicked', async () => {
       const user = userEvent.setup()
-      
+
       toastService.success('Test Success')
       toastService.error('Test Error')
-      
+
       render(
         <TestWrapper>
           <ToastHistory />
         </TestWrapper>
       )
-      
+
       expect(screen.getByText('Test Success')).toBeInTheDocument()
-      
+
       const clearButton = screen.getByRole('button', { name: /trash/i })
       await user.click(clearButton)
-      
+
       await waitFor(() => {
         expect(screen.getByText('No notifications yet')).toBeInTheDocument()
       })
@@ -343,31 +363,31 @@ describe('Toast System', () => {
     it('should show undo button for toasts with undo action', () => {
       const undoAction = jest.fn()
       toastService.success('Test Success', 'Description', { undoAction })
-      
+
       render(
         <TestWrapper>
           <ToastHistory />
         </TestWrapper>
       )
-      
+
       expect(screen.getByText('Undo')).toBeInTheDocument()
     })
 
     it('should call undo action when undo button is clicked', async () => {
       const user = userEvent.setup()
       const undoAction = jest.fn()
-      
+
       toastService.success('Test Success', 'Description', { undoAction })
-      
+
       render(
         <TestWrapper>
           <ToastHistory />
         </TestWrapper>
       )
-      
+
       const undoButton = screen.getByText('Undo')
       await user.click(undoButton)
-      
+
       expect(undoAction).toHaveBeenCalledTimes(1)
     })
 
@@ -376,13 +396,13 @@ describe('Toast System', () => {
       for (let i = 0; i < 10; i++) {
         toastService.success(`Toast ${i}`)
       }
-      
+
       render(
         <TestWrapper>
           <ToastHistory maxItems={5} />
         </TestWrapper>
       )
-      
+
       // Should only show 5 most recent
       expect(screen.getByText('Toast 9')).toBeInTheDocument()
       expect(screen.getByText('Toast 5')).toBeInTheDocument()
@@ -397,7 +417,7 @@ describe('Toast System', () => {
           <ToastDemo />
         </TestWrapper>
       )
-      
+
       const buttons = screen.getAllByRole('button')
       buttons.forEach(button => {
         expect(button).toBeInTheDocument()
@@ -408,22 +428,22 @@ describe('Toast System', () => {
 
     it('should support keyboard navigation', async () => {
       const user = userEvent.setup()
-      
+
       render(
         <TestWrapper>
           <ToastDemo />
         </TestWrapper>
       )
-      
+
       const firstButton = screen.getByText('Business Saved')
-      
+
       // Should be focusable
       await user.tab()
       expect(firstButton).toHaveFocus()
-      
+
       // Should be activatable with Enter
       await user.keyboard('{Enter}')
-      
+
       await waitFor(() => {
         const history = toastService.getHistory()
         expect(history).toHaveLength(1)
@@ -434,18 +454,18 @@ describe('Toast System', () => {
   describe('Performance', () => {
     it('should handle multiple rapid toast calls', () => {
       const startTime = performance.now()
-      
+
       // Create many toasts rapidly
       for (let i = 0; i < 100; i++) {
         toastService.success(`Toast ${i}`)
       }
-      
+
       const endTime = performance.now()
       const duration = endTime - startTime
-      
+
       // Should complete within reasonable time (less than 100ms)
       expect(duration).toBeLessThan(100)
-      
+
       // Should maintain only the last 50 (max history size)
       const history = toastService.getHistory()
       expect(history).toHaveLength(50)
@@ -453,12 +473,12 @@ describe('Toast System', () => {
 
     it('should not leak memory with many toasts', () => {
       const initialHistory = toastService.getHistory().length
-      
+
       // Add many toasts
       for (let i = 0; i < 200; i++) {
         toastService.success(`Memory test ${i}`)
       }
-      
+
       // Should still respect max size
       const history = toastService.getHistory()
       expect(history.length).toBeLessThanOrEqual(50)

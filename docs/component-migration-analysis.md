@@ -1,4 +1,5 @@
 # GoodBuy HQ Component Migration Analysis
+
 ## Converting from Custom Components to ShadCN UI
 
 ### Executive Summary
@@ -8,6 +9,7 @@ This analysis documents the current component architecture in the GoodBuy HQ cod
 ### Current Architecture Analysis
 
 #### 1. Styling Approach
+
 - **Primary**: Tailwind CSS with custom utility classes
 - **Component Library**: Partial ShadCN UI implementation (v4)
 - **Design System**: Custom CSS variables with HSL color system
@@ -15,6 +17,7 @@ This analysis documents the current component architecture in the GoodBuy HQ cod
 - **Animations**: Framer Motion + custom Tailwind animations
 
 #### 2. Existing ShadCN Components (Already Implemented)
+
 The following ShadCN components are already implemented and functioning:
 
 ```typescript
@@ -32,13 +35,14 @@ The following ShadCN components are already implemented and functioning:
 #### 3. Custom Components Requiring Migration
 
 ##### Forms and Inputs
+
 - **SignInForm** (`src/components/forms/signin-form.tsx`)
   - Uses custom `input-field` CSS class
   - Custom OAuth button styling
   - Form validation with react-hook-form
   - **Migration**: Convert to ShadCN Form + Input components
 
-- **SignUpForm** (`src/components/forms/signup-form.tsx`)  
+- **SignUpForm** (`src/components/forms/signup-form.tsx`)
   - Similar pattern to SignInForm
   - **Migration**: Convert to ShadCN Form + Input components
 
@@ -53,13 +57,15 @@ The following ShadCN components are already implemented and functioning:
   - **Migration**: ShadCN RadioGroup + Checkbox + Label
 
 ##### Modals and Dialogs
+
 - **InquiryModal** (`src/components/modals/inquiry-modal.tsx`)
   - Custom modal with backdrop and animations
   - Form inside modal with validation
   - Success state with custom styling
   - **Migration**: ShadCN Dialog + Form components
 
-##### Navigation Components  
+##### Navigation Components
+
 - **Header** (`src/components/layout/header.tsx`)
   - Custom dropdown menu for services
   - Mobile navigation with animations
@@ -67,24 +73,28 @@ The following ShadCN components are already implemented and functioning:
   - **Migration**: ShadCN DropdownMenu + NavigationMenu + Sheet (for mobile)
 
 ##### Data Display Components
+
 - **ListingDashboardClient** (`src/app/dashboard/listings/listing-dashboard-client.tsx`)
   - Custom table-like layout with status badges
   - Action menus with icons
   - **Migration**: ShadCN Table + DropdownMenu + Badge
 
 ##### Communication Components
+
 - **MessagingInterface** (`src/components/communications/messaging-interface.tsx`)
   - Chat-like interface with custom styling
   - Thread lists and message displays
   - **Migration**: ShadCN ScrollArea + Separator + Avatar
 
 ##### Loading Components
+
 - **Loading** (`src/components/ui/loading.tsx`)
   - Custom loading spinners and states
   - Skeleton components
   - **Migration**: ShadCN Skeleton + Spinner (custom)
 
 ##### File Upload Components
+
 - **ImageUpload** (`src/components/ui/image-upload.tsx`)
   - Custom file upload with drag-and-drop
   - Preview functionality
@@ -93,6 +103,7 @@ The following ShadCN components are already implemented and functioning:
 ### Migration Strategy
 
 #### Phase 1: Foundation Components (Weeks 1-2)
+
 1. **Form Components**
    - Install and configure ShadCN Form, Label, and Textarea
    - Create reusable FormField wrapper
@@ -104,6 +115,7 @@ The following ShadCN components are already implemented and functioning:
    - Migrate InquiryModal
 
 #### Phase 2: Navigation & Layout (Weeks 3-4)
+
 1. **Navigation Components**
    - Install ShadCN DropdownMenu and NavigationMenu
    - Migrate Header component
@@ -115,6 +127,7 @@ The following ShadCN components are already implemented and functioning:
    - Migrate listing dashboard
 
 #### Phase 3: Advanced Components (Weeks 5-6)
+
 1. **Communication Components**
    - Install ShadCN ScrollArea and Separator
    - Migrate messaging interface
@@ -126,6 +139,7 @@ The following ShadCN components are already implemented and functioning:
    - Implement multi-step form navigation
 
 #### Phase 4: Polish & Optimization (Week 7)
+
 1. **Loading & Feedback**
    - Install ShadCN Skeleton
    - Standardize loading states
@@ -137,36 +151,40 @@ The following ShadCN components are already implemented and functioning:
 
 ### Component Mapping Table
 
-| Current Component | ShadCN Replacement | Complexity | Notes |
-|-------------------|-------------------|------------|-------|
-| `input-field` class | `Input` + `Label` | Low | Direct replacement |
-| `InquiryModal` | `Dialog` + `DialogContent` | Medium | Need to restructure layout |
-| Custom radio groups | `RadioGroup` + `RadioGroupItem` | Medium | Better accessibility |
-| Custom dropdowns | `DropdownMenu` | Medium | Improved keyboard navigation |
-| Custom table layouts | `Table` + `DataTable` | High | Complete restructure needed |
-| Loading spinners | `Skeleton` + custom | Low | Keep custom spinner, use Skeleton for layout |
-| File upload | Custom with ShadCN styling | High | No direct ShadCN equivalent |
-| Message threads | `ScrollArea` + `Separator` | Medium | Layout restructure |
-| Status badges | `Badge` (already implemented) | None | Already using ShadCN |
+| Current Component    | ShadCN Replacement              | Complexity | Notes                                        |
+| -------------------- | ------------------------------- | ---------- | -------------------------------------------- |
+| `input-field` class  | `Input` + `Label`               | Low        | Direct replacement                           |
+| `InquiryModal`       | `Dialog` + `DialogContent`      | Medium     | Need to restructure layout                   |
+| Custom radio groups  | `RadioGroup` + `RadioGroupItem` | Medium     | Better accessibility                         |
+| Custom dropdowns     | `DropdownMenu`                  | Medium     | Improved keyboard navigation                 |
+| Custom table layouts | `Table` + `DataTable`           | High       | Complete restructure needed                  |
+| Loading spinners     | `Skeleton` + custom             | Low        | Keep custom spinner, use Skeleton for layout |
+| File upload          | Custom with ShadCN styling      | High       | No direct ShadCN equivalent                  |
+| Message threads      | `ScrollArea` + `Separator`      | Medium     | Layout restructure                           |
+| Status badges        | `Badge` (already implemented)   | None       | Already using ShadCN                         |
 
 ### Technical Considerations
 
 #### 1. Color System Migration
+
 - Current: Custom HSL variables in CSS
 - Target: ShadCN's color system with CSS variables
 - **Action**: Update color mappings in tailwind.config.ts
 
 #### 2. Animation System
+
 - Current: Mix of Framer Motion and custom CSS
 - Target: ShadCN's built-in animations with Framer Motion for complex interactions
 - **Action**: Gradually replace custom animations
 
 #### 3. Form Validation
+
 - Current: React Hook Form + Zod
 - Target: Same, but with ShadCN Form components
 - **Action**: Wrapper components to bridge react-hook-form and ShadCN
 
 #### 4. Accessibility Improvements
+
 - Current: Basic accessibility
 - Target: Full WCAG compliance with ShadCN
 - **Action**: Leverage ShadCN's built-in accessibility features
@@ -181,7 +199,7 @@ The following ShadCN components are already implemented and functioning:
    - Custom validation logic
    - **Approach**: Create composed ShadCN components with business logic
 
-2. **Business Listing Cards**  
+2. **Business Listing Cards**
    - Custom image galleries
    - Price formatting
    - Status indicators
@@ -201,6 +219,7 @@ The following ShadCN components are already implemented and functioning:
 ### Implementation Guidelines
 
 #### 1. Component Development Standards
+
 ```typescript
 // Template for migrated components
 import { cn } from '@/lib/utils'
@@ -223,12 +242,14 @@ export function Component({ ...props }: ComponentProps) {
 ```
 
 #### 2. Testing Strategy
+
 - Unit tests for each migrated component
 - Visual regression testing for UI consistency
 - Accessibility testing with automated tools
 - User acceptance testing for complex workflows
 
 #### 3. Documentation Requirements
+
 - Component usage examples
 - Migration guides for each component
 - Storybook documentation
@@ -237,16 +258,19 @@ export function Component({ ...props }: ComponentProps) {
 ### Risk Assessment
 
 #### Low Risk
+
 - Basic form inputs (Input, Label, Button)
 - Simple modals and dialogs
 - Badge and status indicators
 
-#### Medium Risk  
+#### Medium Risk
+
 - Navigation menus (potential layout shifts)
 - Complex forms (validation integration)
 - Data tables (performance with large datasets)
 
 #### High Risk
+
 - File upload components (custom functionality)
 - Real-time messaging (state synchronization)
 - Chart components (Chart.js integration)

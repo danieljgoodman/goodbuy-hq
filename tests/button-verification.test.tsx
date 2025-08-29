@@ -1,6 +1,6 @@
 /**
  * Button Verification Test
- * 
+ *
  * This test verifies that all button components across the GoodBuy HQ app
  * have been successfully replaced with ShadCN Button variants.
  */
@@ -30,9 +30,7 @@ const MockDashboard = () => (
     <Button variant="outline" className="bg-white/20">
       Browse Marketplace
     </Button>
-    <Button variant="secondary">
-      Create Listing
-    </Button>
+    <Button variant="secondary">Create Listing</Button>
     <Button variant="ghost" size="sm">
       View all activity
     </Button>
@@ -44,22 +42,18 @@ const MockInquiryModal = () => (
     <Button variant="ghost" size="icon" className="rounded-full">
       ×
     </Button>
-    <Button variant="outline">
-      Cancel
-    </Button>
-    <Button type="submit">
-      Send Inquiry
-    </Button>
+    <Button variant="outline">Cancel</Button>
+    <Button type="submit">Send Inquiry</Button>
   </div>
 )
 
 describe('Button Component Replacements', () => {
   it('renders LoadingButton with ShadCN variants correctly', () => {
     render(<MockSignInForm />)
-    
+
     const googleButton = screen.getByText('Continue with Google')
     const signInButton = screen.getByText('Sign In')
-    
+
     expect(googleButton).toBeInTheDocument()
     expect(signInButton).toBeInTheDocument()
     expect(signInButton.getAttribute('type')).toBe('submit')
@@ -67,12 +61,12 @@ describe('Button Component Replacements', () => {
 
   it('renders dashboard buttons with proper variants', () => {
     render(<MockDashboard />)
-    
+
     const editProfile = screen.getByText('Edit Profile')
     const browse = screen.getByText('Browse Marketplace')
     const create = screen.getByText('Create Listing')
     const viewAll = screen.getByText('View all activity')
-    
+
     expect(editProfile).toBeInTheDocument()
     expect(browse).toBeInTheDocument()
     expect(create).toBeInTheDocument()
@@ -81,10 +75,10 @@ describe('Button Component Replacements', () => {
 
   it('renders modal buttons with correct variants', () => {
     render(<MockInquiryModal />)
-    
+
     const cancelButton = screen.getByText('Cancel')
     const sendButton = screen.getByText('Send Inquiry')
-    
+
     expect(cancelButton).toBeInTheDocument()
     expect(sendButton).toBeInTheDocument()
     expect(sendButton.getAttribute('type')).toBe('submit')
@@ -136,7 +130,7 @@ describe('Button Component Replacements', () => {
 
     const notLoadingButton = screen.getByText('Not Loading')
     const loadingButton = screen.getByText('Loading')
-    
+
     expect(notLoadingButton).toBeInTheDocument()
     expect(loadingButton).toBeInTheDocument()
     expect(loadingButton).toBeDisabled()
@@ -144,11 +138,7 @@ describe('Button Component Replacements', () => {
 
   it('maintains proper accessibility attributes', () => {
     render(
-      <Button 
-        disabled 
-        aria-label="Accessible button"
-        title="Button tooltip"
-      >
+      <Button disabled aria-label="Accessible button" title="Button tooltip">
         Accessible Button
       </Button>
     )
@@ -163,7 +153,7 @@ describe('Button Component Replacements', () => {
 describe('Button Styling and Theming', () => {
   it('applies custom CSS classes correctly', () => {
     render(<Button className="custom-class bg-red-500">Custom Button</Button>)
-    
+
     const button = screen.getByText('Custom Button')
     expect(button).toHaveClass('custom-class')
   })
@@ -171,8 +161,12 @@ describe('Button Styling and Theming', () => {
   it('maintains GoodBuy brand colors in custom buttons', () => {
     render(
       <div>
-        <Button className="bg-primary-500 hover:bg-primary-600">Primary Brand</Button>
-        <Button className="bg-gradient-to-r from-blue-500 to-indigo-600">Gradient Brand</Button>
+        <Button className="bg-primary-500 hover:bg-primary-600">
+          Primary Brand
+        </Button>
+        <Button className="bg-gradient-to-r from-blue-500 to-indigo-600">
+          Gradient Brand
+        </Button>
       </div>
     )
 

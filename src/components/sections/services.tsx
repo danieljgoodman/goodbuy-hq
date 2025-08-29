@@ -11,6 +11,8 @@ import {
   Zap,
   Shield,
   Target,
+  CheckCircle2,
+  Star,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
@@ -23,6 +25,7 @@ import {
 } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { motion } from 'framer-motion'
+import { cn } from '@/lib/utils'
 
 const services = [
   {
@@ -36,11 +39,11 @@ const services = [
       'Multi-model validation',
       'Investment-grade reports',
     ],
-    color: 'primary',
     href: '/services/ai-valuation',
-    gradient: 'from-blue-500 to-indigo-600',
-    accent: 'blue',
+    gradient: 'from-primary to-purple-600',
+    iconBg: 'bg-gradient-to-br from-primary to-purple-600',
     premium: true,
+    metric: { label: 'Accuracy Rate', value: '98%' },
   },
   {
     icon: Shield,
@@ -53,11 +56,11 @@ const services = [
       'Stress test scenarios',
       'Security analytics',
     ],
-    color: 'success',
     href: '/services/financial-health',
-    gradient: 'from-green-500 to-emerald-600',
-    accent: 'green',
+    gradient: 'from-success to-emerald-600',
+    iconBg: 'bg-gradient-to-br from-success to-emerald-600',
     premium: false,
+    metric: { label: 'Risk Detection', value: '99.2%' },
   },
   {
     icon: Target,
@@ -70,11 +73,11 @@ const services = [
       'Market sizing',
       'Trend forecasting',
     ],
-    color: 'accent',
     href: '/services/market-analysis',
-    gradient: 'from-purple-500 to-pink-600',
-    accent: 'purple',
+    gradient: 'from-purple-500 to-primary',
+    iconBg: 'bg-gradient-to-br from-purple-500 to-primary',
     premium: true,
+    metric: { label: 'Market Coverage', value: '95%' },
   },
   {
     icon: Zap,
@@ -87,281 +90,275 @@ const services = [
       'Resource optimization',
       'Strategic roadmap',
     ],
-    color: 'warning',
     href: '/services/growth-score',
-    gradient: 'from-orange-500 to-yellow-500',
-    accent: 'orange',
+    gradient: 'from-warning to-orange-500',
+    iconBg: 'bg-gradient-to-br from-warning to-orange-500',
     premium: false,
+    metric: { label: 'Growth Prediction', value: '97%' },
   },
 ]
 
-const colorClasses = {
-  primary: {
-    bg: 'bg-primary-50',
-    icon: 'text-primary-600',
-    border: 'border-primary-200',
-    button: 'text-primary-600 hover:text-primary-700',
-  },
-  success: {
-    bg: 'bg-success-50',
-    icon: 'text-success-600',
-    border: 'border-success-200',
-    button: 'text-success-600 hover:text-success-700',
-  },
-  accent: {
-    bg: 'bg-accent-50',
-    icon: 'text-accent-600',
-    border: 'border-accent-200',
-    button: 'text-accent-600 hover:text-accent-700',
-  },
-  warning: {
-    bg: 'bg-warning-50',
-    icon: 'text-warning-600',
-    border: 'border-warning-200',
-    button: 'text-warning-600 hover:text-warning-700',
-  },
-}
-
 export function Services() {
   return (
-    <section className="py-20 lg:py-28 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
-      {/* Background elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-10 w-72 h-72 bg-blue-200/30 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-purple-200/30 rounded-full blur-3xl" />
+    <section 
+      className="relative py-20 lg:py-32 overflow-hidden"
+      style={{
+        background: `
+          linear-gradient(135deg, 
+            hsl(var(--background)) 0%,
+            color-mix(in srgb, hsl(var(--primary)) 5%, hsl(var(--background))) 50%,
+            hsl(var(--background)) 100%
+          )
+        `
+      }}
+      aria-labelledby="services-title"
+    >
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-r from-primary/20 to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-l from-primary/20 to-transparent rounded-full blur-3xl"></div>
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Enhanced Section Header */}
-        <motion.div
-          className="text-center max-w-4xl mx-auto mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <motion.div
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium mb-6"
-            initial={{ scale: 0.9, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.4 }}
-            viewport={{ once: true }}
+        {/* Section Header */}
+        <div className="text-center max-w-4xl mx-auto mb-20">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-6 border border-primary/20">
+            <Sparkles className="w-4 h-4" />
+            AI-Powered Solutions
+            <Sparkles className="w-4 h-4" />
+          </div>
+          
+          <h2 
+            id="services-title"
+            className="hero-title text-4xl sm:text-5xl lg:text-6xl font-bold mb-6"
           >
-            <Sparkles className="w-4 h-4" />
-            <span>AI-Powered Solutions</span>
-            <Sparkles className="w-4 h-4" />
-          </motion.div>
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 mb-6">
             Next-Generation
-            <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="block bg-gradient-to-r from-primary via-purple-600 to-primary bg-clip-text text-transparent text-gradient hero-subtitle">
               Business Intelligence
             </span>
           </h2>
-          <p className="text-xl text-slate-600 leading-relaxed">
+          
+          <p className="text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
             Revolutionary AI platform that transforms raw business data into
             actionable insights, providing unprecedented visibility into your
             company's true potential and market position.
           </p>
-        </motion.div>
+        </div>
 
-        {/* Premium Services Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Professional Services Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {services.map((service, index) => {
             const IconComponent = service.icon
 
             return (
-              <motion.div
+              <div
                 key={service.title}
                 className="group relative"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{
-                  delay: index * 0.1,
-                  duration: 0.6,
-                  ease: 'easeOut',
+                style={{ 
+                  animation: `fadeInUp 0.8s ease-out ${index * 0.2}s both`
                 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -8 }}
               >
-                <Card className="relative backdrop-blur-sm border-slate-200/50 bg-white/80 h-full shadow-lg shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 transition-all duration-500 overflow-hidden">
+                {/* Service Card */}
+                <Card className={cn(
+                  "relative overflow-hidden border-0 shadow-lg hover:shadow-2xl",
+                  "transition-all duration-500 animate-fade-in hover:scale-[1.02] h-full",
+                  "bg-card/90 backdrop-blur-sm hover:bg-card/95"
+                )}>
                   {/* Premium Badge */}
                   {service.premium && (
-                    <motion.div
-                      className="absolute top-4 right-4 z-10"
-                      initial={{ scale: 0, rotate: -10 }}
-                      whileInView={{ scale: 1, rotate: 0 }}
-                      transition={{ delay: 0.3 + index * 0.1, duration: 0.4 }}
-                      viewport={{ once: true }}
-                    >
-                      <Badge className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-bold hover:from-yellow-500 hover:to-orange-600">
+                    <div className="absolute top-4 right-4 z-10">
+                      <Badge className="bg-gradient-to-r from-primary to-purple-600 text-primary-foreground font-bold hover:from-primary/90 hover:to-purple-600/90 shadow-lg">
                         PRO
                       </Badge>
-                    </motion.div>
+                    </div>
                   )}
 
-                  {/* Gradient Background Effect */}
-                  <div
-                    className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500 rounded-2xl`}
-                  />
+                  {/* Gradient border effect */}
+                  <div className={cn(
+                    "absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 blur-sm",
+                    service.gradient
+                  )} />
 
-                  {/* Icon with enhanced styling */}
-                  <motion.div
-                    className={`relative w-16 h-16 bg-gradient-to-br ${service.gradient} rounded-xl flex items-center justify-center mb-6 shadow-lg`}
-                    whileHover={{
-                      scale: 1.1,
-                      rotate: [0, -5, 5, 0],
-                    }}
-                    transition={{
-                      type: 'spring',
-                      stiffness: 400,
-                      damping: 10,
-                      rotate: { duration: 0.6 },
-                    }}
-                  >
-                    <IconComponent className="w-8 h-8 text-white" />
+                  <CardContent className="relative p-6">
+                    {/* Icon with enhanced styling */}
+                    <div className="relative mb-6">
+                      <div className={cn(
+                        "w-16 h-16 rounded-2xl flex items-center justify-center shadow-xl group-hover:shadow-2xl transition-all duration-300",
+                        service.iconBg
+                      )}>
+                        <IconComponent className="w-8 h-8 text-white" />
+                        
+                        {/* Icon glow effect */}
+                        <div className={cn(
+                          "absolute inset-0 rounded-2xl blur-xl opacity-30 group-hover:opacity-60 transition-opacity duration-500 -z-10",
+                          service.iconBg
+                        )} />
+                      </div>
+                    </div>
 
-                    {/* Icon glow effect */}
-                    <div
-                      className={`absolute inset-0 bg-gradient-to-br ${service.gradient} rounded-xl blur-xl opacity-30 -z-10 group-hover:opacity-60 transition-opacity duration-500`}
-                    />
-                  </motion.div>
+                    {/* Content */}
+                    <div className="space-y-4">
+                      <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">
+                        {service.title}
+                      </h3>
+                      <p className="text-muted-foreground leading-relaxed text-sm">
+                        {service.description}
+                      </p>
 
-                  {/* Content */}
-                  <div className="relative space-y-4">
-                    <motion.h3
-                      className="text-xl font-bold text-slate-900 group-hover:text-slate-800"
-                      whileHover={{ x: 2 }}
-                      transition={{
-                        type: 'spring',
-                        stiffness: 400,
-                        damping: 10,
-                      }}
-                    >
-                      {service.title}
-                    </motion.h3>
-                    <p className="text-slate-600 leading-relaxed text-sm">
-                      {service.description}
-                    </p>
+                      {/* Performance Metric */}
+                      <div className="relative overflow-hidden rounded-xl p-4 bg-gradient-to-br from-primary/5 via-card to-purple-50/30 border border-primary/10">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <div className={cn(
+                              "text-2xl font-bold bg-gradient-to-r bg-clip-text text-transparent",
+                              service.gradient
+                            )}>
+                              {service.metric.value}
+                            </div>
+                            <div className="text-xs font-medium text-muted-foreground">
+                              {service.metric.label}
+                            </div>
+                          </div>
+                          <TrendingUp className="w-6 h-6 text-primary/60" />
+                        </div>
+                      </div>
 
-                    {/* Enhanced Features */}
-                    <motion.ul
-                      className="space-y-2"
-                      initial={{ opacity: 0.8 }}
-                      whileInView={{ opacity: 1 }}
-                      transition={{ delay: 0.2 + index * 0.1 }}
-                      viewport={{ once: true }}
-                    >
-                      {service.features.map((feature, featureIndex) => (
-                        <motion.li
-                          key={feature}
-                          className="flex items-center text-xs text-slate-600 group-hover:text-slate-700"
-                          initial={{ opacity: 0, x: -10 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          transition={{
-                            delay: 0.3 + index * 0.1 + featureIndex * 0.05,
-                          }}
-                          viewport={{ once: true }}
-                          whileHover={{ x: 4 }}
-                        >
-                          <motion.div
-                            className={`w-1.5 h-1.5 bg-gradient-to-r ${service.gradient} rounded-full mr-3`}
-                            whileHover={{ scale: 1.2 }}
-                            transition={{
-                              type: 'spring',
-                              stiffness: 400,
-                              damping: 10,
-                            }}
-                          />
-                          {feature}
-                        </motion.li>
-                      ))}
-                    </motion.ul>
-                  </div>
-
-                  {/* Enhanced CTA */}
-                  <div className="mt-6 pt-6 border-t border-slate-200/50">
-                    <Link href={service.href}>
-                      <motion.div
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                      >
-                        <Button
-                          variant="ghost"
-                          className={`w-full justify-between text-slate-700 hover:bg-gradient-to-r hover:${service.gradient} hover:text-white border border-slate-200/50 hover:border-transparent group transition-all duration-300`}
-                        >
-                          <span className="font-medium">Explore</span>
-                          <motion.div
-                            whileHover={{ x: 4 }}
-                            transition={{
-                              type: 'spring',
-                              stiffness: 400,
-                              damping: 10,
+                      {/* Enhanced Features */}
+                      <div className="space-y-2">
+                        {service.features.map((feature, featureIndex) => (
+                          <div
+                            key={feature}
+                            className="flex items-center text-sm text-muted-foreground group-hover:text-foreground transition-colors duration-300"
+                            style={{ 
+                              animationDelay: `${(index * 0.2) + (featureIndex * 0.1)}s`
                             }}
                           >
-                            <ArrowRight className="w-4 h-4" />
-                          </motion.div>
-                        </Button>
-                      </motion.div>
-                    </Link>
-                  </div>
+                            <CheckCircle2 className="w-4 h-4 text-success mr-3 flex-shrink-0" />
+                            <span>{feature}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </CardContent>
 
-                  {/* Floating elements on hover */}
-                  <div className="absolute -top-2 -right-2 w-4 h-4 bg-gradient-to-br from-blue-400 to-purple-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-gradient-to-br from-green-400 to-blue-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                  {/* Enhanced CTA */}
+                  <CardFooter className="p-6 pt-0">
+                    <Link href={service.href} className="w-full">
+                      <Button
+                        variant="outline"
+                        className="w-full justify-between text-foreground hover:text-primary-foreground border-border/50 hover:border-primary bg-transparent hover:bg-primary transition-all duration-300 group/btn"
+                      >
+                        <span className="font-medium">Explore Service</span>
+                        <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
+                      </Button>
+                    </Link>
+                  </CardFooter>
+
+                  {/* Bottom Gradient Accent */}
+                  <div className={cn(
+                    "absolute bottom-0 left-0 right-0 h-1 rounded-b-lg bg-gradient-to-r opacity-0 group-hover:opacity-100 transition-opacity duration-500",
+                    service.gradient
+                  )} />
                 </Card>
-              </motion.div>
+              </div>
             )
           })}
         </div>
 
         {/* Enhanced Bottom CTA */}
-        <motion.div
-          className="text-center mt-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <motion.div
-            className="inline-block"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Link href="/auth/signup">
-              <Button
-                size="lg"
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg shadow-blue-500/25 px-8 py-4 text-lg font-medium"
-              >
-                <Sparkles className="mr-2 w-5 h-5" />
-                Start Your AI Journey
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-            </Link>
-          </motion.div>
-          <motion.div
-            className="flex items-center justify-center gap-4 mt-4 text-sm text-slate-500"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.8, duration: 0.4 }}
-            viewport={{ once: true }}
-          >
-            <div className="flex items-center gap-1">
-              <div className="w-2 h-2 bg-green-500 rounded-full" />
-              <span>No credit card required</span>
+        <div className="mt-20">
+          <div className="relative overflow-hidden business-card bg-gradient-to-br from-card via-card to-primary/5 rounded-3xl border border-border/50 p-10 shadow-2xl max-w-4xl mx-auto">
+            {/* Background Accent */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-primary/10 to-transparent rounded-full blur-3xl"></div>
+            
+            <div className="relative text-center">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-6 border border-primary/20">
+                <Sparkles className="w-4 h-4" />
+                Ready to Transform Your Business?
+              </div>
+              
+              <h3 className="text-3xl lg:text-4xl font-bold text-foreground mb-4 bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent">
+                Start Your AI-Powered Journey
+              </h3>
+              
+              <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
+                Join thousands of businesses using our AI platform to unlock hidden value, 
+                optimize operations, and accelerate growth with data-driven insights.
+              </p>
+              
+              {/* Trust Indicators */}
+              <div className="flex flex-wrap justify-center items-center gap-6 mb-8 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2">
+                  <Shield className="w-4 h-4 text-success" />
+                  <span>Bank-level Security</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-success" />
+                  <span>98%+ Accuracy</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Zap className="w-4 h-4 text-success" />
+                  <span>5-Minute Analysis</span>
+                </div>
+              </div>
+
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-6">
+                <Link href="/auth/signup">
+                  <Button 
+                    size="lg" 
+                    className="professional-cta group px-10 py-4 bg-gradient-to-r from-primary to-primary/90 text-primary-foreground rounded-xl font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center gap-2"
+                  >
+                    <Sparkles className="w-5 h-5" />
+                    <span>Start Free Analysis</span>
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                  </Button>
+                </Link>
+                
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="px-10 py-4 border-2 border-primary/20 hover:border-primary text-foreground hover:text-primary rounded-xl font-semibold text-lg transition-all duration-300 backdrop-blur-sm hover:backdrop-blur-md"
+                >
+                  View Demo
+                </Button>
+              </div>
+
+              {/* Trust Indicators Bottom */}
+              <div className="flex flex-wrap justify-center items-center gap-4 text-xs text-muted-foreground">
+                <div className="flex items-center gap-1.5">
+                  <div className="w-2 h-2 bg-success rounded-full" />
+                  <span>No credit card required</span>
+                </div>
+                <div className="w-px h-3 bg-border" />
+                <div className="flex items-center gap-1.5">
+                  <Star className="w-3 h-3 text-primary fill-current" />
+                  <span>4.9/5 user rating</span>
+                </div>
+                <div className="w-px h-3 bg-border" />
+                <div className="flex items-center gap-1.5">
+                  <div className="w-2 h-2 bg-primary rounded-full" />
+                  <span>Cancel anytime</span>
+                </div>
+              </div>
             </div>
-            <div className="w-1 h-1 bg-slate-300 rounded-full" />
-            <div className="flex items-center gap-1">
-              <div className="w-2 h-2 bg-blue-500 rounded-full" />
-              <span>14-day free trial</span>
-            </div>
-            <div className="w-1 h-1 bg-slate-300 rounded-full" />
-            <div className="flex items-center gap-1">
-              <div className="w-2 h-2 bg-purple-500 rounded-full" />
-              <span>Cancel anytime</span>
-            </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </div>
+
+      {/* CSS Animations */}
+      <style jsx>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
     </section>
   )
 }

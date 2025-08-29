@@ -1,6 +1,6 @@
 'use client'
 
-import { Star, Quote } from 'lucide-react'
+import { Star, Quote, TrendingUp, Users, DollarSign, Award } from 'lucide-react'
 import {
   Card,
   CardHeader,
@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 
 const testimonials = [
   {
@@ -100,103 +101,199 @@ const testimonials = [
 ]
 
 const stats = [
-  { value: '10,000+', label: 'Businesses Valued' },
-  { value: '95%', label: 'Accuracy Rate' },
-  { value: '$2.8B', label: 'Total Value Analyzed' },
-  { value: '4.9/5', label: 'User Rating' },
+  { 
+    value: '10,000+', 
+    label: 'Businesses Valued',
+    icon: Users,
+    color: 'from-purple-500 to-indigo-600',
+    description: 'Companies trust our AI'
+  },
+  { 
+    value: '95%', 
+    label: 'Accuracy Rate',
+    icon: Award,
+    color: 'from-emerald-500 to-green-600',
+    description: 'Precision you can rely on'
+  },
+  { 
+    value: '$2.8B', 
+    label: 'Total Value Analyzed',
+    icon: DollarSign,
+    color: 'from-amber-500 to-orange-600',
+    description: 'Enterprise-grade scale'
+  },
+  { 
+    value: '4.9/5', 
+    label: 'User Rating',
+    icon: Star,
+    color: 'from-rose-500 to-pink-600',
+    description: 'Loved by professionals'
+  },
 ]
 
 export function Testimonials() {
   return (
-    <section className="py-20 lg:py-28 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative py-20 lg:py-28 overflow-hidden">
+      {/* Background with gradient and pattern */}
+      <div className="absolute inset-0 bg-gradient-to-br from-background via-purple-50/30 to-indigo-50/30" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,theme(colors.purple.100),transparent_50%),radial-gradient(circle_at_70%_80%,theme(colors.indigo.100),transparent_50%)]" />
+      
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-secondary-900 mb-6">
-            Trusted by Industry Leaders
+        <div className="text-center max-w-4xl mx-auto mb-20">
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-purple-100 to-indigo-100 border border-purple-200/50 backdrop-blur-sm mb-8">
+            <Award className="w-4 h-4 text-purple-600 mr-2" />
+            <span className="text-sm font-medium text-purple-700">Trusted by Industry Leaders</span>
+          </div>
+          
+          <h2 className="hero-title text-4xl sm:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-foreground via-purple-900 to-indigo-900 bg-clip-text text-transparent text-gradient mb-8">
+            What Our Users Say
           </h2>
-          <p className="text-lg text-secondary-600 leading-relaxed">
-            Join thousands of business owners, investors, and advisors who rely
-            on our AI-powered platform for accurate business valuations.
+          
+          <p className="text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
+            Join thousands of business owners, investors, and advisors who rely on our 
+            AI-powered platform for accurate business valuations and strategic insights.
           </p>
         </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-          {stats.map((stat, index) => (
-            <div
-              key={stat.label}
-              className="text-center animate-fade-in"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              <div className="text-3xl lg:text-4xl font-bold text-primary-600 mb-2">
-                {stat.value}
-              </div>
-              <div className="text-secondary-600 font-medium">{stat.label}</div>
-            </div>
-          ))}
+        {/* Enhanced Stats Section */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-20">
+          {stats.map((stat, index) => {
+            const Icon = stat.icon
+            return (
+              <Card
+                key={stat.label}
+                className={cn(
+                  "group relative overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-500",
+                  "bg-white/80 backdrop-blur-sm hover:bg-white/90",
+                  "animate-fade-in hover:scale-105"
+                )}
+                style={{ animationDelay: `${index * 150}ms` }}
+              >
+                {/* Gradient background overlay */}
+                <div className={cn(
+                  "absolute inset-0 bg-gradient-to-br opacity-5 group-hover:opacity-10 transition-opacity",
+                  stat.color
+                )} />
+                
+                <CardContent className="p-6 text-center relative z-10">
+                  {/* Icon */}
+                  <div className={cn(
+                    "inline-flex items-center justify-center w-14 h-14 rounded-xl mb-4",
+                    "bg-gradient-to-br shadow-lg group-hover:shadow-xl transition-all duration-300",
+                    stat.color
+                  )}>
+                    <Icon className="w-7 h-7 text-white" />
+                  </div>
+                  
+                  {/* Value */}
+                  <div className="text-3xl lg:text-4xl font-bold text-foreground mb-2 group-hover:scale-110 transition-transform duration-300">
+                    {stat.value}
+                  </div>
+                  
+                  {/* Label */}
+                  <div className="text-sm font-semibold text-foreground mb-1">
+                    {stat.label}
+                  </div>
+                  
+                  {/* Description */}
+                  <div className="text-xs text-muted-foreground">
+                    {stat.description}
+                  </div>
+                </CardContent>
+              </Card>
+            )
+          })}
         </div>
 
-        {/* Testimonials Grid */}
+        {/* Professional Testimonials Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {testimonials.map((testimonial, index) => (
             <Card
               key={testimonial.id}
-              className="hover:shadow-xl transition-shadow duration-300 animate-fade-in"
-              style={{ animationDelay: `${index * 150}ms` }}
+              className={cn(
+                "group relative overflow-hidden border-0 shadow-lg hover:shadow-2xl",
+                "transition-all duration-500 animate-fade-in hover:scale-[1.02]",
+                "bg-white/90 backdrop-blur-sm hover:bg-white/95"
+              )}
+              style={{ animationDelay: `${(index + 4) * 100}ms` }}
             >
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  {/* Quote Icon */}
-                  <Quote className="w-8 h-8 text-primary-300" />
+              {/* Gradient border effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-200 via-indigo-200 to-purple-200 opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 blur-sm" />
+              
+              <CardHeader className="relative">
+                <div className="flex items-start justify-between mb-4">
+                  {/* Quote Icon with gradient */}
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-lg blur-lg opacity-20 group-hover:opacity-30 transition-opacity" />
+                    <div className="relative bg-gradient-to-br from-purple-100 to-indigo-100 p-3 rounded-lg">
+                      <Quote className="w-6 h-6 text-purple-600" />
+                    </div>
+                  </div>
 
-                  {/* Rating */}
-                  <div className="flex items-center">
+                  {/* Enhanced Rating */}
+                  <div className="flex items-center space-x-1">
                     {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className="w-4 h-4 text-warning-400 fill-current"
-                      />
+                      <div key={i} className="relative">
+                        <Star className="w-4 h-4 text-amber-400 fill-current drop-shadow-sm" />
+                      </div>
                     ))}
                   </div>
                 </div>
               </CardHeader>
 
-              <CardContent>
-                {/* Quote */}
-                <blockquote className="text-secondary-700 leading-relaxed mb-6">
+              <CardContent className="relative">
+                {/* Quote with better typography */}
+                <blockquote className="text-foreground/90 leading-relaxed mb-6 text-base font-medium">
                   "{testimonial.quote}"
                 </blockquote>
 
-                {/* Metrics */}
-                <div className="bg-gradient-to-r from-primary-50 to-accent-50 rounded-lg p-4 mb-6">
-                  <div className="text-2xl font-bold text-secondary-900">
-                    {testimonial.metrics.value}
-                  </div>
-                  <div className="text-sm text-secondary-600">
-                    {testimonial.metrics.label}
+                {/* Enhanced Metrics Card */}
+                <div className="relative overflow-hidden rounded-xl p-5 mb-6 bg-gradient-to-br from-purple-50 via-white to-indigo-50 border border-purple-100/50">
+                  <div className="absolute inset-0 bg-gradient-to-br from-purple-100/20 to-indigo-100/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="relative z-10">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+                          {testimonial.metrics.value}
+                        </div>
+                        <div className="text-sm font-medium text-muted-foreground">
+                          {testimonial.metrics.label}
+                        </div>
+                      </div>
+                      <TrendingUp className="w-8 h-8 text-purple-400" />
+                    </div>
                   </div>
                 </div>
               </CardContent>
 
-              <CardFooter>
-                {/* Author */}
+              <CardFooter className="relative">
+                {/* Professional Author Section */}
                 <div className="flex items-center w-full">
-                  <div className="w-12 h-12 bg-gradient-to-br from-primary-100 to-primary-200 rounded-full flex items-center justify-center mr-4">
-                    <span className="text-primary-600 font-semibold text-lg">
-                      {testimonial.name
-                        .split(' ')
-                        .map(n => n[0])
-                        .join('')}
-                    </span>
+                  {/* Enhanced Avatar */}
+                  <div className="relative mr-4">
+                    <div className="absolute inset-0 bg-gradient-to-br from-purple-400 to-indigo-500 rounded-full blur-sm opacity-30 group-hover:opacity-50 transition-opacity scale-110" />
+                    <div className="relative w-14 h-14 bg-gradient-to-br from-purple-500 via-purple-600 to-indigo-600 rounded-full flex items-center justify-center shadow-lg">
+                      <span className="text-white font-bold text-lg tracking-wider">
+                        {testimonial.name
+                          .split(' ')
+                          .map(n => n[0])
+                          .join('')}
+                      </span>
+                    </div>
                   </div>
-                  <div>
-                    <CardTitle className="text-base font-semibold text-secondary-900">
+                  
+                  {/* Author Info */}
+                  <div className="flex-1">
+                    <CardTitle className="text-lg font-bold text-foreground mb-1">
                       {testimonial.name}
                     </CardTitle>
-                    <CardDescription className="text-sm text-secondary-600">
-                      {testimonial.role}, {testimonial.company}
+                    <CardDescription className="text-sm text-muted-foreground font-medium">
+                      {testimonial.role}
                     </CardDescription>
+                    <div className="text-xs text-muted-foreground/80 mt-1">
+                      {testimonial.company}
+                    </div>
                   </div>
                 </div>
               </CardFooter>
@@ -204,32 +301,87 @@ export function Testimonials() {
           ))}
         </div>
 
-        {/* Bottom CTA */}
-        <div className="text-center mt-16">
-          <Card className="bg-gradient-to-br from-primary-50 via-white to-accent-50 border-primary-200 max-w-4xl mx-auto">
-            <CardContent className="p-8 lg:p-12 text-center">
-              <CardTitle className="text-2xl lg:text-3xl font-semibold text-secondary-900 mb-4">
-                Ready to join our success stories?
+        {/* Enhanced Bottom CTA */}
+        <div className="text-center mt-20">
+          <Card className="relative overflow-hidden border-0 shadow-2xl max-w-5xl mx-auto group hover:shadow-3xl transition-all duration-700">
+            {/* Animated gradient background */}
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-600 via-indigo-600 to-purple-700 opacity-95" />
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 via-transparent to-indigo-500/20 animate-pulse" />
+            
+            {/* Background pattern */}
+            <div className="absolute inset-0 opacity-10">
+              <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl" />
+              <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full translate-x-1/2 translate-y-1/2 blur-3xl" />
+            </div>
+            
+            <CardContent className="relative z-10 p-10 lg:p-16 text-center">
+              {/* Badge */}
+              <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 mb-8">
+                <Star className="w-4 h-4 text-white mr-2" />
+                <span className="text-sm font-medium text-white">Join 10,000+ Success Stories</span>
+              </div>
+              
+              {/* Title with gradient text */}
+              <CardTitle className="text-3xl lg:text-5xl font-bold text-white mb-6 leading-tight">
+                Ready to Transform Your{' '}
+                <span className="bg-gradient-to-r from-amber-200 to-yellow-200 bg-clip-text text-transparent">
+                  Business Story?
+                </span>
               </CardTitle>
-              <CardDescription className="text-lg text-secondary-600 mb-8 max-w-2xl mx-auto">
+              
+              {/* Description */}
+              <CardDescription className="text-xl text-white/90 mb-10 max-w-3xl mx-auto leading-relaxed">
                 Get your business valued by AI in minutes and discover insights
-                that could transform your company's future.
+                that could transform your company's future. Join thousands of successful
+                entrepreneurs who trust our platform.
               </CardDescription>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center mb-4">
-                <Button className="px-8 py-4 text-lg font-medium" size="lg">
+              
+              {/* Enhanced CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+                <Button 
+                  size="lg"
+                  className={cn(
+                    "px-10 py-4 text-lg font-semibold",
+                    "bg-white text-purple-700 hover:bg-white/95",
+                    "shadow-xl hover:shadow-2xl",
+                    "transform hover:scale-105 transition-all duration-300",
+                    "border-2 border-white/50 hover:border-white"
+                  )}
+                >
                   Start Your Free Valuation
+                  <TrendingUp className="ml-2 w-5 h-5" />
                 </Button>
+                
                 <Button
                   variant="outline"
-                  className="px-8 py-4 text-lg font-medium border-secondary-300 hover:border-primary-300 text-secondary-700 hover:text-primary-600"
                   size="lg"
+                  className={cn(
+                    "px-10 py-4 text-lg font-semibold",
+                    "bg-transparent text-white border-2 border-white/50",
+                    "hover:bg-white/10 hover:border-white",
+                    "backdrop-blur-sm transform hover:scale-105",
+                    "transition-all duration-300 shadow-lg hover:shadow-xl"
+                  )}
                 >
                   View Sample Report
                 </Button>
               </div>
-              <p className="text-sm text-secondary-500">
-                No credit card required • Get results in 5 minutes
-              </p>
+              
+              {/* Trust indicators */}
+              <div className="flex flex-wrap justify-center items-center gap-6 text-white/80 text-sm">
+                <div className="flex items-center">
+                  <Award className="w-4 h-4 mr-2" />
+                  No credit card required
+                </div>
+                <div className="flex items-center">
+                  <Users className="w-4 h-4 mr-2" />
+                  10,000+ businesses valued
+                </div>
+                <div className="flex items-center">
+                  <Star className="w-4 h-4 mr-2 fill-current" />
+                  4.9/5 rating
+                </div>
+              </div>
             </CardContent>
           </Card>
         </div>
