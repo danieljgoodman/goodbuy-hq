@@ -194,25 +194,27 @@ export default function BusinessOwnerDashboardClient({
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           className="text-center"
         >
           <motion.div
-            className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full mx-auto mb-4"
+            className="w-16 h-16 border-4 border-muted border-t-primary rounded-full mx-auto mb-4"
             animate={{ rotate: 360 }}
             transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
           />
-          <p className="text-slate-600">Loading your business dashboard...</p>
+          <p className="text-muted-foreground">
+            Loading your business dashboard...
+          </p>
         </motion.div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 space-y-8">
         {/* Header */}
         <motion.div
@@ -222,10 +224,10 @@ export default function BusinessOwnerDashboardClient({
           className="flex flex-col lg:flex-row lg:items-center lg:justify-between"
         >
           <div>
-            <h1 className="text-4xl font-bold text-slate-900 mb-2">
+            <h1 className="text-4xl font-bold text-foreground mb-2">
               Business Owner Dashboard
             </h1>
-            <p className="text-lg text-slate-600">
+            <p className="text-lg text-muted-foreground">
               Welcome back, {user.firstName || user.name || 'Business Owner'}!
               Manage your listings and track performance.
             </p>
@@ -238,7 +240,7 @@ export default function BusinessOwnerDashboardClient({
           >
             <button
               onClick={() => router.push('/marketplace/create')}
-              className="flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 shadow-md"
+              className="flex items-center px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-all duration-200 shadow-md"
             >
               <Plus className="w-5 h-5 mr-2" />
               Create Listing
@@ -252,21 +254,23 @@ export default function BusinessOwnerDashboardClient({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.6 }}
-            className="bg-white/80 backdrop-blur-sm rounded-2xl border border-white/20 shadow-lg p-6"
+            className="bg-card backdrop-blur-sm rounded-2xl border shadow-lg p-6"
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-slate-600">
+                <p className="text-sm font-medium text-muted-foreground">
                   Active Listings
                 </p>
                 <div className="flex items-baseline gap-2">
-                  <p className="text-3xl font-bold text-slate-900">
+                  <p className="text-3xl font-bold text-foreground">
                     {activeListings}
                   </p>
-                  <p className="text-sm text-slate-500">of {totalListings}</p>
+                  <p className="text-sm text-muted-foreground">
+                    of {totalListings}
+                  </p>
                 </div>
               </div>
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center shadow-md">
+              <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center shadow-md">
                 <Building2 className="w-6 h-6 text-white" />
               </div>
             </div>
@@ -276,22 +280,22 @@ export default function BusinessOwnerDashboardClient({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="bg-white/80 backdrop-blur-sm rounded-2xl border border-white/20 shadow-lg p-6"
+            className="bg-card backdrop-blur-sm rounded-2xl border shadow-lg p-6"
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-slate-600">
+                <p className="text-sm font-medium text-muted-foreground">
                   Total Views
                 </p>
                 <div className="flex items-baseline gap-2">
-                  <p className="text-3xl font-bold text-slate-900">
+                  <p className="text-3xl font-bold text-foreground">
                     {analytics.currentPeriodViews.toLocaleString()}
                   </p>
                   <div
                     className={`flex items-center text-sm ${
                       analytics.viewsChange >= 0
-                        ? 'text-green-600'
-                        : 'text-red-600'
+                        ? 'text-emerald-600'
+                        : 'text-destructive'
                     }`}
                   >
                     {analytics.viewsChange >= 0 ? (
@@ -303,7 +307,7 @@ export default function BusinessOwnerDashboardClient({
                   </div>
                 </div>
               </div>
-              <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center shadow-md">
+              <div className="w-12 h-12 bg-emerald-500 rounded-lg flex items-center justify-center shadow-md">
                 <Eye className="w-6 h-6 text-white" />
               </div>
             </div>
@@ -313,23 +317,25 @@ export default function BusinessOwnerDashboardClient({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.6 }}
-            className="bg-white/80 backdrop-blur-sm rounded-2xl border border-white/20 shadow-lg p-6"
+            className="bg-card backdrop-blur-sm rounded-2xl border shadow-lg p-6"
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-slate-600">Inquiries</p>
+                <p className="text-sm font-medium text-muted-foreground">
+                  Inquiries
+                </p>
                 <div className="flex items-baseline gap-2">
-                  <p className="text-3xl font-bold text-slate-900">
+                  <p className="text-3xl font-bold text-foreground">
                     {analytics.currentPeriodInquiries}
                   </p>
                   {unreadInquiries > 0 && (
-                    <div className="bg-red-100 text-red-700 text-xs px-2 py-1 rounded-full">
+                    <div className="bg-destructive/10 text-destructive text-xs px-2 py-1 rounded-full">
                       {unreadInquiries} new
                     </div>
                   )}
                 </div>
               </div>
-              <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center shadow-md">
+              <div className="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center shadow-md">
                 <MessageCircle className="w-6 h-6 text-white" />
               </div>
             </div>
@@ -339,16 +345,18 @@ export default function BusinessOwnerDashboardClient({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
-            className="bg-white/80 backdrop-blur-sm rounded-2xl border border-white/20 shadow-lg p-6"
+            className="bg-card backdrop-blur-sm rounded-2xl border shadow-lg p-6"
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-slate-600">Avg. Value</p>
-                <p className="text-3xl font-bold text-slate-900">
+                <p className="text-sm font-medium text-muted-foreground">
+                  Avg. Value
+                </p>
+                <p className="text-3xl font-bold text-foreground">
                   {formatPrice(averageValue)}
                 </p>
               </div>
-              <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center shadow-md">
+              <div className="w-12 h-12 bg-copper-500 rounded-lg flex items-center justify-center shadow-md">
                 <DollarSign className="w-6 h-6 text-white" />
               </div>
             </div>
@@ -362,16 +370,18 @@ export default function BusinessOwnerDashboardClient({
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.5, duration: 0.6 }}
-            className="bg-white/80 backdrop-blur-sm rounded-2xl border border-white/20 shadow-lg p-6"
+            className="bg-card backdrop-blur-sm rounded-2xl border shadow-lg p-6"
           >
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-semibold text-slate-900 flex items-center gap-2">
-                <BarChart3 className="w-5 h-5 text-blue-600" />
+              <h3 className="text-xl font-semibold text-foreground flex items-center gap-2">
+                <BarChart3 className="w-5 h-5 text-primary" />
                 Views Trend (30 days)
               </h3>
               <div
                 className={`flex items-center gap-1 text-sm ${
-                  analytics.viewsChange >= 0 ? 'text-green-600' : 'text-red-600'
+                  analytics.viewsChange >= 0
+                    ? 'text-emerald-600'
+                    : 'text-destructive'
                 }`}
               >
                 <TrendingUp className="w-4 h-4" />
@@ -388,12 +398,12 @@ export default function BusinessOwnerDashboardClient({
                   transition={{ delay: 0.6 + index * 0.05, duration: 0.4 }}
                   className="flex items-center gap-4"
                 >
-                  <span className="w-12 text-xs text-slate-600 text-right">
+                  <span className="w-12 text-xs text-muted-foreground text-right">
                     {item.date}
                   </span>
-                  <div className="flex-1 bg-slate-100 rounded-full h-3 overflow-hidden">
+                  <div className="flex-1 bg-muted rounded-full h-3 overflow-hidden">
                     <motion.div
-                      className="h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full"
+                      className="h-full bg-gradient-to-r from-primary to-primary rounded-full"
                       initial={{ width: 0 }}
                       animate={{
                         width: `${Math.max((item.views / maxViews) * 100, 2)}%`,
@@ -401,7 +411,7 @@ export default function BusinessOwnerDashboardClient({
                       transition={{ delay: 0.8 + index * 0.05, duration: 0.6 }}
                     />
                   </div>
-                  <span className="w-8 text-xs text-slate-600 text-right">
+                  <span className="w-8 text-xs text-muted-foreground text-right">
                     {item.views}
                   </span>
                 </motion.div>
@@ -414,10 +424,10 @@ export default function BusinessOwnerDashboardClient({
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.5, duration: 0.6 }}
-            className="bg-white/80 backdrop-blur-sm rounded-2xl border border-white/20 shadow-lg p-6"
+            className="bg-card backdrop-blur-sm rounded-2xl border shadow-lg p-6"
           >
-            <h3 className="text-xl font-semibold text-slate-900 mb-6 flex items-center gap-2">
-              <Activity className="w-5 h-5 text-green-600" />
+            <h3 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
+              <Activity className="w-5 h-5 text-emerald-600" />
               Recent Activity
             </h3>
 
@@ -431,7 +441,7 @@ export default function BusinessOwnerDashboardClient({
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.7 + index * 0.05, duration: 0.4 }}
                       whileHover={{ x: 4 }}
-                      className="flex items-start gap-4 p-3 rounded-xl hover:bg-slate-50/50 transition-colors duration-200"
+                      className="flex items-start gap-4 p-3 rounded-xl hover:bg-muted/50 transition-colors duration-200"
                     >
                       <div
                         className={`w-2 h-2 rounded-full mt-3 flex-shrink-0 ${
@@ -441,15 +451,15 @@ export default function BusinessOwnerDashboardClient({
                         } ${activity.isUnread ? 'animate-pulse' : ''}`}
                       />
                       <div className="flex-1 min-w-0">
-                        <p className="font-medium text-slate-900 mb-1">
+                        <p className="font-medium text-foreground mb-1">
                           {activity.title}
                           {activity.isUnread && (
-                            <span className="bg-red-100 text-red-700 text-xs px-2 py-0.5 rounded-full ml-2">
+                            <span className="bg-destructive/10 text-destructive text-xs px-2 py-0.5 rounded-full ml-2">
                               New
                             </span>
                           )}
                         </p>
-                        <p className="text-sm text-slate-600 mb-2">
+                        <p className="text-sm text-muted-foreground mb-2">
                           {activity.description}
                         </p>
                         <p className="text-xs text-slate-500">
@@ -462,7 +472,7 @@ export default function BusinessOwnerDashboardClient({
                   ))
                 ) : (
                   <div className="text-center py-8">
-                    <Activity className="w-12 h-12 text-slate-400 mx-auto mb-3" />
+                    <Activity className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
                     <p className="text-slate-500">No recent activity</p>
                   </div>
                 )}
@@ -473,7 +483,7 @@ export default function BusinessOwnerDashboardClient({
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full mt-4 py-2 text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors duration-200"
+                className="w-full mt-4 py-2 text-sm text-primary hover:text-primary font-medium transition-colors duration-200"
               >
                 View all activity
               </motion.button>
@@ -486,9 +496,9 @@ export default function BusinessOwnerDashboardClient({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7, duration: 0.6 }}
-          className="bg-white/80 backdrop-blur-sm rounded-2xl border border-white/20 shadow-lg p-6"
+          className="bg-card backdrop-blur-sm rounded-2xl border shadow-lg p-6"
         >
-          <h3 className="text-xl font-semibold text-slate-900 mb-6 flex items-center gap-2">
+          <h3 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
             <Zap className="w-5 h-5 text-yellow-600" />
             Quick Actions
           </h3>
@@ -530,14 +540,14 @@ export default function BusinessOwnerDashboardClient({
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => router.push(action.href)}
-                  className="flex flex-col items-center gap-3 p-4 rounded-xl border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-200 cursor-pointer"
+                  className="flex flex-col items-center gap-3 p-4 rounded-xl border border-border hover:border-border hover:shadow-md transition-all duration-200 cursor-pointer"
                 >
                   <div
                     className={`w-12 h-12 bg-gradient-to-br from-${action.color}-500 to-${action.color}-600 rounded-lg flex items-center justify-center shadow-sm`}
                   >
                     <IconComponent className="w-6 h-6 text-white" />
                   </div>
-                  <span className="text-sm font-medium text-slate-700 text-center">
+                  <span className="text-sm font-medium text-foreground text-center">
                     {action.label}
                   </span>
                 </motion.button>
@@ -551,16 +561,16 @@ export default function BusinessOwnerDashboardClient({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.6 }}
-          className="bg-white/80 backdrop-blur-sm rounded-2xl border border-white/20 shadow-lg p-6"
+          className="bg-card backdrop-blur-sm rounded-2xl border shadow-lg p-6"
         >
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-xl font-semibold text-slate-900 flex items-center gap-2">
+            <h3 className="text-xl font-semibold text-foreground flex items-center gap-2">
               <Star className="w-5 h-5 text-yellow-600" />
               Top Performing Listings
             </h3>
             <button
               onClick={() => router.push('/dashboard/listings')}
-              className="text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors duration-200"
+              className="text-sm text-primary hover:text-primary font-medium transition-colors duration-200"
             >
               View all listings
             </button>
@@ -583,7 +593,7 @@ export default function BusinessOwnerDashboardClient({
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.9 + index * 0.1, duration: 0.4 }}
                     whileHover={{ x: 4 }}
-                    className="flex items-center gap-4 p-4 rounded-xl hover:bg-slate-50/50 transition-colors duration-200 cursor-pointer"
+                    className="flex items-center gap-4 p-4 rounded-xl hover:bg-muted/50 transition-colors duration-200 cursor-pointer"
                     onClick={() => {
                       const slug =
                         business.slug ||
@@ -591,7 +601,7 @@ export default function BusinessOwnerDashboardClient({
                       router.push(`/business/${slug}`)
                     }}
                   >
-                    <div className="w-16 h-12 bg-slate-200 rounded-lg overflow-hidden flex-shrink-0">
+                    <div className="w-16 h-12 bg-muted rounded-lg overflow-hidden flex-shrink-0">
                       {business.images_rel[0]?.url ? (
                         <img
                           src={business.images_rel[0].url}
@@ -600,21 +610,21 @@ export default function BusinessOwnerDashboardClient({
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
-                          <Building2 className="w-6 h-6 text-slate-400" />
+                          <Building2 className="w-6 h-6 text-muted-foreground" />
                         </div>
                       )}
                     </div>
 
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
-                        <h4 className="font-medium text-slate-900 truncate">
+                        <h4 className="font-medium text-foreground truncate">
                           {business.title}
                         </h4>
                         {business.featured && (
                           <Star className="w-4 h-4 text-yellow-500" />
                         )}
                       </div>
-                      <div className="flex items-center gap-4 text-sm text-slate-600">
+                      <div className="flex items-center gap-4 text-sm text-muted-foreground">
                         <span className="flex items-center gap-1">
                           <Eye className="w-3 h-3" />
                           {business._count.views} views
@@ -631,13 +641,13 @@ export default function BusinessOwnerDashboardClient({
                     </div>
 
                     <div className="text-right">
-                      <p className="font-semibold text-slate-900">
+                      <p className="font-semibold text-foreground">
                         {formatPrice(business.askingPrice)}
                       </p>
                       <p
                         className={`text-sm flex items-center gap-1 ${
                           business.status === 'ACTIVE'
-                            ? 'text-green-600'
+                            ? 'text-emerald-600'
                             : 'text-slate-500'
                         }`}
                       >
@@ -649,11 +659,11 @@ export default function BusinessOwnerDashboardClient({
                 ))
             ) : (
               <div className="text-center py-8">
-                <Building2 className="w-12 h-12 text-slate-400 mx-auto mb-3" />
+                <Building2 className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
                 <p className="text-slate-500 mb-4">No listings yet</p>
                 <button
                   onClick={() => router.push('/marketplace/create')}
-                  className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                  className="bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary/90 transition-colors"
                 >
                   Create Your First Listing
                 </button>

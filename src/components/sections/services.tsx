@@ -146,14 +146,14 @@ export function Services() {
         </div>
 
         {/* Professional Services Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 items-start">
           {services.map((service, index) => {
             const IconComponent = service.icon
 
             return (
               <div
                 key={service.title}
-                className="group relative"
+                className="group relative h-full flex flex-col"
                 style={{
                   animation: `fadeInUp 0.8s ease-out ${index * 0.2}s both`,
                 }}
@@ -162,8 +162,8 @@ export function Services() {
                 <Card
                   className={cn(
                     'relative overflow-hidden border-0 shadow-lg hover:shadow-2xl',
-                    'transition-all duration-500 animate-fade-in hover:scale-[1.02] h-full',
-                    'bg-card/90 backdrop-blur-sm hover:bg-card/95'
+                    'transition-all duration-500 animate-fade-in hover:scale-[1.02] h-full flex flex-col',
+                    'bg-card/90 backdrop-blur-sm hover:bg-primary/95 group-hover:text-white'
                   )}
                 >
                   {/* Premium Badge */}
@@ -183,7 +183,7 @@ export function Services() {
                     )}
                   />
 
-                  <CardContent className="relative p-6">
+                  <CardContent className="relative p-6 flex-1 flex flex-col">
                     {/* Icon with enhanced styling */}
                     <div className="relative mb-6">
                       <div
@@ -205,45 +205,50 @@ export function Services() {
                     </div>
 
                     {/* Content */}
-                    <div className="space-y-4">
-                      <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">
-                        {service.title}
-                      </h3>
-                      <p className="text-muted-foreground leading-relaxed text-sm">
-                        {service.description}
-                      </p>
+                    <div className="flex-1 flex flex-col">
+                      {/* Title and Description - Fixed Height */}
+                      <div className="mb-6">
+                        <h3 className="text-xl font-bold text-foreground group-hover:text-white transition-colors duration-300 mb-3">
+                          {service.title}
+                        </h3>
+                        <div className="h-20">
+                          <p className="text-muted-foreground group-hover:text-white/90 leading-relaxed text-sm transition-colors duration-300 line-clamp-4">
+                            {service.description}
+                          </p>
+                        </div>
+                      </div>
 
-                      {/* Performance Metric */}
-                      <div className="relative overflow-hidden rounded-xl p-4 bg-gradient-to-br from-primary/5 via-card to-purple-50/30 border border-primary/10">
+                      {/* Performance Metric - Fixed Position */}
+                      <div className="relative overflow-hidden rounded-xl p-4 bg-gradient-to-br from-primary/5 via-card to-purple-50/30 border border-primary/10 group-hover:bg-white/10 group-hover:border-white/20 transition-all duration-300 mb-6">
                         <div className="flex items-center justify-between">
                           <div>
                             <div
                               className={cn(
-                                'text-2xl font-bold bg-gradient-to-r bg-clip-text text-transparent',
+                                'text-2xl font-bold bg-gradient-to-r bg-clip-text text-transparent group-hover:!text-white group-hover:bg-none transition-all duration-300',
                                 service.gradient
                               )}
                             >
                               {service.metric.value}
                             </div>
-                            <div className="text-xs font-medium text-muted-foreground">
+                            <div className="text-xs font-medium text-muted-foreground group-hover:text-white/80 transition-colors duration-300">
                               {service.metric.label}
                             </div>
                           </div>
-                          <TrendingUp className="w-6 h-6 text-primary/60" />
+                          <TrendingUp className="w-6 h-6 text-primary/60 group-hover:text-white/80 transition-colors duration-300" />
                         </div>
                       </div>
 
-                      {/* Enhanced Features */}
-                      <div className="space-y-2">
+                      {/* Enhanced Features - Flex Grow */}
+                      <div className="space-y-2 flex-1">
                         {service.features.map((feature, featureIndex) => (
                           <div
                             key={feature}
-                            className="flex items-center text-sm text-muted-foreground group-hover:text-foreground transition-colors duration-300"
+                            className="flex items-center text-sm text-muted-foreground group-hover:text-white/90 transition-colors duration-300"
                             style={{
                               animationDelay: `${index * 0.2 + featureIndex * 0.1}s`,
                             }}
                           >
-                            <CheckCircle2 className="w-4 h-4 text-success mr-3 flex-shrink-0" />
+                            <CheckCircle2 className="w-4 h-4 text-success group-hover:text-white mr-3 flex-shrink-0 transition-colors duration-300" />
                             <span>{feature}</span>
                           </div>
                         ))}
@@ -256,7 +261,7 @@ export function Services() {
                     <Link href={service.href} className="w-full">
                       <Button
                         variant="outline"
-                        className="w-full justify-between text-foreground hover:text-primary-foreground border-border/50 hover:border-primary bg-transparent hover:bg-primary transition-all duration-300 group/btn"
+                        className="w-full justify-between text-foreground group-hover:text-white hover:text-white border-border/50 hover:border-white group-hover:border-white/50 bg-transparent hover:bg-white/20 group-hover:bg-white/20 transition-all duration-300 group/btn"
                       >
                         <span className="font-medium">Explore Service</span>
                         <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" />

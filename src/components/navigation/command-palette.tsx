@@ -104,7 +104,7 @@ export function CommandPalette({
           }))
         )
       } catch (error) {
-        console.error('Failed to parse recent searches:', error)
+        // Failed to parse recent searches
       }
     }
   }, [])
@@ -169,7 +169,6 @@ export function CommandPalette({
 
   const favoriteBusiness = React.useCallback((businessId?: string) => {
     // Implementation for favoriting business
-    console.log('Favoriting business:', businessId)
   }, [])
 
   // Search actions

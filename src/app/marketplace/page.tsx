@@ -234,7 +234,7 @@ export default function MarketplacePage() {
               <CardHeader className="pb-2">
                 <div className="flex items-start justify-between">
                   <div className="flex-1 min-w-0">
-                    <CardTitle className="text-xl font-semibold text-secondary-900">
+                    <CardTitle className="text-xl font-semibold text-foreground">
                       {business.title}
                     </CardTitle>
                     <CardDescription className="line-clamp-2 mt-1">
@@ -255,7 +255,7 @@ export default function MarketplacePage() {
               </CardHeader>
 
               <CardContent className="pt-2">
-                <div className="flex items-center text-sm text-secondary-600 space-x-4 mb-4">
+                <div className="flex items-center text-sm text-muted-foreground space-x-4 mb-4">
                   <span className="flex items-center">
                     <Building2 className="w-4 h-4 mr-1" />
                     {business.category &&
@@ -280,18 +280,18 @@ export default function MarketplacePage() {
 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-4">
-                    <span className="text-2xl font-bold text-primary-600">
+                    <span className="text-2xl font-bold text-primary">
                       {formatPrice(business.askingPrice)}
                     </span>
 
                     {business.revenue && (
-                      <span className="text-sm text-secondary-600">
+                      <span className="text-sm text-muted-foreground">
                         Rev: {formatPrice(business.revenue)}
                       </span>
                     )}
                   </div>
 
-                  <div className="flex items-center space-x-3 text-sm text-secondary-500">
+                  <div className="flex items-center space-x-3 text-sm text-muted-foreground">
                     <span className="flex items-center">
                       <Eye className="w-4 h-4 mr-1" />
                       {business._count.views}
@@ -341,12 +341,12 @@ export default function MarketplacePage() {
             size="icon"
             className="absolute top-3 right-3 w-8 h-8 bg-white/80 backdrop-blur-sm hover:bg-white border-white/20"
           >
-            <Heart className="w-4 h-4 text-secondary-600" />
+            <Heart className="w-4 h-4 text-muted-foreground" />
           </Button>
         </div>
 
         <CardHeader className="pb-2">
-          <CardTitle className="text-lg font-semibold text-secondary-900 line-clamp-1 group-hover:text-primary-600 transition-colors">
+          <CardTitle className="text-lg font-semibold text-foreground line-clamp-1 group-hover:text-primary transition-colors">
             {business.title}
           </CardTitle>
           <CardDescription className="text-sm line-clamp-2">
@@ -355,7 +355,7 @@ export default function MarketplacePage() {
         </CardHeader>
 
         <CardContent>
-          <div className="flex items-center text-sm text-secondary-600 space-x-3 mb-3">
+          <div className="flex items-center text-sm text-muted-foreground space-x-3 mb-3">
             {business.category && (
               <span className="flex items-center">
                 <Building2 className="w-4 h-4 mr-1" />
@@ -374,11 +374,11 @@ export default function MarketplacePage() {
         </CardContent>
 
         <CardFooter className="flex items-center justify-between">
-          <span className="text-xl font-bold text-primary-600">
+          <span className="text-xl font-bold text-primary">
             {formatPrice(business.askingPrice)}
           </span>
 
-          <div className="flex items-center space-x-2 text-sm text-secondary-500">
+          <div className="flex items-center space-x-2 text-sm text-muted-foreground">
             <span className="flex items-center">
               <Eye className="w-4 h-4 mr-1" />
               {business._count.views}
@@ -394,12 +394,12 @@ export default function MarketplacePage() {
   }
 
   return (
-    <div className="min-h-screen bg-secondary-50">
+    <div className="min-h-screen bg-muted/30">
       {/* Header */}
-      <div className="bg-white shadow-sm">
+      <div className="bg-card shadow-sm">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between mb-6">
-            <h1 className="text-3xl font-bold text-secondary-900">
+            <h1 className="text-3xl font-bold text-foreground">
               Business Marketplace
             </h1>
 
@@ -410,8 +410,8 @@ export default function MarketplacePage() {
                   flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors
                   ${
                     showFilters
-                      ? 'bg-primary-100 text-primary-700'
-                      : 'bg-secondary-100 text-secondary-700 hover:bg-secondary-200'
+                      ? 'bg-primary/10 text-primary'
+                      : 'bg-muted text-muted-foreground hover:bg-muted/80'
                   }
                 `}
               >
@@ -419,12 +419,12 @@ export default function MarketplacePage() {
                 Filters
               </button>
 
-              <div className="flex items-center bg-secondary-100 rounded-lg p-1">
+              <div className="flex items-center bg-muted rounded-lg p-1">
                 <button
                   onClick={() => setViewMode('grid')}
                   className={`
                     p-2 rounded-lg transition-colors
-                    ${viewMode === 'grid' ? 'bg-white shadow-sm' : 'hover:bg-secondary-200'}
+                    ${viewMode === 'grid' ? 'bg-card shadow-sm' : 'hover:bg-muted/80'}
                   `}
                 >
                   <Grid className="w-4 h-4" />
@@ -433,7 +433,7 @@ export default function MarketplacePage() {
                   onClick={() => setViewMode('list')}
                   className={`
                     p-2 rounded-lg transition-colors
-                    ${viewMode === 'list' ? 'bg-white shadow-sm' : 'hover:bg-secondary-200'}
+                    ${viewMode === 'list' ? 'bg-card shadow-sm' : 'hover:bg-muted/80'}
                   `}
                 >
                   <List className="w-4 h-4" />
@@ -444,13 +444,13 @@ export default function MarketplacePage() {
 
           {/* Search Bar */}
           <div className="relative max-w-2xl">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary-400 w-5 h-5" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
             <input
               type="text"
               placeholder="Search businesses..."
               value={filters.search}
               onChange={e => updateFilters({ search: e.target.value })}
-              className="w-full pl-10 pr-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-3 border border-input rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
             />
           </div>
         </div>
@@ -460,14 +460,14 @@ export default function MarketplacePage() {
         <div className="flex gap-6">
           {/* Filters Sidebar */}
           {showFilters && (
-            <div className="w-80 bg-white rounded-lg shadow-md p-6 h-fit">
+            <div className="w-80 bg-card rounded-lg shadow-md p-6 h-fit">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg font-semibold text-secondary-900">
+                <h2 className="text-lg font-semibold text-foreground">
                   Filters
                 </h2>
                 <button
                   onClick={clearFilters}
-                  className="text-sm text-primary-600 hover:text-primary-700"
+                  className="text-sm text-primary hover:text-primary/80"
                 >
                   Clear All
                 </button>
@@ -476,13 +476,13 @@ export default function MarketplacePage() {
               <div className="space-y-6">
                 {/* Category */}
                 <div>
-                  <label className="block text-sm font-medium text-secondary-700 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     Category
                   </label>
                   <select
                     value={filters.category}
                     onChange={e => updateFilters({ category: e.target.value })}
-                    className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-input rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                   >
                     <option value="">All Categories</option>
                     {BUSINESS_CATEGORIES.map(cat => (
@@ -495,7 +495,7 @@ export default function MarketplacePage() {
 
                 {/* Price Range */}
                 <div>
-                  <label className="block text-sm font-medium text-secondary-700 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     Price Range
                   </label>
                   <div className="grid grid-cols-2 gap-2">
@@ -506,7 +506,7 @@ export default function MarketplacePage() {
                       onChange={e =>
                         updateFilters({ minPrice: e.target.value })
                       }
-                      className="px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                      className="px-3 py-2 border border-input rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                     />
                     <input
                       type="number"
@@ -515,14 +515,14 @@ export default function MarketplacePage() {
                       onChange={e =>
                         updateFilters({ maxPrice: e.target.value })
                       }
-                      className="px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                      className="px-3 py-2 border border-input rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                     />
                   </div>
                 </div>
 
                 {/* Location */}
                 <div>
-                  <label className="block text-sm font-medium text-secondary-700 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     Location
                   </label>
                   <input
@@ -530,7 +530,7 @@ export default function MarketplacePage() {
                     placeholder="City, State"
                     value={filters.location}
                     onChange={e => updateFilters({ location: e.target.value })}
-                    className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-input rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                   />
                 </div>
 
@@ -543,9 +543,9 @@ export default function MarketplacePage() {
                       onChange={e =>
                         updateFilters({ featured: e.target.checked })
                       }
-                      className="rounded border-secondary-300 text-primary-600 focus:ring-primary-500"
+                      className="rounded border-input text-primary focus:ring-primary"
                     />
-                    <span className="ml-2 text-sm text-secondary-700">
+                    <span className="ml-2 text-sm text-foreground">
                       Featured listings only
                     </span>
                   </label>
@@ -558,21 +558,21 @@ export default function MarketplacePage() {
           <div className="flex-1">
             {/* Results Header */}
             <div className="flex items-center justify-between mb-6">
-              <div className="text-sm text-secondary-600">
+              <div className="text-sm text-muted-foreground">
                 {loading
                   ? 'Loading...'
                   : `${pagination.total} business${pagination.total !== 1 ? 'es' : ''} found`}
               </div>
 
               <div className="flex items-center space-x-3">
-                <span className="text-sm text-secondary-600">Sort by:</span>
+                <span className="text-sm text-muted-foreground">Sort by:</span>
                 <select
                   value={`${filters.sort}-${filters.order}`}
                   onChange={e => {
                     const [sort, order] = e.target.value.split('-')
                     updateFilters({ sort, order })
                   }}
-                  className="px-3 py-1 border border-secondary-300 rounded text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  className="px-3 py-1 border border-input rounded text-sm focus:ring-2 focus:ring-primary focus:border-transparent"
                 >
                   {SORT_OPTIONS.map(option => (
                     <React.Fragment key={option.value}>
@@ -608,15 +608,15 @@ export default function MarketplacePage() {
             ) : businesses.length === 0 ? (
               <div className="text-center py-12">
                 <Building2 className="w-16 h-16 text-secondary-400 mx-auto mb-4" />
-                <h3 className="text-xl font-medium text-secondary-900 mb-2">
+                <h3 className="text-xl font-medium text-foreground mb-2">
                   No businesses found
                 </h3>
-                <p className="text-secondary-600 mb-4">
+                <p className="text-muted-foreground mb-4">
                   Try adjusting your search criteria or filters
                 </p>
                 <button
                   onClick={clearFilters}
-                  className="bg-primary-500 text-white px-6 py-2 rounded-lg hover:bg-primary-600"
+                  className="bg-primary text-primary-foreground px-6 py-2 rounded-lg hover:bg-primary/90"
                 >
                   Clear Filters
                 </button>
@@ -641,7 +641,7 @@ export default function MarketplacePage() {
                 <button
                   onClick={() => fetchBusinesses(pagination.page - 1)}
                   disabled={pagination.page === 1}
-                  className="px-4 py-2 border border-secondary-300 rounded-lg text-sm font-medium text-secondary-700 hover:bg-secondary-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-4 py-2 border border-input rounded-lg text-sm font-medium text-foreground hover:bg-secondary-50 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Previous
                 </button>
@@ -665,8 +665,8 @@ export default function MarketplacePage() {
                           px-4 py-2 rounded-lg text-sm font-medium transition-colors
                           ${
                             page === pagination.page
-                              ? 'bg-primary-500 text-white'
-                              : 'border border-secondary-300 text-secondary-700 hover:bg-secondary-50'
+                              ? 'bg-primary text-primary-foreground'
+                              : 'border border-input text-foreground hover:bg-secondary-50'
                           }
                         `}
                       >
@@ -678,7 +678,7 @@ export default function MarketplacePage() {
                 <button
                   onClick={() => fetchBusinesses(pagination.page + 1)}
                   disabled={pagination.page === pagination.pages}
-                  className="px-4 py-2 border border-secondary-300 rounded-lg text-sm font-medium text-secondary-700 hover:bg-secondary-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-4 py-2 border border-input rounded-lg text-sm font-medium text-foreground hover:bg-secondary-50 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Next
                 </button>

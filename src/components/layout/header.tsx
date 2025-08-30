@@ -55,7 +55,8 @@ const navigationItems = [
       {
         title: 'Business Calculator',
         href: '/calculator',
-        description: 'Calculate your business value with AI-powered analysis and comprehensive metrics',
+        description:
+          'Calculate your business value with AI-powered analysis and comprehensive metrics',
         icon: Calculator,
         featured: true,
         badge: 'Popular',
@@ -63,26 +64,30 @@ const navigationItems = [
       {
         title: 'AI Valuation',
         href: '/ai-valuation',
-        description: 'Get comprehensive AI-driven business valuation with market insights',
+        description:
+          'Get comprehensive AI-driven business valuation with market insights',
         icon: Sparkles,
         badge: 'New',
       },
       {
         title: 'Financial Health',
         href: '/financial-health',
-        description: 'Analyze your business financial performance and identify growth opportunities',
+        description:
+          'Analyze your business financial performance and identify growth opportunities',
         icon: BarChart3,
       },
       {
         title: 'Market Analysis',
         href: '/market-analysis',
-        description: 'Understand your market position with competitive intelligence',
+        description:
+          'Understand your market position with competitive intelligence',
         icon: Target,
       },
       {
         title: 'Growth Score',
         href: '/growth-score',
-        description: 'Measure your business growth potential and scalability metrics',
+        description:
+          'Measure your business growth potential and scalability metrics',
         icon: TrendingUp,
       },
     ],
@@ -167,12 +172,14 @@ export function Header() {
                                   </div>
                                 </div>
                                 <p className="text-sm leading-relaxed text-muted-foreground group-hover:text-foreground/80 transition-colors">
-                                  Comprehensive AI-powered tools for business valuation, growth analysis, and market insights.
+                                  Comprehensive AI-powered tools for business
+                                  valuation, growth analysis, and market
+                                  insights.
                                 </p>
                               </a>
                             </NavigationMenuLink>
                           </div>
-                          
+
                           {/* Services Grid */}
                           <div className="p-6">
                             <div className="space-y-1">
@@ -427,50 +434,59 @@ const ServiceItem = React.forwardRef<
     badge?: string
     featured?: boolean
   }
->(({ className, title, description, icon: Icon, badge, featured, ...props }, ref) => {
-  return (
-    <NavigationMenuLink asChild>
-      <a
-        ref={ref}
-        className={cn(
-          'group flex items-start space-x-4 rounded-lg p-3 no-underline outline-none transition-all duration-200 hover:bg-accent/60 hover:shadow-sm focus:bg-accent focus:outline-none focus:ring-2 focus:ring-primary/20 focus:ring-offset-1',
-          featured && 'bg-primary/5 hover:bg-primary/10',
-          className
-        )}
-        {...props}
-      >
-        <div className={cn(
-          'flex h-10 w-10 shrink-0 items-center justify-center rounded-lg transition-all duration-300',
-          featured 
-            ? 'bg-primary/20 text-primary group-hover:bg-primary/30 group-hover:scale-110' 
-            : 'bg-muted text-muted-foreground group-hover:bg-primary/20 group-hover:text-primary group-hover:scale-105'
-        )}>
-          <Icon className="h-5 w-5" />
-        </div>
-        <div className="flex-1 space-y-1">
-          <div className="flex items-center space-x-2">
-            <div className="text-sm font-medium leading-none group-hover:text-primary transition-colors">
-              {title}
-            </div>
-            {badge && (
-              <span className={cn(
-                'rounded-full px-2 py-0.5 text-xs font-medium transition-colors',
-                badge === 'New' && 'bg-green-100 text-green-700',
-                badge === 'Popular' && 'bg-blue-100 text-blue-700'
-              )}>
-                {badge}
-              </span>
+>(
+  (
+    { className, title, description, icon: Icon, badge, featured, ...props },
+    ref
+  ) => {
+    return (
+      <NavigationMenuLink asChild>
+        <a
+          ref={ref}
+          className={cn(
+            'group flex items-start space-x-4 rounded-lg p-3 no-underline outline-none transition-all duration-200 hover:bg-accent/60 hover:shadow-sm focus:bg-accent focus:outline-none focus:ring-2 focus:ring-primary/20 focus:ring-offset-1',
+            featured && 'bg-primary/5 hover:bg-primary/10',
+            className
+          )}
+          {...props}
+        >
+          <div
+            className={cn(
+              'flex h-10 w-10 shrink-0 items-center justify-center rounded-lg transition-all duration-300',
+              featured
+                ? 'bg-primary/20 text-primary group-hover:bg-primary/30 group-hover:scale-110'
+                : 'bg-muted text-muted-foreground group-hover:bg-primary/20 group-hover:text-primary group-hover:scale-105'
             )}
+          >
+            <Icon className="h-5 w-5" />
           </div>
-          <p className="text-xs leading-relaxed text-muted-foreground group-hover:text-foreground/80 transition-colors">
-            {description}
-          </p>
-        </div>
-        <ArrowRight className="h-4 w-4 text-muted-foreground/40 group-hover:text-primary group-hover:translate-x-1 transition-all duration-300" />
-      </a>
-    </NavigationMenuLink>
-  )
-})
+          <div className="flex-1 space-y-1">
+            <div className="flex items-center space-x-2">
+              <div className="text-sm font-medium leading-none group-hover:text-primary transition-colors">
+                {title}
+              </div>
+              {badge && (
+                <span
+                  className={cn(
+                    'rounded-full px-2 py-0.5 text-xs font-medium transition-colors',
+                    badge === 'New' && 'bg-green-100 text-green-700',
+                    badge === 'Popular' && 'bg-blue-100 text-blue-700'
+                  )}
+                >
+                  {badge}
+                </span>
+              )}
+            </div>
+            <p className="text-xs leading-relaxed text-muted-foreground group-hover:text-foreground/80 transition-colors">
+              {description}
+            </p>
+          </div>
+          <ArrowRight className="h-4 w-4 text-muted-foreground/40 group-hover:text-primary group-hover:translate-x-1 transition-all duration-300" />
+        </a>
+      </NavigationMenuLink>
+    )
+  }
+)
 ServiceItem.displayName = 'ServiceItem'
 
 // Helper component for navigation menu items (keeping for backward compatibility)

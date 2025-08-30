@@ -44,7 +44,6 @@ export function SettingsSheet({ trigger }: SettingsSheetProps) {
 
   const handleSaveSettings = async () => {
     // Here you would typically save to API
-    console.log('Saving settings:', settings)
     // Show success toast
   }
 

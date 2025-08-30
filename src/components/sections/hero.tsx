@@ -60,11 +60,11 @@ export function Hero() {
         />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start lg:items-center">
           {/* Left Content */}
           <motion.div
-            className="space-y-8"
+            className="space-y-6 lg:space-y-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -166,7 +166,10 @@ export function Hero() {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    <Button size="lg" className="professional-cta group">
+                    <Button
+                      size="lg"
+                      className="bg-primary hover:bg-primary/90 text-primary-foreground group"
+                    >
                       <Shield className="mr-2 h-4 w-4" />
                       Start Secure AI Analysis
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
@@ -248,7 +251,7 @@ export function Hero() {
 
           {/* Right Content - Modern Dashboard */}
           <motion.div
-            className="relative"
+            className="relative lg:self-start"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.4, duration: 0.8 }}

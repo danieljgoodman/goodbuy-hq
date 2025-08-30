@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
+  darkMode: 'class',
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -79,8 +80,14 @@ const config: Config = {
       },
       fontFamily: {
         sans: ['var(--font-sans)', 'Inter', 'system-ui', 'sans-serif'],
-        serif: ['var(--font-serif)', 'Merriweather', 'serif'], 
-        mono: ['var(--font-mono)', 'JetBrains Mono', 'Consolas', 'Monaco', 'monospace'],
+        serif: ['var(--font-serif)', 'Merriweather', 'serif'],
+        mono: [
+          'var(--font-mono)',
+          'JetBrains Mono',
+          'Consolas',
+          'Monaco',
+          'monospace',
+        ],
         display: ['Lexend', 'Inter', 'system-ui', 'sans-serif'], // For headings
       },
       spacing: {
@@ -89,7 +96,7 @@ const config: Config = {
       },
       borderRadius: {
         lg: 'var(--radius-lg)',
-        md: 'var(--radius-md)', 
+        md: 'var(--radius-md)',
         sm: 'var(--radius-sm)',
         xl: 'var(--radius-xl)',
       },

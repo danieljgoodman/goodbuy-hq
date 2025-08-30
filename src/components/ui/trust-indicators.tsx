@@ -1,7 +1,15 @@
 'use client'
 
 import * as React from 'react'
-import { Shield, CheckCircle, Lock, Award, Star } from 'lucide-react'
+import {
+  Shield,
+  CheckCircle,
+  Lock,
+  Award,
+  Star,
+  Users,
+  DollarSign,
+} from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 interface TrustIndicatorProps {
@@ -95,27 +103,64 @@ interface TrustMetricsProps {
 }
 
 export function TrustMetrics({ className }: TrustMetricsProps) {
+  const stats = [
+    {
+      value: '50K+',
+      label: 'Trusted Clients',
+      icon: Users,
+      color: 'text-trust-primary',
+      bgColor: 'bg-trust-primary/10',
+    },
+    {
+      value: '98%',
+      label: 'Accuracy Rate',
+      icon: Award,
+      color: 'text-trust-success',
+      bgColor: 'bg-trust-success/10',
+    },
+    {
+      value: '$2.8B',
+      label: 'Value Analyzed',
+      icon: DollarSign,
+      color: 'text-trust-primary',
+      bgColor: 'bg-trust-primary/10',
+    },
+    {
+      value: '4.9/5',
+      label: 'User Rating',
+      icon: Star,
+      color: 'text-premium-gold',
+      bgColor: 'bg-premium-gold/10',
+    },
+  ]
+
   return (
     <div className={cn('grid grid-cols-2 md:grid-cols-4 gap-4', className)}>
-      <div className="text-center">
-        <div className="text-2xl font-bold text-trust-primary">50K+</div>
-        <div className="text-sm text-muted-foreground">Trusted Clients</div>
-      </div>
-      <div className="text-center">
-        <div className="text-2xl font-bold text-trust-success">98%</div>
-        <div className="text-sm text-muted-foreground">Accuracy Rate</div>
-      </div>
-      <div className="text-center">
-        <div className="text-2xl font-bold text-trust-primary">$2.8B</div>
-        <div className="text-sm text-muted-foreground">Value Analyzed</div>
-      </div>
-      <div className="text-center">
-        <div className="flex items-center justify-center gap-1">
-          <span className="text-2xl font-bold text-premium-gold">4.9</span>
-          <Star className="h-4 w-4 text-premium-gold fill-current" />
-        </div>
-        <div className="text-sm text-muted-foreground">User Rating</div>
-      </div>
+      {stats.map((stat, index) => {
+        const Icon = stat.icon
+        return (
+          <div key={stat.label} className="text-center group">
+            {/* Icon */}
+            <div
+              className={cn(
+                'inline-flex items-center justify-center w-12 h-12 rounded-xl mb-3 transition-all duration-300',
+                stat.bgColor,
+                'group-hover:scale-110'
+              )}
+            >
+              <Icon className={cn('w-6 h-6', stat.color)} />
+            </div>
+
+            {/* Value */}
+            <div className="text-2xl font-bold mb-1 text-trust-primary">
+              {stat.value}
+            </div>
+
+            {/* Label */}
+            <div className="text-sm text-muted-foreground">{stat.label}</div>
+          </div>
+        )
+      })}
     </div>
   )
 }

@@ -69,7 +69,6 @@ export default function MessageInput({
 
   const insertAtMention = () => {
     // TODO: Implement @mention functionality
-    console.log('At mention functionality to be implemented')
   }
 
   const insertEmoji = (emoji: string) => {

@@ -241,9 +241,9 @@ export default function BusinessDetailClient({
   }
 
   return (
-    <div className="min-h-screen bg-secondary-50">
+    <div className="min-h-screen bg-background">
       {/* Image Gallery */}
-      <div className="relative h-96 bg-secondary-200">
+      <div className="relative h-96 bg-muted">
         {images.length > 0 ? (
           <>
             <img
@@ -284,12 +284,12 @@ export default function BusinessDetailClient({
           </>
         ) : (
           <div className="w-full h-full flex items-center justify-center">
-            <Building2 className="w-16 h-16 text-secondary-400" />
+            <Building2 className="w-16 h-16 text-muted-foreground" />
           </div>
         )}
 
         {business.featured && (
-          <div className="absolute top-4 left-4 bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">
+          <div className="absolute top-4 left-4 bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium border border-primary/20">
             <Star className="w-4 h-4 inline mr-1" />
             Featured
           </div>
@@ -305,11 +305,11 @@ export default function BusinessDetailClient({
               <div className="bg-white rounded-lg shadow-md p-6">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">
-                    <h1 className="text-3xl font-bold text-secondary-900 mb-2">
+                    <h1 className="text-3xl font-bold text-foreground mb-2">
                       {business.title}
                     </h1>
 
-                    <div className="flex items-center space-x-4 text-secondary-600 mb-4">
+                    <div className="flex items-center space-x-4 text-muted-foreground mb-4">
                       {business.category && (
                         <span className="flex items-center">
                           <Building2 className="w-4 h-4 mr-1" />
@@ -345,8 +345,8 @@ export default function BusinessDetailClient({
                         p-2 rounded-full transition-colors
                         ${
                           isFavorited
-                            ? 'bg-red-100 text-red-600'
-                            : 'bg-secondary-100 text-secondary-600 hover:bg-secondary-200'
+                            ? 'bg-destructive/10 text-destructive border border-destructive/20'
+                            : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
                         }
                       `}
                     >
@@ -357,7 +357,7 @@ export default function BusinessDetailClient({
 
                     <button
                       onClick={handleShare}
-                      className="p-2 rounded-full bg-secondary-100 text-secondary-600 hover:bg-secondary-200 transition-colors"
+                      className="p-2 rounded-full bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors"
                     >
                       <Share2 className="w-5 h-5" />
                     </button>
@@ -365,11 +365,11 @@ export default function BusinessDetailClient({
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <div className="text-3xl font-bold text-primary-600">
+                  <div className="text-3xl font-bold text-primary">
                     {formatPrice(business.askingPrice)}
                   </div>
 
-                  <div className="flex items-center space-x-6 text-sm text-secondary-600">
+                  <div className="flex items-center space-x-6 text-sm text-muted-foreground">
                     <span className="flex items-center">
                       <Eye className="w-4 h-4 mr-1" />
                       {formatNumber(business._count.views)} views
@@ -388,11 +388,11 @@ export default function BusinessDetailClient({
 
               {/* Description */}
               <div className="bg-white rounded-lg shadow-md p-6">
-                <h2 className="text-xl font-semibold text-secondary-900 mb-4">
+                <h2 className="text-xl font-semibold text-foreground mb-4">
                   Business Description
                 </h2>
                 <div className="prose max-w-none">
-                  <p className="text-secondary-700 leading-relaxed whitespace-pre-wrap">
+                  <p className="text-foreground/80 leading-relaxed whitespace-pre-wrap">
                     {business.description}
                   </p>
                 </div>
@@ -401,70 +401,81 @@ export default function BusinessDetailClient({
               {/* Financial Information */}
               {(business.revenue || business.profit || business.cashFlow) && (
                 <div className="bg-white rounded-lg shadow-md p-6">
-                  <h2 className="text-xl font-semibold text-secondary-900 mb-6">
+                  <h2 className="text-xl font-semibold text-foreground mb-6">
                     Financial Overview
                   </h2>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {business.revenue && (
-                      <div className="text-center p-4 bg-primary-50 rounded-lg">
-                        <div className="text-2xl font-bold text-primary-600">
+                      <div className="text-center p-4 bg-primary/10 rounded-lg border border-primary/20">
+                        <div className="text-2xl font-bold text-primary">
                           {formatPrice(business.revenue)}
                         </div>
-                        <div className="text-sm text-secondary-600">
+                        <div className="text-sm text-muted-foreground">
                           Annual Revenue
                         </div>
                       </div>
                     )}
 
                     {business.profit && (
-                      <div className="text-center p-4 bg-green-50 rounded-lg">
-                        <div className="text-2xl font-bold text-green-600">
+                      <div className="text-center p-4 bg-chart-1/10 rounded-lg border border-chart-1/20">
+                        <div
+                          className="text-2xl font-bold text-chart-1"
+                          style={{ color: 'var(--chart-1)' }}
+                        >
                           {formatPrice(business.profit)}
                         </div>
-                        <div className="text-sm text-secondary-600">
+                        <div className="text-sm text-muted-foreground">
                           Annual Profit
                         </div>
                       </div>
                     )}
 
                     {business.cashFlow && (
-                      <div className="text-center p-4 bg-blue-50 rounded-lg">
-                        <div className="text-2xl font-bold text-blue-600">
+                      <div className="text-center p-4 bg-chart-2/10 rounded-lg border border-chart-2/20">
+                        <div
+                          className="text-2xl font-bold text-chart-2"
+                          style={{ color: 'var(--chart-2)' }}
+                        >
                           {formatPrice(business.cashFlow)}
                         </div>
-                        <div className="text-sm text-secondary-600">
+                        <div className="text-sm text-muted-foreground">
                           Cash Flow
                         </div>
                       </div>
                     )}
 
                     {business.ebitda && (
-                      <div className="text-center p-4 bg-purple-50 rounded-lg">
-                        <div className="text-2xl font-bold text-purple-600">
+                      <div className="text-center p-4 bg-chart-3/20 rounded-lg border border-chart-3/40">
+                        <div className="text-2xl font-bold text-foreground">
                           {formatPrice(business.ebitda)}
                         </div>
-                        <div className="text-sm text-secondary-600">EBITDA</div>
+                        <div className="text-sm text-muted-foreground">
+                          EBITDA
+                        </div>
                       </div>
                     )}
 
                     {business.grossMargin && (
-                      <div className="text-center p-4 bg-yellow-50 rounded-lg">
-                        <div className="text-2xl font-bold text-yellow-600">
+                      <div className="text-center p-4 bg-warning/10 rounded-lg border border-warning/20">
+                        <div className="text-2xl font-bold text-warning">
                           {formatPercentage(business.grossMargin)}
                         </div>
-                        <div className="text-sm text-secondary-600">
+                        <div className="text-sm text-muted-foreground">
                           Gross Margin
                         </div>
                       </div>
                     )}
 
                     {business.netMargin && (
-                      <div className="text-center p-4 bg-indigo-50 rounded-lg">
-                        <div className="text-2xl font-bold text-indigo-600">
+                      <div className="text-center p-4 bg-chart-4/20 rounded-lg border border-chart-4/40">
+                        <div
+                          className="text-2xl font-bold text-chart-4"
+                          style={{ color: 'var(--chart-4)' }}
+                        >
                           {formatPercentage(business.netMargin)}
                         </div>
-                        <div className="text-sm text-secondary-600">
+                        <div className="text-sm text-muted-foreground">
                           Net Margin
                         </div>
                       </div>
@@ -475,17 +486,17 @@ export default function BusinessDetailClient({
 
               {/* Business Details */}
               <div className="bg-white rounded-lg shadow-md p-6">
-                <h2 className="text-xl font-semibold text-secondary-900 mb-6">
+                <h2 className="text-xl font-semibold text-foreground mb-6">
                   Business Details
                 </h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {business.established && (
                     <div>
-                      <div className="text-sm text-secondary-600 mb-1">
+                      <div className="text-sm text-muted-foreground mb-1">
                         Established
                       </div>
-                      <div className="font-medium text-secondary-900">
+                      <div className="font-medium text-foreground">
                         {business.established}
                       </div>
                     </div>
@@ -493,10 +504,10 @@ export default function BusinessDetailClient({
 
                   {business.employees && (
                     <div>
-                      <div className="text-sm text-secondary-600 mb-1">
+                      <div className="text-sm text-muted-foreground mb-1">
                         Employees
                       </div>
-                      <div className="font-medium text-secondary-900">
+                      <div className="font-medium text-foreground">
                         {formatNumber(business.employees)}
                       </div>
                     </div>
@@ -504,10 +515,10 @@ export default function BusinessDetailClient({
 
                   {business.customerBase && (
                     <div>
-                      <div className="text-sm text-secondary-600 mb-1">
+                      <div className="text-sm text-muted-foreground mb-1">
                         Customer Base
                       </div>
-                      <div className="font-medium text-secondary-900">
+                      <div className="font-medium text-foreground">
                         {formatNumber(business.customerBase)}
                       </div>
                     </div>
@@ -515,10 +526,10 @@ export default function BusinessDetailClient({
 
                   {business.hoursOfOperation && (
                     <div>
-                      <div className="text-sm text-secondary-600 mb-1">
+                      <div className="text-sm text-muted-foreground mb-1">
                         Hours
                       </div>
-                      <div className="font-medium text-secondary-900">
+                      <div className="font-medium text-foreground">
                         {business.hoursOfOperation}
                       </div>
                     </div>
@@ -526,10 +537,10 @@ export default function BusinessDetailClient({
 
                   {business.daysOpen.length > 0 && (
                     <div>
-                      <div className="text-sm text-secondary-600 mb-1">
+                      <div className="text-sm text-muted-foreground mb-1">
                         Days Open
                       </div>
-                      <div className="font-medium text-secondary-900">
+                      <div className="font-medium text-foreground">
                         {business.daysOpen.join(', ')}
                       </div>
                     </div>
@@ -537,10 +548,10 @@ export default function BusinessDetailClient({
 
                   {business.yearlyGrowth && (
                     <div>
-                      <div className="text-sm text-secondary-600 mb-1">
+                      <div className="text-sm text-muted-foreground mb-1">
                         Yearly Growth
                       </div>
-                      <div className="font-medium text-secondary-900">
+                      <div className="font-medium text-foreground">
                         {formatPercentage(business.yearlyGrowth)}
                       </div>
                     </div>
@@ -553,17 +564,17 @@ export default function BusinessDetailClient({
                 business.equipment ||
                 business.realEstate) && (
                 <div className="bg-white rounded-lg shadow-md p-6">
-                  <h2 className="text-xl font-semibold text-secondary-900 mb-6">
+                  <h2 className="text-xl font-semibold text-foreground mb-6">
                     Assets & Liabilities
                   </h2>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {business.inventory && (
                       <div>
-                        <div className="text-sm text-secondary-600 mb-1">
+                        <div className="text-sm text-muted-foreground mb-1">
                           Inventory Value
                         </div>
-                        <div className="font-medium text-secondary-900">
+                        <div className="font-medium text-foreground">
                           {formatPrice(business.inventory)}
                         </div>
                       </div>
@@ -571,10 +582,10 @@ export default function BusinessDetailClient({
 
                     {business.equipment && (
                       <div>
-                        <div className="text-sm text-secondary-600 mb-1">
+                        <div className="text-sm text-muted-foreground mb-1">
                           Equipment Value
                         </div>
-                        <div className="font-medium text-secondary-900">
+                        <div className="font-medium text-foreground">
                           {formatPrice(business.equipment)}
                         </div>
                       </div>
@@ -582,10 +593,10 @@ export default function BusinessDetailClient({
 
                     {business.realEstate && (
                       <div>
-                        <div className="text-sm text-secondary-600 mb-1">
+                        <div className="text-sm text-muted-foreground mb-1">
                           Real Estate Value
                         </div>
-                        <div className="font-medium text-secondary-900">
+                        <div className="font-medium text-foreground">
                           {formatPrice(business.realEstate)}
                         </div>
                       </div>
@@ -593,10 +604,10 @@ export default function BusinessDetailClient({
 
                     {business.totalAssets && (
                       <div>
-                        <div className="text-sm text-secondary-600 mb-1">
+                        <div className="text-sm text-muted-foreground mb-1">
                           Total Assets
                         </div>
-                        <div className="font-medium text-secondary-900">
+                        <div className="font-medium text-foreground">
                           {formatPrice(business.totalAssets)}
                         </div>
                       </div>
@@ -604,10 +615,10 @@ export default function BusinessDetailClient({
 
                     {business.liabilities && (
                       <div>
-                        <div className="text-sm text-secondary-600 mb-1">
+                        <div className="text-sm text-muted-foreground mb-1">
                           Liabilities
                         </div>
-                        <div className="font-medium text-secondary-900">
+                        <div className="font-medium text-foreground">
                           {formatPrice(business.liabilities)}
                         </div>
                       </div>
@@ -621,16 +632,16 @@ export default function BusinessDetailClient({
                 business.timeframe ||
                 business.financing) && (
                 <div className="bg-white rounded-lg shadow-md p-6">
-                  <h2 className="text-xl font-semibold text-secondary-900 mb-6">
+                  <h2 className="text-xl font-semibold text-foreground mb-6">
                     Sale Information
                   </h2>
 
                   {business.reasonForSelling && (
                     <div className="mb-4">
-                      <h3 className="font-medium text-secondary-900 mb-2">
+                      <h3 className="font-medium text-foreground mb-2">
                         Reason for Selling
                       </h3>
-                      <p className="text-secondary-700">
+                      <p className="text-foreground/80">
                         {business.reasonForSelling}
                       </p>
                     </div>
@@ -639,10 +650,10 @@ export default function BusinessDetailClient({
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {business.timeframe && (
                       <div>
-                        <div className="text-sm text-secondary-600 mb-1">
+                        <div className="text-sm text-muted-foreground mb-1">
                           Sale Timeframe
                         </div>
-                        <div className="font-medium text-secondary-900">
+                        <div className="font-medium text-foreground">
                           {business.timeframe
                             .replace('_', ' ')
                             .replace(/\b\w/g, l => l.toUpperCase())}
@@ -652,10 +663,10 @@ export default function BusinessDetailClient({
 
                     {business.negotiations && (
                       <div>
-                        <div className="text-sm text-secondary-600 mb-1">
+                        <div className="text-sm text-muted-foreground mb-1">
                           Price Negotiations
                         </div>
-                        <div className="font-medium text-secondary-900">
+                        <div className="font-medium text-foreground">
                           {business.negotiations
                             .replace('_', ' ')
                             .replace(/\b\w/g, l => l.toUpperCase())}
@@ -666,10 +677,10 @@ export default function BusinessDetailClient({
 
                   {business.financing && (
                     <div className="mt-4">
-                      <h3 className="font-medium text-secondary-900 mb-2">
+                      <h3 className="font-medium text-foreground mb-2">
                         Financing Options
                       </h3>
-                      <p className="text-secondary-700">{business.financing}</p>
+                      <p className="text-foreground/80">{business.financing}</p>
                     </div>
                   )}
                 </div>
@@ -678,7 +689,7 @@ export default function BusinessDetailClient({
               {/* Evaluation */}
               {business.evaluations.length > 0 && (
                 <div className="bg-white rounded-lg shadow-md p-6">
-                  <h2 className="text-xl font-semibold text-secondary-900 mb-6">
+                  <h2 className="text-xl font-semibold text-foreground mb-6">
                     Professional Evaluation
                   </h2>
 
@@ -687,34 +698,34 @@ export default function BusinessDetailClient({
                       key={evaluation.id}
                       className="border-l-4 border-primary-500 pl-4"
                     >
-                      <h3 className="font-medium text-secondary-900 mb-2">
+                      <h3 className="font-medium text-foreground mb-2">
                         {evaluation.title}
                       </h3>
 
                       {evaluation.summary && (
-                        <p className="text-secondary-700 mb-4">
+                        <p className="text-foreground/80 mb-4">
                           {evaluation.summary}
                         </p>
                       )}
 
                       {evaluation.overallScore && (
                         <div className="flex items-center mb-4">
-                          <span className="text-sm text-secondary-600 mr-3">
+                          <span className="text-sm text-muted-foreground mr-3">
                             Overall Score:
                           </span>
-                          <div className="flex-1 bg-secondary-200 rounded-full h-2 mr-3">
+                          <div className="flex-1 bg-muted rounded-full h-2 mr-3">
                             <div
                               className="bg-primary-500 h-2 rounded-full"
                               style={{ width: `${evaluation.overallScore}%` }}
                             />
                           </div>
-                          <span className="text-sm font-medium text-secondary-900">
+                          <span className="text-sm font-medium text-foreground">
                             {evaluation.overallScore}/100
                           </span>
                         </div>
                       )}
 
-                      <div className="text-xs text-secondary-500">
+                      <div className="text-xs text-muted-foreground">
                         Evaluated by {evaluation.evaluator.name} •{' '}
                         {evaluation.completedAt
                           ? format(
@@ -735,14 +746,14 @@ export default function BusinessDetailClient({
               <div className="bg-white rounded-lg shadow-md p-6 sticky top-6">
                 <button
                   onClick={() => setShowInquiryModal(true)}
-                  className="w-full bg-primary-500 text-white py-3 px-4 rounded-lg hover:bg-primary-600 transition-colors font-medium mb-4"
+                  className="w-full bg-primary text-primary-foreground py-3 px-4 rounded-lg hover:bg-primary/90 transition-colors font-medium mb-4"
                 >
                   Contact Seller
                 </button>
 
                 <div className="space-y-4">
-                  <div className="text-center pb-4 border-b border-secondary-200">
-                    <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <div className="text-center pb-4 border-b border-border">
+                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 border border-primary/20">
                       {business.owner.image ? (
                         <img
                           src={business.owner.image}
@@ -750,19 +761,19 @@ export default function BusinessDetailClient({
                           className="w-12 h-12 rounded-full object-cover"
                         />
                       ) : (
-                        <Building2 className="w-6 h-6 text-primary-600" />
+                        <Building2 className="w-6 h-6 text-primary" />
                       )}
                     </div>
-                    <div className="font-medium text-secondary-900">
+                    <div className="font-medium text-foreground">
                       {business.owner.name}
                     </div>
-                    <div className="text-sm text-secondary-600">
+                    <div className="text-sm text-muted-foreground">
                       {business.owner.userType
                         .replace('_', ' ')
                         .replace(/\b\w/g, l => l.toUpperCase())}
                     </div>
                     {business.owner.company && (
-                      <div className="text-sm text-secondary-600">
+                      <div className="text-sm text-muted-foreground">
                         {business.owner.company}
                       </div>
                     )}
@@ -774,7 +785,7 @@ export default function BusinessDetailClient({
                         href={business.website}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center text-primary-600 hover:text-primary-700"
+                        className="flex items-center text-primary hover:text-primary/80"
                       >
                         <Globe className="w-4 h-4 mr-2" />
                         Visit Website
@@ -784,7 +795,7 @@ export default function BusinessDetailClient({
                     {business.phone && (
                       <a
                         href={`tel:${business.phone}`}
-                        className="flex items-center text-secondary-600 hover:text-secondary-700"
+                        className="flex items-center text-muted-foreground hover:text-foreground"
                       >
                         <Phone className="w-4 h-4 mr-2" />
                         {business.phone}
@@ -794,7 +805,7 @@ export default function BusinessDetailClient({
                     {business.email && (
                       <a
                         href={`mailto:${business.email}`}
-                        className="flex items-center text-secondary-600 hover:text-secondary-700"
+                        className="flex items-center text-muted-foreground hover:text-foreground"
                       >
                         <Mail className="w-4 h-4 mr-2" />
                         {business.email}
@@ -802,7 +813,7 @@ export default function BusinessDetailClient({
                     )}
                   </div>
 
-                  <div className="pt-4 border-t border-secondary-200 text-xs text-secondary-500">
+                  <div className="pt-4 border-t border-border text-xs text-muted-foreground">
                     Member since{' '}
                     {format(new Date(business.owner.createdAt), 'MMM yyyy')}
                   </div>
@@ -812,7 +823,7 @@ export default function BusinessDetailClient({
               {/* Documents */}
               {business.documents_rel.length > 0 && (
                 <div className="bg-white rounded-lg shadow-md p-6">
-                  <h3 className="text-lg font-semibold text-secondary-900 mb-4">
+                  <h3 className="text-lg font-semibold text-foreground mb-4">
                     Available Documents
                   </h3>
 
@@ -820,16 +831,16 @@ export default function BusinessDetailClient({
                     {business.documents_rel.map(doc => (
                       <div
                         key={doc.id}
-                        className="flex items-center justify-between p-3 bg-secondary-50 rounded-lg"
+                        className="flex items-center justify-between p-3 bg-muted/50 rounded-lg border border-border"
                       >
                         <div className="flex items-center flex-1">
-                          <FileText className="w-4 h-4 text-secondary-400 mr-3" />
+                          <FileText className="w-4 h-4 text-muted-foreground mr-3" />
                           <div className="flex-1">
-                            <div className="text-sm font-medium text-secondary-900">
+                            <div className="text-sm font-medium text-foreground">
                               {doc.name}
                             </div>
                             {doc.description && (
-                              <div className="text-xs text-secondary-600">
+                              <div className="text-xs text-muted-foreground">
                                 {doc.description}
                               </div>
                             )}
@@ -837,12 +848,12 @@ export default function BusinessDetailClient({
                         </div>
 
                         {doc.requiresNDA && (
-                          <Shield className="w-4 h-4 text-yellow-600 ml-2" />
+                          <Shield className="w-4 h-4 text-warning ml-2" />
                         )}
                       </div>
                     ))}
 
-                    <div className="text-xs text-secondary-500 mt-3">
+                    <div className="text-xs text-muted-foreground mt-3">
                       Contact seller to access confidential documents
                     </div>
                   </div>
@@ -851,14 +862,14 @@ export default function BusinessDetailClient({
 
               {/* Quick Stats */}
               <div className="bg-white rounded-lg shadow-md p-6">
-                <h3 className="text-lg font-semibold text-secondary-900 mb-4">
+                <h3 className="text-lg font-semibold text-foreground mb-4">
                   Quick Stats
                 </h3>
 
                 <div className="space-y-3 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-secondary-600">Listed</span>
-                    <span className="font-medium text-secondary-900">
+                    <span className="text-muted-foreground">Listed</span>
+                    <span className="font-medium text-foreground">
                       {formatDistanceToNow(new Date(business.createdAt), {
                         addSuffix: true,
                       })}
@@ -866,22 +877,22 @@ export default function BusinessDetailClient({
                   </div>
 
                   <div className="flex justify-between">
-                    <span className="text-secondary-600">Views</span>
-                    <span className="font-medium text-secondary-900">
+                    <span className="text-muted-foreground">Views</span>
+                    <span className="font-medium text-foreground">
                       {formatNumber(business._count.views)}
                     </span>
                   </div>
 
                   <div className="flex justify-between">
-                    <span className="text-secondary-600">Inquiries</span>
-                    <span className="font-medium text-secondary-900">
+                    <span className="text-muted-foreground">Inquiries</span>
+                    <span className="font-medium text-foreground">
                       {formatNumber(business._count.inquiries)}
                     </span>
                   </div>
 
                   <div className="flex justify-between">
-                    <span className="text-secondary-600">Listing ID</span>
-                    <span className="font-medium text-secondary-900 text-xs">
+                    <span className="text-muted-foreground">Listing ID</span>
+                    <span className="font-medium text-foreground text-xs">
                       {business.id.slice(-8).toUpperCase()}
                     </span>
                   </div>
@@ -905,7 +916,6 @@ export default function BusinessDetailClient({
         }}
         onSuccess={() => {
           // Could show a success message or refresh data
-          console.log('Inquiry sent successfully')
         }}
       />
     </div>

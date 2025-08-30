@@ -38,13 +38,7 @@ export function useSocket() {
         autoConnect: true,
       })
 
-      socketRef.current.on('connect', () => {
-        console.log('Socket connected:', socketRef.current?.id)
-      })
 
-      socketRef.current.on('disconnect', () => {
-        console.log('Socket disconnected')
-      })
 
       socketRef.current.on('connect_error', error => {
         console.error('Socket connection error:', error)

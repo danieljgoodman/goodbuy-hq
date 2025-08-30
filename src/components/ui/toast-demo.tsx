@@ -22,9 +22,9 @@ import {
 
 export function ToastDemo() {
   const handleBusinessSaved = () => {
-    toastService.businessSaved("Sunny's Cafe", () =>
-      console.log('Undo business save')
-    )
+    toastService.businessSaved("Sunny's Cafe", () => {
+      // Handle undo business save
+    })
   }
 
   const handleInquirySent = () => {
@@ -75,7 +75,9 @@ export function ToastDemo() {
   const handleFileUpload = () => {
     const toastId = toastService.fileUploadProgress(
       'business-documents.pdf',
-      () => console.log('Upload cancelled')
+      () => {
+        // Handle upload cancelled
+      }
     )
 
     // Simulate upload progress
@@ -91,7 +93,9 @@ export function ToastDemo() {
   const handleDataProcessing = () => {
     const toastId = toastService.dataProcessing(
       'Business valuation calculation',
-      () => console.log('Processing cancelled')
+      () => {
+        // Handle processing cancelled
+      }
     )
 
     // Simulate processing completion
@@ -105,9 +109,9 @@ export function ToastDemo() {
   }
 
   const handleAiAnalysis = () => {
-    const toastId = toastService.aiAnalysisProgress('Retail Store Chain', () =>
-      console.log('Analysis cancelled')
-    )
+    const toastId = toastService.aiAnalysisProgress('Retail Store Chain', () => {
+      // Handle analysis cancelled
+    })
 
     // Simulate AI analysis completion
     setTimeout(() => {

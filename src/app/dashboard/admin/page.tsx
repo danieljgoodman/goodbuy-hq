@@ -84,18 +84,18 @@ export default async function AdminDashboardPage() {
       }>
     >`
       SELECT 
-        DATE(created_at) as date,
+        DATE("createdAt") as date,
         COUNT(CASE WHEN table_name = 'users' THEN 1 END)::int as new_users,
         COUNT(CASE WHEN table_name = 'businesses' THEN 1 END)::int as new_businesses,
         COUNT(CASE WHEN table_name = 'inquiries' THEN 1 END)::int as new_inquiries
       FROM (
-        SELECT created_at, 'users' as table_name FROM users WHERE created_at >= NOW() - INTERVAL '30 days'
+        SELECT "createdAt", 'users' as table_name FROM users WHERE "createdAt" >= NOW() - INTERVAL '30 days'
         UNION ALL
-        SELECT created_at, 'businesses' as table_name FROM businesses WHERE created_at >= NOW() - INTERVAL '30 days'
+        SELECT "createdAt", 'businesses' as table_name FROM businesses WHERE "createdAt" >= NOW() - INTERVAL '30 days'
         UNION ALL
-        SELECT created_at, 'inquiries' as table_name FROM inquiries WHERE created_at >= NOW() - INTERVAL '30 days'
+        SELECT "createdAt", 'inquiries' as table_name FROM inquiries WHERE "createdAt" >= NOW() - INTERVAL '30 days'
       ) combined
-      GROUP BY DATE(created_at)
+      GROUP BY DATE("createdAt")
       ORDER BY date DESC
       LIMIT 30
     `,

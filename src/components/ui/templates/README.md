@@ -23,7 +23,6 @@ Professional business listing card component for the marketplace.
 
 ```tsx
 import { BusinessCard } from '@/components/ui/templates'
-
 ;<BusinessCard
   business={businessData}
   metrics={businessMetrics}
@@ -48,7 +47,6 @@ Comprehensive business evaluation display with valuation and risk assessment.
 
 ```tsx
 import { EvaluationSummary } from '@/components/ui/templates'
-
 ;<EvaluationSummary
   business={businessData}
   metrics={businessMetrics}
@@ -73,7 +71,6 @@ Business deal tracking card for the acquisition pipeline.
 
 ```tsx
 import { DealCard } from '@/components/ui/templates'
-
 ;<DealCard
   deal={dealData}
   variant="pipeline"

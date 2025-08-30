@@ -45,24 +45,24 @@ export function BusinessDetailsForm({
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-semibold text-secondary-900 mb-2">
+        <h2 className="text-2xl font-semibold text-foreground mb-2">
           Business Details & Market Position
         </h2>
-        <p className="text-secondary-600">
+        <p className="text-muted-foreground">
           Help us understand your market position and competitive landscape.
         </p>
       </div>
 
       {/* Market Position Section */}
-      <div className="bg-white border border-secondary-200 rounded-lg p-6">
-        <h3 className="text-lg font-medium text-secondary-800 mb-4 flex items-center">
-          <div className="w-2 h-2 bg-primary-500 rounded-full mr-3"></div>
+      <div className="bg-card border border-border rounded-lg p-6">
+        <h3 className="text-lg font-medium text-foreground mb-4 flex items-center">
+          <div className="w-2 h-2 bg-primary rounded-full mr-3"></div>
           Market Position & Stage
         </h3>
 
         <div className="grid md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-secondary-700 mb-3">
+            <label className="block text-sm font-medium text-foreground mb-3">
               Market Position *
             </label>
             <div className="space-y-2">
@@ -103,10 +103,10 @@ export function BusinessDetailsForm({
                     className="mt-1"
                   />
                   <div>
-                    <div className="font-medium text-secondary-800">
+                    <div className="font-medium text-foreground">
                       {option.label}
                     </div>
-                    <div className="text-sm text-secondary-600">
+                    <div className="text-sm text-muted-foreground">
                       {option.description}
                     </div>
                   </div>
@@ -116,7 +116,7 @@ export function BusinessDetailsForm({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-secondary-700 mb-3">
+            <label className="block text-sm font-medium text-foreground mb-3">
               Growth Stage *
             </label>
             <div className="space-y-2">
@@ -155,10 +155,10 @@ export function BusinessDetailsForm({
                     className="mt-1"
                   />
                   <div>
-                    <div className="font-medium text-secondary-800">
+                    <div className="font-medium text-foreground">
                       {option.label}
                     </div>
-                    <div className="text-sm text-secondary-600">
+                    <div className="text-sm text-muted-foreground">
                       {option.description}
                     </div>
                   </div>
@@ -170,21 +170,21 @@ export function BusinessDetailsForm({
       </div>
 
       {/* Market Characteristics */}
-      <div className="bg-white border border-secondary-200 rounded-lg p-6">
-        <h3 className="text-lg font-medium text-secondary-800 mb-4 flex items-center">
-          <div className="w-2 h-2 bg-success-500 rounded-full mr-3"></div>
+      <div className="bg-card border border-border rounded-lg p-6">
+        <h3 className="text-lg font-medium text-foreground mb-4 flex items-center">
+          <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
           Market Characteristics
         </h3>
 
         <div className="grid md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-secondary-700 mb-2">
+            <label className="block text-sm font-medium text-foreground mb-2">
               Market Size
             </label>
             <select
               value={data.marketSize || 'medium'}
               onChange={e => updateField('marketSize', e.target.value)}
-              className="w-full px-3 py-2 border border-secondary-300 rounded-md text-sm"
+              className="w-full px-3 py-2 border border-input rounded-md text-sm"
             >
               <option value="small">Small (&lt;$1B)</option>
               <option value="medium">Medium ($1B-$10B)</option>
@@ -194,7 +194,7 @@ export function BusinessDetailsForm({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-secondary-700 mb-2">
+            <label className="block text-sm font-medium text-foreground mb-2">
               Geographic Reach
             </label>
             <select
@@ -202,7 +202,7 @@ export function BusinessDetailsForm({
               onChange={e =>
                 updateField('geographicDiversification', e.target.value)
               }
-              className="w-full px-3 py-2 border border-secondary-300 rounded-md text-sm"
+              className="w-full px-3 py-2 border border-input rounded-md text-sm"
             >
               <option value="local">Local/Regional</option>
               <option value="national">National</option>
@@ -211,7 +211,7 @@ export function BusinessDetailsForm({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-secondary-700 mb-2">
+            <label className="block text-sm font-medium text-foreground mb-2">
               Customer Concentration Risk
             </label>
             <select
@@ -219,7 +219,7 @@ export function BusinessDetailsForm({
               onChange={e =>
                 updateField('customerConcentration', e.target.value)
               }
-              className="w-full px-3 py-2 border border-secondary-300 rounded-md text-sm"
+              className="w-full px-3 py-2 border border-input rounded-md text-sm"
             >
               <option value="low">Low (No customer &gt;5% of revenue)</option>
               <option value="medium">
@@ -232,7 +232,7 @@ export function BusinessDetailsForm({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-secondary-700 mb-2">
+            <label className="block text-sm font-medium text-foreground mb-2">
               Technology Dependence
             </label>
             <select
@@ -240,7 +240,7 @@ export function BusinessDetailsForm({
               onChange={e =>
                 updateField('technologyDependence', e.target.value)
               }
-              className="w-full px-3 py-2 border border-secondary-300 rounded-md text-sm"
+              className="w-full px-3 py-2 border border-input rounded-md text-sm"
             >
               <option value="low">Low (Traditional business model)</option>
               <option value="medium">
@@ -253,12 +253,12 @@ export function BusinessDetailsForm({
       </div>
 
       {/* Competitive Advantages */}
-      <div className="bg-white border border-secondary-200 rounded-lg p-6">
-        <h3 className="text-lg font-medium text-secondary-800 mb-4 flex items-center">
-          <div className="w-2 h-2 bg-warning-500 rounded-full mr-3"></div>
+      <div className="bg-card border border-border rounded-lg p-6">
+        <h3 className="text-lg font-medium text-foreground mb-4 flex items-center">
+          <div className="w-2 h-2 bg-yellow-500 rounded-full mr-3"></div>
           Competitive Advantages
         </h3>
-        <p className="text-sm text-secondary-600 mb-4">
+        <p className="text-sm text-muted-foreground mb-4">
           Select all competitive advantages that apply to your business:
         </p>
 
@@ -276,9 +276,9 @@ export function BusinessDetailsForm({
                 onChange={() =>
                   toggleArrayItem('competitiveAdvantage', advantage)
                 }
-                className="rounded border-secondary-300"
+                className="rounded border-input"
               />
-              <span className="text-sm text-secondary-700">{advantage}</span>
+              <span className="text-sm text-foreground">{advantage}</span>
             </label>
           ))}
         </div>
@@ -294,12 +294,12 @@ export function BusinessDetailsForm({
       </div>
 
       {/* Risk Factors */}
-      <div className="bg-white border border-secondary-200 rounded-lg p-6">
-        <h3 className="text-lg font-medium text-secondary-800 mb-4 flex items-center">
-          <div className="w-2 h-2 bg-error-500 rounded-full mr-3"></div>
+      <div className="bg-card border border-border rounded-lg p-6">
+        <h3 className="text-lg font-medium text-foreground mb-4 flex items-center">
+          <div className="w-2 h-2 bg-destructive rounded-full mr-3"></div>
           Risk Factors
         </h3>
-        <p className="text-sm text-secondary-600 mb-4">
+        <p className="text-sm text-muted-foreground mb-4">
           Select all significant risk factors affecting your business:
         </p>
 
@@ -313,9 +313,9 @@ export function BusinessDetailsForm({
                 type="checkbox"
                 checked={data.riskFactors?.includes(risk) || false}
                 onChange={() => toggleArrayItem('riskFactors', risk)}
-                className="rounded border-secondary-300"
+                className="rounded border-input"
               />
-              <span className="text-sm text-secondary-700">{risk}</span>
+              <span className="text-sm text-foreground">{risk}</span>
             </label>
           ))}
         </div>
@@ -330,14 +330,14 @@ export function BusinessDetailsForm({
       </div>
 
       {/* Regulatory Risk */}
-      <div className="bg-white border border-secondary-200 rounded-lg p-6">
-        <h3 className="text-lg font-medium text-secondary-800 mb-4 flex items-center">
-          <div className="w-2 h-2 bg-accent-500 rounded-full mr-3"></div>
+      <div className="bg-card border border-border rounded-lg p-6">
+        <h3 className="text-lg font-medium text-foreground mb-4 flex items-center">
+          <div className="w-2 h-2 bg-secondary rounded-full mr-3"></div>
           Regulatory Environment
         </h3>
 
         <div>
-          <label className="block text-sm font-medium text-secondary-700 mb-3">
+          <label className="block text-sm font-medium text-foreground mb-3">
             Regulatory Risk Level
           </label>
           <div className="space-y-2">
@@ -373,10 +373,10 @@ export function BusinessDetailsForm({
                   className="mt-1"
                 />
                 <div>
-                  <div className="font-medium text-secondary-800">
+                  <div className="font-medium text-foreground">
                     {option.label}
                   </div>
-                  <div className="text-sm text-secondary-600">
+                  <div className="text-sm text-muted-foreground">
                     {option.description}
                   </div>
                 </div>
@@ -386,11 +386,11 @@ export function BusinessDetailsForm({
         </div>
       </div>
 
-      <div className="bg-primary-50 border border-primary-200 rounded-lg p-4">
-        <h3 className="font-medium text-primary-800 mb-2">
+      <div className="bg-primary/10 border border-primary/20 rounded-lg p-4">
+        <h3 className="font-medium text-primary mb-2">
           How this affects your valuation
         </h3>
-        <ul className="text-sm text-primary-700 space-y-1">
+        <ul className="text-sm text-primary/80 space-y-1">
           <li>
             • Market leaders and growth-stage companies typically receive higher
             multiples

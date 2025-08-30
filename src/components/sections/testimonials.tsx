@@ -105,28 +105,28 @@ const stats = [
     value: '10,000+',
     label: 'Businesses Valued',
     icon: Users,
-    color: 'from-primary to-primary/80',
+    color: 'from-orange-500 to-orange-600',
     description: 'Companies trust our AI',
   },
   {
     value: '95%',
     label: 'Accuracy Rate',
     icon: Award,
-    color: 'from-primary to-primary/70',
+    color: 'from-orange-500 to-orange-600',
     description: 'Precision you can rely on',
   },
   {
     value: '$2.8B',
     label: 'Total Value Analyzed',
     icon: DollarSign,
-    color: 'from-primary/90 to-primary',
+    color: 'from-orange-500 to-orange-600',
     description: 'Enterprise-grade scale',
   },
   {
     value: '4.9/5',
     label: 'User Rating',
     icon: Star,
-    color: 'from-primary/80 to-primary/60',
+    color: 'from-orange-500 to-orange-600',
     description: 'Loved by professionals',
   },
 ]
@@ -161,9 +161,9 @@ export function Testimonials() {
           {/* Description - Enhanced readability */}
           <div className="max-w-3xl mx-auto">
             <p className="text-xl sm:text-2xl text-muted-foreground leading-relaxed font-light">
-              Join thousands of business owners, investors, and advisors who rely
-              on our AI-powered platform for accurate business valuations and
-              strategic insights.
+              Join thousands of business owners, investors, and advisors who
+              rely on our AI-powered platform for accurate business valuations
+              and strategic insights.
             </p>
           </div>
         </div>

@@ -41,6 +41,7 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet'
 import { cn } from '@/lib/utils'
+import { ThemeToggle } from '@/components/ui/theme-toggle'
 
 // Navigation items configuration
 const navigationItems = [
@@ -102,7 +103,7 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-secondary-200">
+    <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -113,7 +114,7 @@ export function Header() {
               aria-label="GoodBuy HQ Home"
             >
               <motion.div
-                className="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center"
+                className="w-8 h-8 bg-gradient-to-br from-primary to-primary/80 rounded-lg flex items-center justify-center"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -124,7 +125,7 @@ export function Header() {
                   GB
                 </span>
               </motion.div>
-              <span className="text-xl font-bold text-secondary-900">
+              <span className="text-xl font-bold text-foreground">
                 GoodBuy HQ
               </span>
             </Link>
@@ -198,6 +199,8 @@ export function Header() {
 
           {/* User Menu and CTA Buttons */}
           <div className="hidden md:flex items-center space-x-4">
+            {/* Theme Toggle */}
+            <ThemeToggle />
             {/* Command Palette Button for smaller screens */}
             <CommandPaletteTrigger
               onToggle={() => setCommandPaletteOpen(true)}

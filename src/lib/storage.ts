@@ -329,7 +329,7 @@ class LocalProvider implements StorageProvider {
           size: info.info.size,
         }
       } catch (error) {
-        console.warn('Sharp not available, using original image:', error)
+        // Sharp not available, using original image
       }
     }
 
@@ -352,7 +352,7 @@ class LocalProvider implements StorageProvider {
         thumbnailBuffer
       )
     } catch (error) {
-      console.warn('Could not generate thumbnail:', error)
+      // Could not generate thumbnail
     }
 
     return {

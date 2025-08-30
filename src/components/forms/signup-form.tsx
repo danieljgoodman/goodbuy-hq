@@ -143,10 +143,8 @@ export default function SignUpForm() {
   return (
     <div className="w-full max-w-lg space-y-6">
       <div className="text-center">
-        <h1 className="text-3xl font-bold text-secondary-900">
-          Create Account
-        </h1>
-        <p className="mt-2 text-secondary-600">
+        <h1 className="text-3xl font-bold text-foreground">Create Account</h1>
+        <p className="mt-2 text-muted-foreground">
           Join GoodBuy HQ and start your journey
         </p>
       </div>
@@ -213,10 +211,10 @@ export default function SignUpForm() {
 
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-secondary-300" />
+          <div className="w-full border-t border-border" />
         </div>
         <div className="relative flex justify-center text-sm">
-          <span className="bg-white px-2 text-secondary-500">
+          <span className="bg-background px-2 text-muted-foreground">
             Or create account with email
           </span>
         </div>
@@ -392,7 +390,7 @@ export default function SignUpForm() {
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute inset-y-0 right-0 flex items-center pr-3 text-secondary-400 hover:text-secondary-600"
+                      className="absolute inset-y-0 right-0 flex items-center pr-3 text-muted-foreground hover:text-foreground"
                       tabIndex={-1}
                       aria-label={
                         showPassword ? 'Hide password' : 'Show password'
@@ -417,7 +415,7 @@ export default function SignUpForm() {
                           }}
                         />
                       </div>
-                      <span className="text-xs font-medium text-secondary-600">
+                      <span className="text-xs font-medium text-muted-foreground">
                         {passwordStrength.text}
                       </span>
                     </div>
@@ -456,7 +454,7 @@ export default function SignUpForm() {
                       onClick={() =>
                         setShowConfirmPassword(!showConfirmPassword)
                       }
-                      className="absolute inset-y-0 right-0 flex items-center pr-3 text-secondary-400 hover:text-secondary-600"
+                      className="absolute inset-y-0 right-0 flex items-center pr-3 text-muted-foreground hover:text-foreground"
                       tabIndex={-1}
                       aria-label={
                         showConfirmPassword ? 'Hide password' : 'Show password'
@@ -494,14 +492,14 @@ export default function SignUpForm() {
                     I agree to the{' '}
                     <Link
                       href="/terms"
-                      className="text-primary-600 hover:text-primary-500 underline"
+                      className="text-primary hover:text-primary/90 underline"
                     >
                       Terms and Conditions
                     </Link>{' '}
                     and{' '}
                     <Link
                       href="/privacy"
-                      className="text-primary-600 hover:text-primary-500 underline"
+                      className="text-primary hover:text-primary/90 underline"
                     >
                       Privacy Policy
                     </Link>{' '}
@@ -568,11 +566,11 @@ export default function SignUpForm() {
       </Form>
 
       <div className="text-center">
-        <p className="text-sm text-secondary-600">
+        <p className="text-sm text-muted-foreground">
           Already have an account?{' '}
           <Link
             href="/auth/signin"
-            className="text-primary-600 hover:text-primary-500 font-medium focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-sm"
+            className="text-primary hover:text-primary/90 font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-sm"
           >
             Sign in
           </Link>

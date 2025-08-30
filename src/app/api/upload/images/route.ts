@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
           uploadOptions.resize = resizeOptions
         }
       } catch (error) {
-        console.warn('Invalid resize options:', error)
+        // Invalid resize options
       }
     }
 

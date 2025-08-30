@@ -76,7 +76,7 @@ const STATUS_CONFIG = {
   },
   ACTIVE: {
     label: 'Active',
-    color: 'bg-green-100 text-green-800',
+    color: 'bg-emerald-100 text-green-800',
     icon: CheckCircle,
     description: 'Live and visible to buyers',
   },
@@ -94,13 +94,13 @@ const STATUS_CONFIG = {
   },
   SOLD: {
     label: 'Sold',
-    color: 'bg-blue-100 text-blue-800',
+    color: 'bg-primary/10 text-blue-800',
     icon: CheckCircle,
     description: 'Successfully sold',
   },
   ARCHIVED: {
     label: 'Archived',
-    color: 'bg-secondary-100 text-secondary-600',
+    color: 'bg-secondary-100 text-muted-foreground',
     icon: XCircle,
     description: 'No longer active',
   },
@@ -198,22 +198,20 @@ export default function ListingDashboardClient({
   )
 
   return (
-    <div className="min-h-screen bg-secondary-50">
+    <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-secondary-900">
-              My Listings
-            </h1>
-            <p className="text-secondary-600 mt-2">
+            <h1 className="text-3xl font-bold text-foreground">My Listings</h1>
+            <p className="text-muted-foreground mt-2">
               Manage your business listings and track performance
             </p>
           </div>
 
           <button
             onClick={() => router.push('/sell')}
-            className="flex items-center px-6 py-3 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors"
+            className="flex items-center px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
           >
             <Plus className="w-5 h-5 mr-2" />
             New Listing
@@ -222,71 +220,71 @@ export default function ListingDashboardClient({
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="bg-card rounded-lg shadow-md p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-secondary-600">
+                <p className="text-sm font-medium text-muted-foreground">
                   Active Listings
                 </p>
-                <p className="text-3xl font-bold text-secondary-900 mt-2">
+                <p className="text-3xl font-bold text-foreground mt-2">
                   {stats.activeListings}
                 </p>
               </div>
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                <Building2 className="w-6 h-6 text-green-600" />
+              <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center">
+                <Building2 className="w-6 h-6 text-emerald-600" />
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="bg-card rounded-lg shadow-md p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-secondary-600">
+                <p className="text-sm font-medium text-muted-foreground">
                   Total Views
                 </p>
-                <p className="text-3xl font-bold text-secondary-900 mt-2">
+                <p className="text-3xl font-bold text-foreground mt-2">
                   {stats.totalViews.toLocaleString()}
                 </p>
               </div>
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                <Eye className="w-6 h-6 text-blue-600" />
+              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                <Eye className="w-6 h-6 text-primary" />
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="bg-card rounded-lg shadow-md p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-secondary-600">
+                <p className="text-sm font-medium text-muted-foreground">
                   Inquiries
                 </p>
-                <p className="text-3xl font-bold text-secondary-900 mt-2">
+                <p className="text-3xl font-bold text-foreground mt-2">
                   {stats.totalInquiries}
                 </p>
                 {stats.unreadInquiries > 0 && (
-                  <p className="text-sm text-red-600 mt-1">
+                  <p className="text-sm text-destructive mt-1">
                     {stats.unreadInquiries} unread
                   </p>
                 )}
               </div>
-              <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
-                <MessageCircle className="w-6 h-6 text-primary-600" />
+              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                <MessageCircle className="w-6 h-6 text-primary" />
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="bg-card rounded-lg shadow-md p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-secondary-600">
+                <p className="text-sm font-medium text-muted-foreground">
                   Favorites
                 </p>
-                <p className="text-3xl font-bold text-secondary-900 mt-2">
+                <p className="text-3xl font-bold text-foreground mt-2">
                   {stats.totalFavorites}
                 </p>
               </div>
               <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
-                <Heart className="w-6 h-6 text-red-600" />
+                <Heart className="w-6 h-6 text-destructive" />
               </div>
             </div>
           </div>
@@ -295,7 +293,7 @@ export default function ListingDashboardClient({
         {/* Listings */}
         <div className="bg-white rounded-lg shadow-md">
           <div className="px-6 py-4 border-b border-secondary-200">
-            <h2 className="text-lg font-semibold text-secondary-900">
+            <h2 className="text-lg font-semibold text-foreground">
               Your Business Listings ({businesses.length})
             </h2>
           </div>
@@ -303,10 +301,10 @@ export default function ListingDashboardClient({
           {businesses.length === 0 ? (
             <div className="p-12 text-center">
               <Building2 className="w-16 h-16 text-secondary-400 mx-auto mb-4" />
-              <h3 className="text-xl font-medium text-secondary-900 mb-2">
+              <h3 className="text-xl font-medium text-foreground mb-2">
                 No listings yet
               </h3>
-              <p className="text-secondary-600 mb-6">
+              <p className="text-muted-foreground mb-6">
                 Create your first business listing to start attracting buyers.
               </p>
               <button
@@ -349,14 +347,14 @@ export default function ListingDashboardClient({
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between mb-3">
                           <div className="flex-1">
-                            <h3 className="text-lg font-semibold text-secondary-900 mb-1 truncate">
+                            <h3 className="text-lg font-semibold text-foreground mb-1 truncate">
                               {business.title}
                               {business.featured && (
                                 <Star className="w-4 h-4 text-yellow-500 inline ml-2" />
                               )}
                             </h3>
 
-                            <div className="flex items-center space-x-4 text-sm text-secondary-600 mb-2">
+                            <div className="flex items-center space-x-4 text-sm text-muted-foreground mb-2">
                               {business.category && (
                                 <span>
                                   {business.category.replace('_', ' ')}
@@ -387,7 +385,7 @@ export default function ListingDashboardClient({
                             </div>
 
                             {/* Stats */}
-                            <div className="flex items-center space-x-6 text-sm text-secondary-600">
+                            <div className="flex items-center space-x-6 text-sm text-muted-foreground">
                               <span className="flex items-center">
                                 <Eye className="w-4 h-4 mr-1" />
                                 {business._count.views} views
@@ -417,7 +415,7 @@ export default function ListingDashboardClient({
                               onClick={() =>
                                 handleBusinessAction('view', business.id)
                               }
-                              className="p-2 text-secondary-600 hover:text-secondary-800 hover:bg-secondary-100 rounded-lg transition-colors"
+                              className="p-2 text-muted-foreground hover:text-secondary-800 hover:bg-secondary-100 rounded-lg transition-colors"
                               title="View listing"
                             >
                               <Eye className="w-4 h-4" />
@@ -427,7 +425,7 @@ export default function ListingDashboardClient({
                               onClick={() =>
                                 handleBusinessAction('edit', business.id)
                               }
-                              className="p-2 text-secondary-600 hover:text-secondary-800 hover:bg-secondary-100 rounded-lg transition-colors"
+                              className="p-2 text-muted-foreground hover:text-secondary-800 hover:bg-secondary-100 rounded-lg transition-colors"
                               title="Edit listing"
                             >
                               <Edit3 className="w-4 h-4" />
@@ -442,7 +440,7 @@ export default function ListingDashboardClient({
                                       : business.id
                                   )
                                 }
-                                className="p-2 text-secondary-600 hover:text-secondary-800 hover:bg-secondary-100 rounded-lg transition-colors"
+                                className="p-2 text-muted-foreground hover:text-secondary-800 hover:bg-secondary-100 rounded-lg transition-colors"
                               >
                                 <MoreVertical className="w-4 h-4" />
                               </button>
@@ -480,7 +478,7 @@ export default function ListingDashboardClient({
                                       )
                                       setSelectedBusiness(null)
                                     }}
-                                    className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 rounded-b-lg"
+                                    className="w-full px-4 py-2 text-left text-sm text-destructive hover:bg-red-50 rounded-b-lg"
                                   >
                                     <Trash2 className="w-4 h-4 inline mr-2" />
                                     Delete
@@ -494,7 +492,7 @@ export default function ListingDashboardClient({
                         {/* Recent Inquiries */}
                         {business.inquiries.length > 0 && (
                           <div className="mt-4 pt-4 border-t border-secondary-100">
-                            <h4 className="text-sm font-medium text-secondary-900 mb-2">
+                            <h4 className="text-sm font-medium text-foreground mb-2">
                               Recent Inquiries:
                             </h4>
                             <div className="space-y-2">
@@ -504,10 +502,10 @@ export default function ListingDashboardClient({
                                   className="flex items-center justify-between p-2 bg-secondary-50 rounded text-sm"
                                 >
                                   <div className="flex-1 min-w-0">
-                                    <p className="font-medium text-secondary-900 truncate">
+                                    <p className="font-medium text-foreground truncate">
                                       {inquiry.subject}
                                     </p>
-                                    <p className="text-secondary-600">
+                                    <p className="text-muted-foreground">
                                       From {inquiry.contactName} •{' '}
                                       {formatDistanceToNow(
                                         new Date(inquiry.createdAt),
@@ -527,7 +525,7 @@ export default function ListingDashboardClient({
                                       `/dashboard/inquiries?businessId=${business.id}`
                                     )
                                   }
-                                  className="text-sm text-primary-600 hover:text-primary-700"
+                                  className="text-sm text-primary hover:text-primary-700"
                                 >
                                   View all {business.inquiries.length} inquiries
                                 </button>

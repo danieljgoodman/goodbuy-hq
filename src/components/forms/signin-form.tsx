@@ -90,8 +90,8 @@ export default function SignInForm() {
   return (
     <div className="w-full max-w-md space-y-6">
       <div className="text-center">
-        <h1 className="text-3xl font-bold text-secondary-900">Welcome Back</h1>
-        <p className="mt-2 text-secondary-600">
+        <h1 className="text-3xl font-bold text-foreground">Welcome Back</h1>
+        <p className="mt-2 text-muted-foreground">
           Sign in to your GoodBuy HQ account
         </p>
       </div>
@@ -149,10 +149,10 @@ export default function SignInForm() {
 
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-secondary-300" />
+          <div className="w-full border-t border-border" />
         </div>
         <div className="relative flex justify-center text-sm">
-          <span className="bg-white px-2 text-secondary-500">
+          <span className="bg-background px-2 text-muted-foreground">
             Or continue with email
           </span>
         </div>
@@ -204,7 +204,7 @@ export default function SignInForm() {
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute inset-y-0 right-0 flex items-center pr-3 text-secondary-400 hover:text-secondary-600"
+                      className="absolute inset-y-0 right-0 flex items-center pr-3 text-muted-foreground hover:text-foreground"
                       tabIndex={-1}
                       aria-label={
                         showPassword ? 'Hide password' : 'Show password'
@@ -229,7 +229,7 @@ export default function SignInForm() {
           <div className="flex items-center justify-between">
             <Link
               href="/auth/forgot-password"
-              className="text-sm text-primary-600 hover:text-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-sm"
+              className="text-sm text-primary hover:text-primary/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-sm"
             >
               Forgot your password?
             </Link>
@@ -256,11 +256,11 @@ export default function SignInForm() {
       </Form>
 
       <div className="text-center">
-        <p className="text-sm text-secondary-600">
+        <p className="text-sm text-muted-foreground">
           Don&apos;t have an account?{' '}
           <Link
             href="/auth/signup"
-            className="text-primary-600 hover:text-primary-500 font-medium"
+            className="text-primary hover:text-primary/90 font-medium"
           >
             Sign up
           </Link>

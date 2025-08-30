@@ -186,7 +186,7 @@ export default function FinancialPerformanceChart({
   }
 
   const exportChart = () => {
-    console.log('Exporting financial performance chart...')
+    // Implementation for chart export
   }
 
   return (

@@ -129,11 +129,19 @@ export default function BrokerDashboardClient({
   const getStatusConfig = (status: string) => {
     switch (status) {
       case 'ACTIVE':
-        return { color: 'text-green-600', bg: 'bg-green-100', label: 'Active' }
+        return {
+          color: 'text-emerald-600',
+          bg: 'bg-emerald-100',
+          label: 'Active',
+        }
       case 'DRAFT':
         return { color: 'text-gray-600', bg: 'bg-gray-100', label: 'Draft' }
       case 'COMPLETED':
-        return { color: 'text-blue-600', bg: 'bg-blue-100', label: 'Completed' }
+        return {
+          color: 'text-primary',
+          bg: 'bg-primary/10',
+          label: 'Completed',
+        }
       case 'SOLD':
         return { color: 'text-purple-600', bg: 'bg-purple-100', label: 'Sold' }
       default:
@@ -178,25 +186,27 @@ export default function BrokerDashboardClient({
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           className="text-center"
         >
           <motion.div
-            className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full mx-auto mb-4"
+            className="w-16 h-16 border-4 border-muted border-t-primary rounded-full mx-auto mb-4"
             animate={{ rotate: 360 }}
             transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
           />
-          <p className="text-slate-600">Loading your broker dashboard...</p>
+          <p className="text-muted-foreground">
+            Loading your broker dashboard...
+          </p>
         </motion.div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 space-y-8">
         {/* Header */}
         <motion.div
@@ -206,10 +216,10 @@ export default function BrokerDashboardClient({
           className="flex flex-col lg:flex-row lg:items-center lg:justify-between"
         >
           <div>
-            <h1 className="text-4xl font-bold text-slate-900 mb-2">
+            <h1 className="text-4xl font-bold text-foreground mb-2">
               Broker Dashboard
             </h1>
-            <p className="text-lg text-slate-600">
+            <p className="text-lg text-muted-foreground">
               Welcome back, {user.firstName || user.name || 'Broker'}! Manage
               your clients and evaluations.
             </p>
@@ -222,14 +232,14 @@ export default function BrokerDashboardClient({
           >
             <button
               onClick={() => router.push('/calculator')}
-              className="flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 shadow-md"
+              className="flex items-center px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-all duration-200 shadow-md"
             >
               <Brain className="w-5 h-5 mr-2" />
               New Evaluation
             </button>
             <button
               onClick={() => router.push('/marketplace/create')}
-              className="flex items-center px-4 py-3 bg-white text-slate-700 border border-slate-200 rounded-lg hover:bg-slate-50 transition-all duration-200"
+              className="flex items-center px-4 py-3 bg-card text-foreground border rounded-lg hover:bg-muted/50 transition-all duration-200"
             >
               <Plus className="w-5 h-5 mr-2" />
               Add Client Listing
@@ -243,21 +253,21 @@ export default function BrokerDashboardClient({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.6 }}
-            className="bg-white/80 backdrop-blur-sm rounded-2xl border border-white/20 shadow-lg p-6"
+            className="bg-card backdrop-blur-sm rounded-2xl border shadow-lg p-6"
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-slate-600">
+                <p className="text-sm font-medium text-muted-foreground">
                   Active Clients
                 </p>
-                <p className="text-3xl font-bold text-slate-900">
+                <p className="text-3xl font-bold text-foreground">
                   {analytics.totalClients}
                 </p>
-                <p className="text-sm text-slate-500">
+                <p className="text-sm text-muted-foreground">
                   {analytics.activeListings} active listings
                 </p>
               </div>
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center shadow-md">
+              <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center shadow-md">
                 <Users className="w-6 h-6 text-white" />
               </div>
             </div>
@@ -267,25 +277,25 @@ export default function BrokerDashboardClient({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="bg-white/80 backdrop-blur-sm rounded-2xl border border-white/20 shadow-lg p-6"
+            className="bg-card backdrop-blur-sm rounded-2xl border shadow-lg p-6"
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-slate-600">
+                <p className="text-sm font-medium text-muted-foreground">
                   Evaluations
                 </p>
                 <div className="flex items-baseline gap-2">
-                  <p className="text-3xl font-bold text-slate-900">
+                  <p className="text-3xl font-bold text-foreground">
                     {analytics.totalEvaluations}
                   </p>
                   {analytics.recentEvaluations > 0 && (
-                    <p className="text-sm text-green-600">
+                    <p className="text-sm text-emerald-600">
                       +{analytics.recentEvaluations} this month
                     </p>
                   )}
                 </div>
               </div>
-              <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center shadow-md">
+              <div className="w-12 h-12 bg-emerald-500 rounded-lg flex items-center justify-center shadow-md">
                 <Brain className="w-6 h-6 text-white" />
               </div>
             </div>
@@ -295,19 +305,21 @@ export default function BrokerDashboardClient({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.6 }}
-            className="bg-white/80 backdrop-blur-sm rounded-2xl border border-white/20 shadow-lg p-6"
+            className="bg-card backdrop-blur-sm rounded-2xl border shadow-lg p-6"
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-slate-600">
+                <p className="text-sm font-medium text-muted-foreground">
                   Completed Deals
                 </p>
-                <p className="text-3xl font-bold text-slate-900">
+                <p className="text-3xl font-bold text-foreground">
                   {analytics.completedDeals}
                 </p>
-                <p className="text-sm text-slate-500">Total transactions</p>
+                <p className="text-sm text-muted-foreground">
+                  Total transactions
+                </p>
               </div>
-              <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center shadow-md">
+              <div className="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center shadow-md">
                 <CheckCircle className="w-6 h-6 text-white" />
               </div>
             </div>
@@ -317,19 +329,21 @@ export default function BrokerDashboardClient({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
-            className="bg-white/80 backdrop-blur-sm rounded-2xl border border-white/20 shadow-lg p-6"
+            className="bg-card backdrop-blur-sm rounded-2xl border shadow-lg p-6"
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-slate-600">
+                <p className="text-sm font-medium text-muted-foreground">
                   Commission Value
                 </p>
-                <p className="text-3xl font-bold text-slate-900">
+                <p className="text-3xl font-bold text-foreground">
                   {formatPrice(analytics.totalCommissionValue)}
                 </p>
-                <p className="text-sm text-slate-500">Estimated earnings</p>
+                <p className="text-sm text-muted-foreground">
+                  Estimated earnings
+                </p>
               </div>
-              <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center shadow-md">
+              <div className="w-12 h-12 bg-copper-500 rounded-lg flex items-center justify-center shadow-md">
                 <DollarSign className="w-6 h-6 text-white" />
               </div>
             </div>
@@ -341,9 +355,9 @@ export default function BrokerDashboardClient({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.6 }}
-          className="bg-white/80 backdrop-blur-sm rounded-2xl border border-white/20 shadow-lg p-6"
+          className="bg-card backdrop-blur-sm rounded-2xl border shadow-lg p-6"
         >
-          <h3 className="text-xl font-semibold text-slate-900 mb-6 flex items-center gap-2">
+          <h3 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
             <Award className="w-5 h-5 text-yellow-600" />
             Performance Overview
           </h3>
@@ -351,14 +365,14 @@ export default function BrokerDashboardClient({
           <div className="grid md:grid-cols-3 gap-6">
             <div className="text-center">
               <div className="w-20 h-20 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full flex items-center justify-center mx-auto mb-3">
-                <span className="text-2xl font-bold text-blue-700">
+                <span className="text-2xl font-bold text-primary">
                   {averageScore.toFixed(0)}
                 </span>
               </div>
-              <p className="text-sm font-medium text-slate-900">
+              <p className="text-sm font-medium text-foreground">
                 Average Evaluation Score
               </p>
-              <p className="text-xs text-slate-500">Out of 100</p>
+              <p className="text-xs text-muted-foreground">Out of 100</p>
             </div>
 
             <div className="text-center">
@@ -367,10 +381,10 @@ export default function BrokerDashboardClient({
                   {analytics.activeListings}
                 </span>
               </div>
-              <p className="text-sm font-medium text-slate-900">
+              <p className="text-sm font-medium text-foreground">
                 Active Listings
               </p>
-              <p className="text-xs text-slate-500">Currently live</p>
+              <p className="text-xs text-muted-foreground">Currently live</p>
             </div>
 
             <div className="text-center">
@@ -384,8 +398,10 @@ export default function BrokerDashboardClient({
                   %
                 </span>
               </div>
-              <p className="text-sm font-medium text-slate-900">Success Rate</p>
-              <p className="text-xs text-slate-500">Deals closed</p>
+              <p className="text-sm font-medium text-foreground">
+                Success Rate
+              </p>
+              <p className="text-xs text-muted-foreground">Deals closed</p>
             </div>
           </div>
         </motion.div>
@@ -422,8 +438,8 @@ export default function BrokerDashboardClient({
                   onClick={() => setSelectedTab(tab.id)}
                   className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors duration-200 ${
                     selectedTab === tab.id
-                      ? 'border-blue-500 text-blue-600'
-                      : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
+                      ? 'border-blue-500 text-primary'
+                      : 'border-transparent text-muted-foreground hover:text-slate-700 hover:border-slate-300'
                   }`}
                 >
                   {tab.label} {tab.count && `(${tab.count})`}
@@ -445,7 +461,7 @@ export default function BrokerDashboardClient({
                   <div className="grid lg:grid-cols-2 gap-6">
                     {/* Top Performing Clients */}
                     <div>
-                      <h4 className="text-lg font-semibold text-slate-900 mb-4">
+                      <h4 className="text-lg font-semibold text-foreground mb-4">
                         Top Performing Clients
                       </h4>
                       <div className="space-y-3">
@@ -460,7 +476,7 @@ export default function BrokerDashboardClient({
                           .map((business, index) => (
                             <div
                               key={business.id}
-                              className="flex items-center gap-3 p-3 bg-slate-50 rounded-lg"
+                              className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg"
                             >
                               <div className="w-12 h-8 bg-slate-200 rounded overflow-hidden flex-shrink-0">
                                 {business.images_rel[0]?.url ? (
@@ -471,21 +487,21 @@ export default function BrokerDashboardClient({
                                   />
                                 ) : (
                                   <div className="w-full h-full flex items-center justify-center">
-                                    <Building2 className="w-4 h-4 text-slate-400" />
+                                    <Building2 className="w-4 h-4 text-muted-foreground" />
                                   </div>
                                 )}
                               </div>
                               <div className="flex-1">
-                                <p className="font-medium text-slate-900 text-sm">
+                                <p className="font-medium text-foreground text-sm">
                                   {business.title}
                                 </p>
-                                <p className="text-xs text-slate-500">
+                                <p className="text-xs text-muted-foreground">
                                   {business._count.views} views •{' '}
                                   {business._count.inquiries} inquiries
                                 </p>
                               </div>
                               <div className="text-right">
-                                <p className="font-semibold text-slate-900 text-sm">
+                                <p className="font-semibold text-foreground text-sm">
                                   {formatPrice(business.askingPrice)}
                                 </p>
                               </div>
@@ -496,7 +512,7 @@ export default function BrokerDashboardClient({
 
                     {/* Recent Evaluations */}
                     <div>
-                      <h4 className="text-lg font-semibold text-slate-900 mb-4">
+                      <h4 className="text-lg font-semibold text-foreground mb-4">
                         Recent Evaluations
                       </h4>
                       <div className="space-y-3">
@@ -507,22 +523,22 @@ export default function BrokerDashboardClient({
                           return (
                             <div
                               key={evaluation.id}
-                              className="flex items-center gap-3 p-3 bg-slate-50 rounded-lg"
+                              className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg"
                             >
-                              <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                                <Brain className="w-5 h-5 text-blue-600" />
+                              <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <Brain className="w-5 h-5 text-primary" />
                               </div>
                               <div className="flex-1">
-                                <p className="font-medium text-slate-900 text-sm">
+                                <p className="font-medium text-foreground text-sm">
                                   {evaluation.title}
                                 </p>
-                                <p className="text-xs text-slate-500">
+                                <p className="text-xs text-muted-foreground">
                                   {evaluation.business.title}
                                 </p>
                               </div>
                               <div className="text-right">
                                 {evaluation.overallScore && (
-                                  <p className="font-semibold text-slate-900 text-sm">
+                                  <p className="font-semibold text-foreground text-sm">
                                     {evaluation.overallScore}/100
                                   </p>
                                 )}
@@ -550,12 +566,12 @@ export default function BrokerDashboardClient({
                   transition={{ duration: 0.3 }}
                 >
                   <div className="flex items-center justify-between mb-6">
-                    <h3 className="text-lg font-semibold text-slate-900">
+                    <h3 className="text-lg font-semibold text-foreground">
                       Client Listings ({businesses.length})
                     </h3>
                     <button
                       onClick={() => router.push('/marketplace/create')}
-                      className="text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors duration-200"
+                      className="text-sm text-primary hover:text-primary font-medium transition-colors duration-200"
                     >
                       Add new client listing
                     </button>
@@ -583,14 +599,14 @@ export default function BrokerDashboardClient({
                                   />
                                 ) : (
                                   <div className="w-full h-full flex items-center justify-center">
-                                    <Building2 className="w-6 h-6 text-slate-400" />
+                                    <Building2 className="w-6 h-6 text-muted-foreground" />
                                   </div>
                                 )}
                               </div>
 
                               <div className="flex-1">
                                 <div className="flex items-center gap-2 mb-2">
-                                  <h4 className="font-semibold text-slate-900">
+                                  <h4 className="font-semibold text-foreground">
                                     {business.title}
                                   </h4>
                                   <span
@@ -602,10 +618,10 @@ export default function BrokerDashboardClient({
                                     <Star className="w-4 h-4 text-yellow-500" />
                                   )}
                                 </div>
-                                <p className="text-sm text-slate-600 mb-3 line-clamp-2">
+                                <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
                                   {business.description}
                                 </p>
-                                <div className="flex items-center gap-4 text-sm text-slate-500">
+                                <div className="flex items-center gap-4 text-sm text-muted-foreground">
                                   <span className="flex items-center gap-1">
                                     <Eye className="w-3 h-3" />
                                     {business._count.views} views
@@ -622,10 +638,10 @@ export default function BrokerDashboardClient({
                               </div>
 
                               <div className="text-right">
-                                <p className="font-semibold text-slate-900 mb-2">
+                                <p className="font-semibold text-foreground mb-2">
                                   {formatPrice(business.askingPrice)}
                                 </p>
-                                <p className="text-xs text-slate-500">
+                                <p className="text-xs text-muted-foreground">
                                   Updated{' '}
                                   {formatDistanceToNow(
                                     new Date(business.createdAt),
@@ -640,16 +656,16 @@ export default function BrokerDashboardClient({
                     </div>
                   ) : (
                     <div className="text-center py-12">
-                      <Building2 className="w-16 h-16 text-slate-400 mx-auto mb-4" />
-                      <h4 className="text-lg font-medium text-slate-900 mb-2">
+                      <Building2 className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+                      <h4 className="text-lg font-medium text-foreground mb-2">
                         No client listings yet
                       </h4>
-                      <p className="text-slate-600 mb-6">
+                      <p className="text-muted-foreground mb-6">
                         Add your first client listing to get started.
                       </p>
                       <button
                         onClick={() => router.push('/marketplace/create')}
-                        className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+                        className="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors"
                       >
                         Add Client Listing
                       </button>
@@ -667,12 +683,12 @@ export default function BrokerDashboardClient({
                   transition={{ duration: 0.3 }}
                 >
                   <div className="flex items-center justify-between mb-6">
-                    <h3 className="text-lg font-semibold text-slate-900">
+                    <h3 className="text-lg font-semibold text-foreground">
                       Business Evaluations ({evaluations.length})
                     </h3>
                     <button
                       onClick={() => router.push('/calculator')}
-                      className="text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors duration-200"
+                      className="text-sm text-primary hover:text-primary font-medium transition-colors duration-200"
                     >
                       Create new evaluation
                     </button>
@@ -692,10 +708,10 @@ export default function BrokerDashboardClient({
                           >
                             <div className="flex items-start justify-between mb-3">
                               <div className="flex-1">
-                                <h4 className="font-semibold text-slate-900 mb-1">
+                                <h4 className="font-semibold text-foreground mb-1">
                                   {evaluation.title}
                                 </h4>
-                                <p className="text-sm text-slate-600">
+                                <p className="text-sm text-muted-foreground">
                                   {evaluation.business.title}
                                 </p>
                               </div>
@@ -709,10 +725,10 @@ export default function BrokerDashboardClient({
                             {evaluation.overallScore && (
                               <div className="mb-3">
                                 <div className="flex items-center justify-between mb-1">
-                                  <span className="text-xs text-slate-500">
+                                  <span className="text-xs text-muted-foreground">
                                     Overall Score
                                   </span>
-                                  <span className="text-sm font-medium text-slate-900">
+                                  <span className="text-sm font-medium text-foreground">
                                     {evaluation.overallScore}/100
                                   </span>
                                 </div>
@@ -727,7 +743,7 @@ export default function BrokerDashboardClient({
                               </div>
                             )}
 
-                            <div className="flex items-center justify-between text-xs text-slate-500">
+                            <div className="flex items-center justify-between text-xs text-muted-foreground">
                               <span>
                                 {formatDistanceToNow(
                                   new Date(evaluation.createdAt),
@@ -746,17 +762,17 @@ export default function BrokerDashboardClient({
                     </div>
                   ) : (
                     <div className="text-center py-12">
-                      <Brain className="w-16 h-16 text-slate-400 mx-auto mb-4" />
-                      <h4 className="text-lg font-medium text-slate-900 mb-2">
+                      <Brain className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+                      <h4 className="text-lg font-medium text-foreground mb-2">
                         No evaluations yet
                       </h4>
-                      <p className="text-slate-600 mb-6">
+                      <p className="text-muted-foreground mb-6">
                         Create your first business evaluation to provide
                         professional insights.
                       </p>
                       <button
                         onClick={() => router.push('/calculator')}
-                        className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+                        className="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors"
                       >
                         Create Evaluation
                       </button>
@@ -773,7 +789,7 @@ export default function BrokerDashboardClient({
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <h3 className="text-lg font-semibold text-slate-900 mb-6">
+                  <h3 className="text-lg font-semibold text-foreground mb-6">
                     Recent Activity
                   </h3>
 
@@ -785,7 +801,7 @@ export default function BrokerDashboardClient({
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: index * 0.05, duration: 0.4 }}
-                          className="flex items-start gap-4 p-4 bg-slate-50 rounded-lg"
+                          className="flex items-start gap-4 p-4 bg-muted/50 rounded-lg"
                         >
                           <div
                             className={`w-2 h-2 rounded-full mt-3 flex-shrink-0 ${
@@ -795,13 +811,13 @@ export default function BrokerDashboardClient({
                             }`}
                           />
                           <div className="flex-1">
-                            <p className="font-medium text-slate-900 mb-1">
+                            <p className="font-medium text-foreground mb-1">
                               {activity.title}
                             </p>
-                            <p className="text-sm text-slate-600 mb-2">
+                            <p className="text-sm text-muted-foreground mb-2">
                               {activity.description}
                             </p>
-                            <p className="text-xs text-slate-500">
+                            <p className="text-xs text-muted-foreground">
                               {formatDistanceToNow(
                                 new Date(activity.timestamp),
                                 { addSuffix: true }
@@ -813,8 +829,10 @@ export default function BrokerDashboardClient({
                     </div>
                   ) : (
                     <div className="text-center py-12">
-                      <Activity className="w-16 h-16 text-slate-400 mx-auto mb-4" />
-                      <p className="text-slate-500">No recent activity</p>
+                      <Activity className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+                      <p className="text-muted-foreground">
+                        No recent activity
+                      </p>
                     </div>
                   )}
                 </motion.div>
@@ -828,9 +846,9 @@ export default function BrokerDashboardClient({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.6 }}
-          className="bg-white/80 backdrop-blur-sm rounded-2xl border border-white/20 shadow-lg p-6"
+          className="bg-card backdrop-blur-sm rounded-2xl border shadow-lg p-6"
         >
-          <h3 className="text-xl font-semibold text-slate-900 mb-6 flex items-center gap-2">
+          <h3 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
             <Zap className="w-5 h-5 text-yellow-600" />
             Quick Actions
           </h3>

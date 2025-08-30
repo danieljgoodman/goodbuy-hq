@@ -177,7 +177,6 @@ export default function BusinessValuationChart({
 
   const exportChart = (format: string) => {
     // Implementation for chart export
-    console.log(`Exporting chart as ${format}`)
   }
 
   const ChartComponent = viewMode === 'area' ? AreaChart : LineChart

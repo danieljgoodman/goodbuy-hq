@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Providers from '@/components/providers/session-provider'
+import { ThemeProvider } from '@/components/providers/theme-provider'
 import { ToastProvider } from '@/components/providers/toast-provider'
 import { LayoutWithCommandPalette } from '@/components/layout/layout-with-command-palette'
 import './globals.css'
@@ -91,32 +92,39 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body className={inter.className}>
-        <Providers>
-          <ToastProvider
-            position="top-right"
-            theme="system"
-            closeButton={true}
-            richColors={true}
-            expand={false}
-            visibleToasts={3}
-            toastOptions={{
-              duration: 4000,
-              style: {
-                background: 'var(--popover)',
-                color: 'var(--popover-foreground)',
-                border: '1px solid var(--border)',
-              },
-            }}
-          >
-            <LayoutWithCommandPalette>
-              <div className="min-h-screen bg-gradient-to-br from-secondary-50 to-primary-50">
-                {children}
-              </div>
-            </LayoutWithCommandPalette>
-          </ToastProvider>
-        </Providers>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange={false}
+        >
+          <Providers>
+            <ToastProvider
+              position="top-right"
+              theme="system"
+              closeButton={true}
+              richColors={true}
+              expand={false}
+              visibleToasts={3}
+              toastOptions={{
+                duration: 4000,
+                style: {
+                  background: 'var(--popover)',
+                  color: 'var(--popover-foreground)',
+                  border: '1px solid var(--border)',
+                },
+              }}
+            >
+              <LayoutWithCommandPalette>
+                <div className="min-h-screen bg-gradient-to-br from-secondary/10 to-primary/10 dark:from-secondary/5 dark:to-primary/5 transition-colors duration-300">
+                  {children}
+                </div>
+              </LayoutWithCommandPalette>
+            </ToastProvider>
+          </Providers>
+        </ThemeProvider>
       </body>
     </html>
   )

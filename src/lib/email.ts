@@ -28,10 +28,10 @@ export async function sendVerificationEmail(
       <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f8fafc; }
         .container { max-width: 600px; margin: 0 auto; background-color: white; }
-        .header { background: linear-gradient(135deg, #0ea5e9 0%, #d946ef 100%); padding: 40px 20px; text-align: center; }
+        .header { background: linear-gradient(135deg, #c96442 0%, #d97757 100%); padding: 40px 20px; text-align: center; }
         .header h1 { color: white; margin: 0; font-size: 28px; font-weight: bold; }
         .content { padding: 40px 20px; }
-        .button { display: inline-block; background-color: #0ea5e9; color: white; padding: 16px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
+        .button { display: inline-block; background-color: #c96442; color: white; padding: 16px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
         .footer { background-color: #f1f5f9; padding: 20px; text-align: center; color: #64748b; font-size: 14px; }
       </style>
     </head>
@@ -92,7 +92,6 @@ export async function sendVerificationEmail(
       html: htmlContent,
     })
 
-    console.log('Verification email sent successfully to:', email)
   } catch (error) {
     console.error('Failed to send verification email:', error)
     throw error
@@ -109,7 +108,7 @@ export async function sendWelcomeEmail(email: string, name: string) {
       <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f8fafc; }
         .container { max-width: 600px; margin: 0 auto; background-color: white; }
-        .header { background: linear-gradient(135deg, #0ea5e9 0%, #d946ef 100%); padding: 40px 20px; text-align: center; }
+        .header { background: linear-gradient(135deg, #c96442 0%, #d97757 100%); padding: 40px 20px; text-align: center; }
         .header h1 { color: white; margin: 0; font-size: 28px; font-weight: bold; }
         .content { padding: 40px 20px; }
         .feature { margin: 20px 0; padding: 15px; background-color: #f8fafc; border-radius: 8px; }
@@ -187,11 +186,11 @@ export async function sendNewMessageNotification(
       <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f8fafc; }
         .container { max-width: 600px; margin: 0 auto; background-color: white; }
-        .header { background: linear-gradient(135deg, #0ea5e9 0%, #d946ef 100%); padding: 30px 20px; text-align: center; }
+        .header { background: linear-gradient(135deg, #c96442 0%, #d97757 100%); padding: 30px 20px; text-align: center; }
         .header h1 { color: white; margin: 0; font-size: 24px; font-weight: bold; }
         .content { padding: 30px 20px; }
-        .message-preview { background-color: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #0ea5e9; }
-        .button { display: inline-block; background-color: #0ea5e9; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 600; margin: 20px 0; }
+        .message-preview { background-color: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #c96442; }
+        .button { display: inline-block; background-color: #c96442; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 600; margin: 20px 0; }
         .footer { background-color: #f1f5f9; padding: 20px; text-align: center; color: #64748b; font-size: 14px; }
       </style>
     </head>
@@ -260,7 +259,7 @@ export async function sendMeetingInvitation(
       <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f8fafc; }
         .container { max-width: 600px; margin: 0 auto; background-color: white; }
-        .header { background: linear-gradient(135deg, #0ea5e9 0%, #d946ef 100%); padding: 30px 20px; text-align: center; }
+        .header { background: linear-gradient(135deg, #c96442 0%, #d97757 100%); padding: 30px 20px; text-align: center; }
         .header h1 { color: white; margin: 0; font-size: 24px; font-weight: bold; }
         .content { padding: 30px 20px; }
         .meeting-details { background-color: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0; }
@@ -341,11 +340,11 @@ export async function sendMeetingReminder(
       <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f8fafc; }
         .container { max-width: 600px; margin: 0 auto; background-color: white; }
-        .header { background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%); padding: 30px 20px; text-align: center; }
+        .header { background: linear-gradient(135deg, #c96442 0%, #d97757 100%); padding: 30px 20px; text-align: center; }
         .header h1 { color: white; margin: 0; font-size: 24px; font-weight: bold; }
         .content { padding: 30px 20px; }
-        .meeting-details { background-color: #fef3c7; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #f59e0b; }
-        .button { display: inline-block; background-color: #0ea5e9; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 600; margin: 20px 0; }
+        .meeting-details { background-color: #fef3c7; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #c96442; }
+        .button { display: inline-block; background-color: #c96442; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 600; margin: 20px 0; }
         .footer { background-color: #f1f5f9; padding: 20px; text-align: center; color: #64748b; font-size: 14px; }
       </style>
     </head>
@@ -411,11 +410,11 @@ export async function sendDocumentSharedNotification(
       <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f8fafc; }
         .container { max-width: 600px; margin: 0 auto; background-color: white; }
-        .header { background: linear-gradient(135deg, #8b5cf6 0%, #0ea5e9 100%); padding: 30px 20px; text-align: center; }
+        .header { background: linear-gradient(135deg, #c96442 0%, #d97757 100%); padding: 30px 20px; text-align: center; }
         .header h1 { color: white; margin: 0; font-size: 24px; font-weight: bold; }
         .content { padding: 30px 20px; }
-        .document-info { background-color: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #8b5cf6; }
-        .button { display: inline-block; background-color: #8b5cf6; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 600; margin: 20px 0; }
+        .document-info { background-color: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #c96442; }
+        .button { display: inline-block; background-color: #c96442; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 600; margin: 20px 0; }
         .footer { background-color: #f1f5f9; padding: 20px; text-align: center; color: #64748b; font-size: 14px; }
       </style>
     </head>
@@ -478,14 +477,14 @@ export async function sendDailyDigest(
       <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f8fafc; }
         .container { max-width: 600px; margin: 0 auto; background-color: white; }
-        .header { background: linear-gradient(135deg, #0ea5e9 0%, #d946ef 100%); padding: 30px 20px; text-align: center; }
+        .header { background: linear-gradient(135deg, #c96442 0%, #d97757 100%); padding: 30px 20px; text-align: center; }
         .header h1 { color: white; margin: 0; font-size: 24px; font-weight: bold; }
         .content { padding: 30px 20px; }
         .stats { display: flex; justify-content: space-around; margin: 30px 0; }
         .stat-item { text-align: center; padding: 20px; background-color: #f8fafc; border-radius: 8px; margin: 0 10px; flex: 1; }
-        .stat-number { font-size: 32px; font-weight: bold; color: #0ea5e9; }
+        .stat-number { font-size: 32px; font-weight: bold; color: #c96442; }
         .stat-label { font-size: 14px; color: #64748b; margin-top: 5px; }
-        .button { display: inline-block; background-color: #0ea5e9; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 600; margin: 20px 0; }
+        .button { display: inline-block; background-color: #c96442; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 600; margin: 20px 0; }
         .footer { background-color: #f1f5f9; padding: 20px; text-align: center; color: #64748b; font-size: 14px; }
       </style>
     </head>
@@ -563,13 +562,13 @@ export async function sendNewInquiryNotification(
       <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f8fafc; }
         .container { max-width: 600px; margin: 0 auto; background-color: white; }
-        .header { background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%); padding: 30px 20px; text-align: center; }
+        .header { background: linear-gradient(135deg, #c96442 0%, #d97757 100%); padding: 30px 20px; text-align: center; }
         .header h1 { color: white; margin: 0; font-size: 24px; font-weight: bold; }
         .content { padding: 30px 20px; }
-        .inquiry-box { background-color: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #10b981; }
+        .inquiry-box { background-color: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #c96442; }
         .inquiry-details { background-color: white; padding: 15px; border-radius: 6px; margin: 10px 0; }
-        .button { display: inline-block; background-color: #10b981; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 600; margin: 20px 0; }
-        .tips-box { background-color: #fef3c7; border: 1px solid #f59e0b; border-radius: 6px; padding: 15px; margin: 20px 0; }
+        .button { display: inline-block; background-color: #c96442; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 600; margin: 20px 0; }
+        .tips-box { background-color: #fed7aa; border: 1px solid #c96442; border-radius: 6px; padding: 15px; margin: 20px 0; }
         .footer { background-color: #f1f5f9; padding: 20px; text-align: center; color: #64748b; font-size: 14px; }
       </style>
     </head>
@@ -603,7 +602,7 @@ export async function sendNewInquiryNotification(
           
           <div class="tips-box">
             <h4 style="margin: 0 0 10px 0; color: #92400e;">📈 Pro Tips for Success:</h4>
-            <ul style="margin: 0; padding-left: 20px; color: #92400e;">
+            <ul style="margin: 0; padding-left: 20px; color: #7c2d12;">
               <li>Respond within 2-4 hours for best results</li>
               <li>Ask qualifying questions about budget and timeline</li>
               <li>Offer to schedule a call or meeting</li>

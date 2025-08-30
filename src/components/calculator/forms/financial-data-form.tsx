@@ -38,19 +38,19 @@ export function FinancialDataForm({
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-semibold text-secondary-900 mb-2">
+        <h2 className="text-2xl font-semibold text-foreground mb-2">
           Financial Information
         </h2>
-        <p className="text-secondary-600">
+        <p className="text-muted-foreground">
           Provide your company&apos;s financial data for accurate valuation
           calculations.
         </p>
       </div>
 
       {/* Revenue Section */}
-      <div className="bg-white border border-secondary-200 rounded-lg p-6">
-        <h3 className="text-lg font-medium text-secondary-800 mb-4 flex items-center">
-          <div className="w-2 h-2 bg-primary-500 rounded-full mr-3"></div>
+      <div className="bg-card border border-border rounded-lg p-6">
+        <h3 className="text-lg font-medium text-foreground mb-4 flex items-center">
+          <div className="w-2 h-2 bg-primary rounded-full mr-3"></div>
           Revenue & Profitability
         </h3>
 
@@ -58,12 +58,12 @@ export function FinancialDataForm({
           <div>
             <label
               htmlFor="annualRevenue"
-              className="block text-sm font-medium text-secondary-700 mb-2"
+              className="block text-sm font-medium text-foreground mb-2"
             >
               Annual Revenue (Current Year) *
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary-500">
+              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">
                 $
               </span>
               <Input
@@ -78,7 +78,7 @@ export function FinancialDataForm({
               />
             </div>
             {data.annualRevenue && data.annualRevenue > 0 && (
-              <p className="mt-1 text-sm text-secondary-500">
+              <p className="mt-1 text-sm text-muted-foreground">
                 {formatCurrency(data.annualRevenue)}
               </p>
             )}
@@ -87,12 +87,12 @@ export function FinancialDataForm({
           <div>
             <label
               htmlFor="previousYearRevenue"
-              className="block text-sm font-medium text-secondary-700 mb-2"
+              className="block text-sm font-medium text-foreground mb-2"
             >
               Previous Year Revenue
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary-500">
+              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">
                 $
               </span>
               <Input
@@ -112,7 +112,7 @@ export function FinancialDataForm({
             {data.annualRevenue &&
               data.previousYearRevenue &&
               data.previousYearRevenue > 0 && (
-                <p className="mt-1 text-sm text-secondary-500">
+                <p className="mt-1 text-sm text-muted-foreground">
                   Growth:{' '}
                   {(
                     ((data.annualRevenue - data.previousYearRevenue) /
@@ -127,12 +127,12 @@ export function FinancialDataForm({
           <div>
             <label
               htmlFor="grossProfit"
-              className="block text-sm font-medium text-secondary-700 mb-2"
+              className="block text-sm font-medium text-foreground mb-2"
             >
               Gross Profit *
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary-500">
+              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">
                 $
               </span>
               <Input
@@ -149,7 +149,7 @@ export function FinancialDataForm({
             {data.annualRevenue &&
               data.grossProfit &&
               data.annualRevenue > 0 && (
-                <p className="mt-1 text-sm text-secondary-500">
+                <p className="mt-1 text-sm text-muted-foreground">
                   Gross Margin:{' '}
                   {((data.grossProfit / data.annualRevenue) * 100).toFixed(1)}%
                 </p>
@@ -159,12 +159,12 @@ export function FinancialDataForm({
           <div>
             <label
               htmlFor="netIncome"
-              className="block text-sm font-medium text-secondary-700 mb-2"
+              className="block text-sm font-medium text-foreground mb-2"
             >
               Net Income *
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary-500">
+              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">
                 $
               </span>
               <Input
@@ -179,7 +179,7 @@ export function FinancialDataForm({
               />
             </div>
             {data.annualRevenue && data.netIncome && data.annualRevenue > 0 && (
-              <p className="mt-1 text-sm text-secondary-500">
+              <p className="mt-1 text-sm text-muted-foreground">
                 Net Margin:{' '}
                 {((data.netIncome / data.annualRevenue) * 100).toFixed(1)}%
               </p>
@@ -189,9 +189,9 @@ export function FinancialDataForm({
       </div>
 
       {/* Balance Sheet Section */}
-      <div className="bg-white border border-secondary-200 rounded-lg p-6">
-        <h3 className="text-lg font-medium text-secondary-800 mb-4 flex items-center">
-          <div className="w-2 h-2 bg-success-500 rounded-full mr-3"></div>
+      <div className="bg-card border border-border rounded-lg p-6">
+        <h3 className="text-lg font-medium text-foreground mb-4 flex items-center">
+          <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
           Balance Sheet
         </h3>
 
@@ -199,12 +199,12 @@ export function FinancialDataForm({
           <div>
             <label
               htmlFor="totalAssets"
-              className="block text-sm font-medium text-secondary-700 mb-2"
+              className="block text-sm font-medium text-foreground mb-2"
             >
               Total Assets *
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary-500">
+              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">
                 $
               </span>
               <Input
@@ -223,12 +223,12 @@ export function FinancialDataForm({
           <div>
             <label
               htmlFor="totalLiabilities"
-              className="block text-sm font-medium text-secondary-700 mb-2"
+              className="block text-sm font-medium text-foreground mb-2"
             >
               Total Liabilities
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary-500">
+              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">
                 $
               </span>
               <Input
@@ -246,7 +246,7 @@ export function FinancialDataForm({
               />
             </div>
             {data.totalAssets && data.totalLiabilities && (
-              <p className="mt-1 text-sm text-secondary-500">
+              <p className="mt-1 text-sm text-muted-foreground">
                 Equity:{' '}
                 {formatCurrency(data.totalAssets - data.totalLiabilities)}
               </p>
@@ -256,12 +256,12 @@ export function FinancialDataForm({
           <div>
             <label
               htmlFor="cashFlow"
-              className="block text-sm font-medium text-secondary-700 mb-2"
+              className="block text-sm font-medium text-foreground mb-2"
             >
               Operating Cash Flow
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary-500">
+              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">
                 $
               </span>
               <Input
@@ -280,12 +280,12 @@ export function FinancialDataForm({
           <div>
             <label
               htmlFor="monthlyRecurringRevenue"
-              className="block text-sm font-medium text-secondary-700 mb-2"
+              className="block text-sm font-medium text-foreground mb-2"
             >
               Monthly Recurring Revenue (if applicable)
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary-500">
+              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">
                 $
               </span>
               <Input
@@ -302,7 +302,7 @@ export function FinancialDataForm({
                 className="pl-8"
               />
             </div>
-            <p className="mt-1 text-xs text-secondary-500">
+            <p className="mt-1 text-xs text-muted-foreground">
               For subscription-based businesses
             </p>
           </div>
@@ -310,9 +310,9 @@ export function FinancialDataForm({
       </div>
 
       {/* Financial Ratios Section */}
-      <div className="bg-white border border-secondary-200 rounded-lg p-6">
-        <h3 className="text-lg font-medium text-secondary-800 mb-4 flex items-center">
-          <div className="w-2 h-2 bg-warning-500 rounded-full mr-3"></div>
+      <div className="bg-card border border-border rounded-lg p-6">
+        <h3 className="text-lg font-medium text-foreground mb-4 flex items-center">
+          <div className="w-2 h-2 bg-yellow-500 rounded-full mr-3"></div>
           Financial Ratios
         </h3>
 
@@ -320,7 +320,7 @@ export function FinancialDataForm({
           <div>
             <label
               htmlFor="debtToEquity"
-              className="block text-sm font-medium text-secondary-700 mb-2"
+              className="block text-sm font-medium text-foreground mb-2"
             >
               Debt-to-Equity Ratio
             </label>
@@ -334,7 +334,7 @@ export function FinancialDataForm({
               }
               placeholder="0.0"
             />
-            <p className="mt-1 text-xs text-secondary-500">
+            <p className="mt-1 text-xs text-muted-foreground">
               Total Debt ÷ Total Equity
             </p>
           </div>
@@ -342,7 +342,7 @@ export function FinancialDataForm({
           <div>
             <label
               htmlFor="currentRatio"
-              className="block text-sm font-medium text-secondary-700 mb-2"
+              className="block text-sm font-medium text-foreground mb-2"
             >
               Current Ratio
             </label>
@@ -356,18 +356,16 @@ export function FinancialDataForm({
               }
               placeholder="1.0"
             />
-            <p className="mt-1 text-xs text-secondary-500">
+            <p className="mt-1 text-xs text-muted-foreground">
               Current Assets ÷ Current Liabilities
             </p>
           </div>
         </div>
       </div>
 
-      <div className="bg-accent-50 border border-accent-200 rounded-lg p-4">
-        <h3 className="font-medium text-accent-800 mb-2">
-          Financial Data Tips
-        </h3>
-        <ul className="text-sm text-accent-700 space-y-1">
+      <div className="bg-primary/10 border border-primary/20 rounded-lg p-4">
+        <h3 className="font-medium text-primary mb-2">Financial Data Tips</h3>
+        <ul className="text-sm text-primary/80 space-y-1">
           <li>• Use your most recent complete fiscal year data</li>
           <li>• All figures should be in the same currency</li>
           <li>• Include all revenue streams in annual revenue</li>

@@ -70,13 +70,13 @@ export class FinancialFormatter {
     let trend: 'positive' | 'negative' | 'neutral'
 
     if (Math.abs(changePercent) < 1) {
-      colorClass = 'text-gray-500'
+      colorClass = 'text-muted-foreground'
       trend = 'neutral'
     } else if (changePercent > 0) {
-      colorClass = 'text-green-600'
+      colorClass = 'text-success'
       trend = 'positive'
     } else {
-      colorClass = 'text-red-600'
+      colorClass = 'text-destructive'
       trend = 'negative'
     }
 
@@ -111,10 +111,10 @@ export class FinancialFormatter {
    * Get appropriate color class for financial health score
    */
   static getHealthScoreColor(score: number): string {
-    if (score >= 80) return 'text-green-600 bg-green-50'
-    if (score >= 60) return 'text-yellow-600 bg-yellow-50'
-    if (score >= 40) return 'text-orange-600 bg-orange-50'
-    return 'text-red-600 bg-red-50'
+    if (score >= 80) return 'text-success bg-success/10'
+    if (score >= 60) return 'text-warning bg-warning/10'
+    if (score >= 40) return 'text-primary bg-primary/10'
+    return 'text-destructive bg-destructive/10'
   }
 
   /**
@@ -125,15 +125,15 @@ export class FinancialFormatter {
   ): string {
     switch (riskLevel) {
       case 'Low':
-        return 'text-green-600 bg-green-50 border-green-200'
+        return 'text-success bg-success/10 border-success/20'
       case 'Medium':
-        return 'text-yellow-600 bg-yellow-50 border-yellow-200'
+        return 'text-warning bg-warning/10 border-warning/20'
       case 'High':
-        return 'text-orange-600 bg-orange-50 border-orange-200'
+        return 'text-primary bg-primary/10 border-primary/20'
       case 'Critical':
-        return 'text-red-600 bg-red-50 border-red-200'
+        return 'text-destructive bg-destructive/10 border-destructive/20'
       default:
-        return 'text-gray-600 bg-gray-50 border-gray-200'
+        return 'text-muted-foreground bg-muted border-muted-foreground/20'
     }
   }
 

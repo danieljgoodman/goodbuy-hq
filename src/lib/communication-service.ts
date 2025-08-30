@@ -261,7 +261,6 @@ export class CommunicationService {
         })
       }
 
-      console.log(`Processed ${dueReminders.length} meeting reminders`)
     } catch (error) {
       console.error('Failed to process meeting reminders:', error)
       throw error
@@ -437,7 +436,6 @@ export class CommunicationService {
         }
       }
 
-      console.log(`Processed daily digests for ${users.length} users`)
     } catch (error) {
       console.error('Failed to send daily digests:', error)
       throw error
@@ -478,11 +476,6 @@ export class CommunicationService {
         },
       })
 
-      console.log('Cleanup completed:', {
-        dismissedNotifications: dismissedNotifications.count,
-        oldAuditLogs: oldAuditLogs.count,
-        oldAccessLogs: oldAccessLogs.count,
-      })
     } catch (error) {
       console.error('Failed to cleanup old data:', error)
       throw error

@@ -245,7 +245,7 @@ export function BusinessEvaluationForm() {
           />
         ) : (
           <div className="text-center p-8">
-            <div className="animate-spin w-8 h-8 border-2 border-primary-600 border-t-transparent rounded-full mx-auto mb-4" />
+            <div className="animate-spin w-8 h-8 border-2 border-primary border-t-transparent rounded-full mx-auto mb-4" />
             <p>Calculating your business valuation...</p>
           </div>
         )
@@ -255,7 +255,7 @@ export function BusinessEvaluationForm() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-primary/10">
       <div className="max-w-6xl mx-auto px-4 py-8">
         {/* Enhanced Header */}
         <motion.div
@@ -265,7 +265,7 @@ export function BusinessEvaluationForm() {
           transition={{ duration: 0.6 }}
         >
           <motion.div
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-2 rounded-full text-sm font-medium mb-4"
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-primary to-primary/80 text-primary-foreground px-4 py-2 rounded-full text-sm font-medium mb-4"
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.4 }}
@@ -274,10 +274,10 @@ export function BusinessEvaluationForm() {
             <span>AI-Powered Evaluation</span>
             <Sparkles className="w-4 h-4" />
           </motion.div>
-          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             Business Valuation Calculator
           </h1>
-          <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Get an accurate valuation of your business using advanced AI
             algorithms and comprehensive market analysis.
           </p>
@@ -312,12 +312,12 @@ export function BusinessEvaluationForm() {
                     disabled={!isAccessible}
                     className={`w-full text-left p-6 rounded-xl backdrop-blur-sm border transition-all duration-300 ${
                       isActive
-                        ? 'border-blue-300 bg-gradient-to-br from-blue-50 to-indigo-50 shadow-lg shadow-blue-200/50'
+                        ? 'border-primary/30 bg-gradient-to-br from-primary/5 to-primary/10 shadow-lg shadow-primary/20'
                         : isCompleted
                           ? 'border-green-300 bg-gradient-to-br from-green-50 to-emerald-50 hover:shadow-lg shadow-green-200/50'
                           : isAccessible
-                            ? 'border-slate-200 bg-white/70 hover:bg-white hover:shadow-lg shadow-slate-200/50'
-                            : 'border-slate-200 bg-slate-50/50 opacity-50 cursor-not-allowed'
+                            ? 'border-border bg-card/70 hover:bg-card hover:shadow-lg shadow-border/50'
+                            : 'border-border bg-muted/50 opacity-50 cursor-not-allowed'
                     }`}
                     whileHover={isAccessible ? { y: -2 } : {}}
                     whileTap={isAccessible ? { scale: 0.98 } : {}}
@@ -326,10 +326,10 @@ export function BusinessEvaluationForm() {
                       <motion.div
                         className={`w-12 h-12 rounded-full flex items-center justify-center ${
                           isActive
-                            ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white'
+                            ? 'bg-gradient-to-r from-primary to-primary/80 text-primary-foreground'
                             : isCompleted
                               ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white'
-                              : 'bg-slate-200 text-slate-600'
+                              : 'bg-muted text-muted-foreground'
                         }`}
                         whileHover={isAccessible ? { scale: 1.1 } : {}}
                         transition={{
@@ -359,10 +359,10 @@ export function BusinessEvaluationForm() {
                         <motion.div
                           className={`font-semibold text-sm ${
                             isActive
-                              ? 'text-blue-700'
+                              ? 'text-primary'
                               : isCompleted
                                 ? 'text-green-700'
-                                : 'text-slate-700'
+                                : 'text-foreground'
                           }`}
                           initial={{ opacity: 0.8 }}
                           animate={{ opacity: 1 }}
@@ -370,12 +370,12 @@ export function BusinessEvaluationForm() {
                         >
                           {step.title}
                         </motion.div>
-                        <div className="text-xs text-slate-500 mt-1 line-clamp-2">
+                        <div className="text-xs text-muted-foreground mt-1 line-clamp-2">
                           {step.description}
                         </div>
                         {isActive && (
                           <motion.div
-                            className="mt-2 h-1 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-full"
+                            className="mt-2 h-1 bg-gradient-to-r from-primary to-primary/80 rounded-full"
                             initial={{ width: 0 }}
                             animate={{
                               width: `${((index + 1) / FORM_STEPS.length) * 100}%`,
@@ -389,7 +389,7 @@ export function BusinessEvaluationForm() {
 
                   {index < FORM_STEPS.length - 1 && (
                     <motion.div
-                      className="absolute top-1/2 -right-2 w-4 h-0.5 bg-gradient-to-r from-slate-300 to-slate-200 transform -translate-y-1/2"
+                      className="absolute top-1/2 -right-2 w-4 h-0.5 bg-gradient-to-r from-border to-border/50 transform -translate-y-1/2"
                       initial={{ width: 0 }}
                       animate={{ width: '1rem' }}
                       transition={{ delay: 0.2 * index, duration: 0.3 }}
@@ -403,7 +403,7 @@ export function BusinessEvaluationForm() {
 
         {/* Form Content */}
         <motion.div
-          className="bg-white/80 backdrop-blur-xl rounded-2xl border border-white/20 shadow-2xl"
+          className="bg-card/80 backdrop-blur-xl rounded-2xl border border-border/20 shadow-2xl"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.6 }}
@@ -444,7 +444,7 @@ export function BusinessEvaluationForm() {
           {/* Enhanced Navigation Buttons */}
           {formState.currentStep !== 'results' && (
             <motion.div
-              className="flex justify-between items-center px-8 py-6 border-t border-slate-200/50 bg-gradient-to-r from-slate-50/50 to-blue-50/50 backdrop-blur-sm rounded-b-2xl"
+              className="flex justify-between items-center px-8 py-6 border-t border-border/50 bg-gradient-to-r from-muted/50 to-primary/5 backdrop-blur-sm rounded-b-2xl"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7, duration: 0.4 }}
@@ -457,7 +457,7 @@ export function BusinessEvaluationForm() {
                   variant="ghost"
                   onClick={handlePrevious}
                   disabled={isFirstStep}
-                  className="flex items-center space-x-2 hover:bg-slate-100 disabled:opacity-50"
+                  className="flex items-center space-x-2 hover:bg-muted disabled:opacity-50"
                 >
                   <ChevronLeft className="w-4 h-4" />
                   <span>Previous</span>
@@ -465,7 +465,7 @@ export function BusinessEvaluationForm() {
               </motion.div>
 
               <div className="flex items-center space-x-3">
-                <div className="text-sm text-slate-500">
+                <div className="text-sm text-muted-foreground">
                   Step {currentStepIndex + 1} of {FORM_STEPS.length}
                 </div>
                 <div className="flex space-x-1">
@@ -474,8 +474,8 @@ export function BusinessEvaluationForm() {
                       key={index}
                       className={`w-2 h-2 rounded-full ${
                         index <= currentStepIndex
-                          ? 'bg-gradient-to-r from-blue-400 to-indigo-500'
-                          : 'bg-slate-200'
+                          ? 'bg-gradient-to-r from-primary to-primary/80'
+                          : 'bg-muted'
                       }`}
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
@@ -492,7 +492,7 @@ export function BusinessEvaluationForm() {
                 <Button
                   onClick={handleNext}
                   disabled={isCalculating || !validateCurrentStep()}
-                  className="flex items-center space-x-2 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex items-center space-x-2 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isCalculating ? (
                     <>
