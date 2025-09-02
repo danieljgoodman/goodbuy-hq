@@ -260,7 +260,6 @@ export class CommunicationService {
           },
         })
       }
-
     } catch (error) {
       console.error('Failed to process meeting reminders:', error)
       throw error
@@ -435,7 +434,6 @@ export class CommunicationService {
           console.error(`Failed to send daily digest to ${user.email}:`, error)
         }
       }
-
     } catch (error) {
       console.error('Failed to send daily digests:', error)
       throw error
@@ -475,7 +473,6 @@ export class CommunicationService {
           createdAt: { lt: ninetyDaysAgo },
         },
       })
-
     } catch (error) {
       console.error('Failed to cleanup old data:', error)
       throw error

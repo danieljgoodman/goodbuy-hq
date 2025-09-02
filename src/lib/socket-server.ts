@@ -58,7 +58,6 @@ export class SocketServer {
 
   private setupEventHandlers() {
     this.io.on('connection', (socket: AuthenticatedSocket) => {
-
       if (socket.userId) {
         // Track connected user
         if (!this.connectedUsers.has(socket.userId)) {
@@ -108,7 +107,6 @@ export class SocketServer {
 
       // Handle disconnection
       socket.on('disconnect', () => {
-
         if (socket.userId) {
           const userSockets = this.connectedUsers.get(socket.userId)
           if (userSockets) {

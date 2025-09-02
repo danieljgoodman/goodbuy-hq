@@ -144,11 +144,8 @@ export default function FinancialPerformanceChart({
       },
       efficiency: {
         margin: latest.margin,
-        cashFlow: latest.cashFlow,
-        customerGrowth:
-          ((latest.customers - chartData[0].customers) /
-            chartData[0].customers) *
-          100,
+        cashFlow: latest.revenue * (latest.margin / 100),
+        customerGrowth: 0, // Placeholder - customers field not available
       },
     }
   }, [chartData])

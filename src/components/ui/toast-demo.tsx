@@ -109,9 +109,12 @@ export function ToastDemo() {
   }
 
   const handleAiAnalysis = () => {
-    const toastId = toastService.aiAnalysisProgress('Retail Store Chain', () => {
-      // Handle analysis cancelled
-    })
+    const toastId = toastService.aiAnalysisProgress(
+      'Retail Store Chain',
+      () => {
+        // Handle analysis cancelled
+      }
+    )
 
     // Simulate AI analysis completion
     setTimeout(() => {

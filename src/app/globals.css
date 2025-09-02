@@ -65,65 +65,226 @@
     letter-spacing: -0.025em !important;
   }
 
-  /* NUCLEAR-LEVEL BLUR FOR NAVIGATION DROPDOWN - EXTREME SETTINGS */
+  /* OPTIMIZED BLUR FOR NAVIGATION DROPDOWN - BALANCED PERFORMANCE & AESTHETICS */
   .nuclear-blur-dropdown {
-    backdrop-filter: blur(300px) saturate(800%) brightness(300%) contrast(500%)
-      hue-rotate(30deg) opacity(0.98) !important;
-    -webkit-backdrop-filter: blur(300px) saturate(800%) brightness(300%)
-      contrast(500%) hue-rotate(30deg) opacity(0.98) !important;
-    background: rgba(255, 255, 255, 0.998) !important;
-    background-blend-mode: hard-light !important;
+    backdrop-filter: blur(20px) saturate(180%) brightness(110%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(180%) brightness(110%) !important;
+    background: rgba(255, 255, 255, 0.95) !important;
     position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   }
 
   .nuclear-blur-dropdown::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(250px) saturate(600%) brightness(250%) contrast(400%);
-    -webkit-backdrop-filter: blur(250px) saturate(600%) brightness(250%)
-      contrast(400%);
-    background-blend-mode: overlay;
-    z-index: -2;
-  }
-
-  .nuclear-blur-dropdown::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.98) 0%,
-      rgba(255, 255, 255, 0.995) 25%,
-      rgba(255, 255, 255, 0.99) 50%,
-      rgba(255, 255, 255, 0.995) 75%,
-      rgba(255, 255, 255, 0.98) 100%
-    );
-    backdrop-filter: blur(200px) saturate(400%) brightness(200%) contrast(300%);
-    -webkit-backdrop-filter: blur(200px) saturate(400%) brightness(200%)
-      contrast(300%);
-    background-blend-mode: multiply;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(15px) saturate(150%);
+    -webkit-backdrop-filter: blur(15px) saturate(150%);
     z-index: -1;
+    border-radius: inherit;
   }
 
-  /* Additional extreme blur utilities */
+  /* Optimized blur utilities for better performance */
   .backdrop-blur-extreme {
-    backdrop-filter: blur(500px) !important;
-    -webkit-backdrop-filter: blur(500px) !important;
+    backdrop-filter: blur(24px) !important;
+    -webkit-backdrop-filter: blur(24px) !important;
   }
 
   .backdrop-blur-nuclear {
-    backdrop-filter: blur(1000px) saturate(1000%) brightness(400%)
-      contrast(800%) !important;
-    -webkit-backdrop-filter: blur(1000px) saturate(1000%) brightness(400%)
-      contrast(800%) !important;
+    backdrop-filter: blur(30px) saturate(150%) brightness(105%) !important;
+    -webkit-backdrop-filter: blur(30px) saturate(150%) brightness(105%) !important;
   }
 
   .hero-subtitle {
     line-height: 1.2 !important;
     letter-spacing: -0.02em !important;
   }
+
+  /* ACCESSIBILITY-FIRST ANIMATION SYSTEM */
+  
+  /* Respect user's motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Optimized animation utilities */
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.4s ease-out;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.2s ease-out;
+  }
+
+  .animate-slide-down {
+    animation: slideDown 0.4s ease-out;
+  }
+
+  /* Smooth hover transitions with reduced motion support */
+  .hover-lift {
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Reduced motion alternatives */
+  @media (prefers-reduced-motion: reduce) {
+    .hover-lift:hover {
+      transform: none;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+    }
+  }
+
+  /* Keyframe definitions */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideUp {
+    from { 
+      opacity: 0; 
+      transform: translateY(20px); 
+    }
+    to { 
+      opacity: 1; 
+      transform: translateY(0); 
+    }
+  }
+
+  @keyframes scaleIn {
+    from { 
+      opacity: 0; 
+      transform: scale(0.95); 
+    }
+    to { 
+      opacity: 1; 
+      transform: scale(1); 
+    }
+  }
+
+  @keyframes slideDown {
+    from { 
+      opacity: 0; 
+      transform: translateY(-10px); 
+    }
+    to { 
+      opacity: 1; 
+      transform: translateY(0); 
+    }
+  }
+
+  /* Focus indicators that respect motion preferences */
+  .focus-ring {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    transition: outline-color 0.15s ease-out;
+  }
+
+  .focus-ring:focus-visible {
+    outline-color: rgb(59 130 246);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .focus-ring:focus-visible {
+      outline-color: rgb(59 130 246);
+      transition: none;
+    }
+  }
+
+  /* STANDARDIZED VISUAL HIERARCHY SYSTEM */
+  
+  /* Consistent heading scales */
+  .heading-hero {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+  }
+
+  .heading-1 {
+    font-size: clamp(1.875rem, 4vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  .heading-2 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+  }
+
+  .heading-3 {
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+  }
+
+  .heading-4 {
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  /* Consistent text sizes */
+  .text-large {
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
+
+  .text-base {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .text-small {
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .text-tiny {
+    font-size: 0.75rem;
+    line-height: 1.4;
+  }
+
+  /* Consistent spacing scale */
+  .space-xs { margin: 0.25rem; }
+  .space-sm { margin: 0.5rem; }
+  .space-md { margin: 1rem; }
+  .space-lg { margin: 1.5rem; }
+  .space-xl { margin: 2rem; }
+  .space-2xl { margin: 3rem; }
+  .space-3xl { margin: 4rem; }
+
+  /* Consistent section spacing */
+  .section-spacing-sm { padding: 2rem 0; }
+  .section-spacing-md { padding: 3rem 0; }
+  .section-spacing-lg { padding: 4rem 0; }
+  .section-spacing-xl { padding: 6rem 0; }
+
+  /* Color utilities for semantic hierarchy */
+  .text-primary-emphasis { color: rgb(var(--primary) / 1); }
+  .text-secondary-emphasis { color: rgb(var(--secondary) / 0.8); }
+  .text-tertiary { color: rgb(var(--muted-foreground) / 0.7); }
 
   /* Ensure proper text rendering */
   h1,

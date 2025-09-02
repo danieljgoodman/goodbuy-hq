@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import {
@@ -14,6 +14,9 @@ import {
   Save,
   Eye,
   Send,
+  Clock,
+  CheckCircle,
+  AlertCircle,
 } from 'lucide-react'
 import ImageUpload from '../ui/image-upload'
 import { toastService } from '@/lib/toast'
@@ -114,6 +117,14 @@ export default function BusinessListingForm() {
   const router = useRouter()
   const [currentStep, setCurrentStep] = useState(1)
   const [saving, setSaving] = useState(false)
+  const [autoSaving, setAutoSaving] = useState(false)
+  const [lastSaved, setLastSaved] = useState<Date | null>(null)
+  const [validationErrors, setValidationErrors] = useState<
+    Record<string, string>
+  >({})
+  const [stepCompletion, setStepCompletion] = useState<Record<number, boolean>>(
+    {}
+  )
   const [formData, setFormData] = useState<BusinessFormData>({
     title: '',
     description: '',
@@ -164,8 +175,89 @@ export default function BusinessListingForm() {
     { id: 6, title: 'Media & Documents', icon: Camera },
   ]
 
+  // Auto-save functionality
+  const autoSave = useCallback(async (data: BusinessFormData) => {
+    setAutoSaving(true)
+    try {
+      const response = await fetch('/api/businesses/autosave', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...data, status: 'DRAFT' }),
+      })
+
+      if (response.ok) {
+        setLastSaved(new Date())
+      }
+    } catch (error) {
+      console.error('Auto-save failed:', error)
+    } finally {
+      setAutoSaving(false)
+    }
+  }, [])
+
+  // Enhanced form data update with validation and auto-save
   const updateFormData = (updates: Partial<BusinessFormData>) => {
-    setFormData(prev => ({ ...prev, ...updates }))
+    setFormData(prev => {
+      const newData = { ...prev, ...updates }
+
+      // Clear validation errors for updated fields
+      const updatedFields = Object.keys(updates)
+      const newErrors = { ...validationErrors }
+      updatedFields.forEach(field => {
+        delete newErrors[field]
+      })
+      setValidationErrors(newErrors)
+
+      // Update step completion status
+      const newCompletion = { ...stepCompletion }
+      for (let i = 1; i <= steps.length; i++) {
+        newCompletion[i] = validateStep(i, newData)
+      }
+      setStepCompletion(newCompletion)
+
+      return newData
+    })
+  }
+
+  // Auto-save effect
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (formData.title || formData.description) {
+        autoSave(formData)
+      }
+    }, 30000) // Auto-save every 30 seconds
+
+    return () => clearTimeout(timer)
+  }, [formData, autoSave])
+
+  // Real-time field validation
+  const validateField = (fieldName: string, value: any): string => {
+    switch (fieldName) {
+      case 'title':
+        return !value ? 'Business title is required' : ''
+      case 'description':
+        return !value
+          ? 'Business description is required'
+          : value.length < 50
+            ? 'Description must be at least 50 characters'
+            : ''
+      case 'category':
+        return !value ? 'Please select a business category' : ''
+      case 'email':
+        return value && !/\S+@\S+\.\S+/.test(value)
+          ? 'Invalid email format'
+          : ''
+      case 'phone':
+        return value && !/^\+?[\d\s\-\(\)]+$/.test(value)
+          ? 'Invalid phone format'
+          : ''
+      case 'askingPrice':
+        return value && !/^\d+(\.\d{2})?$/.test(value.replace(/,/g, ''))
+          ? 'Invalid price format'
+          : ''
+      default:
+        return ''
+    }
   }
 
   const handleDayToggle = (day: string) => {
@@ -176,14 +268,17 @@ export default function BusinessListingForm() {
     updateFormData({ daysOpen: updatedDays })
   }
 
-  const validateStep = (step: number): boolean => {
+  const validateStep = (
+    step: number,
+    data: BusinessFormData = formData
+  ): boolean => {
     switch (step) {
       case 1:
-        return !!(formData.title && formData.description && formData.category)
+        return !!(data.title && data.description && data.category)
       case 2:
-        return !!(formData.city && formData.state)
+        return !!(data.city && data.state)
       case 3:
-        return !!(formData.askingPrice || formData.revenue)
+        return !!(data.askingPrice || data.revenue)
       case 4:
         return true // Optional fields
       case 5:

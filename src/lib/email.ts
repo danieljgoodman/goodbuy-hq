@@ -91,7 +91,6 @@ export async function sendVerificationEmail(
       text: textContent,
       html: htmlContent,
     })
-
   } catch (error) {
     console.error('Failed to send verification email:', error)
     throw error

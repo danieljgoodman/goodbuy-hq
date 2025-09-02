@@ -38,8 +38,6 @@ export function useSocket() {
         autoConnect: true,
       })
 
-
-
       socketRef.current.on('connect_error', error => {
         console.error('Socket connection error:', error)
       })
