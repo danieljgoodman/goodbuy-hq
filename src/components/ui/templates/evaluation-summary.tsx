@@ -274,7 +274,7 @@ export function EvaluationSummary({
                           {factor.description}
                         </div>
                       </div>
-                      <Badge size="sm" className={getRiskColor(factor.level)}>
+                      <Badge className={getRiskColor(factor.level)}>
                         {factor.level}
                       </Badge>
                     </div>

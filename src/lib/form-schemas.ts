@@ -81,7 +81,7 @@ export const signUpSchema = z
     agreeToTerms: z.boolean().refine(val => val === true, {
       message: 'You must agree to the terms and conditions',
     }),
-    subscribeNewsletter: z.boolean().default(false),
+    subscribeNewsletter: z.boolean().optional(),
   })
   .refine(data => data.password === data.confirmPassword, {
     message: "Passwords don't match",

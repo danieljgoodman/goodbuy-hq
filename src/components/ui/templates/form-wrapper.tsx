@@ -316,7 +316,7 @@ export function FormWrapper({
         hasError && 'border-red-500 focus:border-red-500 focus:ring-red-500/20',
         field.className
       ),
-      'aria-invalid': hasError ? 'true' : 'false',
+      'aria-invalid': hasError,
       'aria-describedby': hasError ? `${field.id}-error` : undefined,
     }
 

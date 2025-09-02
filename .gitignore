@@ -71,6 +71,7 @@ node_modules/
 .env.test
 /generated/prisma
 
+
 # Claude Flow generated files
 .claude/settings.local.json
 .mcp.json

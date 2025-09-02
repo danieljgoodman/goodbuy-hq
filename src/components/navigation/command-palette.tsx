@@ -470,7 +470,7 @@ export function CommandPalette({
     const down = (e: KeyboardEvent) => {
       if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
         e.preventDefault()
-        setOpen(open => !open)
+        setOpen(!open)
       }
     }
 
@@ -496,6 +496,7 @@ export function CommandPalette({
           search: 'Search',
           settings: 'Settings & Account',
           help: 'Help & Support',
+          recent: 'Recent Searches',
         }[command.category] || 'Other'
 
       if (!groups[categoryName]) {

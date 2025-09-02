@@ -502,7 +502,7 @@ export default function FinancialPerformanceChart({
                       dataKey="margin"
                       stroke={CHART_COLORS.margin}
                       strokeWidth={3}
-                      dot={{ fill: CHART_COLORS.warning, strokeWidth: 2, r: 4 }}
+                      dot={{ fill: CHART_COLORS.margin, strokeWidth: 2, r: 4 }}
                       name="Profit Margin %"
                     />
                   </LineChart>

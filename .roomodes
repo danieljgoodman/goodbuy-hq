@@ -1,0 +1,104 @@
+{
+  "spec-pseudocode": {
+    "name": "Specification & Pseudocode",
+    "description": "Requirements analysis and algorithm design",
+    "command": "npx claude-flow@alpha sparc run spec-pseudocode",
+    "agents": ["specification", "pseudocode", "researcher"]
+  },
+  "architect": {
+    "name": "System Architecture",
+    "description": "Design system architecture and patterns",
+    "command": "npx claude-flow@alpha sparc run architect",
+    "agents": ["architecture", "system-architect", "reviewer"]
+  },
+  "tdd": {
+    "name": "Test-Driven Development",
+    "description": "Complete TDD workflow with testing",
+    "command": "npx claude-flow@alpha sparc tdd",
+    "agents": ["tdd-london-swarm", "tester", "coder"]
+  },
+  "refine": {
+    "name": "Code Refinement",
+    "description": "Iterative improvement and optimization",
+    "command": "npx claude-flow@alpha sparc run refine",
+    "agents": ["refinement", "code-analyzer", "reviewer"]
+  },
+  "integration": {
+    "name": "System Integration",
+    "description": "Component integration and testing",
+    "command": "npx claude-flow@alpha sparc run integration",
+    "agents": ["sparc-coder", "tester", "production-validator"]
+  },
+  "batch-analyze": {
+    "name": "Batch Analysis",
+    "description": "Parallel code analysis across modules",
+    "command": "npx claude-flow@alpha sparc batch analyze",
+    "agents": ["code-analyzer", "researcher", "reviewer"]
+  },
+  "batch-test": {
+    "name": "Batch Testing",
+    "description": "Comprehensive test suite generation",
+    "command": "npx claude-flow@alpha sparc batch test",
+    "agents": ["tester", "tdd-london-swarm", "production-validator"]
+  },
+  "batch-document": {
+    "name": "Batch Documentation",
+    "description": "Generate comprehensive documentation",
+    "command": "npx claude-flow@alpha sparc batch document",
+    "agents": ["api-docs", "researcher", "base-template-generator"]
+  },
+  "pipeline-full": {
+    "name": "Full Pipeline",
+    "description": "Complete SPARC pipeline execution",
+    "command": "npx claude-flow@alpha sparc pipeline",
+    "agents": ["sparc-coord", "task-orchestrator", "memory-coordinator"]
+  },
+  "concurrent-dev": {
+    "name": "Concurrent Development",
+    "description": "Multi-agent concurrent development",
+    "command": "npx claude-flow@alpha sparc concurrent dev",
+    "agents": ["hierarchical-coordinator", "smart-agent", "swarm-init"]
+  },
+  "backend-api": {
+    "name": "Backend API Development",
+    "description": "REST API and backend services",
+    "command": "npx claude-flow@alpha sparc run backend-api",
+    "agents": ["backend-dev", "api-docs", "tester"]
+  },
+  "frontend-ui": {
+    "name": "Frontend UI Development",
+    "description": "User interface and experience",
+    "command": "npx claude-flow@alpha sparc run frontend-ui",
+    "agents": ["coder", "base-template-generator", "reviewer"]
+  },
+  "mobile-dev": {
+    "name": "Mobile Development",
+    "description": "React Native mobile applications",
+    "command": "npx claude-flow@alpha sparc run mobile-dev",
+    "agents": ["mobile-dev", "tester", "production-validator"]
+  },
+  "ml-pipeline": {
+    "name": "ML Development Pipeline",
+    "description": "Machine learning model development",
+    "command": "npx claude-flow@alpha sparc run ml-pipeline",
+    "agents": ["ml-developer", "code-analyzer", "performance-benchmarker"]
+  },
+  "security-audit": {
+    "name": "Security Audit",
+    "description": "Security analysis and vulnerability assessment",
+    "command": "npx claude-flow@alpha sparc run security-audit",
+    "agents": ["security-manager", "code-review-swarm", "reviewer"]
+  },
+  "performance-opt": {
+    "name": "Performance Optimization",
+    "description": "System performance analysis and optimization",
+    "command": "npx claude-flow@alpha sparc run performance-opt",
+    "agents": ["perf-analyzer", "performance-benchmarker", "code-analyzer"]
+  },
+  "github-workflow": {
+    "name": "GitHub Workflow",
+    "description": "GitHub integration and CI/CD",
+    "command": "npx claude-flow@alpha sparc run github-workflow",
+    "agents": ["github-modes", "workflow-automation", "cicd-engineer"]
+  }
+}
