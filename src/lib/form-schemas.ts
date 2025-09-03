@@ -73,8 +73,8 @@ export const signUpSchema = z
       .min(8, VALIDATION_MESSAGES.password.minLength)
       .regex(strongPasswordRegex, VALIDATION_MESSAGES.password.pattern),
     confirmPassword: z.string().min(1, 'Please confirm your password'),
-    userType: z.nativeEnum(UserType, {
-      errorMap: () => ({ message: 'Please select a user type' }),
+    userType: z.nativeEnum(UserType).refine(val => val, {
+      message: 'Please select a user type',
     }),
     company: z.string().optional(),
     position: z.string().optional(),

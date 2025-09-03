@@ -46,6 +46,7 @@ The BMad Orchestrator serves as your entry point to the entire system. Here's ho
 ```
 
 **Expected Response:**
+
 ```
 🎭 BMad Orchestrator Activated
 
@@ -56,7 +57,7 @@ All commands must start with * (asterisk)
 
 Core Commands:
 *help .................. Show this guide
-*agent [name] .......... Transform into specialized agent  
+*agent [name] .......... Transform into specialized agent
 *workflow [name] ....... Start specific workflow
 *task [name] ........... Execute specific task
 *checklist [name] ...... Load quality checklist
@@ -64,7 +65,7 @@ Core Commands:
 
 Workflows Available:
 *workflow greenfield-fullstack ... Complete new application
-*workflow brownfield-fullstack .. Enhance existing application  
+*workflow brownfield-fullstack .. Enhance existing application
 *workflow greenfield-service .... New microservice
 *workflow greenfield-ui ......... New frontend interface
 
@@ -92,17 +93,19 @@ Let's walk through a complete implementation of an AI-powered product recommenda
 #### Phase 1: Planning (Web UI - Cost Effective)
 
 **Step 1: Workflow Initiation**
+
 ```
 *workflow greenfield-fullstack
 ```
 
 **System Response:**
+
 ```
 🚀 Greenfield Full-Stack Workflow Initiated
 
 This workflow will guide you through:
 1. Business Analysis (Analyst)
-2. Product Requirements (PM) 
+2. Product Requirements (PM)
 3. UI/UX Specification (UX-Expert)
 4. System Architecture (Architect)
 5. Quality Validation (PO)
@@ -112,11 +115,13 @@ Starting with business analysis phase...
 ```
 
 **Step 2: Business Analysis with Analyst Agent**
+
 ```
 *agent analyst
 ```
 
 **Analyst Agent Demo Session:**
+
 ```
 🔍 Analyst Agent Activated
 
@@ -137,7 +142,7 @@ Market Research Insights:
 
 Competitive Analysis:
 • Amazon: Collaborative filtering + content-based
-• Netflix: Deep learning recommendation algorithms  
+• Netflix: Deep learning recommendation algorithms
 • Spotify: Hybrid approach with explicit feedback
 
 === Generated: docs/project-brief.md ===
@@ -154,7 +159,7 @@ Goodbuy HQ seeks to implement intelligent product recommendations to increase cu
 
 ## Success Metrics
 - 25% increase in average order value
-- 15% improvement in conversion rate  
+- 15% improvement in conversion rate
 - 40% increase in customer engagement time
 - 20% boost in customer lifetime value
 
@@ -162,11 +167,13 @@ Would you like me to proceed to competitor deep-dive analysis? (Y/N)
 ```
 
 **Step 3: Product Requirements with PM Agent**
+
 ```
 *agent pm
 ```
 
 **PM Agent Demo Session:**
+
 ```
 📋 Product Manager Agent Activated
 
@@ -180,7 +187,7 @@ Elicitation mode: ENABLED (interactive refinement)
 
 Section: Goals & Context [COMPLETE]
 ✓ Business objectives defined
-✓ Success metrics established  
+✓ Success metrics established
 ✓ Stakeholder analysis complete
 
 Section: Requirements [ELICITATION REQUIRED]
@@ -196,7 +203,7 @@ Rationale: Based on market research, focusing on core recommendation capabilitie
 
 Select 1-9 or provide feedback:
 1. Proceed to next section
-2. Stakeholder Interview Simulation  
+2. Stakeholder Interview Simulation
 3. Assumption Challenge Method
 4. Trade-off Analysis
 5. User Journey Mapping
@@ -221,16 +228,18 @@ Recommendation Algorithm Options:
 
 Recommendation: Hybrid approach for MVP, with deep learning roadmap.
 
-Section: Requirements [COMPLETE] 
+Section: Requirements [COMPLETE]
 Proceeding to UI Goals...
 ```
 
 **Step 4: UX Design with UX-Expert Agent**
+
 ```
 *agent ux-expert
 ```
 
 **UX-Expert Demo Session:**
+
 ```
 🎨 UX Expert Agent Activated
 
@@ -267,16 +276,18 @@ AI UI Generation Prompts:
 For v0.dev:
 "Create a modern e-commerce product recommendation carousel using React and Tailwind CSS. Include loading skeletons, responsive design, and smooth animations. Products should display image, name, price, and star rating."
 
-For Lovable.dev:  
+For Lovable.dev:
 "Design a personalized homepage grid for an e-commerce platform. Use a clean, modern design with product cards that include hover effects and quick-view functionality. Include filter options and sorting capabilities."
 ```
 
 **Step 5: System Architecture with Architect Agent**
+
 ```
 *agent architect
 ```
 
 **Architect Agent Demo Session:**
+
 ```
 🏗️ Technical Architect Agent Activated
 
@@ -337,18 +348,20 @@ Key Architectural Decisions:
 
 Implementation Phases:
 Phase 1: Basic collaborative filtering (2 weeks)
-Phase 2: Content-based recommendations (1 week)  
+Phase 2: Content-based recommendations (1 week)
 Phase 3: Hybrid algorithm implementation (2 weeks)
 Phase 4: A/B testing framework (1 week)
 Phase 5: Advanced analytics and monitoring (1 week)
 ```
 
 **Step 6: Quality Validation with PO Agent**
+
 ```
 *agent po
 ```
 
 **PO Agent Demo Session:**
+
 ```
 🔍 Product Owner Agent Activated
 
@@ -358,7 +371,7 @@ Performing comprehensive document validation...
 
 Cross-Reference Analysis:
 ✅ PRD requirements align with architecture decisions
-✅ UI specifications match technical capabilities  
+✅ UI specifications match technical capabilities
 ✅ Success metrics are measurable and achievable
 ⚠️  Performance SLA needs clarification (200ms vs 500ms)
 ✅ Privacy requirements addressed in architecture
@@ -372,7 +385,7 @@ Business Alignment: ✅ PASS
 - ROI projections realistic and measurable
 - Stakeholder requirements captured
 
-Technical Feasibility: ✅ PASS  
+Technical Feasibility: ✅ PASS
 - Technology stack proven and scalable
 - Integration points well-defined
 - Performance requirements achievable
@@ -394,6 +407,7 @@ Ready for document sharding and development phase transition.
 #### Phase 2: Development (IDE - Enhanced Tooling)
 
 **Step 7: Document Sharding for Development**
+
 ```bash
 # In IDE environment (Claude Code, Cursor, VS Code)
 @po
@@ -401,6 +415,7 @@ Ready for document sharding and development phase transition.
 ```
 
 **PO Response:**
+
 ```
 🔄 Document Sharding Initiated
 
@@ -410,7 +425,7 @@ Generated Structure:
 docs/
 ├── prd/
 │   ├── epic-1-recommendation-engine.md
-│   ├── epic-2-user-interface.md  
+│   ├── epic-2-user-interface.md
 │   ├── epic-3-analytics-dashboard.md
 │   ├── epic-4-ab-testing.md
 │   └── stories/
@@ -442,12 +457,14 @@ Ready for story development cycle.
 **Step 8: Story Development Cycle**
 
 **8a. Story Creation with SM Agent**
+
 ```bash
 @sm
 *create
 ```
 
 **SM Agent Demo:**
+
 ```
 📝 Scrum Master Agent Activated
 
@@ -466,7 +483,7 @@ So that I can discover items relevant to my interests and previous purchases.
 
 **Acceptance Criteria:**
 1. System generates 5 personalized recommendations for logged-in users
-2. Fallback to popular products for anonymous/new users  
+2. Fallback to popular products for anonymous/new users
 3. Recommendations update based on current session behavior
 4. API response time under 200ms for recommendation requests
 5. Recommendation relevance score included in API response
@@ -496,12 +513,14 @@ Ready for development implementation.
 ```
 
 **8b. Implementation with Dev Agent**
+
 ```bash
 @dev
 "Implement story 1.1 - Core Algorithm Implementation"
 ```
 
 **Dev Agent Demo:**
+
 ```
 👨‍💻 Developer Agent Activated
 
@@ -561,7 +580,7 @@ src/
 
 === Performance Benchmarks ===
 - Cold start: 180ms (within 200ms requirement)
-- Warm cache: 45ms  
+- Warm cache: 45ms
 - Cache hit rate: 87%
 - Memory usage: 24MB average
 
@@ -570,11 +589,13 @@ Ready for QA review process.
 ```
 
 **8c. Quality Assurance with QA Agent**
+
 ```bash
 @qa *review story-1-1
 ```
 
 **QA Agent Demo:**
+
 ```
 🔍 QA Agent Activated
 
@@ -601,7 +622,7 @@ Mapping acceptance criteria to test coverage...
 
 ✅ AC1: Personalized recommendations → Unit + Integration tests
 ✅ AC2: Anonymous user fallback → Integration tests
-✅ AC3: Session-based updates → Behavioral tests  
+✅ AC3: Session-based updates → Behavioral tests
 ✅ AC4: <200ms response time → Performance tests
 ✅ AC5: Relevance scoring → Algorithm tests
 ✅ AC6: Click tracking → Analytics tests
@@ -613,7 +634,7 @@ Comprehensive test strategy created...
 
 Test Pyramid:
 - Unit Tests (35): Algorithm logic, utilities, helpers
-- Integration Tests (12): API endpoints, service integration  
+- Integration Tests (12): API endpoints, service integration
 - E2E Tests (8): Complete user journey scenarios
 - Performance Tests (5): Load testing, stress testing
 - Security Tests (3): Input validation, data protection
@@ -640,7 +661,7 @@ Load testing results:
 
 Concurrent Users: 1,000
 - Average Response Time: 145ms ✅
-- 95th Percentile: 178ms ✅  
+- 95th Percentile: 178ms ✅
 - 99th Percentile: 198ms ✅
 - Error Rate: 0.02% ✅
 
@@ -664,7 +685,7 @@ Security analysis completed:
 **Overall Assessment: ✅ PASS**
 
 Critical Requirements: ✅ All Met
-Performance Requirements: ✅ Exceeds expectations  
+Performance Requirements: ✅ Exceeds expectations
 Security Requirements: ✅ Adequate with minor improvements
 Test Coverage: ✅ Excellent (92% unit, 88% integration)
 Code Quality: ✅ High standards maintained
@@ -685,11 +706,12 @@ Story approved for production deployment.
 ### 3.1 Sequential Agent Handoffs
 
 **Classic Workflow Pattern:**
+
 ```
 Web UI Environment:
 *agent analyst → *agent pm → *agent ux-expert → *agent architect → *agent po
 
-IDE Environment:  
+IDE Environment:
 @po (document sharding) → @sm (story creation) → @dev (implementation) → @qa (review)
 ```
 
@@ -699,26 +721,74 @@ IDE Environment:
 
 ```javascript
 // Single message with parallel agent spawning via Claude Code's Task tool
-Task("BMAD Research Agent", "Analyze AI recommendation algorithms and best practices for e-commerce. Focus on collaborative filtering vs content-based approaches. Store findings in memory for other agents.", "analyst")
+Task(
+  'BMAD Research Agent',
+  'Analyze AI recommendation algorithms and best practices for e-commerce. Focus on collaborative filtering vs content-based approaches. Store findings in memory for other agents.',
+  'analyst'
+)
 
-Task("BMAD UX Agent", "Design user interface patterns for recommendation displays. Create mobile-first responsive designs. Consider accessibility requirements and loading states.", "ux-expert")
+Task(
+  'BMAD UX Agent',
+  'Design user interface patterns for recommendation displays. Create mobile-first responsive designs. Consider accessibility requirements and loading states.',
+  'ux-expert'
+)
 
-Task("BMAD Architecture Agent", "Design scalable system architecture for real-time recommendations. Include caching strategies, API design, and database optimization. Check memory for research insights.", "architect")
+Task(
+  'BMAD Architecture Agent',
+  'Design scalable system architecture for real-time recommendations. Include caching strategies, API design, and database optimization. Check memory for research insights.',
+  'architect'
+)
 
-Task("BMAD QA Agent", "Develop comprehensive test strategy for recommendation systems. Include performance testing, A/B testing framework, and quality metrics. Coordinate with other agents via hooks.", "qa")
+Task(
+  'BMAD QA Agent',
+  'Develop comprehensive test strategy for recommendation systems. Include performance testing, A/B testing framework, and quality metrics. Coordinate with other agents via hooks.',
+  'qa'
+)
 
 // Batch all todos in one call
 TodoWrite({
   todos: [
-    {content: "Research recommendation algorithms", status: "in_progress", activeForm: "Researching recommendation algorithms"},
-    {content: "Design recommendation UI components", status: "in_progress", activeForm: "Designing recommendation UI components"}, 
-    {content: "Architect recommendation system", status: "in_progress", activeForm: "Architecting recommendation system"},
-    {content: "Create testing strategy", status: "in_progress", activeForm: "Creating testing strategy"},
-    {content: "Document integration patterns", status: "pending", activeForm: "Documenting integration patterns"},
-    {content: "Validate performance requirements", status: "pending", activeForm: "Validating performance requirements"},
-    {content: "Review security implications", status: "pending", activeForm: "Reviewing security implications"},
-    {content: "Plan deployment strategy", status: "pending", activeForm: "Planning deployment strategy"}
-  ]
+    {
+      content: 'Research recommendation algorithms',
+      status: 'in_progress',
+      activeForm: 'Researching recommendation algorithms',
+    },
+    {
+      content: 'Design recommendation UI components',
+      status: 'in_progress',
+      activeForm: 'Designing recommendation UI components',
+    },
+    {
+      content: 'Architect recommendation system',
+      status: 'in_progress',
+      activeForm: 'Architecting recommendation system',
+    },
+    {
+      content: 'Create testing strategy',
+      status: 'in_progress',
+      activeForm: 'Creating testing strategy',
+    },
+    {
+      content: 'Document integration patterns',
+      status: 'pending',
+      activeForm: 'Documenting integration patterns',
+    },
+    {
+      content: 'Validate performance requirements',
+      status: 'pending',
+      activeForm: 'Validating performance requirements',
+    },
+    {
+      content: 'Review security implications',
+      status: 'pending',
+      activeForm: 'Reviewing security implications',
+    },
+    {
+      content: 'Plan deployment strategy',
+      status: 'pending',
+      activeForm: 'Planning deployment strategy',
+    },
+  ],
 })
 ```
 
@@ -735,7 +805,7 @@ npx claude-flow@alpha hooks session-restore --session-id "goodbuy-recommendation
 npx claude-flow@alpha hooks post-edit --file "src/lib/recommendations/collaborative-filtering.ts" --memory-key "swarm/dev/algorithm-implementation"
 npx claude-flow@alpha hooks notify --message "Recommendation algorithm core implementation complete"
 
-# Post-task coordination  
+# Post-task coordination
 npx claude-flow@alpha hooks post-task --task-id "story-1-1"
 npx claude-flow@alpha hooks session-end --export-metrics true
 ```
@@ -745,37 +815,39 @@ npx claude-flow@alpha hooks session-end --export-metrics true
 ### 4.1 PRD Template with Interactive Elicitation
 
 **Template: prd-template-v2.yaml**
+
 ```yaml
 template:
   id: prd-template-v2
-  description: "Comprehensive Product Requirements Document"
+  description: 'Comprehensive Product Requirements Document'
   sections:
     - id: goals-context
-      title: "Goals & Context"
+      title: 'Goals & Context'
       elicit: false
-      content_type: "analysis"
+      content_type: 'analysis'
     - id: requirements
-      title: "Requirements"
+      title: 'Requirements'
       elicit: true
       subsections:
         - functional-requirements
         - non-functional-requirements
         - constraints
     - id: ui-goals
-      title: "UI/UX Goals" 
+      title: 'UI/UX Goals'
       elicit: true
-      content_type: "design"
+      content_type: 'design'
     - id: technical-assumptions
-      title: "Technical Assumptions"
+      title: 'Technical Assumptions'
       elicit: true
-      content_type: "technical"
+      content_type: 'technical'
     - id: epic-list
-      title: "Epic Breakdown"
+      title: 'Epic Breakdown'
       elicit: true
       repeatable: true
 ```
 
 **Interactive Elicitation Demo:**
+
 ```
 PM Agent using PRD Template:
 
@@ -794,7 +866,7 @@ Rationale: Based on e-commerce industry standards and competitive analysis, thes
 Select 1-9 for refinement approach:
 1. Proceed to next section
 2. Stakeholder Interview Simulation
-3. Assumption Challenge Method  
+3. Assumption Challenge Method
 4. Trade-off Analysis (Recommended)
 5. User Journey Mapping
 6. Technical Constraint Exploration
@@ -811,7 +883,7 @@ Option A: Aggressive Caching (Redis + CDN)
 ❌ Cons: Higher infrastructure costs, cache complexity
 
 Option B: Database Optimization Only
-✅ Pros: Lower costs, simpler architecture  
+✅ Pros: Lower costs, simpler architecture
 ❌ Cons: 150-300ms response times, potential bottlenecks
 
 Option C: Hybrid Approach (Recommended)
@@ -829,68 +901,70 @@ Updated Requirements:
 ### 4.2 Architecture Template Usage
 
 **Template: fullstack-architecture-tmpl.yaml**
+
 ```yaml
 template:
   id: fullstack-architecture
   sections:
     system_overview:
-      description: "High-level system description"
+      description: 'High-level system description'
     tech_stack:
-      frontend: "Frontend technologies"
-      backend: "Backend technologies"  
-      database: "Data storage solutions"
-      deployment: "Deployment and infrastructure"
+      frontend: 'Frontend technologies'
+      backend: 'Backend technologies'
+      database: 'Data storage solutions'
+      deployment: 'Deployment and infrastructure'
     architecture_decisions:
-      type: "array"
+      type: 'array'
       items:
-        - decision: "Architectural choice made"
-          rationale: "Reasoning behind decision"
-          alternatives: "Other options considered"
-          impact: "Expected impact and trade-offs"
+        - decision: 'Architectural choice made'
+          rationale: 'Reasoning behind decision'
+          alternatives: 'Other options considered'
+          impact: 'Expected impact and trade-offs'
 ```
 
 **Generated Architecture Document:**
+
 ```yaml
 # Goodbuy HQ Recommendation System Architecture
 
 system_overview:
-  description: "AI-powered e-commerce recommendation engine with real-time personalization, A/B testing capabilities, and comprehensive analytics"
-  
+  description: 'AI-powered e-commerce recommendation engine with real-time personalization, A/B testing capabilities, and comprehensive analytics'
+
 tech_stack:
-  frontend: 
-    - "Next.js 14 (App Router)"
-    - "TypeScript 5.2+"
-    - "Tailwind CSS + Shadcn/ui"
-    - "React Query for state management"
+  frontend:
+    - 'Next.js 14 (App Router)'
+    - 'TypeScript 5.2+'
+    - 'Tailwind CSS + Shadcn/ui'
+    - 'React Query for state management'
   backend:
-    - "Node.js 20+ with Express.js"
-    - "Prisma ORM with PostgreSQL"
-    - "Redis for caching and sessions"
-    - "OpenAI API for embeddings"
+    - 'Node.js 20+ with Express.js'
+    - 'Prisma ORM with PostgreSQL'
+    - 'Redis for caching and sessions'
+    - 'OpenAI API for embeddings'
   database:
-    - "PostgreSQL 15 (primary data)"
-    - "Redis 7 (cache and sessions)"  
-    - "Vector database (embeddings)"
+    - 'PostgreSQL 15 (primary data)'
+    - 'Redis 7 (cache and sessions)'
+    - 'Vector database (embeddings)'
   deployment:
-    - "Vercel (frontend)"
-    - "Railway (backend + database)"
-    - "CloudFlare CDN"
-    
+    - 'Vercel (frontend)'
+    - 'Railway (backend + database)'
+    - 'CloudFlare CDN'
+
 architecture_decisions:
-  - decision: "Microservices architecture for recommendation engine"
-    rationale: "Enables independent scaling and deployment of AI components"
-    alternatives: "Monolithic architecture, serverless functions"
-    impact: "Higher initial complexity, better long-term scalability"
-    
-  - decision: "Hybrid recommendation algorithm (collaborative + content-based)"
-    rationale: "Balances accuracy with performance, handles cold start problem"
-    alternatives: "Pure collaborative filtering, deep learning only"  
-    impact: "Better recommendation quality, moderate complexity increase"
-    
-  - decision: "Event-driven user behavior tracking"
-    rationale: "Real-time personalization with decoupled analytics"
-    alternatives: "Batch processing, synchronous tracking"
-    impact: "Improved user experience, requires event infrastructure"
+  - decision: 'Microservices architecture for recommendation engine'
+    rationale: 'Enables independent scaling and deployment of AI components'
+    alternatives: 'Monolithic architecture, serverless functions'
+    impact: 'Higher initial complexity, better long-term scalability'
+
+  - decision: 'Hybrid recommendation algorithm (collaborative + content-based)'
+    rationale: 'Balances accuracy with performance, handles cold start problem'
+    alternatives: 'Pure collaborative filtering, deep learning only'
+    impact: 'Better recommendation quality, moderate complexity increase'
+
+  - decision: 'Event-driven user behavior tracking'
+    rationale: 'Real-time personalization with decoupled analytics'
+    alternatives: 'Batch processing, synchronous tracking'
+    impact: 'Improved user experience, requires event infrastructure'
 ```
 
 ## Part 5: Quality Gate System
@@ -898,23 +972,27 @@ architecture_decisions:
 ### 5.1 QA Agent Quality Gates
 
 **Risk Assessment Gate:**
+
 ```bash
 @qa *risk story-2-1
 ```
 
 **Output: docs/qa/assessments/epic2.story1-risk-20240902.md**
+
 ```markdown
 # Risk Assessment: Story 2.1 - Recommendation Carousel UI
 
 ## High-Risk Areas (Score ≥ 25)
 
 ### 1. Mobile Performance Optimization (Score: 35)
+
 - **Probability:** 7 (High likelihood of issues)
 - **Impact:** 5 (Affects user experience)
 - **Description:** Complex carousel animations may impact mobile performance
 - **Mitigation:** Implement virtual scrolling, lazy loading, performance monitoring
 
-### 2. Cross-Browser Compatibility (Score: 28) 
+### 2. Cross-Browser Compatibility (Score: 28)
+
 - **Probability:** 4 (Medium likelihood)
 - **Impact:** 7 (Could break core functionality)
 - **Description:** Advanced CSS animations may not work consistently
@@ -923,6 +1001,7 @@ architecture_decisions:
 ## Medium-Risk Areas (Score 15-24)
 
 ### 3. Accessibility Compliance (Score: 21)
+
 - **Probability:** 3 (Lower probability with proper planning)
 - **Impact:** 7 (Legal and UX implications)
 - **Description:** Carousel navigation may not be screen reader friendly
@@ -931,12 +1010,14 @@ architecture_decisions:
 ## Risk Mitigation Strategy
 
 **Testing Requirements:**
+
 - [ ] Performance testing on low-end devices
 - [ ] Cross-browser testing (Chrome, Safari, Firefox, Edge)
 - [ ] Accessibility audit with screen readers
 - [ ] Mobile responsiveness testing
 
 **Implementation Safeguards:**
+
 - Progressive enhancement approach
 - Fallback UI for JavaScript failures
 - Performance budgets and monitoring
@@ -944,47 +1025,51 @@ architecture_decisions:
 ```
 
 **Test Design Gate:**
-```bash  
+
+```bash
 @qa *design story-2-1
 ```
 
 **Output: docs/qa/assessments/epic2.story1-test-design-20240902.md**
-```markdown
+
+````markdown
 # Test Design: Recommendation Carousel UI
 
 ## Test Strategy Overview
 
 ### Test Pyramid Distribution
+
 - **Unit Tests (60%):** Component logic, utilities, state management
-- **Integration Tests (25%):** API integration, user interactions  
+- **Integration Tests (25%):** API integration, user interactions
 - **E2E Tests (10%):** Complete user journeys
 - **Visual Tests (5%):** UI regression, cross-browser
 
 ## Detailed Test Scenarios
 
 ### Unit Tests (35 tests)
+
 ```typescript
 describe('RecommendationCarousel', () => {
   describe('Core Functionality', () => {
     it('renders recommended products correctly')
-    it('handles empty recommendations gracefully') 
+    it('handles empty recommendations gracefully')
     it('displays loading state during data fetch')
     it('shows error state when API fails')
   })
-  
+
   describe('User Interactions', () => {
     it('navigates through products with arrow buttons')
     it('supports keyboard navigation (arrow keys)')
     it('handles touch swipe gestures on mobile')
     it('tracks click events for analytics')
   })
-  
+
   describe('Performance', () => {
     it('implements lazy loading for product images')
     it('virtualizes scroll for large product lists')
     it('debounces rapid navigation actions')
   })
-  
+
   describe('Accessibility', () => {
     it('provides proper ARIA labels and roles')
     it('supports screen reader navigation')
@@ -992,8 +1077,10 @@ describe('RecommendationCarousel', () => {
   })
 })
 ```
+````
 
 ### Integration Tests (12 tests)
+
 ```typescript
 describe('Recommendation API Integration', () => {
   it('fetches personalized recommendations for logged-in users')
@@ -1006,6 +1093,7 @@ describe('Recommendation API Integration', () => {
 ```
 
 ### E2E Tests (8 scenarios)
+
 ```typescript
 describe('Complete User Journey', () => {
   it('displays recommendations on product detail page')
@@ -1018,22 +1106,26 @@ describe('Complete User Journey', () => {
 ```
 
 ### Performance Test Criteria
+
 - **Load Time:** <2 seconds for carousel initialization
 - **Interaction Response:** <100ms for navigation actions
 - **Memory Usage:** <10MB additional memory footprint
 - **Bundle Size:** <50KB additional JavaScript
-```
+
+````
 
 **Comprehensive Quality Review:**
 ```bash
 @qa *review story-2-1
-```
+````
 
 **Quality Gate Output:**
+
 ```markdown
 # Quality Gate: Story 2.1 - Recommendation Carousel
 
 ## Executive Summary
+
 **Gate Status: ✅ PASS**
 **Overall Score: 87/100**
 **Recommendation:** Approved for production with minor optimizations
@@ -1041,28 +1133,33 @@ describe('Complete User Journey', () => {
 ## Assessment Results
 
 ### Requirements Traceability (25/25 points)
+
 ✅ All acceptance criteria mapped to validating tests
 ✅ Edge cases identified and covered
 ✅ Non-functional requirements addressed
 
-### Code Quality (22/25 points)  
+### Code Quality (22/25 points)
+
 ✅ TypeScript strict mode compliance
 ✅ Component architecture follows best practices
 ✅ Proper error handling and loading states
 ⚠️ Minor: Could benefit from more comprehensive JSDoc comments
 
 ### Performance (20/25 points)
+
 ✅ Meets load time requirements (<2s initialization)
 ✅ Smooth animations and interactions
 ✅ Mobile performance optimized
 ⚠️ Minor: Bundle size slightly higher than target (55KB vs 50KB)
 
 ### Security (15/15 points)
+
 ✅ No security vulnerabilities detected
 ✅ Input sanitization implemented  
 ✅ HTTPS enforcement for all API calls
 
 ### Accessibility (10/10 points)
+
 ✅ WCAG 2.1 AA compliance verified
 ✅ Screen reader compatibility tested
 ✅ Keyboard navigation fully functional
@@ -1070,11 +1167,13 @@ describe('Complete User Journey', () => {
 ## Recommendations for Enhancement
 
 ### Before Next Sprint
+
 - [ ] Add comprehensive JSDoc documentation (1 day)
 - [ ] Optimize bundle size through code splitting (0.5 days)
 - [ ] Add performance monitoring dashboards (0.5 days)
 
-### Future Iterations  
+### Future Iterations
+
 - [ ] Consider implementing advanced carousel features (infinite scroll, autoplay)
 - [ ] Add A/B testing variants for different layouts
 - [ ] Implement advanced analytics (time spent, scroll depth)
@@ -1082,13 +1181,15 @@ describe('Complete User Journey', () => {
 ## Quality Metrics
 
 ### Test Coverage
+
 - Unit Tests: 94% line coverage
-- Integration Tests: 89% scenario coverage  
+- Integration Tests: 89% scenario coverage
 - E2E Tests: 100% critical path coverage
 
 ### Performance Benchmarks
+
 - Desktop Load Time: 1.2s ✅
-- Mobile Load Time: 1.8s ✅  
+- Mobile Load Time: 1.8s ✅
 - Interaction Response: 45ms ✅
 - Memory Usage: 8.5MB ✅
 
@@ -1100,44 +1201,54 @@ Gate approved with confidence level: HIGH
 ### 6.1 MCP Tool Coordination Setup
 
 **Step 1: Initialize Swarm Coordination**
+
 ```javascript
 // MCP tools set up coordination topology (optional for complex workflows)
-mcp__claude-flow__swarm_init({
-  topology: "mesh",
-  maxAgents: 10,
-  coordination: "bmad-orchestrated"
-})
+mcp__claude -
+  flow__swarm_init({
+    topology: 'mesh',
+    maxAgents: 10,
+    coordination: 'bmad-orchestrated',
+  })
 
-mcp__claude-flow__agent_spawn({
-  type: "bmad-orchestrator",
-  role: "master-coordinator"
-})
+mcp__claude -
+  flow__agent_spawn({
+    type: 'bmad-orchestrator',
+    role: 'master-coordinator',
+  })
 
-mcp__claude-flow__agent_spawn({
-  type: "analyst", 
-  role: "business-research"
-})
+mcp__claude -
+  flow__agent_spawn({
+    type: 'analyst',
+    role: 'business-research',
+  })
 
-mcp__claude-flow__agent_spawn({
-  type: "architect",
-  role: "technical-design" 
-})
+mcp__claude -
+  flow__agent_spawn({
+    type: 'architect',
+    role: 'technical-design',
+  })
 
-mcp__claude-flow__agent_spawn({
-  type: "developer",
-  role: "implementation"
-})
+mcp__claude -
+  flow__agent_spawn({
+    type: 'developer',
+    role: 'implementation',
+  })
 
-mcp__claude-flow__agent_spawn({
-  type: "qa",
-  role: "quality-assurance"
-})
+mcp__claude -
+  flow__agent_spawn({
+    type: 'qa',
+    role: 'quality-assurance',
+  })
 ```
 
 **Step 2: Execute Parallel Agent Workflows**
+
 ```javascript
 // Claude Code Task tool spawns actual working agents
-Task("BMAD Business Analyst", `
+Task(
+  'BMAD Business Analyst',
+  `
 Analyze Goodbuy HQ's e-commerce enhancement requirements.
 Focus on AI recommendation systems and competitive analysis.
 Coordinate with other agents via hooks and memory storage.
@@ -1145,9 +1256,13 @@ Coordinate with other agents via hooks and memory storage.
 Pre-task: npx claude-flow@alpha hooks pre-task --description "Business analysis for recommendation system"
 During: Store insights in memory key 'goodbuy/analysis/recommendations'
 Post-task: npx claude-flow@alpha hooks post-task --task-id "analysis-recommendations"
-`, "analyst")
+`,
+  'analyst'
+)
 
-Task("BMAD System Architect", `
+Task(
+  'BMAD System Architect',
+  `
 Design scalable architecture for AI-powered recommendations.
 Include real-time processing, caching, and analytics.
 Check memory for business requirements from analyst agent.
@@ -1155,9 +1270,13 @@ Check memory for business requirements from analyst agent.
 Pre-task: npx claude-flow@alpha hooks pre-task --description "Architecture design for recommendation system"
 During: Use memory key 'goodbuy/architecture/recommendations' 
 Post-task: npx claude-flow@alpha hooks post-task --task-id "architecture-recommendations"
-`, "architect")
+`,
+  'architect'
+)
 
-Task("BMAD Developer", `
+Task(
+  'BMAD Developer',
+  `
 Implement recommendation algorithm and API endpoints.
 Follow architectural guidelines and coding standards.
 Coordinate implementation with architect decisions.
@@ -1165,9 +1284,13 @@ Coordinate implementation with architect decisions.
 Pre-task: npx claude-flow@alpha hooks pre-task --description "Recommendation system implementation"
 During: Document code in memory key 'goodbuy/dev/recommendations'
 Post-task: npx claude-flow@alpha hooks post-task --task-id "dev-recommendations"
-`, "dev")
+`,
+  'dev'
+)
 
-Task("BMAD QA Engineer", `
+Task(
+  'BMAD QA Engineer',
+  `
 Develop comprehensive test strategy and quality gates.
 Focus on performance, security, and user experience.
 Review work from all other agents for quality compliance.
@@ -1175,7 +1298,9 @@ Review work from all other agents for quality compliance.
 Pre-task: npx claude-flow@alpha hooks pre-task --description "QA strategy for recommendation system"
 During: Store test results in memory key 'goodbuy/qa/recommendations'
 Post-task: npx claude-flow@alpha hooks post-task --task-id "qa-recommendations"
-`, "qa")
+`,
+  'qa'
+)
 ```
 
 ### 6.2 Agent Coordination Hooks Implementation
@@ -1205,6 +1330,7 @@ npx claude-flow@alpha hooks session-end --export-metrics true
 ### 7.1 Common Issues and Solutions
 
 **Issue: Agent Activation Failure**
+
 ```
 Error: "BMad Orchestrator not responding to commands"
 
@@ -1216,11 +1342,12 @@ Solution:
 
 Debug Commands:
 *status        # Check current agent state
-*help          # Verify command availability  
+*help          # Verify command availability
 *agent list    # Show available agents
 ```
 
 **Issue: Context Overflow**
+
 ```
 Error: "Context limit exceeded during document processing"
 
@@ -1237,12 +1364,13 @@ Prevention:
 ```
 
 **Issue: Quality Gate Failures**
-```  
+
+```
 Error: "QA review returns FAIL status consistently"
 
 Solution:
 1. Review acceptance criteria completeness: @qa *trace story-X-X
-2. Check test coverage requirements: Target 85%+ unit tests  
+2. Check test coverage requirements: Target 85%+ unit tests
 3. Address security and performance concerns systematically
 4. Use incremental validation: *nfr before full *review
 
@@ -1253,6 +1381,7 @@ Document waived items if business accepts risk
 ```
 
 **Issue: Agent Coordination Conflicts**
+
 ```
 Error: "Agents producing inconsistent outputs"
 
@@ -1272,6 +1401,7 @@ Coordination Checklist:
 ### 7.2 Performance Optimization
 
 **Rapid Prototyping Mode:**
+
 ```bash
 *yolo  # Enable skip-confirmation mode
 *workflow greenfield-fullstack
@@ -1280,6 +1410,7 @@ Coordination Checklist:
 ```
 
 **Batch Processing:**
+
 ```bash
 *task create-stories epic-1 epic-2 epic-3
 # Generates multiple stories simultaneously
@@ -1287,11 +1418,12 @@ Coordination Checklist:
 ```
 
 **Context Management:**
+
 ```bash
 # Efficient file organization
 docs/
 ├── core/           # Always-loaded files
-├── current/        # Active work files  
+├── current/        # Active work files
 ├── archive/        # Completed work
 └── reference/      # Background information
 ```
@@ -1310,7 +1442,7 @@ docs/
 The BMAD Method delivers measurable improvements:
 
 - **84.8% SWE-Bench solve rate** (industry leading)
-- **32.3% token reduction** (cost optimization)  
+- **32.3% token reduction** (cost optimization)
 - **2.8-4.4x speed improvement** (faster delivery)
 - **Production-ready code** (quality assurance)
 - **Comprehensive documentation** (maintainability)

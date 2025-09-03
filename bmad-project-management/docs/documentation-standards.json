@@ -1,0 +1,506 @@
+{
+  "documentation_standards": {
+    "project": "AI Financial Health Analyzer",
+    "methodology": "BMAD Documentation Framework",
+    "version": "1.0",
+    "effective_date": "2025-01-06",
+    "philosophy": "Documentation as code - living, versioned, and integrated"
+  },
+  "documentation_categories": [
+    {
+      "category": "Technical Documentation",
+      "description": "Code, architecture, and system documentation",
+      "audience": "Developers, Architects, Operations",
+      "maintenance": "Continuous with code changes",
+      "standards": [
+        "Code comments and inline documentation",
+        "API documentation (OpenAPI/Swagger)",
+        "Architecture Decision Records (ADRs)",
+        "Database schema documentation",
+        "Infrastructure as Code documentation"
+      ]
+    },
+    {
+      "category": "Business Documentation",
+      "description": "Requirements, processes, and business rules",
+      "audience": "Product Owners, Business Analysts, Stakeholders",
+      "maintenance": "Updated with requirement changes",
+      "standards": [
+        "Business Requirements Documents (BRDs)",
+        "User stories and acceptance criteria",
+        "Business process documentation",
+        "Compliance and regulatory documentation",
+        "Risk and mitigation documentation"
+      ]
+    },
+    {
+      "category": "User Documentation",
+      "description": "End-user guides and help content",
+      "audience": "End Users, Customer Support, Training Teams",
+      "maintenance": "Updated with feature releases",
+      "standards": [
+        "User manuals and guides",
+        "Feature documentation and tutorials",
+        "FAQ and troubleshooting guides",
+        "Video tutorials and walkthroughs",
+        "Context-sensitive help content"
+      ]
+    },
+    {
+      "category": "Operational Documentation",
+      "description": "Deployment, monitoring, and maintenance guides",
+      "audience": "DevOps, SRE, Operations Teams",
+      "maintenance": "Updated with infrastructure changes",
+      "standards": [
+        "Deployment and configuration guides",
+        "Monitoring and alerting documentation",
+        "Incident response procedures",
+        "Backup and recovery procedures",
+        "Performance tuning guides"
+      ]
+    },
+    {
+      "category": "Project Documentation",
+      "description": "Project management and process documentation",
+      "audience": "Project Teams, Management, Auditors",
+      "maintenance": "Updated throughout project lifecycle",
+      "standards": [
+        "Project plans and timelines",
+        "Meeting minutes and decisions",
+        "Status reports and metrics",
+        "Lessons learned documentation",
+        "Change management records"
+      ]
+    }
+  ],
+  "documentation_templates": [
+    {
+      "template": "Architecture Decision Record (ADR)",
+      "purpose": "Document significant architectural decisions",
+      "format": "Markdown",
+      "location": "/docs/decisions/",
+      "structure": {
+        "sections": [
+          "Title",
+          "Status (Proposed/Accepted/Deprecated/Superseded)",
+          "Context",
+          "Decision",
+          "Consequences",
+          "Related Decisions"
+        ],
+        "naming_convention": "YYYYMMDD-decision-title.md",
+        "review_process": "Technical Lead approval required"
+      }
+    },
+    {
+      "template": "API Documentation",
+      "purpose": "Document REST API endpoints and usage",
+      "format": "OpenAPI 3.0 (Swagger)",
+      "location": "/docs/api/",
+      "structure": {
+        "sections": [
+          "Endpoint description",
+          "Request/Response schemas",
+          "Authentication requirements",
+          "Error codes and messages",
+          "Usage examples"
+        ],
+        "generation": "Auto-generated from code annotations",
+        "review_process": "Code review integration"
+      }
+    },
+    {
+      "template": "User Story Documentation",
+      "purpose": "Detailed user story specifications",
+      "format": "Markdown + YAML metadata",
+      "location": "/docs/stories/",
+      "structure": {
+        "sections": [
+          "User story statement",
+          "Acceptance criteria",
+          "Business rules",
+          "UI/UX mockups",
+          "Technical considerations",
+          "Testing scenarios"
+        ],
+        "naming_convention": "STORY-ID-brief-description.md",
+        "review_process": "Product Owner approval"
+      }
+    },
+    {
+      "template": "Deployment Guide",
+      "purpose": "Step-by-step deployment instructions",
+      "format": "Markdown with code blocks",
+      "location": "/docs/deployment/",
+      "structure": {
+        "sections": [
+          "Prerequisites",
+          "Environment setup",
+          "Deployment steps",
+          "Verification procedures",
+          "Rollback procedures",
+          "Troubleshooting"
+        ],
+        "validation": "Tested in staging environment",
+        "review_process": "Operations team approval"
+      }
+    },
+    {
+      "template": "Incident Response Playbook",
+      "purpose": "Standardized incident response procedures",
+      "format": "Markdown with checklists",
+      "location": "/docs/operations/playbooks/",
+      "structure": {
+        "sections": [
+          "Incident classification",
+          "Initial response steps",
+          "Investigation procedures",
+          "Escalation criteria",
+          "Communication templates",
+          "Post-incident procedures"
+        ],
+        "testing": "Regular incident simulation drills",
+        "review_process": "Quarterly review and updates"
+      }
+    }
+  ],
+  "documentation_workflow": {
+    "creation_process": [
+      {
+        "step": 1,
+        "action": "Identify documentation need",
+        "trigger": "New feature, architecture change, process update",
+        "owner": "Feature owner or technical lead"
+      },
+      {
+        "step": 2,
+        "action": "Select appropriate template",
+        "criteria": "Audience, purpose, and maintenance requirements",
+        "owner": "Documentation coordinator"
+      },
+      {
+        "step": 3,
+        "action": "Create initial draft",
+        "timeline": "Within 48 hours of trigger event",
+        "owner": "Subject matter expert"
+      },
+      {
+        "step": 4,
+        "action": "Peer review",
+        "criteria": "Accuracy, completeness, clarity",
+        "owner": "Technical reviewer"
+      },
+      {
+        "step": 5,
+        "action": "Stakeholder approval",
+        "criteria": "Business alignment and compliance",
+        "owner": "Designated approver"
+      },
+      {
+        "step": 6,
+        "action": "Publication and distribution",
+        "method": "Version control + notification",
+        "owner": "Documentation coordinator"
+      }
+    ],
+    "maintenance_process": [
+      {
+        "trigger": "Code changes",
+        "action": "Update technical documentation",
+        "timeline": "Same pull request",
+        "responsibility": "Developer"
+      },
+      {
+        "trigger": "Feature releases",
+        "action": "Update user documentation",
+        "timeline": "Before release deployment",
+        "responsibility": "Product owner + Technical writer"
+      },
+      {
+        "trigger": "Process changes",
+        "action": "Update operational documentation",
+        "timeline": "Within 24 hours",
+        "responsibility": "Process owner"
+      },
+      {
+        "trigger": "Quarterly review",
+        "action": "Audit all documentation",
+        "timeline": "End of each quarter",
+        "responsibility": "Documentation coordinator"
+      }
+    ]
+  },
+  "quality_standards": [
+    {
+      "standard": "Accuracy",
+      "description": "Documentation reflects current state of system/process",
+      "measurement": "Regular audits and user feedback",
+      "target": "95% accuracy rate"
+    },
+    {
+      "standard": "Completeness",
+      "description": "All necessary information included for target audience",
+      "measurement": "Completeness checklists and review criteria",
+      "target": "100% of required sections completed"
+    },
+    {
+      "standard": "Clarity",
+      "description": "Clear, concise, and understandable language",
+      "measurement": "Readability scores and user feedback",
+      "target": "Flesch Reading Ease score >60"
+    },
+    {
+      "standard": "Consistency",
+      "description": "Consistent style, format, and terminology",
+      "measurement": "Style guide compliance checks",
+      "target": "100% compliance with style guide"
+    },
+    {
+      "standard": "Currency",
+      "description": "Documentation is up-to-date and relevant",
+      "measurement": "Last updated timestamps and review dates",
+      "target": "No documentation older than 6 months without review"
+    }
+  ],
+  "tools_and_platforms": [
+    {
+      "tool": "GitBook",
+      "purpose": "Primary documentation platform",
+      "features": [
+        "Version control integration",
+        "Collaborative editing",
+        "Search functionality",
+        "Multiple export formats"
+      ],
+      "audiences": ["All stakeholders"],
+      "maintenance": "Real-time collaborative updates"
+    },
+    {
+      "tool": "Swagger/OpenAPI",
+      "purpose": "API documentation generation",
+      "features": [
+        "Auto-generation from code",
+        "Interactive testing interface",
+        "Schema validation",
+        "Multiple language SDKs"
+      ],
+      "audiences": ["Developers", "Integration partners"],
+      "maintenance": "Automated with code deployments"
+    },
+    {
+      "tool": "Confluence",
+      "purpose": "Business and project documentation",
+      "features": [
+        "Rich text editing",
+        "Page templates",
+        "Comments and collaboration",
+        "Integration with Jira"
+      ],
+      "audiences": ["Business users", "Project teams"],
+      "maintenance": "Manual with review workflows"
+    },
+    {
+      "tool": "GitHub Wiki/Markdown",
+      "purpose": "Technical documentation in repository",
+      "features": [
+        "Version controlled with code",
+        "Markdown formatting",
+        "Inline with development workflow",
+        "Pull request reviews"
+      ],
+      "audiences": ["Developers", "Technical teams"],
+      "maintenance": "Updated with code changes"
+    },
+    {
+      "tool": "Loom/Vidyard",
+      "purpose": "Video documentation and tutorials",
+      "features": [
+        "Screen recording",
+        "Video editing",
+        "Interactive elements",
+        "Analytics tracking"
+      ],
+      "audiences": ["End users", "Training teams"],
+      "maintenance": "Updated with major UI changes"
+    }
+  ],
+  "governance_and_compliance": [
+    {
+      "aspect": "Version Control",
+      "requirements": [
+        "All documentation must be version controlled",
+        "Changes tracked with meaningful commit messages",
+        "Branching strategy aligned with code development",
+        "Release tags for documentation versions"
+      ]
+    },
+    {
+      "aspect": "Review and Approval",
+      "requirements": [
+        "Peer review required for all documentation",
+        "Subject matter expert approval for technical content",
+        "Legal review for compliance-related documentation",
+        "Stakeholder sign-off for business requirements"
+      ]
+    },
+    {
+      "aspect": "Access Control",
+      "requirements": [
+        "Role-based access to sensitive documentation",
+        "Public documentation accessible to all team members",
+        "External documentation with appropriate permissions",
+        "Audit trail of access and modifications"
+      ]
+    },
+    {
+      "aspect": "Retention and Archival",
+      "requirements": [
+        "Documentation retention policy defined",
+        "Archived versions maintained for regulatory compliance",
+        "Search and retrieval capabilities for historical documents",
+        "Regular cleanup of obsolete documentation"
+      ]
+    }
+  ],
+  "knowledge_management": {
+    "knowledge_base_structure": [
+      {
+        "section": "Getting Started",
+        "content": [
+          "Project overview and goals",
+          "Team introductions and contacts",
+          "Development environment setup",
+          "Contributing guidelines"
+        ]
+      },
+      {
+        "section": "Architecture",
+        "content": [
+          "System architecture overview",
+          "Component diagrams",
+          "Data flow diagrams",
+          "Technology stack documentation"
+        ]
+      },
+      {
+        "section": "Development",
+        "content": [
+          "Coding standards and guidelines",
+          "Testing strategies and frameworks",
+          "Deployment procedures",
+          "Debugging and troubleshooting guides"
+        ]
+      },
+      {
+        "section": "Operations",
+        "content": [
+          "Monitoring and alerting setup",
+          "Incident response procedures",
+          "Backup and recovery processes",
+          "Performance optimization guides"
+        ]
+      },
+      {
+        "section": "Business",
+        "content": [
+          "Business requirements and rules",
+          "User personas and journeys",
+          "Feature specifications",
+          "Compliance and regulatory information"
+        ]
+      }
+    ],
+    "search_and_discovery": [
+      {
+        "method": "Full-text search",
+        "implementation": "Elasticsearch integration",
+        "scope": "All documentation platforms"
+      },
+      {
+        "method": "Tagging system",
+        "implementation": "Standardized tags for categorization",
+        "scope": "All documentation types"
+      },
+      {
+        "method": "Recommendation engine",
+        "implementation": "AI-powered content recommendations",
+        "scope": "Based on user role and activity"
+      }
+    ],
+    "knowledge_sharing": [
+      {
+        "method": "Documentation reviews",
+        "frequency": "Monthly team sessions",
+        "purpose": "Share knowledge and identify gaps"
+      },
+      {
+        "method": "Lunch and learns",
+        "frequency": "Bi-weekly presentations",
+        "purpose": "Deep dive into specific topics"
+      },
+      {
+        "method": "Knowledge transfer sessions",
+        "frequency": "As needed for role changes",
+        "purpose": "Ensure continuity of knowledge"
+      }
+    ]
+  },
+  "metrics_and_improvement": [
+    {
+      "metric": "Documentation Coverage",
+      "description": "Percentage of features/processes documented",
+      "target": "100% of user-facing features",
+      "measurement": "Automated scanning + manual audit"
+    },
+    {
+      "metric": "Documentation Usage",
+      "description": "Page views, search queries, user engagement",
+      "target": "Increasing trend in usage metrics",
+      "measurement": "Analytics tracking"
+    },
+    {
+      "metric": "Documentation Quality",
+      "description": "User satisfaction and feedback scores",
+      "target": "Average rating >4/5",
+      "measurement": "User surveys and feedback forms"
+    },
+    {
+      "metric": "Time to Information",
+      "description": "Time to find relevant information",
+      "target": "<2 minutes for common queries",
+      "measurement": "User behavior analytics"
+    },
+    {
+      "metric": "Documentation Maintenance",
+      "description": "Currency and accuracy of documentation",
+      "target": "95% of docs updated within SLA",
+      "measurement": "Automated staleness detection"
+    }
+  ],
+  "success_criteria": [
+    {
+      "criterion": "Self-Service Success",
+      "description": "Team members can find answers independently",
+      "measurement": "Reduction in documentation-related questions",
+      "target": "50% reduction in support tickets"
+    },
+    {
+      "criterion": "Onboarding Efficiency",
+      "description": "New team members productive faster",
+      "measurement": "Time to first contribution",
+      "target": "Reduce onboarding time by 30%"
+    },
+    {
+      "criterion": "Compliance Readiness",
+      "description": "Documentation meets audit requirements",
+      "measurement": "Audit findings and recommendations",
+      "target": "Zero compliance-related findings"
+    },
+    {
+      "criterion": "Knowledge Retention",
+      "description": "Critical knowledge captured and accessible",
+      "measurement": "Knowledge gap analysis",
+      "target": "100% of critical processes documented"
+    }
+  ]
+}

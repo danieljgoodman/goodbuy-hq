@@ -45,6 +45,7 @@ model User {
   uploadedDocuments        SharedDocument[]
   threadParticipants       ThreadParticipant[]
   verificationTokens       VerificationToken[]
+  healthAlerts             HealthAlert[]
 
   @@map("users")
 }
@@ -151,6 +152,10 @@ model Business {
   evaluations          Evaluation[]
   favorites            Favorite[]
   inquiries            Inquiry[]
+  healthMetrics        HealthMetric[]
+  forecastResults      ForecastResult[]
+  quickbooksConnection QuickBooksConnection?
+  healthAlerts         HealthAlert[]
 
   @@map("businesses")
 }
@@ -549,6 +554,88 @@ model VerificationToken {
   @@map("verification_tokens")
 }
 
+model HealthMetric {
+  id                    String           @id @default(cuid())
+  businessId            String
+  overallScore          Int              @db.SmallInt
+  growthScore           Int              @db.SmallInt
+  operationalScore      Int              @db.SmallInt
+  financialScore        Int              @db.SmallInt
+  saleReadinessScore    Int              @db.SmallInt
+  confidenceLevel       Int              @db.SmallInt
+  trajectory            HealthTrajectory @default(STABLE)
+  calculatedAt          DateTime         @default(now())
+  dataSources           Json?
+  calculationMetadata   Json?
+  createdAt             DateTime         @default(now())
+  updatedAt             DateTime         @updatedAt
+  business              Business         @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  @@index([businessId, calculatedAt(sort: Desc)], name: "idx_health_metrics_business_date")
+  @@map("health_metrics")
+}
+
+model ForecastResult {
+  id                      String      @id @default(cuid())
+  businessId              String
+  forecastType            ForecastType
+  forecastPeriod          Int         @db.SmallInt
+  predictedValue          Decimal     @db.Decimal(15, 2)
+  confidenceIntervalLower Decimal     @db.Decimal(15, 2)
+  confidenceIntervalUpper Decimal     @db.Decimal(15, 2)
+  confidenceScore         Int         @db.SmallInt
+  modelUsed               String      @db.VarChar(50)
+  actualValue             Decimal?    @db.Decimal(15, 2)
+  createdAt               DateTime    @default(now())
+  updatedAt               DateTime    @updatedAt
+  business                Business    @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  @@index([businessId, forecastType], name: "idx_forecast_results_business_type")
+  @@map("forecast_results")
+}
+
+model QuickBooksConnection {
+  id                    String     @id @default(cuid())
+  businessId            String     @unique
+  companyId             String     @db.VarChar(100)
+  accessTokenEncrypted  String?    @db.Text
+  refreshTokenEncrypted String?    @db.Text
+  tokenExpiresAt        DateTime?
+  lastSyncAt            DateTime?
+  syncStatus            SyncStatus @default(PENDING)
+  syncErrors            Json?
+  webhookSubscriptions  Json?
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+  business              Business   @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  @@index([companyId], name: "idx_quickbooks_connections_company")
+  @@map("quickbooks_connections")
+}
+
+model HealthAlert {
+  id             String        @id @default(cuid())
+  businessId     String
+  userId         String
+  alertType      AlertType
+  severity       AlertSeverity
+  title          String        @db.VarChar(200)
+  description    String?       @db.Text
+  thresholdValue Decimal?      @db.Decimal(10, 2)
+  actualValue    Decimal?      @db.Decimal(10, 2)
+  triggeredAt    DateTime      @default(now())
+  acknowledgedAt DateTime?
+  resolvedAt     DateTime?
+  metadata       Json?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  business       Business      @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([businessId, severity, triggeredAt(sort: Desc)], name: "idx_health_alerts_business_severity")
+  @@map("health_alerts")
+}
+
 enum UserType {
   BUSINESS_OWNER
   BUYER
@@ -638,4 +725,40 @@ enum NotificationStatus {
   SENT
   READ
   DISMISSED
+}
+
+enum HealthTrajectory {
+  IMPROVING
+  STABLE
+  DECLINING
+  VOLATILE
+}
+
+enum ForecastType {
+  REVENUE
+  EXPENSES
+  PROFIT
+  CASH_FLOW
+  GROWTH_RATE
+}
+
+enum SyncStatus {
+  PENDING
+  SYNCING
+  COMPLETED
+  ERROR
+}
+
+enum AlertType {
+  SCORE_DROP
+  FORECAST_ALERT
+  DATA_ANOMALY
+  THRESHOLD_BREACH
+}
+
+enum AlertSeverity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
 }

@@ -236,7 +236,7 @@ export function FinancialAnalysisIntegration({
                       />
                     </div>
                     <span className="text-sm text-muted-foreground w-8">
-                      {score}
+                      {score as number}
                     </span>
                   </div>
                 </div>

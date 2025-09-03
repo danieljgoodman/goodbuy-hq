@@ -1,0 +1,329 @@
+{
+  "dashboard_config": {
+    "project": "AI Financial Health Analyzer",
+    "methodology": "BMAD",
+    "update_frequency": "daily",
+    "reporting_schedule": "weekly",
+    "stakeholder_access": "tiered"
+  },
+  "key_performance_indicators": {
+    "technical_kpis": [
+      {
+        "id": "KPI-T-001",
+        "name": "System Performance",
+        "description": "Core system response times and throughput",
+        "metrics": [
+          {
+            "metric": "API Response Time",
+            "target": "<200ms",
+            "current": "TBD",
+            "unit": "milliseconds",
+            "measurement": "p95",
+            "phase": "All"
+          },
+          {
+            "metric": "Transaction Processing Rate",
+            "target": "10,000+/hour",
+            "current": "TBD",
+            "unit": "transactions per hour",
+            "measurement": "sustained",
+            "phase": "Phase 1"
+          },
+          {
+            "metric": "System Uptime",
+            "target": "99.9%",
+            "current": "TBD",
+            "unit": "percentage",
+            "measurement": "monthly",
+            "phase": "Phase 3"
+          }
+        ]
+      },
+      {
+        "id": "KPI-T-002",
+        "name": "AI Model Accuracy",
+        "description": "Machine learning model performance metrics",
+        "metrics": [
+          {
+            "metric": "Health Score Accuracy",
+            "target": ">85%",
+            "current": "TBD",
+            "unit": "percentage",
+            "measurement": "validation_set",
+            "phase": "Phase 1"
+          },
+          {
+            "metric": "Risk Detection Precision",
+            "target": ">90%",
+            "current": "TBD",
+            "unit": "percentage",
+            "measurement": "test_set",
+            "phase": "Phase 1"
+          },
+          {
+            "metric": "Prediction Accuracy",
+            "target": ">80%",
+            "current": "TBD",
+            "unit": "percentage",
+            "measurement": "6_month_forecast",
+            "phase": "Phase 2"
+          },
+          {
+            "metric": "Recommendation Relevance",
+            "target": ">75%",
+            "current": "TBD",
+            "unit": "percentage",
+            "measurement": "user_rating",
+            "phase": "Phase 2"
+          }
+        ]
+      },
+      {
+        "id": "KPI-T-003",
+        "name": "Quality Assurance",
+        "description": "Code quality and testing metrics",
+        "metrics": [
+          {
+            "metric": "Test Coverage",
+            "target": ">95%",
+            "current": "TBD",
+            "unit": "percentage",
+            "measurement": "line_coverage",
+            "phase": "Phase 3"
+          },
+          {
+            "metric": "Defect Density",
+            "target": "<0.1/KLOC",
+            "current": "TBD",
+            "unit": "defects per 1000 lines",
+            "measurement": "static_analysis",
+            "phase": "All"
+          },
+          {
+            "metric": "Security Vulnerabilities",
+            "target": "0 critical",
+            "current": "TBD",
+            "unit": "count",
+            "measurement": "security_scan",
+            "phase": "Phase 3"
+          }
+        ]
+      }
+    ],
+    "business_kpis": [
+      {
+        "id": "KPI-B-001",
+        "name": "User Experience",
+        "description": "User engagement and satisfaction metrics",
+        "metrics": [
+          {
+            "metric": "User Engagement Rate",
+            "target": "+40%",
+            "current": "baseline",
+            "unit": "percentage increase",
+            "measurement": "monthly_active_users",
+            "phase": "Phase 2"
+          },
+          {
+            "metric": "Session Duration",
+            "target": ">10 minutes",
+            "current": "TBD",
+            "unit": "minutes",
+            "measurement": "average",
+            "phase": "All"
+          },
+          {
+            "metric": "Feature Adoption Rate",
+            "target": ">60%",
+            "current": "TBD",
+            "unit": "percentage",
+            "measurement": "30_day_usage",
+            "phase": "Phase 2"
+          }
+        ]
+      },
+      {
+        "id": "KPI-B-002",
+        "name": "Financial Goals",
+        "description": "Impact on user financial outcomes",
+        "metrics": [
+          {
+            "metric": "Goal Completion Rate",
+            "target": "+25%",
+            "current": "baseline",
+            "unit": "percentage increase",
+            "measurement": "vs_baseline",
+            "phase": "Phase 2"
+          },
+          {
+            "metric": "Financial Health Improvement",
+            "target": "+15%",
+            "current": "baseline",
+            "unit": "score increase",
+            "measurement": "6_month_tracking",
+            "phase": "All"
+          },
+          {
+            "metric": "Cost Savings Generated",
+            "target": "$500/user/year",
+            "current": "TBD",
+            "unit": "dollars",
+            "measurement": "tracked_savings",
+            "phase": "Phase 2"
+          }
+        ]
+      }
+    ],
+    "development_kpis": [
+      {
+        "id": "KPI-D-001",
+        "name": "Project Delivery",
+        "description": "Timeline and resource utilization metrics",
+        "metrics": [
+          {
+            "metric": "Sprint Velocity",
+            "target": "42 story points",
+            "current": "TBD",
+            "unit": "story points per sprint",
+            "measurement": "rolling_average",
+            "phase": "All"
+          },
+          {
+            "metric": "Schedule Adherence",
+            "target": "±5%",
+            "current": "TBD",
+            "unit": "percentage variance",
+            "measurement": "milestone_tracking",
+            "phase": "All"
+          },
+          {
+            "metric": "Resource Utilization",
+            "target": "85%",
+            "current": "TBD",
+            "unit": "percentage",
+            "measurement": "team_capacity",
+            "phase": "All"
+          },
+          {
+            "metric": "Technical Debt Ratio",
+            "target": "<10%",
+            "current": "TBD",
+            "unit": "percentage",
+            "measurement": "code_analysis",
+            "phase": "All"
+          }
+        ]
+      }
+    ]
+  },
+  "milestone_tracking": [
+    {
+      "milestone": "M1 - Data Pipeline Complete",
+      "target_date": "2025-02-14",
+      "success_criteria": [
+        "Process 10,000+ transactions/hour",
+        "Support 5+ bank API integrations",
+        "Data accuracy >99%",
+        "Error handling coverage 100%"
+      ],
+      "validation_method": "automated_testing",
+      "stakeholder_sign_off": ["Technical Lead", "Product Owner"]
+    },
+    {
+      "milestone": "M2 - AI Health Engine Live",
+      "target_date": "2025-02-28",
+      "success_criteria": [
+        "Health score accuracy >85%",
+        "Real-time score calculation <100ms",
+        "Risk detection precision >90%",
+        "Explainable AI insights available"
+      ],
+      "validation_method": "model_validation",
+      "stakeholder_sign_off": ["ML Lead", "Business Analyst"]
+    },
+    {
+      "milestone": "M3 - Predictive Features Complete",
+      "target_date": "2025-03-28",
+      "success_criteria": [
+        "Prediction accuracy >80%",
+        "Recommendation relevance >75%",
+        "Goal completion rate +25%",
+        "User engagement +40%"
+      ],
+      "validation_method": "user_testing",
+      "stakeholder_sign_off": ["Product Owner", "UX Lead"]
+    },
+    {
+      "milestone": "M4 - Launch Ready",
+      "target_date": "2025-04-25",
+      "success_criteria": [
+        "Response time <200ms",
+        "Support 10,000+ concurrent users",
+        "Test coverage >95%",
+        "Zero critical security issues"
+      ],
+      "validation_method": "production_readiness",
+      "stakeholder_sign_off": [
+        "Technical Lead",
+        "Security Officer",
+        "Product Owner"
+      ]
+    }
+  ],
+  "automated_tracking": {
+    "data_sources": [
+      "GitHub API - Code metrics, commits, PRs",
+      "CI/CD Pipeline - Build status, test results",
+      "Application Monitoring - Performance, uptime",
+      "User Analytics - Engagement, feature usage",
+      "ML Model Metrics - Accuracy, predictions"
+    ],
+    "collection_frequency": {
+      "real_time": ["API response times", "system uptime", "error rates"],
+      "hourly": ["transaction volumes", "user sessions"],
+      "daily": ["test results", "code coverage", "security scans"],
+      "weekly": ["sprint velocity", "user engagement", "model performance"]
+    },
+    "alerting_rules": [
+      {
+        "metric": "API Response Time",
+        "condition": ">500ms",
+        "severity": "critical",
+        "notification": ["tech-team", "oncall"]
+      },
+      {
+        "metric": "Test Coverage",
+        "condition": "<90%",
+        "severity": "warning",
+        "notification": ["dev-team"]
+      },
+      {
+        "metric": "Security Vulnerabilities",
+        "condition": "critical > 0",
+        "severity": "critical",
+        "notification": ["security-team", "management"]
+      }
+    ]
+  },
+  "reporting_structure": {
+    "daily_standups": {
+      "metrics": ["Yesterday's velocity", "Blockers", "Today's commitments"],
+      "format": "dashboard_snapshot"
+    },
+    "weekly_reports": {
+      "audience": ["Development Team", "Product Owner"],
+      "metrics": ["Sprint progress", "KPI status", "Risk indicators"],
+      "format": "detailed_dashboard"
+    },
+    "monthly_reviews": {
+      "audience": ["Stakeholders", "Management"],
+      "metrics": ["Phase completion", "Business KPIs", "ROI analysis"],
+      "format": "executive_summary"
+    },
+    "milestone_reports": {
+      "audience": ["All Stakeholders"],
+      "metrics": ["Success criteria validation", "Next phase readiness"],
+      "format": "comprehensive_review"
+    }
+  }
+}

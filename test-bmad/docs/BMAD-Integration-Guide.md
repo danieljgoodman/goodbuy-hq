@@ -23,6 +23,7 @@ BMAD-Core System
 The BMad Orchestrator is your entry point to the system. It can morph into any specialized agent and coordinate complex workflows.
 
 **Activation Pattern:**
+
 ```bash
 # In Web UI (Claude, Gemini, ChatGPT)
 Upload: /Users/danielgoodman/Documents/AI Projects/Goodbuy HQ/.bmad-core/agents/bmad-orchestrator.md
@@ -32,6 +33,7 @@ Upload: /Users/danielgoodman/Documents/AI Projects/Goodbuy HQ/.bmad-core/agents/
 ```
 
 **Expected Response:**
+
 ```
 🎭 BMad Orchestrator Activated
 
@@ -63,23 +65,23 @@ npx bmad-method install -f -i codex-web -d .  # For Codex Web
 
 ### Core Planning Agents
 
-| Agent | Role | Key Deliverables | When to Use |
-|-------|------|------------------|-------------|
-| **BMad-Orchestrator** | Master coordinator | Workflow orchestration | Entry point, complex coordination |
-| **Analyst** | Business analyst | Project briefs, research | Project inception, requirements gathering |
-| **PM** | Product manager | PRDs, requirements | Feature definition, scope management |
-| **UX-Expert** | UX/UI specialist | UI specs, design prompts | User experience design |
-| **Architect** | Technical architect | System architecture | Technical design, infrastructure |
-| **PO** | Product owner | Validation, sharding | Quality assurance, document management |
+| Agent                 | Role                | Key Deliverables         | When to Use                               |
+| --------------------- | ------------------- | ------------------------ | ----------------------------------------- |
+| **BMad-Orchestrator** | Master coordinator  | Workflow orchestration   | Entry point, complex coordination         |
+| **Analyst**           | Business analyst    | Project briefs, research | Project inception, requirements gathering |
+| **PM**                | Product manager     | PRDs, requirements       | Feature definition, scope management      |
+| **UX-Expert**         | UX/UI specialist    | UI specs, design prompts | User experience design                    |
+| **Architect**         | Technical architect | System architecture      | Technical design, infrastructure          |
+| **PO**                | Product owner       | Validation, sharding     | Quality assurance, document management    |
 
 ### Development Agents
 
-| Agent | Role | Key Deliverables | When to Use |
-|-------|------|------------------|-------------|
-| **SM** | Scrum master | User stories | Sprint planning, story creation |
-| **Dev** | Developer | Code implementation | Feature implementation |
-| **QA** | Test architect | Test strategies, gates | Quality assurance, testing |
-| **BMad-Master** | General purpose | Any task except implementation | When unsure which agent to use |
+| Agent           | Role            | Key Deliverables               | When to Use                     |
+| --------------- | --------------- | ------------------------------ | ------------------------------- |
+| **SM**          | Scrum master    | User stories                   | Sprint planning, story creation |
+| **Dev**         | Developer       | Code implementation            | Feature implementation          |
+| **QA**          | Test architect  | Test strategies, gates         | Quality assurance, testing      |
+| **BMad-Master** | General purpose | Any task except implementation | When unsure which agent to use  |
 
 ## Workflow Deep Dive: Greenfield Full-Stack
 
@@ -96,7 +98,7 @@ graph TD
     G --> H[PO: Document Validation]
     H --> I[Document Sharding]
     I --> J[Switch to IDE]
-    
+
     style A fill:#e1f5fe
     style J fill:#c8e6c9
 ```
@@ -104,11 +106,13 @@ graph TD
 #### Step-by-Step Execution
 
 **1. Orchestrator Activation**
+
 ```
 *workflow greenfield-fullstack
 ```
 
 **2. Analyst Phase**
+
 ```
 *agent analyst
 # Creates: docs/project-brief.md
@@ -116,6 +120,7 @@ graph TD
 ```
 
 **3. PM Phase**
+
 ```
 *agent pm
 # Input: project-brief.md
@@ -124,6 +129,7 @@ graph TD
 ```
 
 **4. UX Expert Phase**
+
 ```
 *agent ux-expert
 # Input: prd.md
@@ -132,6 +138,7 @@ graph TD
 ```
 
 **5. Architect Phase**
+
 ```
 *agent architect
 # Input: prd.md, front-end-spec.md
@@ -140,6 +147,7 @@ graph TD
 ```
 
 **6. PO Validation**
+
 ```
 *agent po
 *checklist po-master-checklist
@@ -160,11 +168,12 @@ graph TD
     F --> H{More Stories?}
     H -->|Yes| B
     H -->|No| I[Epic Complete]
-    
+
     style I fill:#c8e6c9
 ```
 
 **7. Document Sharding (IDE)**
+
 ```bash
 # Load PO agent in IDE
 @po
@@ -174,13 +183,14 @@ graph TD
 ```
 
 **8. Story Development Cycle**
+
 ```bash
 # SM Agent - Story Creation
 @sm
 *create
 # Creates next story from sharded epic
 
-# Dev Agent - Implementation  
+# Dev Agent - Implementation
 @dev
 # Implements story with tests and validation
 
@@ -194,6 +204,7 @@ graph TD
 ### Multi-Agent Handoffs
 
 **Planning to Development Transition:**
+
 ```
 # Web UI Phase
 *agent architect
@@ -208,6 +219,7 @@ graph TD
 ```
 
 **Story Development Handoff:**
+
 ```
 # SM to Dev
 @sm
@@ -232,10 +244,22 @@ Using Claude Code's Task tool for concurrent execution:
 
 ```javascript
 // Single message with parallel agent spawning
-Task("Research Agent", "Analyze market requirements for task management app", "analyst")
-Task("UX Agent", "Create user experience specifications based on research", "ux-expert")  
-Task("Architecture Agent", "Design system architecture considering research insights", "architect")
-Task("QA Agent", "Develop early test strategy for high-risk areas", "qa")
+Task(
+  'Research Agent',
+  'Analyze market requirements for task management app',
+  'analyst'
+)
+Task(
+  'UX Agent',
+  'Create user experience specifications based on research',
+  'ux-expert'
+)
+Task(
+  'Architecture Agent',
+  'Design system architecture considering research insights',
+  'architect'
+)
+Task('QA Agent', 'Develop early test strategy for high-risk areas', 'qa')
 ```
 
 ## Template Usage Examples
@@ -243,12 +267,13 @@ Task("QA Agent", "Develop early test strategy for high-risk areas", "qa")
 ### PRD Template Deep Dive
 
 **Template Structure:**
+
 ```yaml
 template:
   id: prd-template-v2
   sections:
     - goals-context (elicit: false)
-    - requirements (elicit: true) 
+    - requirements (elicit: true)
     - ui-goals (elicit: true)
     - technical-assumptions (elicit: true)
     - epic-list (elicit: true)
@@ -263,13 +288,13 @@ Section: Requirements - Functional Requirements
 
 [Generated content presented]
 
-Rationale: Based on project goals, I've prioritized core CRUD operations 
+Rationale: Based on project goals, I've prioritized core CRUD operations
 and user authentication as foundational requirements...
 
 Select 1-9 or just type your question/feedback:
 1. Proceed to next section
 2. Stakeholder Interview Simulation
-3. Assumption Challenge Method  
+3. Assumption Challenge Method
 4. Trade-off Analysis
 5. User Journey Mapping
 6. Technical Constraint Exploration
@@ -281,29 +306,31 @@ Select 1-9 or just type your question/feedback:
 ### Architecture Template Example
 
 **Goodbuy HQ E-commerce Architecture:**
+
 ```yaml
 # Generated from fullstack-architecture-tmpl.yaml
 system_overview:
-  description: "Modern e-commerce platform with AI-powered product recommendations"
-  
+  description: 'Modern e-commerce platform with AI-powered product recommendations'
+
 tech_stack:
-  frontend: "Next.js 14, TypeScript, Tailwind CSS"
-  backend: "Node.js, Express, PostgreSQL"
-  ai_integration: "OpenAI API, Vector embeddings"
-  deployment: "Vercel, Railway"
-  
+  frontend: 'Next.js 14, TypeScript, Tailwind CSS'
+  backend: 'Node.js, Express, PostgreSQL'
+  ai_integration: 'OpenAI API, Vector embeddings'
+  deployment: 'Vercel, Railway'
+
 architecture_decisions:
-  - decision: "Monorepo structure for shared types"
-    rationale: "Enables type safety across frontend/backend boundary"
-  - decision: "Server-side rendering with SSG"
-    rationale: "Optimal SEO for product pages"
+  - decision: 'Monorepo structure for shared types'
+    rationale: 'Enables type safety across frontend/backend boundary'
+  - decision: 'Server-side rendering with SSG'
+    rationale: 'Optimal SEO for product pages'
 ```
 
 ## Quality Gate Demonstrations
 
 ### QA Agent Testing Workflow
 
-**Risk Assessment (*risk):**
+**Risk Assessment (\*risk):**
+
 ```bash
 @qa *risk story-1-1
 # Outputs: docs/qa/assessments/epic1.story1-risk-20240902.md
@@ -311,42 +338,46 @@ architecture_decisions:
 # Scoring: 1-9 scale (Probability × Impact)
 ```
 
-**Test Design (*design):**
+**Test Design (\*design):**
+
 ```bash
-@qa *design story-1-1  
+@qa *design story-1-1
 # Outputs: docs/qa/assessments/epic1.story1-test-design-20240902.md
 # Includes: Test scenarios, levels (unit/integration/e2e), priorities
 ```
 
-**Requirements Tracing (*trace):**
+**Requirements Tracing (\*trace):**
+
 ```bash
 @qa *trace story-1-1
 # Maps: Each acceptance criterion → validating tests
 # Identifies: Coverage gaps with severity ratings
 ```
 
-**Comprehensive Review (*review):**
+**Comprehensive Review (\*review):**
+
 ```bash
 @qa *review story-1-1
-# Performs: Full quality assessment + active code refactoring  
+# Performs: Full quality assessment + active code refactoring
 # Outputs: Quality gate file + improvement recommendations
 # Decision: PASS/CONCERNS/FAIL based on deterministic rules
 ```
 
 ### Quality Gate Status Meanings
 
-| Status | Meaning | Action Required |
-|--------|---------|-----------------|
-| **PASS** | All critical requirements met | Continue to next story |
-| **CONCERNS** | Non-critical issues found | Team review recommended |
-| **FAIL** | Critical issues present | Must address before proceeding |
-| **WAIVED** | Issues acknowledged but accepted | Document reason and expiry |
+| Status       | Meaning                          | Action Required                |
+| ------------ | -------------------------------- | ------------------------------ |
+| **PASS**     | All critical requirements met    | Continue to next story         |
+| **CONCERNS** | Non-critical issues found        | Team review recommended        |
+| **FAIL**     | Critical issues present          | Must address before proceeding |
+| **WAIVED**   | Issues acknowledged but accepted | Document reason and expiry     |
 
 ## Practical Goodbuy HQ Examples
 
 ### E-commerce Product Management Story
 
 **Story Creation:**
+
 ```bash
 @sm *create
 
@@ -367,24 +398,26 @@ Acceptance Criteria:
 ```
 
 **Implementation with Dev Agent:**
+
 ```bash
 @dev
 
 # Implementation generates:
 # - /src/models/Product.ts (Data model)
-# - /src/api/products.ts (CRUD endpoints)  
+# - /src/api/products.ts (CRUD endpoints)
 # - /src/components/ProductForm.tsx (Admin form)
 # - /tests/products.test.ts (Comprehensive tests)
 # - /src/pages/admin/products.tsx (Admin interface)
 ```
 
 **QA Review:**
+
 ```bash
 @qa *review story-2-1
 
 # Quality Assessment:
 # ✅ All acceptance criteria have validating tests
-# ✅ Error handling covers edge cases  
+# ✅ Error handling covers edge cases
 # ✅ UI follows design system patterns
 # ⚠️ Missing pagination performance tests
 # ❌ No image upload validation tests
@@ -396,6 +429,7 @@ Acceptance Criteria:
 ### AI Integration Story
 
 **Advanced Story Example:**
+
 ```bash
 # Story 3.2: AI-Powered Product Recommendations
 
@@ -412,6 +446,7 @@ Acceptance Criteria:
 ```
 
 **Technical Implementation Considerations:**
+
 - Vector embeddings for product similarity
 - Caching strategy for recommendation responses
 - A/B testing framework for recommendation algorithms
@@ -422,10 +457,11 @@ Acceptance Criteria:
 ### Context Management
 
 **File Organization:**
+
 ```
 docs/
 ├── project-brief.md (Analyst output)
-├── prd.md (PM output) 
+├── prd.md (PM output)
 ├── front-end-spec.md (UX Expert output)
 ├── fullstack-architecture.md (Architect output)
 ├── prd/ (Sharded epics and stories)
@@ -434,23 +470,25 @@ docs/
 ```
 
 **Context Loading Configuration:**
+
 ```yaml
 # .bmad-core/core-config.yaml
 devLoadAlwaysFiles:
   - docs/architecture/coding-standards.md
-  - docs/architecture/tech-stack.md  
+  - docs/architecture/tech-stack.md
   - docs/architecture/source-tree.md
 ```
 
 ### Agent Transformation Patterns
 
 **Seamless Agent Switching:**
+
 ```bash
 # Start with Orchestrator
 *agent analyst
 # Work on project brief
 
-*agent pm  
+*agent pm
 # Switch to PM for PRD creation
 
 *agent architect
@@ -461,6 +499,7 @@ devLoadAlwaysFiles:
 ```
 
 **Emergency Course Correction:**
+
 ```bash
 @bmad-master
 *task correct-course
@@ -471,6 +510,7 @@ devLoadAlwaysFiles:
 ### Performance Optimization
 
 **YOLO Mode for Rapid Prototyping:**
+
 ```bash
 *yolo
 # Toggles skip confirmations mode
@@ -479,6 +519,7 @@ devLoadAlwaysFiles:
 ```
 
 **Batch Processing:**
+
 ```bash
 # Process multiple stories simultaneously
 *task create-stories epic-1 epic-2 epic-3
@@ -490,6 +531,7 @@ devLoadAlwaysFiles:
 ### MCP Tool Coordination
 
 **Setup Coordination Topology:**
+
 ```javascript
 // Step 1: MCP tools set up coordination (optional)
 mcp__claude-flow__swarm_init { topology: "mesh", maxAgents: 6 }
@@ -505,14 +547,15 @@ Task("BMAD Dev", "Implement user stories with tests", "dev")
 ### Hooks Integration
 
 **Pre/Post Operation Hooks:**
+
 ```bash
 # Before starting work
 npx claude-flow@alpha hooks pre-task --description "Epic 1 Story Implementation"
 
 # During work
-npx claude-flow@alpha hooks post-edit --file "src/components/Product.tsx" 
+npx claude-flow@alpha hooks post-edit --file "src/components/Product.tsx"
 
-# After completion  
+# After completion
 npx claude-flow@alpha hooks post-task --task-id "story-1-1"
 ```
 
@@ -521,17 +564,20 @@ npx claude-flow@alpha hooks post-task --task-id "story-1-1"
 ### Common Issues
 
 **1. Context Overflow:**
+
 - Solution: Use document sharding via PO agent
 - Keep architecture docs lean and focused
 - Regular conversation compaction
 
 **2. Agent Confusion:**
+
 - Solution: Always specify agent role clearly
 - Use proper activation patterns
 - Return to Orchestrator for complex coordination
 
 **3. Quality Gate Failures:**
-- Solution: Address QA concerns systematically  
+
+- Solution: Address QA concerns systematically
 - Use incremental validation with *trace and *nfr
 - Document accepted risks with WAIVED status
 
@@ -547,8 +593,9 @@ npx claude-flow@alpha hooks post-task --task-id "story-1-1"
 ## Success Metrics
 
 BMAD Method delivers:
+
 - **84.8% SWE-Bench solve rate**
-- **32.3% token reduction** 
+- **32.3% token reduction**
 - **2.8-4.4x speed improvement**
 - **Production-ready code** from concept to deployment
 - **Comprehensive documentation** throughout development lifecycle
@@ -557,8 +604,8 @@ BMAD Method delivers:
 ## Next Steps
 
 1. **Activate BMad Orchestrator** in your preferred AI platform
-2. **Run *workflow-guidance** to select appropriate workflow
-3. **Follow the structured planning phase** 
+2. **Run \*workflow-guidance** to select appropriate workflow
+3. **Follow the structured planning phase**
 4. **Transition to IDE** for development
 5. **Iterate through story development cycles**
 6. **Maintain quality gates** throughout the process

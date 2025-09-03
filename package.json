@@ -49,7 +49,6 @@
     "@types/d3-scale": "^4.0.9",
     "@types/nodemailer": "^7.0.1",
     "@types/puppeteer": "^5.4.7",
-    "puppeteer": "^24.17.1",
     "@types/recharts": "^1.8.29",
     "ai": "^5.0.26",
     "bcryptjs": "^3.0.2",
@@ -106,6 +105,7 @@
     "eslint-plugin-prettier": "^5.2.1",
     "postcss": "^8.5.1",
     "prettier": "^3.4.2",
+    "puppeteer": "^24.18.0",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.7.2"
   }

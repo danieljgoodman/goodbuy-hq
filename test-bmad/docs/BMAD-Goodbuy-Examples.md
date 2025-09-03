@@ -7,6 +7,7 @@ This document provides concrete examples of using the BMAD system to develop spe
 ## Scenario 1: AI-Powered Product Recommendations
 
 ### Business Context
+
 Goodbuy HQ wants to implement intelligent product recommendations to increase average order value by 25% and improve customer engagement.
 
 ### Complete BMAD Workflow Implementation
@@ -14,12 +15,14 @@ Goodbuy HQ wants to implement intelligent product recommendations to increase av
 #### Phase 1: Planning and Analysis (Web UI)
 
 **Step 1: Orchestrator Activation**
+
 ```
 *workflow greenfield-fullstack
 Project: AI Product Recommendations for Goodbuy HQ E-commerce Platform
 ```
 
 **Step 2: Business Analysis**
+
 ```
 *agent analyst
 
@@ -64,6 +67,7 @@ Generated: docs/project-brief.md
 ```
 
 **Step 3: Product Requirements**
+
 ```
 *agent pm
 
@@ -118,6 +122,7 @@ Generated: docs/prd.md (Complete with epics and stories)
 ```
 
 **Step 4: UX/UI Design**
+
 ```
 *agent ux-expert
 
@@ -133,40 +138,46 @@ User Experience Goals:
 Key UI Components:
 
 1. **Product Detail Page Carousel**
-   ```
-   [Product Image] [Product Details]
-   
-   ┌─────────────────────────────────────┐
-   │ "You might also like"               │
-   │ ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐    │
-   │ │ P1  │ │ P2  │ │ P3  │ │ P4  │ → │
-   │ └─────┘ └─────┘ └─────┘ └─────┘    │
-   └─────────────────────────────────────┘
-   ```
+```
+
+[Product Image] [Product Details]
+
+┌─────────────────────────────────────┐
+│ "You might also like" │
+│ ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐ │
+│ │ P1 │ │ P2 │ │ P3 │ │ P4 │ → │
+│ └─────┘ └─────┘ └─────┘ └─────┘ │
+└─────────────────────────────────────┘
+
+```
 
 2. **Cart Page Recommendations**
-   ```
-   [Cart Items]
-   
-   ┌─────────────────────────────────────┐
-   │ "Frequently bought together"        │
-   │ [Current Item] + [Rec 1] + [Rec 2]  │
-   │ [Bundle Price] [Add All to Cart]    │
-   └─────────────────────────────────────┘
-   ```
+```
+
+[Cart Items]
+
+┌─────────────────────────────────────┐
+│ "Frequently bought together" │
+│ [Current Item] + [Rec 1] + [Rec 2] │
+│ [Bundle Price] [Add All to Cart] │
+└─────────────────────────────────────┘
+
+```
 
 3. **Homepage Personalized Grid**
-   ```
-   ┌─────────────────────────────────────┐
-   │ "Recommended for you"               │
-   │ ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐    │
-   │ │ P1  │ │ P2  │ │ P3  │ │ P4  │    │
-   │ └─────┘ └─────┘ └─────┘ └─────┘    │
-   │ ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐    │
-   │ │ P5  │ │ P6  │ │ P7  │ │ P8  │    │
-   │ └─────┘ └─────┘ └─────┘ └─────┘    │
-   └─────────────────────────────────────┘
-   ```
+```
+
+┌─────────────────────────────────────┐
+│ "Recommended for you" │
+│ ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐ │
+│ │ P1 │ │ P2 │ │ P3 │ │ P4 │ │
+│ └─────┘ └─────┘ └─────┘ └─────┘ │
+│ ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐ │
+│ │ P5 │ │ P6 │ │ P7 │ │ P8 │ │
+│ └─────┘ └─────┘ └─────┘ └─────┘ │
+└─────────────────────────────────────┘
+
+```
 
 Design System Extensions:
 - Recommendation cards with consistent styling
@@ -178,13 +189,14 @@ AI UI Generation Prompts:
 **For v0.dev:**
 "Create a responsive product recommendation carousel for an e-commerce site using React and Tailwind CSS. Include product images, names, prices, ratings, and smooth horizontal scrolling. Add loading skeletons and error handling."
 
-**For Lovable.dev:**  
+**For Lovable.dev:**
 "Design a 'Frequently bought together' component showing 2-3 related products with bundle pricing and one-click add-all functionality. Use modern e-commerce design patterns."
 
 Generated: docs/front-end-spec.md
 ```
 
 **Step 5: System Architecture**
+
 ```
 *agent architect
 
@@ -267,6 +279,7 @@ Generated: docs/fullstack-architecture.md
 ```
 
 **Step 6: Quality Validation**
+
 ```
 *agent po
 *checklist po-master-checklist
@@ -276,14 +289,14 @@ PO Validation Process:
 
 Cross-Reference Analysis:
 ✅ Business goals align with technical implementation
-✅ UI specifications match performance requirements  
+✅ UI specifications match performance requirements
 ✅ Architecture supports scalability targets
 ⚠️  API performance target discrepancy (200ms vs 150ms)
 ✅ Privacy requirements addressed in architecture
 
 Quality Gate Results:
 ✅ PASS - Business Alignment
-✅ PASS - Technical Feasibility  
+✅ PASS - Technical Feasibility
 ⚠️  CONCERNS - Performance SLA Consistency
 ✅ PASS - Risk Assessment
 ✅ PASS - Implementation Roadmap
@@ -301,6 +314,7 @@ Ready for document sharding and development phase.
 #### Phase 2: Development Implementation (IDE)
 
 **Step 7: Document Sharding**
+
 ```bash
 # In IDE (VS Code, Cursor, Claude Code)
 @po
@@ -309,7 +323,7 @@ Ready for document sharding and development phase.
 PO Response:
 Document sharding complete. Created:
 - docs/prd/epic-1-recommendation-engine/
-- docs/prd/epic-2-user-interface/  
+- docs/prd/epic-2-user-interface/
 - docs/prd/epic-3-analytics/
 - docs/architecture/recommendation-service/
 - docs/architecture/frontend-integration/
@@ -323,6 +337,7 @@ Context loading configured for:
 **Step 8: Story Development Cycle**
 
 **Story Creation:**
+
 ```bash
 @sm *create
 
@@ -367,6 +382,7 @@ Created: docs/prd/stories/epic1/story-1-1-collaborative-filtering.md
 ```
 
 **Implementation:**
+
 ```bash
 @dev
 "Implement story 1.1 - Collaborative Filtering Algorithm"
@@ -393,7 +409,7 @@ src/lib/recommendations/
 
 ✅ Type definitions implemented
 ✅ User-item matrix calculation
-✅ Cosine similarity algorithm  
+✅ Cosine similarity algorithm
 ✅ Collaborative filtering core logic
 ✅ Caching layer with Redis
 ✅ API endpoints created
@@ -409,7 +425,7 @@ Generated Files:
 
 Performance Benchmarks:
 - Average API response: 142ms ✅
-- Cache hit rate: 84% ✅  
+- Cache hit rate: 84% ✅
 - Algorithm accuracy: 76% (baseline established)
 - Memory usage: 28MB under load
 
@@ -417,6 +433,7 @@ Implementation complete and ready for QA review.
 ```
 
 **Quality Assurance:**
+
 ```bash
 @qa *review story-1-1
 
@@ -428,7 +445,7 @@ QA Review Results:
 - Edge cases properly covered
 - Performance requirements validated
 
-**Code Quality: ✅ PASS** 
+**Code Quality: ✅ PASS**
 - TypeScript strict mode compliance
 - 94% unit test coverage
 - ESLint/Prettier conformance
@@ -469,13 +486,14 @@ Generated: docs/qa/gates/story-1-1-quality-gate.md
 Enhance existing search functionality with faceted filters, autocomplete, and search analytics to improve product discoverability.
 
 **Quick Implementation:**
+
 ```bash
 *workflow brownfield-fullstack
 
 *agent analyst
 "Analyze search enhancement opportunities for Goodbuy HQ. Focus on user behavior data and conversion optimization."
 
-*agent pm  
+*agent pm
 "Create enhancement PRD for search functionality including faceted filtering, autocomplete, and search analytics."
 
 *agent ux-expert
@@ -499,6 +517,7 @@ Enhance existing search functionality with faceted filters, autocomplete, and se
 Create optimized mobile checkout experience to reduce cart abandonment by 30%.
 
 **Streamlined Workflow:**
+
 ```bash
 *workflow greenfield-ui
 
@@ -528,13 +547,14 @@ Expected UX Output:
 Build administrative dashboard for inventory management with real-time stock tracking.
 
 **Service Workflow:**
+
 ```bash
 *workflow greenfield-service
 
 *agent analyst
 "Research inventory management requirements and admin user workflows."
 
-*agent architect  
+*agent architect
 "Design inventory management service with real-time updates and admin dashboard architecture."
 
 # Direct to implementation for internal tools
@@ -545,6 +565,7 @@ Build administrative dashboard for inventory management with real-time stock tra
 ## Integration with Existing Goodbuy HQ Systems
 
 ### Database Integration Patterns
+
 ```typescript
 // Example: Extending existing user model for recommendations
 // src/lib/database/extensions/user-recommendations.ts
@@ -564,23 +585,31 @@ export const enhanceUserWithRecommendations = async (user: User) => {
 ```
 
 ### API Integration Examples
-```typescript  
+
+```typescript
 // src/pages/api/products/[id].ts - Enhanced with recommendations
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const { id } = req.query
   const product = await getProduct(id as string)
-  
+
   // BMAD Enhancement: Add recommendations
-  const recommendations = await getRecommendationsForProduct(id as string, req.user?.id)
-  
+  const recommendations = await getRecommendationsForProduct(
+    id as string,
+    req.user?.id
+  )
+
   res.json({
     ...product,
-    recommendations: recommendations || []
+    recommendations: recommendations || [],
   })
 }
 ```
 
-### Component Integration  
+### Component Integration
+
 ```tsx
 // src/components/ProductDetail.tsx - Enhanced with BMAD recommendations
 import { RecommendationCarousel } from '@/components/bmad/RecommendationCarousel'
@@ -590,14 +619,14 @@ export function ProductDetail({ product }: { product: Product }) {
     <div className="product-detail">
       <ProductInfo product={product} />
       <ProductImages product={product} />
-      
+
       {/* BMAD Enhancement */}
-      <RecommendationCarousel 
+      <RecommendationCarousel
         productId={product.id}
         userId={session?.user?.id}
         placement="product-detail"
       />
-      
+
       <ProductReviews product={product} />
     </div>
   )
@@ -607,6 +636,7 @@ export function ProductDetail({ product }: { product: Product }) {
 ## Performance Monitoring Integration
 
 ### Analytics Integration
+
 ```typescript
 // src/lib/analytics/bmad-events.ts
 export const trackRecommendationEvent = (event: {
@@ -620,7 +650,7 @@ export const trackRecommendationEvent = (event: {
   mixpanel.track('Recommendation Event', {
     ...event,
     timestamp: new Date().toISOString(),
-    source: 'bmad-system'
+    source: 'bmad-system',
   })
 }
 ```
@@ -628,6 +658,7 @@ export const trackRecommendationEvent = (event: {
 ## Success Metrics Dashboard
 
 ### Key Performance Indicators
+
 ```typescript
 // Example metrics tracking for BMAD implementations
 export interface BMADMetrics {

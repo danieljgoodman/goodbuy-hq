@@ -347,30 +347,635 @@ interface DashboardCardProps {
 - **Update Efficiency**: Easy ShadCN version upgrades
 - **Documentation Coverage**: 100% component documentation
 
-## Risk Mitigation
+## Risk Mitigation & Rollback Strategy
 
-### 1. Breaking Changes
+### 1. Comprehensive Rollback Strategy
 
-- **Gradual Migration**: Phase implementation to avoid disruption
-- **Backward Compatibility**: Maintain existing component interfaces
-- **Rollback Strategy**: Keep previous components during transition
+#### Rollback Triggers & Thresholds
 
-### 2. Performance Impact
+**Performance Thresholds**:
 
-- **Bundle Size Monitoring**: Track and optimize bundle sizes
-- **Code Splitting**: Implement proper code splitting strategies
-- **Performance Budget**: Set and monitor performance budgets
+- Lighthouse Performance Score drops below 85
+- First Contentful Paint increases by >20%
+- Largest Contentful Paint exceeds 2.5s
+- Cumulative Layout Shift exceeds 0.1
+- Bundle size increases by >30%
 
-### 3. Team Adoption
+**Error Rate Thresholds**:
 
-- **Training Sessions**: Component usage workshops
-- **Documentation**: Comprehensive usage guides
-- **Code Reviews**: Ensure proper component usage patterns
+- JavaScript errors increase by >50%
+- Component rendering failures >5%
+- User session errors >3%
+- Critical business flow failures >1%
+
+**User Experience Thresholds**:
+
+- User satisfaction scores drop below 4.0/5.0
+- Support tickets increase by >25%
+- Accessibility score drops below WCAG 2.1 AA
+- Mobile usability issues increase by >15%
+
+#### Phase-Specific Rollback Procedures
+
+**Phase 1 Foundation Rollback**:
+
+```bash
+# Emergency rollback script
+#!/bin/bash
+echo "Starting Phase 1 rollback..."
+
+# 1. Restore previous component files
+git checkout HEAD~1 -- src/components/ui/
+git checkout HEAD~1 -- tailwind.config.ts
+git checkout HEAD~1 -- components.json
+
+# 2. Restore previous CSS variables
+git checkout HEAD~1 -- src/app/globals.css
+cp colors.md.backup colors.md
+
+# 3. Reinstall previous dependencies
+npm install --package-lock-only
+npm ci
+
+# 4. Rebuild and verify
+npm run build
+npm run test
+
+echo "Phase 1 rollback complete"
+```
+
+**Phase 2 Business Components Rollback**:
+
+```bash
+#!/bin/bash
+echo "Starting Phase 2 rollback..."
+
+# 1. Restore business component files
+git checkout HEAD~1 -- src/components/business/
+git checkout HEAD~1 -- src/components/layout/
+
+# 2. Restore page components that use business components
+git checkout HEAD~1 -- src/app/businesses/
+git checkout HEAD~1 -- src/app/dashboard/
+
+# 3. Database schema rollback (if needed)
+if [ -f "prisma/migrations/rollback.sql" ]; then
+  npx prisma db execute --file prisma/migrations/rollback.sql
+fi
+
+# 4. Clear component cache and rebuild
+rm -rf .next/cache/webpack
+npm run build
+
+echo "Phase 2 rollback complete"
+```
+
+**Phase 3 Advanced Features Rollback**:
+
+```bash
+#!/bin/bash
+echo "Starting Phase 3 rollback..."
+
+# 1. Restore advanced component files
+git checkout HEAD~1 -- src/components/ui/calendar.tsx
+git checkout HEAD~1 -- src/components/ui/command.tsx
+git checkout HEAD~1 -- src/components/ui/data-table.tsx
+
+# 2. Restore related configuration
+git checkout HEAD~1 -- src/lib/utils.ts
+git checkout HEAD~1 -- src/hooks/
+
+# 3. Rollback API changes if any
+git checkout HEAD~1 -- src/app/api/
+
+echo "Phase 3 rollback complete"
+```
+
+### 2. Brownfield Safety Measures
+
+#### Existing System Preservation
+
+**Critical System Components (DO NOT MODIFY)**:
+
+- User authentication system (`src/lib/auth/`)
+- Payment processing (`src/lib/payments/`)
+- Business listing database schemas
+- Email notification system
+- File upload/storage system
+- Search indexing system
+
+**Theme System Preservation**:
+
+```typescript
+// Theme compatibility layer
+interface LegacyThemeMapping {
+  // Preserve existing color variables
+  'goodbuy-orange': string // #c96442
+  'goodbuy-cream': string // #faf9f5
+  'goodbuy-brown': string // #3d3929
+}
+
+// Automatic theme migration with fallbacks
+const preserveExistingTheme = () => {
+  const legacyColors = document.querySelector(':root')
+  if (legacyColors) {
+    // Backup existing theme
+    localStorage.setItem(
+      'legacy-theme',
+      legacyColors.getAttribute('style') || ''
+    )
+
+    // Apply ShadCN theme while preserving critical colors
+    legacyColors.style.setProperty('--primary', 'var(--goodbuy-orange)')
+    legacyColors.style.setProperty('--background', 'var(--goodbuy-cream)')
+  }
+}
+```
+
+**Database Safety Measures**:
+
+- No destructive schema changes during ShadCN migration
+- All database operations maintain backward compatibility
+- Existing data validation rules preserved
+- API endpoints maintain existing contracts
+
+#### Component Migration Safety
+
+**Backward Compatibility Layer**:
+
+```typescript
+// Legacy component wrapper
+interface LegacyComponentProps {
+  legacyMode?: boolean;
+  fallbackComponent?: React.ComponentType;
+}
+
+const withLegacySupport = <T extends {}>(Component: React.ComponentType<T>) => {
+  return (props: T & LegacyComponentProps) => {
+    const { legacyMode, fallbackComponent: FallbackComponent, ...rest } = props;
+
+    if (legacyMode && FallbackComponent) {
+      return <FallbackComponent {...rest} />;
+    }
+
+    try {
+      return <Component {...rest} />;
+    } catch (error) {
+      console.error('ShadCN component error:', error);
+      return FallbackComponent ? <FallbackComponent {...rest} /> : null;
+    }
+  };
+};
+```
+
+### 3. Monitoring & Alerting System
+
+#### Real-Time Performance Monitoring
+
+**Component Performance Tracking**:
+
+```typescript
+// Performance monitoring for ShadCN components
+const componentPerformanceMonitor = {
+  trackRender: (componentName: string, renderTime: number) => {
+    if (renderTime > 16) {
+      // 60fps threshold
+      console.warn(`Slow render: ${componentName} took ${renderTime}ms`)
+
+      // Send alert if threshold exceeded
+      fetch('/api/monitoring/performance', {
+        method: 'POST',
+        body: JSON.stringify({
+          component: componentName,
+          renderTime,
+          timestamp: Date.now(),
+          threshold: 'EXCEEDED',
+        }),
+      })
+    }
+  },
+
+  trackError: (componentName: string, error: Error) => {
+    fetch('/api/monitoring/errors', {
+      method: 'POST',
+      body: JSON.stringify({
+        component: componentName,
+        error: error.message,
+        stack: error.stack,
+        timestamp: Date.now(),
+      }),
+    })
+  },
+}
+```
+
+**Bundle Size Monitoring**:
+
+```javascript
+// webpack-bundle-analyzer integration
+const bundleAnalyzer = require('webpack-bundle-analyzer')
+
+const monitorBundleSize = {
+  maxSize: {
+    js: 500 * 1024, // 500KB
+    css: 100 * 1024, // 100KB
+  },
+
+  analyze: stats => {
+    const assets = stats.toJson().assets
+    const jsSize = assets
+      .filter(asset => asset.name.endsWith('.js'))
+      .reduce((total, asset) => total + asset.size, 0)
+
+    if (jsSize > monitorBundleSize.maxSize.js) {
+      throw new Error(
+        `Bundle size exceeded: ${jsSize} > ${monitorBundleSize.maxSize.js}`
+      )
+    }
+  },
+}
+```
+
+#### Automated Health Checks
+
+**Component Health Dashboard**:
+
+```typescript
+// Health check endpoint
+export async function GET() {
+  const healthChecks = {
+    shadcnComponents: await checkShadcnComponents(),
+    themeSystem: await checkThemeSystem(),
+    performance: await checkPerformanceMetrics(),
+    accessibility: await checkAccessibility(),
+    browserCompatibility: await checkBrowserSupport(),
+  }
+
+  const overall = Object.values(healthChecks).every(
+    check => check.status === 'healthy'
+  )
+
+  return Response.json({
+    status: overall ? 'healthy' : 'unhealthy',
+    checks: healthChecks,
+    timestamp: new Date().toISOString(),
+  })
+}
+
+const checkShadcnComponents = async () => {
+  const criticalComponents = ['Button', 'Card', 'Form', 'Dialog']
+  const componentTests = await Promise.all(
+    criticalComponents.map(async component => {
+      try {
+        // Component render test
+        const result = await testComponentRender(component)
+        return { component, status: 'healthy', renderTime: result.time }
+      } catch (error) {
+        return { component, status: 'unhealthy', error: error.message }
+      }
+    })
+  )
+
+  return {
+    status: componentTests.every(test => test.status === 'healthy')
+      ? 'healthy'
+      : 'unhealthy',
+    details: componentTests,
+  }
+}
+```
+
+### 4. Breaking Changes Prevention
+
+#### API Contract Preservation
+
+**Component Interface Compatibility**:
+
+```typescript
+// Interface versioning for backward compatibility
+interface ButtonPropsV1 {
+  variant?: 'primary' | 'secondary'
+  size?: 'sm' | 'md' | 'lg'
+}
+
+interface ButtonPropsV2 extends ButtonPropsV1 {
+  variant?:
+    | 'default'
+    | 'destructive'
+    | 'outline'
+    | 'secondary'
+    | 'ghost'
+    | 'link'
+  size?: 'default' | 'sm' | 'lg' | 'icon'
+}
+
+// Migration adapter
+const adaptLegacyProps = (props: ButtonPropsV1): ButtonPropsV2 => {
+  return {
+    ...props,
+    variant:
+      props.variant === 'primary' ? 'default' : props.variant || 'default',
+    size: props.size === 'md' ? 'default' : props.size || 'default',
+  }
+}
+```
+
+**Gradual Migration Strategy**:
+
+- Phase 1: Add ShadCN components alongside existing ones
+- Phase 2: Create compatibility wrappers for legacy components
+- Phase 3: Gradually replace legacy components with feature flags
+- Phase 4: Remove legacy components after full validation
+
+### 5. Performance Impact Prevention
+
+#### Bundle Size Optimization
+
+**Tree Shaking Configuration**:
+
+```javascript
+// webpack.config.js optimization
+module.exports = {
+  optimization: {
+    usedExports: true,
+    sideEffects: false,
+    splitChunks: {
+      chunks: 'all',
+      cacheGroups: {
+        shadcn: {
+          test: /[\/]node_modules[\/]@radix-ui[\/]/,
+          name: 'shadcn-ui',
+          chunks: 'all',
+        },
+      },
+    },
+  },
+  resolve: {
+    alias: {
+      '@/components/ui': path.resolve(__dirname, 'src/components/ui'),
+    },
+  },
+}
+```
+
+**Performance Budget Enforcement**:
+
+```javascript
+// Performance budget configuration
+const performanceBudgets = {
+  'initial-js': 200 * 1024, // 200KB initial JS
+  'total-js': 500 * 1024, // 500KB total JS
+  css: 100 * 1024, // 100KB CSS
+  fonts: 150 * 1024, // 150KB fonts
+  images: 1000 * 1024, // 1MB images
+}
+
+// Budget validation in CI/CD
+const validatePerformanceBudget = buildStats => {
+  const violations = []
+
+  Object.entries(performanceBudgets).forEach(([type, budget]) => {
+    const actual = calculateAssetSize(buildStats, type)
+    if (actual > budget) {
+      violations.push({
+        type,
+        budget: formatBytes(budget),
+        actual: formatBytes(actual),
+        violation: formatBytes(actual - budget),
+      })
+    }
+  })
+
+  if (violations.length > 0) {
+    throw new Error(
+      `Performance budget violations: ${JSON.stringify(violations)}`
+    )
+  }
+}
+```
+
+### 6. Team Adoption Safety
+
+#### Training & Documentation
+
+- **Component Migration Guide**: Step-by-step migration instructions
+- **Error Recovery Procedures**: What to do when components fail
+- **Rollback Decision Matrix**: When and how to trigger rollbacks
+- **Performance Best Practices**: Optimizing ShadCN component usage
+
+#### Code Review Safety Nets
+
+```typescript
+// ESLint rules for ShadCN safety
+module.exports = {
+  rules: {
+    'shadcn/no-legacy-imports': 'error',
+    'shadcn/require-error-boundaries': 'error',
+    'shadcn/performance-check': 'warn',
+    'shadcn/accessibility-check': 'error',
+  },
+}
+```
+
+## Emergency Response Procedures
+
+### Incident Response Team
+
+**Primary Contacts**:
+
+- Technical Lead: Immediate rollback authority
+- Product Owner: Business impact assessment
+- DevOps Engineer: Infrastructure and deployment management
+- QA Lead: Validation and testing coordination
+
+### Escalation Matrix
+
+**Level 1 (Minor Issues)**:
+
+- Performance degradation <20%
+- Non-critical component failures
+- Aesthetic inconsistencies
+  **Response**: Fix forward, monitor closely
+
+**Level 2 (Moderate Issues)**:
+
+- Performance degradation 20-50%
+- Business flow interruptions
+- Accessibility violations
+  **Response**: Immediate investigation, rollback consideration
+
+**Level 3 (Critical Issues)**:
+
+- Performance degradation >50%
+- Payment system failures
+- Security vulnerabilities
+- Data loss or corruption
+  **Response**: Immediate rollback, full incident response
+
+### Rollback Decision Tree
+
+```mermaid
+flowchart TD
+    A[Issue Detected] --> B{Critical System?}
+    B -->|Yes| C[Immediate Rollback]
+    B -->|No| D{Performance Impact?}
+    D -->|>50%| C
+    D -->|20-50%| E[Investigate & Plan Rollback]
+    D -->|<20%| F[Fix Forward]
+    E --> G{Fix Available in 2h?}
+    G -->|No| C
+    G -->|Yes| H[Implement Fix]
+    H --> I{Fix Successful?}
+    I -->|No| C
+    I -->|Yes| J[Continue Monitoring]
+```
+
+## Automated Rollback System
+
+### CI/CD Integration
+
+```yaml
+# .github/workflows/shadcn-safety.yml
+name: ShadCN Safety Checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  safety-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Performance Budget Check
+        run: |
+          npm run build
+          npm run analyze-bundle
+
+      - name: Component Health Check
+        run: |
+          npm run test:components
+          npm run test:accessibility
+
+      - name: Rollback Readiness Check
+        run: |
+          # Verify rollback scripts work
+          chmod +x scripts/rollback-*.sh
+          bash scripts/test-rollback.sh
+
+      - name: Auto Rollback on Failure
+        if: failure()
+        run: |
+          echo "Safety checks failed, initiating rollback..."
+          bash scripts/emergency-rollback.sh
+
+      - name: Notify Team
+        if: failure()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: failure
+          text: 'ShadCN deployment failed and was automatically rolled back'
+```
+
+### Monitoring Dashboard
+
+```typescript
+// Real-time monitoring dashboard component
+const ShadcnHealthDashboard = () => {
+  const [health, setHealth] = useState(null);
+  const [metrics, setMetrics] = useState(null);
+
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      // Check system health
+      const healthResponse = await fetch('/api/health/shadcn');
+      const healthData = await healthResponse.json();
+      setHealth(healthData);
+
+      // Check performance metrics
+      const metricsResponse = await fetch('/api/metrics/performance');
+      const metricsData = await metricsResponse.json();
+      setMetrics(metricsData);
+
+      // Auto-trigger rollback if critical thresholds exceeded
+      if (healthData.status === 'critical' || metricsData.performanceScore < 50) {
+        await fetch('/api/emergency/rollback', { method: 'POST' });
+      }
+    }, 30000); // Check every 30 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="p-4 border rounded-lg">
+      <h2 className="text-lg font-semibold mb-4">ShadCN System Health</h2>
+
+      <div className="grid grid-cols-2 gap-4">
+        <HealthIndicator
+          label="Component Status"
+          status={health?.components?.status}
+        />
+        <HealthIndicator
+          label="Performance Score"
+          status={metrics?.performanceScore > 85 ? 'healthy' : 'warning'}
+        />
+        <HealthIndicator
+          label="Bundle Size"
+          status={metrics?.bundleSize < 500000 ? 'healthy' : 'critical'}
+        />
+        <HealthIndicator
+          label="Error Rate"
+          status={metrics?.errorRate < 0.01 ? 'healthy' : 'warning'}
+        />
+      </div>
+
+      {health?.status === 'critical' && (
+        <div className="mt-4 p-3 bg-red-100 border border-red-400 rounded">
+          <p className="text-red-700 font-semibold">Critical Issue Detected</p>
+          <p className="text-red-600">Automatic rollback may be initiated</p>
+        </div>
+      )}
+    </div>
+  );
+};
+```
+
+## Success Validation Criteria
+
+### Rollback Success Metrics
+
+1. **System Recovery Time**: < 5 minutes for emergency rollbacks
+2. **Data Integrity**: 100% data preservation during rollbacks
+3. **User Experience**: No user-facing errors during rollback process
+4. **Performance Recovery**: Return to baseline performance within 2 minutes
+
+### Post-Rollback Procedures
+
+1. **Incident Analysis**: Root cause analysis within 24 hours
+2. **Improvement Plan**: Updated rollback procedures based on lessons learned
+3. **Team Communication**: Clear communication of what happened and next steps
+4. **Testing Enhancement**: Additional tests to prevent similar issues
 
 ## Conclusion
 
-This ShadCN UI integration will establish GoodBuy HQ as a modern, professional platform with consistent, accessible, and maintainable user interfaces. The phased approach ensures minimal disruption while delivering immediate improvements to the user experience.
+This enhanced ShadCN UI architecture provides comprehensive rollback strategies and risk mitigation measures to ensure safe integration into GoodBuy HQ's brownfield environment. The multi-layered safety approach includes automated monitoring, emergency procedures, and preservation of existing system functionality.
 
-The business-focused color palette and professional aesthetic will reinforce the platform's credibility while the comprehensive component library will accelerate future development and ensure design consistency across all features.
+Key safety features include:
 
-**Next Steps**: Begin Phase 1 implementation with core component setup and business theme configuration.
+- **Automated rollback triggers** based on performance and error thresholds
+- **Brownfield preservation** of critical existing systems
+- **Theme system compatibility** maintaining existing design tokens
+- **Real-time monitoring** with immediate alerting
+- **Emergency response procedures** with clear escalation paths
+
+The phased approach combined with comprehensive rollback strategies ensures minimal business disruption while enabling modern UI improvements. Each phase includes specific rollback procedures tested and validated before implementation.
+
+**Next Steps**:
+
+1. Set up monitoring infrastructure and rollback scripts
+2. Conduct rollback procedure testing in staging environment
+3. Begin Phase 1 implementation with safety measures active
+4. Validate rollback triggers and thresholds with production-like load testing

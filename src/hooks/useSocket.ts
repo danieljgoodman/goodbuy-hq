@@ -64,12 +64,12 @@ export function useSocket() {
       eventListenersRef.current.get(event)!.add(listener)
 
       // Add to socket
-      socketRef.current.on(event, listener)
+      socketRef.current.on(event, listener as any)
 
       // Return cleanup function
       return () => {
         if (socketRef.current) {
-          socketRef.current.off(event, listener)
+          socketRef.current.off(event, listener as any)
         }
         eventListenersRef.current.get(event)?.delete(listener)
       }
@@ -81,7 +81,7 @@ export function useSocket() {
     <K extends keyof SocketEvents>(event: K, listener: SocketEvents[K]) => {
       if (!socketRef.current) return
 
-      socketRef.current.off(event, listener)
+      socketRef.current.off(event, listener as any)
       eventListenersRef.current.get(event)?.delete(listener)
     },
     []

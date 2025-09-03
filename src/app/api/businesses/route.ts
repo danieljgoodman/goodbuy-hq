@@ -175,7 +175,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Execute query
-    const [businesses, total] = await Promise.all([
+    const [businessesRaw, total] = await Promise.all([
       prisma.business.findMany({
         where,
         skip,
@@ -199,6 +199,33 @@ export async function GET(request: NextRequest) {
       }),
       prisma.business.count({ where }),
     ])
+
+    // Convert Decimal fields to numbers for client serialization
+    const businesses = businessesRaw.map(business => ({
+      ...business,
+      askingPrice: business.askingPrice ? Number(business.askingPrice) : null,
+      revenue: business.revenue ? Number(business.revenue) : null,
+      profit: business.profit ? Number(business.profit) : null,
+      cashFlow: business.cashFlow ? Number(business.cashFlow) : null,
+      ebitda: business.ebitda ? Number(business.ebitda) : null,
+      monthlyRevenue: business.monthlyRevenue
+        ? Number(business.monthlyRevenue)
+        : null,
+      inventory: business.inventory ? Number(business.inventory) : null,
+      equipment: business.equipment ? Number(business.equipment) : null,
+      realEstate: business.realEstate ? Number(business.realEstate) : null,
+      totalAssets: business.totalAssets ? Number(business.totalAssets) : null,
+      liabilities: business.liabilities ? Number(business.liabilities) : null,
+      grossMargin: business.grossMargin ? Number(business.grossMargin) : null,
+      netMargin: business.netMargin ? Number(business.netMargin) : null,
+      yearlyGrowth: business.yearlyGrowth
+        ? Number(business.yearlyGrowth)
+        : null,
+      employees: business.employees ? Number(business.employees) : null,
+      customerBase: business.customerBase
+        ? Number(business.customerBase)
+        : null,
+    }))
 
     return NextResponse.json({
       businesses,

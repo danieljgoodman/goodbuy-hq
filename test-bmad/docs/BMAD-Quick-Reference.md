@@ -3,11 +3,13 @@
 ## Instant Activation Commands
 
 ### Web UI Activation (Claude, ChatGPT, Gemini)
+
 ```
 Activate as BMad Orchestrator. Load core configuration and display help menu for Goodbuy HQ e-commerce project development.
 ```
 
 ### IDE Activation (VS Code, Cursor, Claude Code)
+
 ```bash
 @bmad-orchestrator
 "Initialize BMAD system for Goodbuy HQ project development"
@@ -16,6 +18,7 @@ Activate as BMad Orchestrator. Load core configuration and display help menu for
 ## Essential Command Cheat Sheet
 
 ### Core Orchestrator Commands
+
 ```bash
 *help                    # Show full command reference
 *agent [name]           # Transform into specialized agent
@@ -28,6 +31,7 @@ Activate as BMad Orchestrator. Load core configuration and display help menu for
 ```
 
 ### Workflow Quick Start
+
 ```bash
 *workflow-guidance           # Get workflow selection help
 *workflow greenfield-fullstack    # New full-stack application
@@ -37,6 +41,7 @@ Activate as BMad Orchestrator. Load core configuration and display help menu for
 ```
 
 ### Agent Quick Access
+
 ```bash
 *agent analyst          # Business analysis and research
 *agent pm              # Product requirements and planning
@@ -52,13 +57,15 @@ Activate as BMad Orchestrator. Load core configuration and display help menu for
 ## Goodbuy HQ Specific Use Cases
 
 ### 1. AI Product Recommendations
+
 ```bash
 *workflow greenfield-fullstack
 # Follow guided process through:
 # Analyst → PM → UX-Expert → Architect → PO → Document Sharding
 ```
 
-### 2. Enhanced Search Functionality  
+### 2. Enhanced Search Functionality
+
 ```bash
 *workflow brownfield-fullstack
 *agent analyst
@@ -66,6 +73,7 @@ Activate as BMad Orchestrator. Load core configuration and display help menu for
 ```
 
 ### 3. Mobile App Development
+
 ```bash
 *workflow greenfield-ui
 *agent ux-expert
@@ -73,6 +81,7 @@ Activate as BMad Orchestrator. Load core configuration and display help menu for
 ```
 
 ### 4. Payment System Integration
+
 ```bash
 *workflow greenfield-service
 *agent architect
@@ -82,16 +91,18 @@ Activate as BMad Orchestrator. Load core configuration and display help menu for
 ## Development Workflow Patterns
 
 ### Planning Phase (Web UI - Cost Effective)
+
 ```
 1. *workflow [type]
 2. *agent analyst      # Create project brief
-3. *agent pm          # Generate PRD with elicitation  
+3. *agent pm          # Generate PRD with elicitation
 4. *agent ux-expert   # UI/UX specifications
 5. *agent architect   # Technical architecture
 6. *agent po          # Validation and approval
 ```
 
 ### Development Phase (IDE - Enhanced Tooling)
+
 ```
 1. @po               # Document sharding
 2. @sm *create       # Story generation
@@ -104,53 +115,57 @@ Activate as BMad Orchestrator. Load core configuration and display help menu for
 
 ### When to Use Each Agent
 
-| Situation | Agent | Command | Expected Output |
-|-----------|--------|---------|-----------------|
-| Project inception | Analyst | `*agent analyst` | Project brief, market research |
-| Feature definition | PM | `*agent pm` | PRD, requirements, epics |
-| UI/UX design | UX-Expert | `*agent ux-expert` | UI specs, design prompts |
-| Technical architecture | Architect | `*agent architect` | System design, tech stack |
-| Document validation | PO | `*agent po` | Quality checks, sharding |
-| Story creation | SM | `@sm *create` | User stories, acceptance criteria |
-| Code implementation | Dev | `@dev` | Production code with tests |
-| Quality assurance | QA | `@qa *review` | Quality gates, test strategies |
-| General tasks | BMad-Master | `*agent bmad-master` | Any non-implementation task |
+| Situation              | Agent       | Command              | Expected Output                   |
+| ---------------------- | ----------- | -------------------- | --------------------------------- |
+| Project inception      | Analyst     | `*agent analyst`     | Project brief, market research    |
+| Feature definition     | PM          | `*agent pm`          | PRD, requirements, epics          |
+| UI/UX design           | UX-Expert   | `*agent ux-expert`   | UI specs, design prompts          |
+| Technical architecture | Architect   | `*agent architect`   | System design, tech stack         |
+| Document validation    | PO          | `*agent po`          | Quality checks, sharding          |
+| Story creation         | SM          | `@sm *create`        | User stories, acceptance criteria |
+| Code implementation    | Dev         | `@dev`               | Production code with tests        |
+| Quality assurance      | QA          | `@qa *review`        | Quality gates, test strategies    |
+| General tasks          | BMad-Master | `*agent bmad-master` | Any non-implementation task       |
 
 ## Quality Gate Quick Commands
 
 ### QA Agent Commands
+
 ```bash
 @qa *risk story-X-X      # Risk assessment
-@qa *design story-X-X    # Test design strategy  
+@qa *design story-X-X    # Test design strategy
 @qa *trace story-X-X     # Requirements traceability
 @qa *review story-X-X    # Comprehensive quality review
 @qa *nfr story-X-X       # Non-functional requirements check
 ```
 
 ### Quality Gate Statuses
+
 - **✅ PASS** - Ready for production
-- **⚠️ CONCERNS** - Minor issues, team review recommended  
+- **⚠️ CONCERNS** - Minor issues, team review recommended
 - **❌ FAIL** - Critical issues, must address before proceeding
 - **🔄 WAIVED** - Issues accepted, document reasoning
 
 ## Template System Quick Reference
 
 ### Available Templates
+
 ```bash
 *template list                    # Show all templates
 *template prd-template-v2        # Product requirements document
 *template fullstack-architecture  # System architecture
-*template ui-specification       # Frontend specifications  
+*template ui-specification       # Frontend specifications
 *template user-story            # Story template
 *template quality-checklist     # QA checklists
 ```
 
 ### Template Elicitation Options (1-9 Selection)
+
 ```
 1. Proceed to next section
 2. Stakeholder Interview Simulation
 3. Assumption Challenge Method
-4. Trade-off Analysis  
+4. Trade-off Analysis
 5. User Journey Mapping
 6. Technical Constraint Exploration
 7. Business Impact Assessment
@@ -161,22 +176,48 @@ Activate as BMad Orchestrator. Load core configuration and display help menu for
 ## Claude Code Integration Patterns
 
 ### Parallel Agent Spawning
+
 ```javascript
 // Single message with concurrent agent execution
-Task("BMAD Analyst", "Research requirements for [feature]. Store in memory key 'project/analysis'", "analyst")
-Task("BMAD Architect", "Design architecture for [feature]. Check memory for analysis", "architect") 
-Task("BMAD QA", "Develop test strategy for [feature]. Coordinate via hooks", "qa")
+Task(
+  'BMAD Analyst',
+  "Research requirements for [feature]. Store in memory key 'project/analysis'",
+  'analyst'
+)
+Task(
+  'BMAD Architect',
+  'Design architecture for [feature]. Check memory for analysis',
+  'architect'
+)
+Task(
+  'BMAD QA',
+  'Develop test strategy for [feature]. Coordinate via hooks',
+  'qa'
+)
 
 TodoWrite({
   todos: [
-    {content: "Research market requirements", status: "in_progress", activeForm: "Researching market requirements"},
-    {content: "Design system architecture", status: "in_progress", activeForm: "Designing system architecture"},
-    {content: "Create test strategy", status: "in_progress", activeForm: "Creating test strategy"}
-  ]
+    {
+      content: 'Research market requirements',
+      status: 'in_progress',
+      activeForm: 'Researching market requirements',
+    },
+    {
+      content: 'Design system architecture',
+      status: 'in_progress',
+      activeForm: 'Designing system architecture',
+    },
+    {
+      content: 'Create test strategy',
+      status: 'in_progress',
+      activeForm: 'Creating test strategy',
+    },
+  ],
 })
 ```
 
 ### Coordination Hooks (Each Agent)
+
 ```bash
 # Pre-task
 npx claude-flow@alpha hooks pre-task --description "[task-description]"
@@ -184,13 +225,14 @@ npx claude-flow@alpha hooks pre-task --description "[task-description]"
 # During work
 npx claude-flow@alpha hooks post-edit --file "[file-path]" --memory-key "swarm/[agent]/[step]"
 
-# Post-task  
+# Post-task
 npx claude-flow@alpha hooks post-task --task-id "[task-id]"
 ```
 
 ## Common Troubleshooting
 
 ### Quick Fixes
+
 ```bash
 # Agent not responding
 *status                 # Check current state
@@ -206,6 +248,7 @@ npx claude-flow@alpha hooks post-task --task-id "[task-id]"
 ```
 
 ### Emergency Commands
+
 ```bash
 *agent bmad-master *task correct-course  # Analyze and correct project issues
 *checklist po-master-checklist          # Comprehensive validation
@@ -215,6 +258,7 @@ npx claude-flow@alpha hooks post-task --task-id "[task-id]"
 ## Performance Optimization
 
 ### Rapid Development Mode
+
 ```bash
 *yolo                    # Skip confirmation prompts
 *task create-stories epic-1 epic-2  # Batch story creation
@@ -222,6 +266,7 @@ npx claude-flow@alpha hooks post-task --task-id "[task-id]"
 ```
 
 ### Context Management
+
 ```bash
 # Efficient file structure
 docs/core/              # Always-loaded architecture files
@@ -232,16 +277,19 @@ docs/archive/           # Completed work
 ## Success Metrics to Track
 
 ### Development Velocity
+
 - Time from concept to working prototype
 - Stories completed per sprint
 - Quality gate pass rate
 
-### Code Quality  
+### Code Quality
+
 - Test coverage percentage (target: 85%+)
 - Performance benchmarks met
 - Security vulnerability count (target: 0 critical)
 
 ### Documentation Quality
+
 - Architecture decision records maintained
 - Requirements traceability score
 - Knowledge transfer effectiveness
@@ -259,6 +307,7 @@ docs/archive/           # Completed work
 ## Quick Start for Goodbuy HQ Features
 
 ### New Feature Development
+
 ```bash
 1. *workflow greenfield-fullstack
 2. *agent analyst "Analyze [feature] requirements for Goodbuy HQ"
@@ -267,7 +316,8 @@ docs/archive/           # Completed work
 5. @sm *create → @dev → @qa *review cycle
 ```
 
-### Existing Feature Enhancement  
+### Existing Feature Enhancement
+
 ```bash
 1. *workflow brownfield-fullstack
 2. *agent analyst "Research enhancement opportunities for [existing-feature]"
@@ -276,6 +326,7 @@ docs/archive/           # Completed work
 ```
 
 ### Bug Fix or Technical Debt
+
 ```bash
 1. *agent bmad-master
 2. *task analyze-technical-debt
