@@ -96,3 +96,50 @@ claude-flow
 claude-flow.bat
 claude-flow.ps1
 hive-mind-prompt-*.txt
+
+# Temporary working documents and migration planning
+docs/database-migration-strategy.md
+docs/database-migration-rollback-plan.md
+docs/database-testing-checklist.md
+docs/migration-risk-assessment-methodology.md
+docs/migration-rollback-procedures.md
+docs/rollback-strategy.md
+docs/rollback-strategy-summary.md
+docs/rollback-validation-checklist.md
+docs/schema-change-approval-process.md
+docs/monitoring-thresholds-rollback-triggers.md
+docs/backward-compatibility-testing-procedures.md
+
+# Completed implementation guides and component work
+docs/command-palette-implementation.md
+docs/component-mapping-analysis.md
+docs/component-migration-analysis.md
+docs/form-conversion-summary.md
+docs/shadcn-implementation-plan.md
+docs/shadcn-integration-summary.md
+docs/shadcn-review-report.md
+docs/shadcn-architecture.md
+docs/ui-component-implementation-guide.md
+docs/ui-ux-audit-report.md
+
+# Deployment and validation reports
+docs/DEPLOYMENT_VALIDATION_REPORT.md
+docs/DESIGN_CONSISTENCY_REPORT.md
+docs/health-dashboard-integration-test-report.md
+docs/production-deployment-checklist.md
+docs/production-deployment-summary.md
+
+# Performance analysis and working documents
+docs/performance-bottleneck-analysis.md
+docs/performance-impact-monitoring-guidelines.md
+docs/brainstorming-session-results.md
+docs/brownfield-architecture.md
+docs/epic-dependencies.md
+docs/epic-dependency-mapping.md
+
+# Large generated documentation files
+docs/AI_FINANCIAL_HEALTH_ANALYZER_PRD.md
+
+# QA and stories subdirectories (working files)
+docs/qa/
+docs/stories/
