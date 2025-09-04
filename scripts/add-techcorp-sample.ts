@@ -3,7 +3,9 @@ import { PrismaClient, BusinessCategory } from '@prisma/client'
 const prisma = new PrismaClient()
 
 async function addTechCorpSample() {
-  console.log('Adding TechCorp Solutions sample business for Financial Health Dashboard testing...')
+  console.log(
+    'Adding TechCorp Solutions sample business for Financial Health Dashboard testing...'
+  )
 
   try {
     // Get the test business owner
@@ -12,7 +14,9 @@ async function addTechCorpSample() {
     })
 
     if (!testOwner) {
-      console.log('❌ Test business owner not found. Please run create-test-users.ts first.')
+      console.log(
+        '❌ Test business owner not found. Please run create-test-users.ts first.'
+      )
       return
     }
 
@@ -22,8 +26,11 @@ async function addTechCorpSample() {
     })
 
     if (existingBusiness) {
-      console.log('✅ TechCorp Solutions already exists with ID:', existingBusiness.id)
-      
+      console.log(
+        '✅ TechCorp Solutions already exists with ID:',
+        existingBusiness.id
+      )
+
       // Update it with complete financial data if needed
       await prisma.business.update({
         where: { id: existingBusiness.id },
@@ -46,7 +53,8 @@ async function addTechCorpSample() {
       const business = await prisma.business.create({
         data: {
           title: 'TechCorp Solutions',
-          description: 'A leading software development company specializing in enterprise solutions and custom applications. TechCorp Solutions has established itself as a trusted partner for businesses looking to modernize their operations through innovative technology.',
+          description:
+            'A leading software development company specializing in enterprise solutions and custom applications. TechCorp Solutions has established itself as a trusted partner for businesses looking to modernize their operations through innovative technology.',
           category: BusinessCategory.TECHNOLOGY,
           industry: 'Software Development',
           location: 'San Francisco, CA',
@@ -82,18 +90,23 @@ async function addTechCorpSample() {
           reasonForSelling: 'Founder wants to start a new venture',
           timeframe: '3-6_months',
           negotiations: 'negotiable',
-          financing: 'SBA financing available, seller financing for qualified buyers',
+          financing:
+            'SBA financing available, seller financing for qualified buyers',
         },
       })
 
-      console.log('✅ Created TechCorp Solutions business with ID:', business.id)
+      console.log(
+        '✅ Created TechCorp Solutions business with ID:',
+        business.id
+      )
 
       // Create some sample business images
       const imageData = [
         {
           businessId: business.id,
           url: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=600&fit=crop',
-          thumbnailUrl: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&h=300&fit=crop',
+          thumbnailUrl:
+            'https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&h=300&fit=crop',
           alt: 'TechCorp Solutions Office Building',
           isPrimary: true,
           orderIndex: 0,
@@ -105,7 +118,8 @@ async function addTechCorpSample() {
         {
           businessId: business.id,
           url: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=600&fit=crop',
-          thumbnailUrl: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=300&fit=crop',
+          thumbnailUrl:
+            'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=300&fit=crop',
           alt: 'TechCorp Solutions Team Meeting',
           isPrimary: false,
           orderIndex: 1,
@@ -117,7 +131,8 @@ async function addTechCorpSample() {
         {
           businessId: business.id,
           url: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop',
-          thumbnailUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop',
+          thumbnailUrl:
+            'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop',
           alt: 'TechCorp Solutions Development Team',
           isPrimary: false,
           orderIndex: 2,
@@ -162,7 +177,7 @@ async function addTechCorpSample() {
               revenue: 'financial_statements',
               profit: 'tax_returns',
               employees: 'payroll_records',
-              growth: 'historical_data'
+              growth: 'historical_data',
             },
             calculationMetadata: {
               revenueGrowth: 15.5,
@@ -171,7 +186,11 @@ async function addTechCorpSample() {
               employeeProductivity: 41667, // Revenue per employee
               industryBenchmark: 'above_average',
               riskFactors: ['market_competition', 'talent_retention'],
-              strengths: ['strong_margins', 'consistent_growth', 'skilled_team'],
+              strengths: [
+                'strong_margins',
+                'consistent_growth',
+                'skilled_team',
+              ],
             },
           },
         })
@@ -242,8 +261,9 @@ async function addTechCorpSample() {
     console.log('• Established: 2018')
     console.log('• Customer Base: 250')
     console.log('• Overall Health Score: 82/100')
-    console.log('\n✅ The business is now available for Financial Health Dashboard testing!')
-
+    console.log(
+      '\n✅ The business is now available for Financial Health Dashboard testing!'
+    )
   } catch (error) {
     console.error('Error adding TechCorp Solutions:', error)
   } finally {

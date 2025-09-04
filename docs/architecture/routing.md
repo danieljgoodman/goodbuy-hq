@@ -27,7 +27,7 @@ export default async function AIToolsLayout({
 }) {
   // Preserve existing authentication patterns
   const session = await getServerSession(authOptions)
-  
+
   if (!session) {
     redirect('/api/auth/signin')
   }
@@ -38,7 +38,7 @@ export default async function AIToolsLayout({
       <aside className="w-64 border-r bg-muted/10">
         <AIToolsNav />
       </aside>
-      
+
       {/* Main content with subscription-based access control */}
       <main className="flex-1">
         <SubscriptionGuard>
@@ -84,7 +84,7 @@ export async function generateMetadata({ params }: AnalysisPageProps): Promise<M
 
 export default async function AnalysisPage({ params, searchParams }: AnalysisPageProps) {
   const session = await getServerSession(authOptions)
-  
+
   if (!session) {
     redirect('/api/auth/signin')
   }

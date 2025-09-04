@@ -23,16 +23,19 @@ This document provides detailed rollback procedures for each story in the GoodBu
 ### Rollback Triggers
 
 **Automatic Triggers**:
+
 - Database migration fails during subscription table creation
 - NextAuth.js authentication breaks (>5% login failure rate)
 - Stripe integration connection failures (>3 consecutive API errors)
 
 **Performance Triggers**:
+
 - User login time increases >40% from baseline
 - Database query performance degrades >30% on user-related queries
 - Memory usage increases >50% on authentication endpoints
 
 **Manual Triggers**:
+
 - User complaints about login issues (>10 reports in 24 hours)
 - Subscription data inconsistencies detected
 - Business decision to postpone billing integration
@@ -40,6 +43,7 @@ This document provides detailed rollback procedures for each story in the GoodBu
 ### Rollback Procedures
 
 #### Level 1: Feature Disable (Recommended first step)
+
 ```sql
 -- Disable subscription features
 UPDATE subscription_plans SET is_active = false;
@@ -49,9 +53,9 @@ UPDATE user_subscriptions SET status = 'disabled';
 ```javascript
 // Application config changes
 // In environment variables or config file
-ENABLE_SUBSCRIPTIONS=false
-ENABLE_BILLING=false
-STRIPE_ENABLED=false
+ENABLE_SUBSCRIPTIONS = false
+ENABLE_BILLING = false
+STRIPE_ENABLED = false
 ```
 
 **Recovery Time**: 5-10 minutes  
@@ -59,6 +63,7 @@ STRIPE_ENABLED=false
 **User Impact**: Subscription features disappear from UI
 
 #### Level 2: Data Rollback
+
 ```sql
 -- Remove subscription assignments
 DELETE FROM billing_transactions;
@@ -71,10 +76,11 @@ DELETE FROM user_subscriptions;
 **User Impact**: Users revert to pre-subscription state
 
 #### Level 3: Complete Rollback
+
 ```sql
 -- Execute full schema rollback
 DROP TABLE IF EXISTS billing_transactions CASCADE;
-DROP TABLE IF EXISTS usage_metrics CASCADE;  
+DROP TABLE IF EXISTS usage_metrics CASCADE;
 DROP TABLE IF EXISTS user_subscriptions CASCADE;
 DROP TABLE IF EXISTS subscription_plans CASCADE;
 
@@ -87,6 +93,7 @@ SELECT COUNT(*) FROM users WHERE id IS NULL; -- Should be 0
 **User Impact**: System returns to original authentication-only state
 
 ### Rollback Validation
+
 ```sql
 -- Verify authentication still works
 SELECT COUNT(*) FROM users WHERE email IS NOT NULL;
@@ -101,16 +108,19 @@ SELECT COUNT(*) FROM user_subscriptions; -- Should be 0 after rollback
 ### Rollback Triggers
 
 **Automatic Triggers**:
+
 - Dashboard load failures (>10% error rate)
 - Component rendering errors (React crashes)
 - Navigation integration breaks existing flows
 
 **Performance Triggers**:
+
 - Dashboard load time >8 seconds (baseline: 2-3 seconds)
 - Memory leak detected (>100MB increase over 1 hour)
 - API response times >5 seconds for dashboard data
 
 **Manual Triggers**:
+
 - User experience feedback indicating confusion
 - Existing workflow disruption reports
 - UI/UX quality concerns
@@ -118,10 +128,11 @@ SELECT COUNT(*) FROM user_subscriptions; -- Should be 0 after rollback
 ### Rollback Procedures
 
 #### Level 1: Feature Disable
+
 ```javascript
 // Feature flags in application
-ENABLE_AI_DASHBOARD=false
-SHOW_AI_TOOLS=false
+ENABLE_AI_DASHBOARD = false
+SHOW_AI_TOOLS = false
 
 // Route changes
 // Redirect AI tools routes to existing business analysis
@@ -133,6 +144,7 @@ SHOW_AI_TOOLS=false
 **User Impact**: AI dashboard hidden, original interface restored
 
 #### Level 2: Component Rollback
+
 ```bash
 # Git revert specific components
 git revert --no-commit <ai-dashboard-commits>
@@ -152,16 +164,19 @@ npm run deploy
 ### Rollback Triggers
 
 **Automatic Triggers**:
+
 - Data validation failures causing data corruption
 - CSV upload functionality breaking existing data entry
 - Form submission errors >15% of attempts
 
 **Performance Triggers**:
+
 - Form load time increases >60% from baseline
 - File upload processing >2 minutes for typical business data
 - Database writes take >10 seconds per business record
 
 **Manual Triggers**:
+
 - Data quality issues reported by users
 - Existing manual entry workflow disruption
 - File upload security concerns
@@ -169,14 +184,15 @@ npm run deploy
 ### Rollback Procedures
 
 #### Level 1: Feature Disable
+
 ```javascript
 // Disable enhanced features
-ENABLE_CSV_UPLOAD=false
-ENABLE_ENHANCED_VALIDATION=false
-ENABLE_AUTO_SAVE=false
+ENABLE_CSV_UPLOAD = false
+ENABLE_ENHANCED_VALIDATION = false
+ENABLE_AUTO_SAVE = false
 
 // Form configuration
-FORM_MODE="legacy"
+FORM_MODE = 'legacy'
 ```
 
 **Recovery Time**: 1-3 minutes  
@@ -184,9 +200,10 @@ FORM_MODE="legacy"
 **User Impact**: Forms revert to original functionality
 
 #### Level 2: Data Rollback
+
 ```sql
 -- Remove enhanced validation metadata
-UPDATE businesses SET 
+UPDATE businesses SET
   metadata = metadata - 'enhanced_validation_data',
   metadata = metadata - 'csv_import_history';
 
@@ -203,16 +220,19 @@ DELETE FROM form_drafts WHERE form_type = 'enhanced_business_input';
 ### Rollback Triggers
 
 **Automatic Triggers**:
+
 - WebSocket connection failures >20%
 - AI analysis results differ significantly from existing algorithms (>25% variance)
 - Streaming analysis timeouts >60 seconds
 
 **Performance Triggers**:
+
 - AI analysis time exceeds 45 seconds (current target: 30 seconds)
 - Concurrent analysis causes system slowdown >40%
 - WebSocket memory leaks detected
 
 **Manual Triggers**:
+
 - Analysis quality concerns from users
 - Confidence scoring inaccuracy reports
 - Real-time streaming stability issues
@@ -220,21 +240,23 @@ DELETE FROM form_drafts WHERE form_type = 'enhanced_business_input';
 ### Rollback Procedures
 
 #### Level 1: Feature Disable
+
 ```javascript
 // Disable streaming features
-ENABLE_STREAMING_ANALYSIS=false
-ENABLE_REALTIME_PROGRESS=false
-USE_LEGACY_ANALYSIS=true
+ENABLE_STREAMING_ANALYSIS = false
+ENABLE_REALTIME_PROGRESS = false
+USE_LEGACY_ANALYSIS = true
 
 // WebSocket configuration
-DISABLE_WEBSOCKETS=true
+DISABLE_WEBSOCKETS = true
 ```
 
 **Recovery Time**: 2-5 minutes  
 **Data Loss**: None  
 **User Impact**: Analysis reverts to original batch processing
 
-#### Level 2: Analysis Rollback  
+#### Level 2: Analysis Rollback
+
 ```sql
 -- Disable enhanced AI analysis
 UPDATE ai_analysis_sessions SET status = 'disabled' WHERE status = 'streaming';
@@ -252,16 +274,19 @@ DELETE FROM ai_analysis_sessions WHERE session_type IN ('streaming_health', 'rea
 ### Rollback Triggers
 
 **Automatic Triggers**:
+
 - PDF generation failures >10%
 - Report template rendering errors
 - Export functionality breaking existing exports
 
 **Performance Triggers**:
+
 - Report generation time >5 minutes
 - File storage usage spikes >500MB per hour
 - Export process causes system memory issues
 
 **Manual Triggers**:
+
 - Report quality issues (formatting, branding)
 - Existing export workflow disruption
 - Professional template concerns
@@ -269,11 +294,12 @@ DELETE FROM ai_analysis_sessions WHERE session_type IN ('streaming_health', 'rea
 ### Rollback Procedures
 
 #### Level 1: Feature Disable
+
 ```javascript
 // Disable professional reporting
-ENABLE_PROFESSIONAL_REPORTS=false
-ENABLE_WHITE_LABEL_REPORTS=false
-USE_LEGACY_EXPORTS=true
+ENABLE_PROFESSIONAL_REPORTS = false
+ENABLE_WHITE_LABEL_REPORTS = false
+USE_LEGACY_EXPORTS = true
 ```
 
 **Recovery Time**: 1-3 minutes  
@@ -281,6 +307,7 @@ USE_LEGACY_EXPORTS=true
 **User Impact**: Reports revert to original PDF/Excel export functionality
 
 #### Level 2: Data Rollback
+
 ```sql
 -- Remove generated professional reports
 DELETE FROM generated_reports WHERE report_type IN ('professional_pdf', 'white_label');
@@ -298,16 +325,19 @@ DELETE FROM generated_reports WHERE report_type IN ('professional_pdf', 'white_l
 ### Rollback Triggers
 
 **Automatic Triggers**:
+
 - Bulk analysis processing failures >20%
-- Portfolio data corruption or integrity issues  
+- Portfolio data corruption or integrity issues
 - Comparative analysis calculation errors
 
 **Performance Triggers**:
+
 - Bulk analysis exceeds 10 minutes for 10 businesses (target: 5 minutes)
 - Portfolio dashboard load time >10 seconds
 - Database performance impact on individual business queries
 
 **Manual Triggers**:
+
 - Portfolio organization confusion reported by users
 - Bulk processing quality concerns
 - Individual analysis quality degradation
@@ -315,11 +345,12 @@ DELETE FROM generated_reports WHERE report_type IN ('professional_pdf', 'white_l
 ### Rollback Procedures
 
 #### Level 1: Feature Disable
+
 ```javascript
 // Disable portfolio features
-ENABLE_PORTFOLIOS=false
-ENABLE_BULK_ANALYSIS=false
-HIDE_PORTFOLIO_UI=true
+ENABLE_PORTFOLIOS = false
+ENABLE_BULK_ANALYSIS = false
+HIDE_PORTFOLIO_UI = true
 ```
 
 **Recovery Time**: 2-5 minutes  
@@ -327,6 +358,7 @@ HIDE_PORTFOLIO_UI=true
 **User Impact**: Portfolio features hidden, individual analysis only
 
 #### Level 2: Data Rollback
+
 ```sql
 -- Remove portfolio assignments
 DELETE FROM portfolio_businesses;
@@ -345,16 +377,19 @@ DELETE FROM ai_analysis_sessions WHERE session_type = 'bulk_analysis';
 ### Rollback Triggers
 
 **Automatic Triggers**:
+
 - Usage tracking data inconsistencies >10%
 - Billing integration failures with Stripe
 - Analytics dashboard critical errors
 
 **Performance Triggers**:
+
 - Usage analytics queries slow system >25%
 - Billing webhook processing delays >30 seconds
 - Admin dashboard load time >15 seconds
 
 **Manual Triggers**:
+
 - Usage tracking accuracy concerns
 - Billing discrepancies reported
 - Admin management difficulties
@@ -362,11 +397,12 @@ DELETE FROM ai_analysis_sessions WHERE session_type = 'bulk_analysis';
 ### Rollback Procedures
 
 #### Level 1: Feature Disable
+
 ```javascript
 // Disable analytics and billing features
-ENABLE_USAGE_ANALYTICS=false
-ENABLE_BILLING_MANAGEMENT=false
-DISABLE_USAGE_TRACKING=true
+ENABLE_USAGE_ANALYTICS = false
+ENABLE_BILLING_MANAGEMENT = false
+DISABLE_USAGE_TRACKING = true
 ```
 
 **Recovery Time**: 1-3 minutes  
@@ -374,6 +410,7 @@ DISABLE_USAGE_TRACKING=true
 **User Impact**: Usage analytics hidden, subscription management disabled
 
 #### Level 2: Data Rollback
+
 ```sql
 -- Clear usage analytics (keep for potential re-enablement)
 UPDATE usage_metrics SET is_active = false;
@@ -387,6 +424,7 @@ DELETE FROM billing_transactions WHERE transaction_type = 'subscription';
 ## Cross-Story Emergency Rollback
 
 ### Complete Epic Rollback
+
 If multiple stories fail or systemic issues occur:
 
 ```bash
@@ -423,32 +461,35 @@ echo "Emergency rollback completed. System restored to pre-enhancement state."
 -- Validate system integrity after rollback
 SELECT 'Users' as table_name, COUNT(*) as count FROM users
 UNION ALL
-SELECT 'Businesses', COUNT(*) FROM businesses  
+SELECT 'Businesses', COUNT(*) FROM businesses
 UNION ALL
 SELECT 'Health Metrics', COUNT(*) FROM health_metrics
 UNION ALL
 SELECT 'Communications', COUNT(*) FROM messages;
 
 -- Check for any orphaned data
-SELECT 'Orphaned Subscriptions', COUNT(*) FROM user_subscriptions 
+SELECT 'Orphaned Subscriptions', COUNT(*) FROM user_subscriptions
 WHERE user_id NOT IN (SELECT id FROM users);
 ```
 
 ## Success Criteria for Rollbacks
 
 ### Technical Validation
+
 - All original functionality restored and tested
 - No data corruption or orphaned records
 - Performance returns to baseline metrics
 - All existing APIs functional
 
-### User Validation  
+### User Validation
+
 - Existing workflows operate normally
 - No user complaints about missing functionality
 - System stability confirmed over 24-hour period
 - Monitoring shows normal operation patterns
 
 ### Business Validation
+
 - Revenue systems unaffected (if applicable)
 - User retention maintained
 - Support ticket volume returns to normal
@@ -457,6 +498,7 @@ WHERE user_id NOT IN (SELECT id FROM users);
 ## Documentation and Communication
 
 ### Post-Rollback Actions
+
 1. **Document the incident** - Root cause, timeline, resolution
 2. **Notify stakeholders** - Users, management, development team
 3. **Schedule post-mortem** - Identify improvements for future deployments
@@ -464,8 +506,9 @@ WHERE user_id NOT IN (SELECT id FROM users);
 5. **Plan re-deployment** - If and when issues are resolved
 
 ### Communication Templates
+
 - User notification email templates
-- Status page updates  
+- Status page updates
 - Internal team notifications
 - Stakeholder summary reports
 

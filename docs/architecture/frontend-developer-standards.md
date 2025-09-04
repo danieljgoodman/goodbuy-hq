@@ -10,7 +10,7 @@ Based on your existing codebase patterns and the complexity of AI SaaS features,
 
 ```typescript
 // ❌ WRONG - Float precision errors
-const profitMargin = (revenue - costs) / revenue * 100
+const profitMargin = ((revenue - costs) / revenue) * 100
 
 // ✅ CORRECT - Decimal precision
 import { Decimal } from 'decimal.js'
@@ -38,6 +38,7 @@ const profitMargin = new Decimal(revenue).minus(costs).div(revenue).mul(100)
 ## Quick Reference
 
 ### Common Commands
+
 ```bash
 # Development server with proper environment
 npm run dev
@@ -53,6 +54,7 @@ npm run db:migrate && npm run db:generate
 ```
 
 ### Key Import Patterns
+
 ```typescript
 // ShadCN UI components (existing patterns)
 import { Button } from '@/components/ui/button'
@@ -72,6 +74,7 @@ import { useSubscription } from '@/hooks/use-subscription'
 ```
 
 ### File Naming Conventions
+
 - **AI Components**: `ai-health-score-ring.tsx`, `streaming-progress-indicator.tsx`
 - **Subscription Components**: `subscription-plan-card.tsx`, `usage-metrics-display.tsx`
 - **Service Files**: `ai-analysis-service.ts`, `subscription-service.ts`
@@ -79,6 +82,7 @@ import { useSubscription } from '@/hooks/use-subscription'
 - **Type Files**: `ai-types.ts`, `subscription-types.ts`
 
 ### Project-Specific Patterns
+
 - **AI Analysis Results**: Always cache expensive calculations with proper revalidation
 - **WebSocket Connections**: Implement heartbeat and reconnection logic for reliability
 - **Financial Calculations**: Use Decimal.js for all currency and percentage calculations

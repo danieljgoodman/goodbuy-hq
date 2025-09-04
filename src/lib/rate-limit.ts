@@ -24,7 +24,6 @@ function getRateLimiter(
 ): RateLimiterMemory {
   if (!rateLimiters.has(key)) {
     const limiter = new RateLimiterMemory({
-      keyGenerator: (req?: any) => req?.ip || 'default',
       points: config.limit,
       duration: Math.ceil(config.window / 1000), // Convert to seconds
       execEvenly: true,
@@ -90,7 +89,7 @@ export async function rateLimit(
         ? Date.now() + result.msBeforeNext
         : undefined,
     }
-  } catch (rateLimiterRes) {
+  } catch (rateLimiterRes: any) {
     // Rate limit exceeded
     const remaining = rateLimiterRes.remainingPoints || 0
     const resetTime = rateLimiterRes.msBeforeNext

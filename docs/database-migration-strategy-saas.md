@@ -7,6 +7,7 @@ This document outlines the comprehensive database migration strategy for transfo
 ## Current Database Analysis
 
 **Existing Schema Foundation**:
+
 - **Users**: Complete authentication system with NextAuth.js integration
 - **Businesses**: Comprehensive business data model with health metrics
 - **Health Analytics**: Advanced health scoring and forecasting system already implemented
@@ -134,15 +135,18 @@ CREATE TABLE generated_reports (
 ## Migration Phases
 
 ### Phase 1: Schema Preparation (Story 1.1)
+
 **Target**: Extend existing authentication with subscription foundation
 
 **Actions**:
+
 1. Add subscription-related tables without foreign key constraints
 2. Create indexes for performance optimization
 3. Set up initial subscription plans data
 4. Add usage tracking infrastructure
 
 **Rollback Strategy**:
+
 ```sql
 -- Phase 1 Rollback
 DROP TABLE IF EXISTS usage_metrics CASCADE;
@@ -152,13 +156,15 @@ DROP TABLE IF EXISTS subscription_plans CASCADE;
 ```
 
 ### Phase 2: User Migration (Story 1.1)
+
 **Target**: Migrate existing users to appropriate subscription tiers
 
 **Actions**:
+
 ```sql
 -- Auto-assign existing users to Free tier
 INSERT INTO user_subscriptions (user_id, plan_id, status, current_period_start, current_period_end)
-SELECT u.id, 
+SELECT u.id,
        (SELECT id FROM subscription_plans WHERE name = 'Free' LIMIT 1),
        'active',
        now(),
@@ -170,22 +176,26 @@ WHERE NOT EXISTS (
 ```
 
 **Rollback Strategy**:
+
 ```sql
 -- Remove auto-assigned subscriptions
-DELETE FROM user_subscriptions 
+DELETE FROM user_subscriptions
 WHERE plan_id = (SELECT id FROM subscription_plans WHERE name = 'Free');
 ```
 
 ### Phase 3: AI Enhancement (Stories 1.2-1.4)
+
 **Target**: Add AI analysis tracking and portfolio management
 
 **Actions**:
+
 1. Create AI analysis session tracking
 2. Implement portfolio management tables
 3. Add usage metrics collection
 4. Enable real-time analysis streaming
 
 **Rollback Strategy**:
+
 ```sql
 DROP TABLE IF EXISTS portfolio_businesses CASCADE;
 DROP TABLE IF EXISTS portfolios CASCADE;
@@ -193,22 +203,27 @@ DROP TABLE IF EXISTS ai_analysis_sessions CASCADE;
 ```
 
 ### Phase 4: Professional Reporting (Story 1.5)
+
 **Target**: Add professional report generation capabilities
 
 **Actions**:
+
 1. Create report generation tracking tables
 2. Add file storage metadata
 3. Implement branding customization storage
 
 **Rollback Strategy**:
+
 ```sql
 DROP TABLE IF EXISTS generated_reports CASCADE;
 ```
 
 ### Phase 5: Finalization (Stories 1.6-1.7)
+
 **Target**: Complete integration and monitoring
 
 **Actions**:
+
 1. Add performance monitoring tables
 2. Implement billing integration verification
 3. Final data consistency checks
@@ -216,12 +231,14 @@ DROP TABLE IF EXISTS generated_reports CASCADE;
 ## Data Preservation Guarantees
 
 ### Existing Data Protection
+
 - **Users**: All existing user accounts, authentication, and profile data preserved
 - **Businesses**: All business listings, evaluations, and health metrics maintained
 - **Health Analytics**: Existing health metrics, forecasts, and alerts unchanged
 - **Communications**: All messages, meetings, and document sharing preserved
 
 ### Backward Compatibility
+
 - All existing API endpoints continue to function
 - Existing user workflows remain unchanged
 - Current UI components and routes preserved
@@ -230,6 +247,7 @@ DROP TABLE IF EXISTS generated_reports CASCADE;
 ## Performance Impact Mitigation
 
 ### Indexing Strategy
+
 ```sql
 -- Critical performance indexes
 CREATE INDEX CONCURRENTLY idx_user_subscriptions_user_id ON user_subscriptions(user_id);
@@ -239,6 +257,7 @@ CREATE INDEX CONCURRENTLY idx_portfolios_user_default ON portfolios(user_id, is_
 ```
 
 ### Query Optimization
+
 - Use CONCURRENTLY for index creation to avoid table locks
 - Implement connection pooling optimization for new tables
 - Add materialized views for complex subscription analytics
@@ -248,6 +267,7 @@ CREATE INDEX CONCURRENTLY idx_portfolios_user_default ON portfolios(user_id, is_
 ### Critical Rollback Points
 
 **Level 1: Schema Rollback** (Complete reversal)
+
 ```bash
 # Execute phase-specific rollback scripts in reverse order
 psql $DATABASE_URL -f rollback_phase_5.sql
@@ -258,6 +278,7 @@ psql $DATABASE_URL -f rollback_phase_1.sql
 ```
 
 **Level 2: Data Rollback** (Preserve new tables, reset data)
+
 ```sql
 -- Clear subscription assignments but keep infrastructure
 DELETE FROM user_subscriptions;
@@ -267,6 +288,7 @@ DELETE FROM billing_transactions;
 ```
 
 **Level 3: Feature Rollback** (Disable new features, keep data)
+
 ```sql
 -- Disable subscription features via application config
 UPDATE subscription_plans SET is_active = false;
@@ -276,11 +298,13 @@ UPDATE subscription_plans SET is_active = false;
 ### Rollback Triggers
 
 **Automatic Triggers**:
+
 - Database migration failure (any step fails)
 - Performance degradation >20% on key queries
 - Data integrity violations detected
 
 **Manual Triggers**:
+
 - User experience issues reported
 - Subscription billing problems
 - Critical bug discovery
@@ -288,6 +312,7 @@ UPDATE subscription_plans SET is_active = false;
 ## Monitoring and Validation
 
 ### Pre-Migration Validation
+
 ```sql
 -- Validate existing data integrity
 SELECT COUNT(*) FROM users WHERE id IS NULL; -- Should be 0
@@ -296,18 +321,20 @@ SELECT COUNT(*) FROM health_metrics WHERE business_id NOT IN (SELECT id FROM bus
 ```
 
 ### Post-Migration Validation
+
 ```sql
 -- Verify subscription assignments
-SELECT COUNT(*) FROM users u 
-LEFT JOIN user_subscriptions us ON u.id = us.user_id 
+SELECT COUNT(*) FROM users u
+LEFT JOIN user_subscriptions us ON u.id = us.user_id
 WHERE us.id IS NULL; -- Should be 0
 
 -- Verify data integrity
-SELECT COUNT(*) FROM user_subscriptions 
+SELECT COUNT(*) FROM user_subscriptions
 WHERE user_id NOT IN (SELECT id FROM users); -- Should be 0
 ```
 
 ### Performance Monitoring
+
 - Track query performance on key tables
 - Monitor subscription lookup speed
 - Validate usage tracking accuracy
@@ -316,11 +343,13 @@ WHERE user_id NOT IN (SELECT id FROM users); -- Should be 0
 ## Security Considerations
 
 ### Data Encryption
+
 - Encrypt Stripe tokens using application-level encryption
 - Hash sensitive billing information
 - Implement secure API key management
 
 ### Access Controls
+
 - Row-level security for subscription data
 - Audit trail for all billing operations
 - Rate limiting for AI analysis requests
@@ -328,12 +357,14 @@ WHERE user_id NOT IN (SELECT id FROM users); -- Should be 0
 ## Success Criteria
 
 ### Technical Success
+
 - Zero data loss during migration
 - <5% performance impact on existing queries
 - 100% backward compatibility maintained
 - All rollback procedures tested and verified
 
 ### Business Success
+
 - Existing users seamlessly upgraded
 - New subscription features functional
 - Billing integration operational
@@ -348,6 +379,7 @@ WHERE user_id NOT IN (SELECT id FROM users); -- Should be 0
 **Week 6**: Final integration and monitoring
 
 **Dependencies**:
+
 - Stripe account setup and API integration
 - Testing environment with production data copy
 - Monitoring infrastructure enhancement

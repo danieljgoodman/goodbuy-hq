@@ -23,6 +23,7 @@ Your GoodBuy HQ project is built on **Next.js 14.2.32** with **React 18.3.1** an
 **Framework Decision:** ✅ **Continue with existing Next.js 14 App Router** - No starter template needed as you have a sophisticated brownfield application.
 
 **Brownfield Integration Constraints:**
+
 1. Must maintain existing ShadCN UI component patterns and Radix UI foundations
 2. Must preserve established Tailwind CSS configuration and theme system
 3. Must integrate with existing authentication, database, and real-time infrastructure
@@ -30,9 +31,9 @@ Your GoodBuy HQ project is built on **Next.js 14.2.32** with **React 18.3.1** an
 
 ### Change Log
 
-| Date | Version | Description | Author |
-|------|---------|-------------|---------|
-| 2025-01-03 | 1.0 | Frontend Architecture for AI SaaS Enhancement | Winston (Architect) |
+| Date       | Version | Description                                   | Author              |
+| ---------- | ------- | --------------------------------------------- | ------------------- |
+| 2025-01-03 | 1.0     | Frontend Architecture for AI SaaS Enhancement | Winston (Architect) |
 
 ---
 
@@ -42,19 +43,19 @@ Based on analysis of your existing brownfield Next.js application, I'm documenti
 
 ### Technology Stack Table
 
-| Category | Technology | Version | Purpose | Rationale |
-|----------|------------|---------|---------|-----------|
-| **Framework** | Next.js | 14.2.32 | Full-stack React framework with App Router | Industry-leading performance, built-in API routes, optimal for AI streaming analysis, existing codebase foundation |
-| **UI Library** | React | 18.3.1 | Component-based UI library | Concurrent features enable real-time AI analysis streaming, extensive ecosystem, established patterns in codebase |
-| **State Management** | React Hook Form + Zustand (inferred) | 7.62.0 | Form state and global application state | React Hook Form for complex financial data entry, lightweight state management for AI tool preferences |
-| **Routing** | Next.js App Router | 14.2.32 | File-system based routing with layouts | Built-in authentication integration, parallel routes for AI analysis, existing route structure preservation |
-| **Build Tool** | Next.js (Turbopack/Webpack) | 14.2.32 | Bundling and optimization | Automatic code splitting, API route optimization, existing build configuration |
-| **Styling** | Tailwind CSS | 3.4.17 | Utility-first CSS framework | Professional design system, existing theme configuration, responsive AI dashboard layouts |
-| **Testing** | Jest | Latest | Unit and integration testing | Existing test patterns, AI algorithm validation, component testing for financial data display |
-| **Component Library** | ShadCN UI + Radix UI | Latest | Professional business UI components | Enterprise-grade accessibility, existing theme integration, financial data visualization components |
-| **Form Handling** | React Hook Form + Hookform Resolvers | 7.62.0 + 5.2.1 | Complex form management with validation | Essential for business data input, Zod schema validation, existing form patterns |
-| **Animation** | Framer Motion | 12.23.12 | UI animations and transitions | Real-time AI analysis progress visualization, professional micro-interactions, existing usage |
-| **Dev Tools** | TypeScript + ESLint + Prettier | 5.7.2 | Type safety and code quality | Financial data accuracy, existing configuration, AI algorithm type safety |
+| Category              | Technology                           | Version        | Purpose                                    | Rationale                                                                                                          |
+| --------------------- | ------------------------------------ | -------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
+| **Framework**         | Next.js                              | 14.2.32        | Full-stack React framework with App Router | Industry-leading performance, built-in API routes, optimal for AI streaming analysis, existing codebase foundation |
+| **UI Library**        | React                                | 18.3.1         | Component-based UI library                 | Concurrent features enable real-time AI analysis streaming, extensive ecosystem, established patterns in codebase  |
+| **State Management**  | React Hook Form + Zustand (inferred) | 7.62.0         | Form state and global application state    | React Hook Form for complex financial data entry, lightweight state management for AI tool preferences             |
+| **Routing**           | Next.js App Router                   | 14.2.32        | File-system based routing with layouts     | Built-in authentication integration, parallel routes for AI analysis, existing route structure preservation        |
+| **Build Tool**        | Next.js (Turbopack/Webpack)          | 14.2.32        | Bundling and optimization                  | Automatic code splitting, API route optimization, existing build configuration                                     |
+| **Styling**           | Tailwind CSS                         | 3.4.17         | Utility-first CSS framework                | Professional design system, existing theme configuration, responsive AI dashboard layouts                          |
+| **Testing**           | Jest                                 | Latest         | Unit and integration testing               | Existing test patterns, AI algorithm validation, component testing for financial data display                      |
+| **Component Library** | ShadCN UI + Radix UI                 | Latest         | Professional business UI components        | Enterprise-grade accessibility, existing theme integration, financial data visualization components                |
+| **Form Handling**     | React Hook Form + Hookform Resolvers | 7.62.0 + 5.2.1 | Complex form management with validation    | Essential for business data input, Zod schema validation, existing form patterns                                   |
+| **Animation**         | Framer Motion                        | 12.23.12       | UI animations and transitions              | Real-time AI analysis progress visualization, professional micro-interactions, existing usage                      |
+| **Dev Tools**         | TypeScript + ESLint + Prettier       | 5.7.2          | Type safety and code quality               | Financial data accuracy, existing configuration, AI algorithm type safety                                          |
 
 ---
 
@@ -201,13 +202,13 @@ interface AIAnalysisCardProps {
 }
 
 // Component following established ShadCN patterns
-export function AIAnalysisCard({ 
-  businessId, 
-  analysisType, 
+export function AIAnalysisCard({
+  businessId,
+  analysisType,
   isStreaming = false,
   confidence,
   onAnalyze,
-  className 
+  className
 }: AIAnalysisCardProps) {
   // Hooks follow existing patterns
   const [isLoading, setIsLoading] = React.useState(false)
@@ -241,8 +242,8 @@ export function AIAnalysisCard({
               <span className="text-sm">Analyzing...</span>
             </div>
           )}
-          
-          <Button 
+
+          <Button
             onClick={handleAnalyze}
             disabled={isLoading || isStreaming}
             className="w-full"
@@ -264,23 +265,27 @@ export type { AIAnalysisCardProps }
 
 ### Naming Conventions
 
-**Component Naming**: 
+**Component Naming**:
+
 - **AI Components**: Prefix with `AI` for analysis-specific components (`AIHealthScoreRing`, `AIStreamingProgress`)
 - **Generic Components**: Use descriptive names following existing patterns (`SubscriptionPlanCard`, `UsageMetrics`)
 - **Page Components**: Suffix with `Page` for route components (`AIToolsDashboardPage`, `PortfolioManagementPage`)
 
 **File Naming**:
+
 - **Components**: PascalCase matching component name (`AIAnalysisCard.tsx`, `ReportBuilder.tsx`)
 - **Hooks**: kebab-case with `use-` prefix (`use-ai-analysis.ts`, `use-subscription.ts`)
 - **Utilities**: kebab-case descriptive (`health-calculator.ts`, `streaming-client.ts`)
 - **Types**: kebab-case with domain prefix (`ai-types.ts`, `subscription-types.ts`)
 
 **Props and State**:
+
 - **Props**: camelCase with descriptive names (`businessId`, `analysisType`, `isStreaming`)
 - **State**: camelCase with action prefixes (`isLoading`, `hasError`, `streamingData`)
 - **Handlers**: camelCase with `handle` prefix (`handleAnalyze`, `handleSubscriptionChange`)
 
 **Directory Organization**:
+
 - **Feature Groups**: kebab-case directories (`ai-analysis/`, `subscription-management/`)
 - **Component Collections**: plural descriptive names (`charts/`, `forms/`, `dashboards/`)
 - **Shared Utilities**: singular descriptive names (`validation/`, `utils/`, `constants/`)
@@ -329,17 +334,17 @@ import { immer } from 'zustand/middleware/immer'
 interface AIAnalysisState {
   // Active analysis sessions
   activeAnalyses: Record<string, AnalysisSession>
-  
+
   // Streaming state for real-time progress
   streamingConnections: Record<string, WebSocketConnection>
-  
+
   // Analysis results cache
   results: Record<string, AnalysisResult>
-  
+
   // Loading and error states
   isAnalyzing: boolean
   error: string | null
-  
+
   // Actions
   startAnalysis: (businessId: string, type: AnalysisType) => Promise<void>
   updateProgress: (sessionId: string, progress: ProgressUpdate) => void
@@ -360,10 +365,10 @@ export const useAIAnalysisStore = create<AIAnalysisState>()(
 
       // Analysis lifecycle management
       startAnalysis: async (businessId: string, type: AnalysisType) => {
-        set((state) => {
+        set(state => {
           state.isAnalyzing = true
           state.error = null
-          
+
           const sessionId = `${businessId}-${type}-${Date.now()}`
           state.activeAnalyses[sessionId] = {
             id: sessionId,
@@ -384,36 +389,37 @@ export const useAIAnalysisStore = create<AIAnalysisState>()(
           })
 
           if (!response.ok) throw new Error('Analysis failed to start')
-          
+
           const { sessionId, streamUrl } = await response.json()
-          
+
           // Establish WebSocket connection for real-time updates
           get().setupStreaming(sessionId, streamUrl)
-          
         } catch (error) {
-          set((state) => {
+          set(state => {
             state.isAnalyzing = false
-            state.error = error instanceof Error ? error.message : 'Unknown error'
+            state.error =
+              error instanceof Error ? error.message : 'Unknown error'
           })
         }
       },
 
       // Real-time progress updates
       updateProgress: (sessionId: string, progress: ProgressUpdate) => {
-        set((state) => {
+        set(state => {
           if (state.activeAnalyses[sessionId]) {
             state.activeAnalyses[sessionId].progress = progress.percentage
             state.activeAnalyses[sessionId].status = progress.stage
-            state.activeAnalyses[sessionId].partialResults = progress.partialResults
+            state.activeAnalyses[sessionId].partialResults =
+              progress.partialResults
           }
         })
       },
 
       // Analysis completion handling
       completeAnalysis: (sessionId: string, result: AnalysisResult) => {
-        set((state) => {
+        set(state => {
           state.isAnalyzing = false
-          
+
           // Move from active to completed
           const analysis = state.activeAnalyses[sessionId]
           if (analysis) {
@@ -423,11 +429,11 @@ export const useAIAnalysisStore = create<AIAnalysisState>()(
               businessId: analysis.businessId,
               completedAt: new Date(),
             }
-            
+
             // Clean up active analysis
             delete state.activeAnalyses[sessionId]
           }
-          
+
           // Clean up streaming connection
           if (state.streamingConnections[sessionId]) {
             state.streamingConnections[sessionId].close()
@@ -438,7 +444,7 @@ export const useAIAnalysisStore = create<AIAnalysisState>()(
 
       // Error handling
       clearError: () => {
-        set((state) => {
+        set(state => {
           state.error = null
         })
       },
@@ -446,26 +452,26 @@ export const useAIAnalysisStore = create<AIAnalysisState>()(
       // WebSocket connection management
       setupStreaming: (sessionId: string, streamUrl: string) => {
         const ws = new WebSocket(streamUrl)
-        
-        ws.onmessage = (event) => {
+
+        ws.onmessage = event => {
           const update = JSON.parse(event.data) as ProgressUpdate
           get().updateProgress(sessionId, update)
         }
-        
+
         ws.onclose = () => {
-          set((state) => {
+          set(state => {
             delete state.streamingConnections[sessionId]
           })
         }
-        
+
         ws.onerror = () => {
-          set((state) => {
+          set(state => {
             state.error = 'Streaming connection failed'
             delete state.streamingConnections[sessionId]
           })
         }
-        
-        set((state) => {
+
+        set(state => {
           state.streamingConnections[sessionId] = ws
         })
       },
@@ -476,17 +482,19 @@ export const useAIAnalysisStore = create<AIAnalysisState>()(
 // Custom hooks for component integration
 export const useAIAnalysis = (businessId?: string) => {
   const store = useAIAnalysisStore()
-  
+
   // Filter active analyses for specific business
-  const businessAnalyses = businessId 
-    ? Object.values(store.activeAnalyses).filter(a => a.businessId === businessId)
+  const businessAnalyses = businessId
+    ? Object.values(store.activeAnalyses).filter(
+        a => a.businessId === businessId
+      )
     : Object.values(store.activeAnalyses)
-    
+
   // Get results for business
   const businessResults = businessId
     ? Object.values(store.results).filter(r => r.businessId === businessId)
     : Object.values(store.results)
-  
+
   return {
     activeAnalyses: businessAnalyses,
     results: businessResults,
@@ -513,19 +521,22 @@ import { z } from 'zod'
 // API client configuration building on existing patterns
 class AIAnalysisService {
   private baseUrl = '/api/ai'
-  private wsBaseUrl = process.env.NODE_ENV === 'production' 
-    ? 'wss://your-domain.com/ws' 
-    : 'ws://localhost:3000/ws'
+  private wsBaseUrl =
+    process.env.NODE_ENV === 'production'
+      ? 'wss://your-domain.com/ws'
+      : 'ws://localhost:3000/ws'
 
   // Analysis request validation using existing Zod patterns
   private analyzeRequestSchema = z.object({
     businessId: z.string().uuid(),
     analysisType: z.enum(['health', 'valuation', 'forecast', 'comprehensive']),
-    options: z.object({
-      includeConfidence: z.boolean().default(true),
-      streamProgress: z.boolean().default(true),
-      priority: z.enum(['normal', 'high']).default('normal'),
-    }).optional(),
+    options: z
+      .object({
+        includeConfidence: z.boolean().default(true),
+        streamProgress: z.boolean().default(true),
+        priority: z.enum(['normal', 'high']).default('normal'),
+      })
+      .optional(),
   })
 
   // Start AI analysis with streaming support
@@ -533,13 +544,13 @@ class AIAnalysisService {
     try {
       // Validate request using existing validation patterns
       const validatedRequest = this.analyzeRequestSchema.parse(request)
-      
+
       // API call following existing error handling patterns
       const response = await fetch(`${this.baseUrl}/analyze`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${await this.getAuthToken()}`,
+          Authorization: `Bearer ${await this.getAuthToken()}`,
         },
         body: JSON.stringify(validatedRequest),
       })
@@ -553,13 +564,12 @@ class AIAnalysisService {
       }
 
       const session = await response.json()
-      
+
       // Return session with WebSocket URL for streaming
       return {
         ...session,
         streamUrl: `${this.wsBaseUrl}/analysis/${session.sessionId}`,
       }
-
     } catch (error) {
       if (error instanceof z.ZodError) {
         throw new ValidationError('Invalid analysis request', error.errors)
@@ -602,13 +612,16 @@ class StreamingClient {
           resolve()
         }
 
-        this.ws.onerror = (error) => {
+        this.ws.onerror = error => {
           console.error('WebSocket error:', error)
           reject(new Error('Failed to establish streaming connection'))
         }
 
-        this.ws.onclose = (event) => {
-          if (event.code !== 1000 && this.reconnectAttempts < this.maxReconnectAttempts) {
+        this.ws.onclose = event => {
+          if (
+            event.code !== 1000 &&
+            this.reconnectAttempts < this.maxReconnectAttempts
+          ) {
             setTimeout(() => {
               this.reconnectAttempts++
               this.connect()
@@ -623,8 +636,8 @@ class StreamingClient {
 
   onProgress(callback: (progress: ProgressUpdate) => void): void {
     if (!this.ws) throw new Error('WebSocket not connected')
-    
-    this.ws.onmessage = (event) => {
+
+    this.ws.onmessage = event => {
       try {
         const progress = JSON.parse(event.data) as ProgressUpdate
         callback(progress)
@@ -699,10 +712,10 @@ export class APIClient {
     options: RequestInit = {}
   ): Promise<T> {
     const url = `${this.baseUrl}${endpoint}`
-    
+
     // Add authentication header from existing NextAuth session
     const authHeaders = await this.getAuthHeaders()
-    
+
     const config: RequestInit = {
       ...options,
       headers: {
@@ -714,7 +727,7 @@ export class APIClient {
 
     try {
       const response = await fetch(url, config)
-      
+
       // Handle authentication errors
       if (response.status === 401) {
         // Trigger re-authentication using existing patterns
@@ -753,8 +766,8 @@ export class APIClient {
   private async getAuthHeaders(): Promise<Record<string, string>> {
     try {
       const session = await fetch('/api/auth/session').then(r => r.json())
-      return session?.accessToken 
-        ? { 'Authorization': `Bearer ${session.accessToken}` }
+      return session?.accessToken
+        ? { Authorization: `Bearer ${session.accessToken}` }
         : {}
     } catch {
       return {}
@@ -767,7 +780,10 @@ export const apiClient = new APIClient()
 
 // Custom error classes
 export class RateLimitError extends Error {
-  constructor(message: string, public retryAfter: number) {
+  constructor(
+    message: string,
+    public retryAfter: number
+  ) {
     super(message)
     this.name = 'RateLimitError'
   }
@@ -805,7 +821,7 @@ export default async function AIToolsLayout({
 }) {
   // Preserve existing authentication patterns
   const session = await getServerSession(authOptions)
-  
+
   if (!session) {
     redirect('/api/auth/signin')
   }
@@ -816,7 +832,7 @@ export default async function AIToolsLayout({
       <aside className="w-64 border-r bg-muted/10">
         <AIToolsNav />
       </aside>
-      
+
       {/* Main content with subscription-based access control */}
       <main className="flex-1">
         <SubscriptionGuard>
@@ -862,7 +878,7 @@ export async function generateMetadata({ params }: AnalysisPageProps): Promise<M
 
 export default async function AnalysisPage({ params, searchParams }: AnalysisPageProps) {
   const session = await getServerSession(authOptions)
-  
+
   if (!session) {
     redirect('/api/auth/signin')
   }
@@ -1085,19 +1101,19 @@ Your existing Tailwind CSS foundation provides excellent support for AI SaaS enh
   .ai-confidence-indicator {
     @apply inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium;
   }
-  
+
   .ai-confidence-high {
     @apply bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400;
     background-color: hsl(var(--ai-confidence-high) / 0.1);
     color: hsl(var(--ai-confidence-high));
   }
-  
+
   .ai-confidence-medium {
     @apply bg-amber-100 text-amber-800 dark:bg-amber-900/20 dark:text-amber-400;
     background-color: hsl(var(--ai-confidence-medium) / 0.1);
     color: hsl(var(--ai-confidence-medium));
   }
-  
+
   .ai-confidence-low {
     @apply bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400;
     background-color: hsl(var(--ai-confidence-low) / 0.1);
@@ -1108,32 +1124,32 @@ Your existing Tailwind CSS foundation provides excellent support for AI SaaS enh
   .health-score-ring {
     @apply relative inline-flex items-center justify-center;
   }
-  
+
   .health-score-ring svg {
     @apply transform -rotate-90;
   }
-  
+
   .health-score-ring .background-ring {
     @apply stroke-muted;
   }
-  
+
   .health-score-ring .progress-ring {
     @apply transition-all duration-1000 ease-out;
     stroke-linecap: round;
   }
-  
+
   .health-excellent .progress-ring {
     stroke: hsl(var(--health-excellent));
   }
-  
+
   .health-good .progress-ring {
     stroke: hsl(var(--health-good));
   }
-  
+
   .health-fair .progress-ring {
     stroke: hsl(var(--health-fair));
   }
-  
+
   .health-poor .progress-ring {
     stroke: hsl(var(--health-poor));
   }
@@ -1143,11 +1159,11 @@ Your existing Tailwind CSS foundation provides excellent support for AI SaaS enh
     @apply animate-pulse;
     animation-duration: 2s;
   }
-  
+
   .ai-streaming-progress {
     @apply relative overflow-hidden;
   }
-  
+
   .ai-streaming-progress::after {
     @apply absolute inset-0 -translate-x-full;
     content: '';
@@ -1165,26 +1181,26 @@ Your existing Tailwind CSS foundation provides excellent support for AI SaaS enh
     @apply max-w-4xl mx-auto bg-card text-card-foreground;
     color: hsl(var(--report-primary));
   }
-  
+
   .report-header {
     @apply border-b-2 pb-6 mb-8;
     border-color: hsl(var(--report-primary));
   }
-  
+
   .report-section {
     @apply mb-8 last:mb-0;
   }
-  
+
   .report-table {
     @apply w-full border-collapse;
   }
-  
+
   .report-table th,
   .report-table td {
     @apply border p-3 text-left;
     border-color: hsl(var(--border));
   }
-  
+
   .report-table th {
     @apply font-semibold bg-muted;
     background-color: hsl(var(--report-neutral));
@@ -1194,15 +1210,15 @@ Your existing Tailwind CSS foundation provides excellent support for AI SaaS enh
   .tier-badge {
     @apply inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium uppercase tracking-wide;
   }
-  
+
   .tier-free {
     @apply bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300;
   }
-  
+
   .tier-professional {
     @apply bg-blue-100 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400;
   }
-  
+
   .tier-enterprise {
     @apply bg-purple-100 text-purple-700 dark:bg-purple-900/20 dark:text-purple-400;
   }
@@ -1211,19 +1227,27 @@ Your existing Tailwind CSS foundation provides excellent support for AI SaaS enh
 @layer utilities {
   /* NEW: Animation utilities for AI features */
   @keyframes streaming-shimmer {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
   }
-  
+
   @keyframes health-score-fill {
-    0% { stroke-dashoffset: 283; }
-    100% { stroke-dashoffset: var(--progress-offset); }
+    0% {
+      stroke-dashoffset: 283;
+    }
+    100% {
+      stroke-dashoffset: var(--progress-offset);
+    }
   }
-  
+
   .animate-streaming-shimmer {
     animation: streaming-shimmer 2s infinite;
   }
-  
+
   .animate-health-score-fill {
     animation: health-score-fill 2s ease-out forwards;
   }
@@ -1284,7 +1308,7 @@ describe('AIHealthScoreRing', () => {
     // Test score display
     expect(screen.getByText('85')).toBeInTheDocument()
     expect(screen.getByText(/85%/)).toBeInTheDocument()
-    
+
     // Test confidence indicator
     expect(screen.getByText(/92% confidence/)).toBeInTheDocument()
   })
@@ -1326,7 +1350,7 @@ describe('AIHealthScoreRing', () => {
     // Test ARIA attributes
     const ring = screen.getByRole('img')
     expect(ring).toHaveAttribute('aria-label', 'Business health score: 85 out of 100')
-    
+
     // Test screen reader content
     expect(screen.getByText(/85 out of 100/)).toBeInTheDocument()
   })
@@ -1413,7 +1437,9 @@ import { z } from 'zod'
 // Environment variable validation schema
 const envSchema = z.object({
   // Base Next.js configuration
-  NODE_ENV: z.enum(['development', 'staging', 'production']).default('development'),
+  NODE_ENV: z
+    .enum(['development', 'staging', 'production'])
+    .default('development'),
   NEXTAUTH_URL: z.string().url(),
   NEXTAUTH_SECRET: z.string().min(32),
   DATABASE_URL: z.string().url(),
@@ -1439,12 +1465,15 @@ const envSchema = z.object({
 // Parse and validate environment variables
 function createEnv() {
   const parsed = envSchema.safeParse(process.env)
-  
+
   if (!parsed.success) {
-    console.error('❌ Invalid environment variables:', parsed.error.flatten().fieldErrors)
+    console.error(
+      '❌ Invalid environment variables:',
+      parsed.error.flatten().fieldErrors
+    )
     throw new Error('Invalid environment configuration')
   }
-  
+
   return parsed.data
 }
 
@@ -1466,7 +1495,7 @@ Based on your existing codebase patterns and the complexity of AI SaaS features,
 
 ```typescript
 // ❌ WRONG - Float precision errors
-const profitMargin = (revenue - costs) / revenue * 100
+const profitMargin = ((revenue - costs) / revenue) * 100
 
 // ✅ CORRECT - Decimal precision
 import { Decimal } from 'decimal.js'
@@ -1494,6 +1523,7 @@ const profitMargin = new Decimal(revenue).minus(costs).div(revenue).mul(100)
 ### Quick Reference
 
 #### Common Commands
+
 ```bash
 # Development server with proper environment
 npm run dev
@@ -1509,6 +1539,7 @@ npm run db:migrate && npm run db:generate
 ```
 
 #### Key Import Patterns
+
 ```typescript
 // ShadCN UI components (existing patterns)
 import { Button } from '@/components/ui/button'
@@ -1528,6 +1559,7 @@ import { useSubscription } from '@/hooks/use-subscription'
 ```
 
 #### File Naming Conventions
+
 - **AI Components**: `ai-health-score-ring.tsx`, `streaming-progress-indicator.tsx`
 - **Subscription Components**: `subscription-plan-card.tsx`, `usage-metrics-display.tsx`
 - **Service Files**: `ai-analysis-service.ts`, `subscription-service.ts`
@@ -1535,6 +1567,7 @@ import { useSubscription } from '@/hooks/use-subscription'
 - **Type Files**: `ai-types.ts`, `subscription-types.ts`
 
 #### Project-Specific Patterns
+
 - **AI Analysis Results**: Always cache expensive calculations with proper revalidation
 - **WebSocket Connections**: Implement heartbeat and reconnection logic for reliability
 - **Financial Calculations**: Use Decimal.js for all currency and percentage calculations
@@ -1564,6 +1597,7 @@ The brownfield enhancement approach ensures zero disruption to current operation
 ---
 
 **Document Version Control:**
+
 - v1.0 - Frontend Architecture for AI SaaS Enhancement (January 3, 2025)
 - Review cycle: Technical Review → Frontend Team Review → Architecture Approval
 - Next review date: January 17, 2025

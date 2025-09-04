@@ -1,4 +1,4 @@
-import { toast, ExternalToast, ToastTypes } from 'sonner'
+import { toast, ExternalToast } from 'sonner'
 import React from 'react'
 
 export interface ToastHistoryItem {

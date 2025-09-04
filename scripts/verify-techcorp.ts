@@ -10,9 +10,9 @@ async function verifyTechCorp() {
         healthMetrics: true,
         forecastResults: true,
         owner: {
-          select: { email: true, name: true }
-        }
-      }
+          select: { email: true, name: true },
+        },
+      },
     })
 
     if (!business) {
@@ -40,7 +40,9 @@ async function verifyTechCorp() {
       console.log('Trajectory:', metric.trajectory)
     }
 
-    console.log('\n🎉 TechCorp Solutions is ready for Financial Health Dashboard testing!')
+    console.log(
+      '\n🎉 TechCorp Solutions is ready for Financial Health Dashboard testing!'
+    )
   } catch (error) {
     console.error('Error verifying TechCorp:', error)
   } finally {

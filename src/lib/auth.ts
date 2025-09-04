@@ -5,7 +5,7 @@ import LinkedInProvider from 'next-auth/providers/linkedin'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import bcrypt from 'bcryptjs'
 import { prisma } from './prisma'
-import { UserType } from '@prisma/client'
+import { UserType, SubscriptionTier, SubscriptionStatus } from '@prisma/client'
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -96,11 +96,27 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user, trigger, session }) {
-      // Include user type in JWT token
+      // Include user type and subscription info in JWT token
       if (user) {
         token.userType = user.userType
         token.firstName = user.firstName
         token.lastName = user.lastName
+        // Fetch subscription info on login
+        if (token.sub) {
+          const userWithSubscription = await prisma.user.findUnique({
+            where: { id: token.sub },
+            include: { subscription: true },
+          })
+          if (userWithSubscription) {
+            token.subscriptionTier = userWithSubscription.subscriptionTier
+            token.subscriptionStatus = userWithSubscription.subscriptionStatus
+            token.subscriptionId =
+              userWithSubscription.subscriptionId || undefined
+            token.currentPeriodEnd =
+              userWithSubscription.currentPeriodEnd?.toISOString()
+            token.trialEndsAt = userWithSubscription.trialEndsAt?.toISOString()
+          }
+        }
       }
 
       // Handle session updates
@@ -108,6 +124,22 @@ export const authOptions: NextAuthOptions = {
         token.userType = session.userType
         token.firstName = session.firstName
         token.lastName = session.lastName
+        // Refresh subscription info on session update
+        if (token.sub) {
+          const userWithSubscription = await prisma.user.findUnique({
+            where: { id: token.sub },
+            include: { subscription: true },
+          })
+          if (userWithSubscription) {
+            token.subscriptionTier = userWithSubscription.subscriptionTier
+            token.subscriptionStatus = userWithSubscription.subscriptionStatus
+            token.subscriptionId =
+              userWithSubscription.subscriptionId || undefined
+            token.currentPeriodEnd =
+              userWithSubscription.currentPeriodEnd?.toISOString()
+            token.trialEndsAt = userWithSubscription.trialEndsAt?.toISOString()
+          }
+        }
       }
 
       return token
@@ -119,6 +151,17 @@ export const authOptions: NextAuthOptions = {
         session.user.userType = token.userType as UserType
         session.user.firstName = token.firstName as string
         session.user.lastName = token.lastName as string
+        session.user.subscriptionTier =
+          token.subscriptionTier as SubscriptionTier
+        session.user.subscriptionStatus =
+          token.subscriptionStatus as SubscriptionStatus
+        session.user.subscriptionId = token.subscriptionId as string
+        session.user.currentPeriodEnd = token.currentPeriodEnd
+          ? new Date(token.currentPeriodEnd)
+          : undefined
+        session.user.trialEndsAt = token.trialEndsAt
+          ? new Date(token.trialEndsAt)
+          : undefined
       }
 
       return session
@@ -132,7 +175,7 @@ export const authOptions: NextAuthOptions = {
             where: { email: user.email! },
           })
 
-          // If user doesn't exist, create with additional profile data
+          // If user doesn't exist, create with additional profile data and default subscription
           if (!existingUser) {
             await prisma.user.create({
               data: {
@@ -144,14 +187,43 @@ export const authOptions: NextAuthOptions = {
                 userType: UserType.BUYER,
                 status: 'ACTIVE',
                 emailVerified: new Date(),
+                subscriptionTier: SubscriptionTier.FREE,
+                subscriptionStatus: SubscriptionStatus.ACTIVE,
+                subscription: {
+                  create: {
+                    tier: SubscriptionTier.FREE,
+                    status: SubscriptionStatus.ACTIVE,
+                    aiAnalysesPerMonthLimit: 5,
+                    portfolioSizeLimit: 1,
+                    reportGenerationLimit: 2,
+                  },
+                },
               },
             })
           } else {
-            // Update last login
+            // Update last login and ensure subscription exists
+            const subscription = await prisma.subscription.findUnique({
+              where: { userId: existingUser.id },
+            })
+
             await prisma.user.update({
               where: { id: existingUser.id },
               data: { lastLoginAt: new Date() },
             })
+
+            // Create default subscription if none exists
+            if (!subscription) {
+              await prisma.subscription.create({
+                data: {
+                  userId: existingUser.id,
+                  tier: SubscriptionTier.FREE,
+                  status: SubscriptionStatus.ACTIVE,
+                  aiAnalysesPerMonthLimit: 5,
+                  portfolioSizeLimit: 1,
+                  reportGenerationLimit: 2,
+                },
+              })
+            }
           }
 
           return true

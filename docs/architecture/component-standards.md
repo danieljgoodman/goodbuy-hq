@@ -24,13 +24,13 @@ interface AIAnalysisCardProps {
 }
 
 // Component following established ShadCN patterns
-export function AIAnalysisCard({ 
-  businessId, 
-  analysisType, 
+export function AIAnalysisCard({
+  businessId,
+  analysisType,
   isStreaming = false,
   confidence,
   onAnalyze,
-  className 
+  className
 }: AIAnalysisCardProps) {
   // Hooks follow existing patterns
   const [isLoading, setIsLoading] = React.useState(false)
@@ -64,8 +64,8 @@ export function AIAnalysisCard({
               <span className="text-sm">Analyzing...</span>
             </div>
           )}
-          
-          <Button 
+
+          <Button
             onClick={handleAnalyze}
             disabled={isLoading || isStreaming}
             className="w-full"
@@ -87,23 +87,27 @@ export type { AIAnalysisCardProps }
 
 ## Naming Conventions
 
-**Component Naming**: 
+**Component Naming**:
+
 - **AI Components**: Prefix with `AI` for analysis-specific components (`AIHealthScoreRing`, `AIStreamingProgress`)
 - **Generic Components**: Use descriptive names following existing patterns (`SubscriptionPlanCard`, `UsageMetrics`)
 - **Page Components**: Suffix with `Page` for route components (`AIToolsDashboardPage`, `PortfolioManagementPage`)
 
 **File Naming**:
+
 - **Components**: PascalCase matching component name (`AIAnalysisCard.tsx`, `ReportBuilder.tsx`)
 - **Hooks**: kebab-case with `use-` prefix (`use-ai-analysis.ts`, `use-subscription.ts`)
 - **Utilities**: kebab-case descriptive (`health-calculator.ts`, `streaming-client.ts`)
 - **Types**: kebab-case with domain prefix (`ai-types.ts`, `subscription-types.ts`)
 
 **Props and State**:
+
 - **Props**: camelCase with descriptive names (`businessId`, `analysisType`, `isStreaming`)
 - **State**: camelCase with action prefixes (`isLoading`, `hasError`, `streamingData`)
 - **Handlers**: camelCase with `handle` prefix (`handleAnalyze`, `handleSubscriptionChange`)
 
 **Directory Organization**:
+
 - **Feature Groups**: kebab-case directories (`ai-analysis/`, `subscription-management/`)
 - **Component Collections**: plural descriptive names (`charts/`, `forms/`, `dashboards/`)
 - **Shared Utilities**: singular descriptive names (`validation/`, `utils/`, `constants/`)

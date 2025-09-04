@@ -5,6 +5,7 @@
 The enhanced AI SaaS features must seamlessly integrate with your existing ShadCN UI component library and established colors.md theming system. New AI dashboard components will extend current card-based layouts, leveraging existing progress indicators, chart components, and form elements to maintain visual consistency. The professional reporting interfaces will build upon your current export capabilities while adding white-labeling customization that integrates with the established theme switching infrastructure.
 
 Key integration points include:
+
 - **Navigation Enhancement**: Extending current navigation patterns to accommodate AI tool categories while preserving existing user workflows
 - **Component Library Extension**: Building new AI analysis components (health score rings, streaming progress indicators, portfolio comparison tables) using existing ShadCN patterns and CSS variable architecture
 - **Theme System Expansion**: Adding professional/white-label theme variants that work within your current colors.md configuration system
@@ -12,11 +13,13 @@ Key integration points include:
 ## Modified/New Screens and Views
 
 **Enhanced Screens (Modifications to Existing)**:
+
 - **Main Dashboard**: Extended to feature AI tools as primary navigation with existing business evaluation tools integrated as legacy/advanced options
 - **Business Analysis Pages**: Enhanced with real-time streaming analysis overlays while maintaining current static analysis functionality
 - **User Profile/Settings**: Extended with subscription management, usage analytics, and professional branding configuration
 
 **New Screens (Additional Views)**:
+
 - **AI Tools Hub**: Central dashboard showcasing Business Valuation, Health Analysis, Financial Intelligence, and Portfolio Analysis with usage tracking
 - **Real-time Analysis Streaming Interface**: Progressive results display with confidence indicators and partial result visualization
 - **Professional Report Builder**: Template selection, white-labeling customization, and multi-format export capabilities

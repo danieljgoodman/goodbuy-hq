@@ -40,17 +40,17 @@ import { immer } from 'zustand/middleware/immer'
 interface AIAnalysisState {
   // Active analysis sessions
   activeAnalyses: Record<string, AnalysisSession>
-  
+
   // Streaming state for real-time progress
   streamingConnections: Record<string, WebSocketConnection>
-  
+
   // Analysis results cache
   results: Record<string, AnalysisResult>
-  
+
   // Loading and error states
   isAnalyzing: boolean
   error: string | null
-  
+
   // Actions
   startAnalysis: (businessId: string, type: AnalysisType) => Promise<void>
   updateProgress: (sessionId: string, progress: ProgressUpdate) => void
@@ -71,10 +71,10 @@ export const useAIAnalysisStore = create<AIAnalysisState>()(
 
       // Analysis lifecycle management
       startAnalysis: async (businessId: string, type: AnalysisType) => {
-        set((state) => {
+        set(state => {
           state.isAnalyzing = true
           state.error = null
-          
+
           const sessionId = `${businessId}-${type}-${Date.now()}`
           state.activeAnalyses[sessionId] = {
             id: sessionId,
@@ -95,36 +95,37 @@ export const useAIAnalysisStore = create<AIAnalysisState>()(
           })
 
           if (!response.ok) throw new Error('Analysis failed to start')
-          
+
           const { sessionId, streamUrl } = await response.json()
-          
+
           // Establish WebSocket connection for real-time updates
           get().setupStreaming(sessionId, streamUrl)
-          
         } catch (error) {
-          set((state) => {
+          set(state => {
             state.isAnalyzing = false
-            state.error = error instanceof Error ? error.message : 'Unknown error'
+            state.error =
+              error instanceof Error ? error.message : 'Unknown error'
           })
         }
       },
 
       // Real-time progress updates
       updateProgress: (sessionId: string, progress: ProgressUpdate) => {
-        set((state) => {
+        set(state => {
           if (state.activeAnalyses[sessionId]) {
             state.activeAnalyses[sessionId].progress = progress.percentage
             state.activeAnalyses[sessionId].status = progress.stage
-            state.activeAnalyses[sessionId].partialResults = progress.partialResults
+            state.activeAnalyses[sessionId].partialResults =
+              progress.partialResults
           }
         })
       },
 
       // Analysis completion handling
       completeAnalysis: (sessionId: string, result: AnalysisResult) => {
-        set((state) => {
+        set(state => {
           state.isAnalyzing = false
-          
+
           // Move from active to completed
           const analysis = state.activeAnalyses[sessionId]
           if (analysis) {
@@ -134,11 +135,11 @@ export const useAIAnalysisStore = create<AIAnalysisState>()(
               businessId: analysis.businessId,
               completedAt: new Date(),
             }
-            
+
             // Clean up active analysis
             delete state.activeAnalyses[sessionId]
           }
-          
+
           // Clean up streaming connection
           if (state.streamingConnections[sessionId]) {
             state.streamingConnections[sessionId].close()
@@ -149,7 +150,7 @@ export const useAIAnalysisStore = create<AIAnalysisState>()(
 
       // Error handling
       clearError: () => {
-        set((state) => {
+        set(state => {
           state.error = null
         })
       },
@@ -157,26 +158,26 @@ export const useAIAnalysisStore = create<AIAnalysisState>()(
       // WebSocket connection management
       setupStreaming: (sessionId: string, streamUrl: string) => {
         const ws = new WebSocket(streamUrl)
-        
-        ws.onmessage = (event) => {
+
+        ws.onmessage = event => {
           const update = JSON.parse(event.data) as ProgressUpdate
           get().updateProgress(sessionId, update)
         }
-        
+
         ws.onclose = () => {
-          set((state) => {
+          set(state => {
             delete state.streamingConnections[sessionId]
           })
         }
-        
+
         ws.onerror = () => {
-          set((state) => {
+          set(state => {
             state.error = 'Streaming connection failed'
             delete state.streamingConnections[sessionId]
           })
         }
-        
-        set((state) => {
+
+        set(state => {
           state.streamingConnections[sessionId] = ws
         })
       },
@@ -187,17 +188,19 @@ export const useAIAnalysisStore = create<AIAnalysisState>()(
 // Custom hooks for component integration
 export const useAIAnalysis = (businessId?: string) => {
   const store = useAIAnalysisStore()
-  
+
   // Filter active analyses for specific business
-  const businessAnalyses = businessId 
-    ? Object.values(store.activeAnalyses).filter(a => a.businessId === businessId)
+  const businessAnalyses = businessId
+    ? Object.values(store.activeAnalyses).filter(
+        a => a.businessId === businessId
+      )
     : Object.values(store.activeAnalyses)
-    
+
   // Get results for business
   const businessResults = businessId
     ? Object.values(store.results).filter(r => r.businessId === businessId)
     : Object.values(store.results)
-  
+
   return {
     activeAnalyses: businessAnalyses,
     results: businessResults,

@@ -67,7 +67,9 @@ import { z } from 'zod'
 // Environment variable validation schema
 const envSchema = z.object({
   // Base Next.js configuration
-  NODE_ENV: z.enum(['development', 'staging', 'production']).default('development'),
+  NODE_ENV: z
+    .enum(['development', 'staging', 'production'])
+    .default('development'),
   NEXTAUTH_URL: z.string().url(),
   NEXTAUTH_SECRET: z.string().min(32),
   DATABASE_URL: z.string().url(),
@@ -93,12 +95,15 @@ const envSchema = z.object({
 // Parse and validate environment variables
 function createEnv() {
   const parsed = envSchema.safeParse(process.env)
-  
+
   if (!parsed.success) {
-    console.error('❌ Invalid environment variables:', parsed.error.flatten().fieldErrors)
+    console.error(
+      '❌ Invalid environment variables:',
+      parsed.error.flatten().fieldErrors
+    )
     throw new Error('Invalid environment configuration')
   }
-  
+
   return parsed.data
 }
 

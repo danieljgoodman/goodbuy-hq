@@ -50,7 +50,7 @@ describe('AIHealthScoreRing', () => {
     // Test score display
     expect(screen.getByText('85')).toBeInTheDocument()
     expect(screen.getByText(/85%/)).toBeInTheDocument()
-    
+
     // Test confidence indicator
     expect(screen.getByText(/92% confidence/)).toBeInTheDocument()
   })
@@ -92,7 +92,7 @@ describe('AIHealthScoreRing', () => {
     // Test ARIA attributes
     const ring = screen.getByRole('img')
     expect(ring).toHaveAttribute('aria-label', 'Business health score: 85 out of 100')
-    
+
     // Test screen reader content
     expect(screen.getByText(/85 out of 100/)).toBeInTheDocument()
   })

@@ -53,42 +53,49 @@ const navigationItems = [
     title: 'Services',
     items: [
       {
-        title: 'Business Calculator',
-        href: '/calculator',
-        description:
-          'Calculate your business value with AI-powered analysis and comprehensive metrics',
-        icon: Calculator,
+        title: 'Dashboard',
+        href: '/ai-tools/dashboard',
+        description: 'AI tools overview and comprehensive business analytics',
+        icon: BarChart3,
         featured: true,
         badge: 'Popular',
       },
       {
+        title: 'Business Calculator',
+        href: '/calculator',
+        description: 'Calculate your business value with AI-powered analysis',
+        icon: Calculator,
+      },
+      {
         title: 'AI Valuation',
         href: '/ai-valuation',
-        description:
-          'Get comprehensive AI-driven business valuation with market insights',
+        description: 'AI-driven business valuation with market insights',
         icon: Sparkles,
         badge: 'New',
       },
       {
         title: 'Financial Health',
         href: '/financial-health',
-        description:
-          'Analyze your business financial performance and identify growth opportunities',
+        description: 'Analyze your business financial performance',
         icon: BarChart3,
       },
       {
         title: 'Market Analysis',
         href: '/market-analysis',
-        description:
-          'Understand your market position with competitive intelligence',
+        description: 'Market position intelligence and competitive analysis',
         icon: Target,
       },
       {
         title: 'Growth Score',
         href: '/growth-score',
-        description:
-          'Measure your business growth potential and scalability metrics',
+        description: 'Growth potential metrics and scalability analysis',
         icon: TrendingUp,
+      },
+      {
+        title: 'Usage & Billing',
+        href: '/ai-tools/subscription',
+        description: 'Subscription management and usage tracking',
+        icon: Settings,
       },
     ],
   },

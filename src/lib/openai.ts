@@ -1,6 +1,6 @@
 import OpenAI from 'openai'
 import { RateLimiterMemory } from 'rate-limiter-flexible'
-import pRetry from 'p-retry'
+import pRetry, { AbortError } from 'p-retry'
 import winston from 'winston'
 
 const logger = winston.createLogger({
@@ -32,7 +32,6 @@ export class OpenAIService {
     })
 
     this.rateLimiter = new RateLimiterMemory({
-      keyGenerator: () => 'openai-api',
       points: 10,
       duration: 60,
     })
@@ -97,7 +96,7 @@ export class OpenAIService {
             throw error
           }
 
-          throw new pRetry.AbortError(error.message)
+          throw new AbortError(error.message)
         }
       },
       {
@@ -108,7 +107,7 @@ export class OpenAIService {
         onFailedAttempt: error => {
           logger.warn(`Retry attempt ${error.attemptNumber} failed`, {
             context,
-            error: error.message,
+            error: error.retriesLeft,
           })
         },
       }

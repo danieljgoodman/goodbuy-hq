@@ -22,6 +22,14 @@ model User {
   position                 String?
   bio                      String?
   hashedPassword           String?
+  subscriptionTier         SubscriptionTier          @default(FREE)
+  subscriptionStatus       SubscriptionStatus        @default(INACTIVE)
+  subscriptionId           String?                   @unique
+  stripeCustomerId         String?                   @unique
+  currentPeriodStart       DateTime?
+  currentPeriodEnd         DateTime?
+  cancelAtPeriodEnd        Boolean                   @default(false)
+  trialEndsAt              DateTime?
   createdAt                DateTime                  @default(now())
   updatedAt                DateTime                  @updatedAt
   lastLoginAt              DateTime?
@@ -33,6 +41,7 @@ model User {
   documentAccessLogs       DocumentAccessLog[]
   evaluations              Evaluation[]
   favorites                Favorite[]
+  healthAlerts             HealthAlert[]
   inquiries                Inquiry[]
   meetingAttendances       MeetingAttendee[]
   meetingReminders         MeetingReminder[]
@@ -43,9 +52,10 @@ model User {
   savedSearches            SavedSearch[]
   sessions                 Session[]
   uploadedDocuments        SharedDocument[]
+  subscription             Subscription?
   threadParticipants       ThreadParticipant[]
+  usageRecords             UsageRecord[]
   verificationTokens       VerificationToken[]
-  healthAlerts             HealthAlert[]
 
   @@map("users")
 }
@@ -151,11 +161,11 @@ model Business {
   communicationThreads CommunicationThread[]
   evaluations          Evaluation[]
   favorites            Favorite[]
-  inquiries            Inquiry[]
-  healthMetrics        HealthMetric[]
   forecastResults      ForecastResult[]
-  quickbooksConnection QuickBooksConnection?
   healthAlerts         HealthAlert[]
+  healthMetrics        HealthMetric[]
+  inquiries            Inquiry[]
+  quickbooksConnection QuickBooksConnection?
 
   @@map("businesses")
 }
@@ -555,42 +565,42 @@ model VerificationToken {
 }
 
 model HealthMetric {
-  id                    String           @id @default(cuid())
-  businessId            String
-  overallScore          Int              @db.SmallInt
-  growthScore           Int              @db.SmallInt
-  operationalScore      Int              @db.SmallInt
-  financialScore        Int              @db.SmallInt
-  saleReadinessScore    Int              @db.SmallInt
-  confidenceLevel       Int              @db.SmallInt
-  trajectory            HealthTrajectory @default(STABLE)
-  calculatedAt          DateTime         @default(now())
-  dataSources           Json?
-  calculationMetadata   Json?
-  createdAt             DateTime         @default(now())
-  updatedAt             DateTime         @updatedAt
-  business              Business         @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  id                  String           @id @default(cuid())
+  businessId          String
+  overallScore        Int              @db.SmallInt
+  growthScore         Int              @db.SmallInt
+  operationalScore    Int              @db.SmallInt
+  financialScore      Int              @db.SmallInt
+  saleReadinessScore  Int              @db.SmallInt
+  confidenceLevel     Int              @db.SmallInt
+  trajectory          HealthTrajectory @default(STABLE)
+  calculatedAt        DateTime         @default(now())
+  dataSources         Json?
+  calculationMetadata Json?
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
+  business            Business         @relation(fields: [businessId], references: [id], onDelete: Cascade)
 
-  @@index([businessId, calculatedAt(sort: Desc)], name: "idx_health_metrics_business_date")
+  @@index([businessId, calculatedAt(sort: Desc)], map: "idx_health_metrics_business_date")
   @@map("health_metrics")
 }
 
 model ForecastResult {
-  id                      String      @id @default(cuid())
+  id                      String       @id @default(cuid())
   businessId              String
   forecastType            ForecastType
-  forecastPeriod          Int         @db.SmallInt
-  predictedValue          Decimal     @db.Decimal(15, 2)
-  confidenceIntervalLower Decimal     @db.Decimal(15, 2)
-  confidenceIntervalUpper Decimal     @db.Decimal(15, 2)
-  confidenceScore         Int         @db.SmallInt
-  modelUsed               String      @db.VarChar(50)
-  actualValue             Decimal?    @db.Decimal(15, 2)
-  createdAt               DateTime    @default(now())
-  updatedAt               DateTime    @updatedAt
-  business                Business    @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  forecastPeriod          Int          @db.SmallInt
+  predictedValue          Decimal      @db.Decimal(15, 2)
+  confidenceIntervalLower Decimal      @db.Decimal(15, 2)
+  confidenceIntervalUpper Decimal      @db.Decimal(15, 2)
+  confidenceScore         Int          @db.SmallInt
+  modelUsed               String       @db.VarChar(50)
+  actualValue             Decimal?     @db.Decimal(15, 2)
+  createdAt               DateTime     @default(now())
+  updatedAt               DateTime     @updatedAt
+  business                Business     @relation(fields: [businessId], references: [id], onDelete: Cascade)
 
-  @@index([businessId, forecastType], name: "idx_forecast_results_business_type")
+  @@index([businessId, forecastType], map: "idx_forecast_results_business_type")
   @@map("forecast_results")
 }
 
@@ -598,8 +608,8 @@ model QuickBooksConnection {
   id                    String     @id @default(cuid())
   businessId            String     @unique
   companyId             String     @db.VarChar(100)
-  accessTokenEncrypted  String?    @db.Text
-  refreshTokenEncrypted String?    @db.Text
+  accessTokenEncrypted  String?
+  refreshTokenEncrypted String?
   tokenExpiresAt        DateTime?
   lastSyncAt            DateTime?
   syncStatus            SyncStatus @default(PENDING)
@@ -609,7 +619,7 @@ model QuickBooksConnection {
   updatedAt             DateTime   @updatedAt
   business              Business   @relation(fields: [businessId], references: [id], onDelete: Cascade)
 
-  @@index([companyId], name: "idx_quickbooks_connections_company")
+  @@index([companyId], map: "idx_quickbooks_connections_company")
   @@map("quickbooks_connections")
 }
 
@@ -620,7 +630,7 @@ model HealthAlert {
   alertType      AlertType
   severity       AlertSeverity
   title          String        @db.VarChar(200)
-  description    String?       @db.Text
+  description    String?
   thresholdValue Decimal?      @db.Decimal(10, 2)
   actualValue    Decimal?      @db.Decimal(10, 2)
   triggeredAt    DateTime      @default(now())
@@ -632,8 +642,53 @@ model HealthAlert {
   business       Business      @relation(fields: [businessId], references: [id], onDelete: Cascade)
   user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@index([businessId, severity, triggeredAt(sort: Desc)], name: "idx_health_alerts_business_severity")
+  @@index([businessId, severity, triggeredAt(sort: Desc)], map: "idx_health_alerts_business_severity")
   @@map("health_alerts")
+}
+
+model Subscription {
+  id                      String             @id @default(cuid())
+  userId                  String             @unique
+  stripeSubscriptionId    String?            @unique
+  stripePriceId           String?
+  stripeCustomerId        String?
+  tier                    SubscriptionTier   @default(FREE)
+  status                  SubscriptionStatus @default(INACTIVE)
+  currentPeriodStart      DateTime?
+  currentPeriodEnd        DateTime?
+  cancelAtPeriodEnd       Boolean            @default(false)
+  canceledAt              DateTime?
+  trialStart              DateTime?
+  trialEnd                DateTime?
+  metadata                Json?
+  aiAnalysesPerMonthLimit Int                @default(5)
+  portfolioSizeLimit      Int                @default(1)
+  reportGenerationLimit   Int                @default(2)
+  currentAIAnalysesUsed   Int                @default(0)
+  currentReportsGenerated Int                @default(0)
+  billingCycleResetAt     DateTime?
+  createdAt               DateTime           @default(now())
+  updatedAt               DateTime           @updatedAt
+  user                    User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("subscriptions")
+}
+
+model UsageRecord {
+  id            String   @id @default(cuid())
+  userId        String
+  feature       String
+  action        String
+  resourceType  String?
+  resourceId    String?
+  quantity      Int      @default(1)
+  metadata      Json?
+  billingPeriod String?
+  createdAt     DateTime @default(now())
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, feature, createdAt(sort: Desc)], map: "idx_usage_records_user_feature")
+  @@map("usage_records")
 }
 
 enum UserType {
@@ -761,4 +816,19 @@ enum AlertSeverity {
   MEDIUM
   HIGH
   CRITICAL
+}
+
+enum SubscriptionTier {
+  FREE
+  PROFESSIONAL
+  ENTERPRISE
+}
+
+enum SubscriptionStatus {
+  INACTIVE
+  ACTIVE
+  PAST_DUE
+  CANCELED
+  UNPAID
+  TRIALING
 }

@@ -1,0 +1,357 @@
+#!/usr/bin/env tsx
+
+/**
+ * Health Scoring Edge Cases Test Script
+ *
+ * Tests edge cases, missing data scenarios, and error handling
+ */
+
+import { calculateHealthScores } from '../src/lib/health-scoring'
+import type { Business, BusinessCategory } from '@prisma/client'
+
+// Create minimal business template
+const createTestBusiness = (overrides: Partial<Business> = {}): Business => ({
+  id: 'test-business',
+  title: 'Test Business',
+  description: 'Test business description',
+  industry: 'Test',
+  category: 'OTHER' as BusinessCategory,
+  location: 'Test Location',
+  established: new Date('2020-01-01'),
+  employees: 5,
+  status: 'APPROVED' as const,
+  featured: false,
+  images: [],
+  documents: [],
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  ownerId: 'test-owner',
+  inquiryCount: 0,
+  viewCount: 0,
+  priority: 0,
+  country: 'US',
+  listingType: 'BUSINESS_SALE' as const,
+
+  // Financial defaults
+  askingPrice: 100000,
+  revenue: 50000,
+  profit: 5000,
+
+  ...overrides,
+})
+
+const edgeCaseTests = [
+  {
+    name: 'Minimal Data - Only Required Fields',
+    business: createTestBusiness({
+      // Only the most basic fields, everything else null/undefined
+      askingPrice: null,
+      revenue: null,
+      profit: null,
+      monthlyRevenue: null,
+      cashFlow: null,
+      ebitda: null,
+      grossMargin: null,
+      netMargin: null,
+      yearlyGrowth: null,
+      totalAssets: null,
+      liabilities: null,
+    }),
+  },
+  {
+    name: 'Zero Revenue Business',
+    business: createTestBusiness({
+      revenue: 0,
+      profit: -10000,
+      monthlyRevenue: 0,
+      cashFlow: -5000,
+      yearlyGrowth: -1.0, // -100% growth
+    }),
+  },
+  {
+    name: 'Extremely High Values',
+    business: createTestBusiness({
+      askingPrice: 50000000,
+      revenue: 10000000,
+      profit: 2000000,
+      monthlyRevenue: 833333,
+      cashFlow: 2500000,
+      ebitda: 3000000,
+      employees: 500,
+      totalAssets: 8000000,
+      customerBase: 50000,
+      yearlyGrowth: 2.0, // 200% growth
+    }),
+  },
+  {
+    name: 'Negative Margins',
+    business: createTestBusiness({
+      revenue: 100000,
+      profit: -20000,
+      grossMargin: -0.1, // Negative 10%
+      netMargin: -0.2, // Negative 20%
+      cashFlow: -15000,
+      yearlyGrowth: -0.5, // -50% growth
+    }),
+  },
+  {
+    name: 'Very New Business',
+    business: createTestBusiness({
+      established: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), // 30 days ago
+      employees: 1,
+      revenue: 5000,
+      profit: 500,
+      customerBase: 5,
+    }),
+  },
+  {
+    name: 'Very Old Business',
+    business: createTestBusiness({
+      established: new Date('1950-01-01'),
+      employees: 100,
+      revenue: 500000,
+      profit: 50000,
+      customerBase: 1000,
+    }),
+  },
+  {
+    name: 'Inconsistent Data',
+    business: createTestBusiness({
+      revenue: 100000,
+      monthlyRevenue: 50000, // Would be 600k annually - inconsistent
+      profit: 150000, // Profit > Revenue (impossible)
+      grossMargin: 2.0, // 200% margin (suspicious)
+      totalAssets: 50000,
+      liabilities: 75000, // Liabilities > Assets
+    }),
+  },
+  {
+    name: 'Restaurant with Complete Data',
+    business: createTestBusiness({
+      category: 'RESTAURANT' as BusinessCategory,
+      established: new Date('2018-06-01'),
+      employees: 12,
+      revenue: 450000,
+      profit: 35000,
+      monthlyRevenue: 37500,
+      cashFlow: 40000,
+      ebitda: 55000,
+      grossMargin: 0.35,
+      netMargin: 0.078,
+      yearlyGrowth: 0.08,
+      totalAssets: 180000,
+      liabilities: 85000,
+      equipment: 75000,
+      inventory: 15000,
+      customerBase: 850,
+      hoursOfOperation: 'Monday-Sunday 11am-10pm',
+      daysOpen: [
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+        'Sunday',
+      ],
+      seasonality: 'Busy during summer months, slower in winter',
+      competition: 'High competition from established restaurants and chains',
+    }),
+  },
+]
+
+async function testEdgeCase(testCase: any) {
+  console.log(`\n🧪 Testing: ${testCase.name}`)
+  console.log('-'.repeat(50))
+
+  const startTime = Date.now()
+
+  try {
+    const result = await calculateHealthScores(testCase.business)
+    const calculationTime = Date.now() - startTime
+
+    console.log(`✅ Calculation successful (${calculationTime}ms)`)
+    console.log(
+      `Overall: ${result.scores.overall.toFixed(1)}, Confidence: ${result.scores.confidence.toFixed(1)}`
+    )
+
+    // Check for reasonable behavior
+    const issues: string[] = []
+
+    if (isNaN(result.scores.overall)) {
+      issues.push('Overall score is NaN')
+    }
+    if (result.scores.overall < 0 || result.scores.overall > 100) {
+      issues.push(`Overall score out of range: ${result.scores.overall}`)
+    }
+    if (result.scores.confidence < 0 || result.scores.confidence > 100) {
+      issues.push(`Confidence out of range: ${result.scores.confidence}`)
+    }
+
+    // For minimal data, confidence should be lower
+    if (
+      testCase.name.includes('Minimal Data') &&
+      result.scores.confidence > 70
+    ) {
+      issues.push('Confidence too high for minimal data')
+    }
+
+    // For inconsistent data, confidence should be lower
+    if (
+      testCase.name.includes('Inconsistent') &&
+      result.scores.confidence > 65
+    ) {
+      issues.push('Confidence too high for inconsistent data')
+    }
+
+    if (issues.length > 0) {
+      console.log('⚠️  Issues found:')
+      issues.forEach(issue => console.log(`  • ${issue}`))
+      return false
+    }
+
+    return true
+  } catch (error) {
+    console.log(`❌ Error: ${error.message}`)
+    return false
+  }
+}
+
+async function testConfidenceScoring() {
+  console.log('\n🎯 CONFIDENCE SCORING VALIDATION')
+  console.log('='.repeat(50))
+
+  const confidenceTests = [
+    {
+      name: 'Complete Data',
+      business: createTestBusiness({
+        revenue: 100000,
+        profit: 15000,
+        monthlyRevenue: 8333,
+        cashFlow: 18000,
+        ebitda: 22000,
+        grossMargin: 0.6,
+        netMargin: 0.15,
+        yearlyGrowth: 0.1,
+        totalAssets: 75000,
+        liabilities: 25000,
+        employees: 8,
+        customerBase: 150,
+      }),
+    },
+    {
+      name: 'Missing Financial Data',
+      business: createTestBusiness({
+        revenue: 100000,
+        // Missing: profit, cashFlow, ebitda, margins
+        employees: 8,
+        customerBase: 150,
+      }),
+    },
+    {
+      name: 'Missing Operational Data',
+      business: createTestBusiness({
+        revenue: 100000,
+        profit: 15000,
+        monthlyRevenue: 8333,
+        cashFlow: 18000,
+        // Missing: employees, customerBase, operational details
+        employees: null,
+        customerBase: null,
+      }),
+    },
+  ]
+
+  const results = []
+  for (const test of confidenceTests) {
+    console.log(`\nTesting: ${test.name}`)
+    try {
+      const result = await calculateHealthScores(test.business)
+      const confidence = result.scores.confidence
+      console.log(`Confidence: ${confidence.toFixed(1)}%`)
+      results.push({ name: test.name, confidence })
+    } catch (error) {
+      console.log(`Error: ${error.message}`)
+      results.push({ name: test.name, confidence: 0 })
+    }
+  }
+
+  // Validate confidence makes sense
+  const complete = results.find(r => r.name === 'Complete Data')
+  const missingFinancial = results.find(
+    r => r.name === 'Missing Financial Data'
+  )
+  const missingOperational = results.find(
+    r => r.name === 'Missing Operational Data'
+  )
+
+  let confidenceLogicPassed = true
+
+  if (
+    complete &&
+    missingFinancial &&
+    complete.confidence <= missingFinancial.confidence
+  ) {
+    console.log(
+      '❌ Complete data should have higher confidence than missing financial data'
+    )
+    confidenceLogicPassed = false
+  }
+
+  if (
+    complete &&
+    missingOperational &&
+    complete.confidence <= missingOperational.confidence
+  ) {
+    console.log(
+      '❌ Complete data should have higher confidence than missing operational data'
+    )
+    confidenceLogicPassed = false
+  }
+
+  if (confidenceLogicPassed) {
+    console.log('✅ Confidence scoring logic is working correctly')
+  }
+
+  return confidenceLogicPassed
+}
+
+async function main() {
+  console.log('🧪 HEALTH SCORING EDGE CASES & ERROR HANDLING TEST')
+  console.log('=='.repeat(35))
+
+  let allPassed = true
+  let testsPassed = 0
+
+  // Test edge cases
+  console.log('\n🔬 Testing Edge Cases...')
+  for (const testCase of edgeCaseTests) {
+    const passed = await testEdgeCase(testCase)
+    if (passed) testsPassed++
+    else allPassed = false
+  }
+
+  // Test confidence scoring
+  const confidencePassed = await testConfidenceScoring()
+  if (!confidencePassed) allPassed = false
+
+  // Summary
+  console.log('\n📋 EDGE CASE TEST SUMMARY')
+  console.log('='.repeat(50))
+  console.log(`Tests passed: ${testsPassed}/${edgeCaseTests.length}`)
+  console.log(`Confidence logic: ${confidencePassed ? 'PASSED' : 'FAILED'}`)
+  console.log(
+    `Overall: ${allPassed ? '✅ ALL TESTS PASSED' : '❌ SOME TESTS FAILED'}`
+  )
+
+  if (allPassed) {
+    console.log('\n🎉 Health scoring engine handles edge cases correctly!')
+    console.log('✅ Error handling and data validation working properly')
+  }
+
+  return allPassed ? 0 : 1
+}
+
+if (require.main === module) {
+  main().then(exitCode => process.exit(exitCode))
+}

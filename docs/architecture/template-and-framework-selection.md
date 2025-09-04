@@ -14,6 +14,7 @@ Your GoodBuy HQ project is built on **Next.js 14.2.32** with **React 18.3.1** an
 **Framework Decision:** ✅ **Continue with existing Next.js 14 App Router** - No starter template needed as you have a sophisticated brownfield application.
 
 **Brownfield Integration Constraints:**
+
 1. Must maintain existing ShadCN UI component patterns and Radix UI foundations
 2. Must preserve established Tailwind CSS configuration and theme system
 3. Must integrate with existing authentication, database, and real-time infrastructure
@@ -21,8 +22,8 @@ Your GoodBuy HQ project is built on **Next.js 14.2.32** with **React 18.3.1** an
 
 ## Change Log
 
-| Date | Version | Description | Author |
-|------|---------|-------------|---------|
-| 2025-01-03 | 1.0 | Frontend Architecture for AI SaaS Enhancement | Winston (Architect) |
+| Date       | Version | Description                                   | Author              |
+| ---------- | ------- | --------------------------------------------- | ------------------- |
+| 2025-01-03 | 1.0     | Frontend Architecture for AI SaaS Enhancement | Winston (Architect) |
 
 ---

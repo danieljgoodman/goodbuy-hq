@@ -55,6 +55,13 @@ export default withAuth(
       }
     }
 
+    // AI Tools access control with subscription validation
+    if (pathname.startsWith('/ai-tools')) {
+      // All authenticated users can access AI tools dashboard
+      // Specific features are controlled by subscription tiers within components
+      return NextResponse.next()
+    }
+
     return NextResponse.next()
   },
   {
@@ -106,5 +113,8 @@ export const config = {
      * - public files (public folder)
      */
     '/((?!api/auth|api/businesses|_next/static|_next/image|favicon.ico|public).*)',
+    '/ai-tools/:path*',
+    '/api/ai/:path*',
+    '/api/subscription/:path*',
   ],
 }

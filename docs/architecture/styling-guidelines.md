@@ -120,19 +120,19 @@ Your existing Tailwind CSS foundation provides excellent support for AI SaaS enh
   .ai-confidence-indicator {
     @apply inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium;
   }
-  
+
   .ai-confidence-high {
     @apply bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400;
     background-color: hsl(var(--ai-confidence-high) / 0.1);
     color: hsl(var(--ai-confidence-high));
   }
-  
+
   .ai-confidence-medium {
     @apply bg-amber-100 text-amber-800 dark:bg-amber-900/20 dark:text-amber-400;
     background-color: hsl(var(--ai-confidence-medium) / 0.1);
     color: hsl(var(--ai-confidence-medium));
   }
-  
+
   .ai-confidence-low {
     @apply bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400;
     background-color: hsl(var(--ai-confidence-low) / 0.1);
@@ -143,32 +143,32 @@ Your existing Tailwind CSS foundation provides excellent support for AI SaaS enh
   .health-score-ring {
     @apply relative inline-flex items-center justify-center;
   }
-  
+
   .health-score-ring svg {
     @apply transform -rotate-90;
   }
-  
+
   .health-score-ring .background-ring {
     @apply stroke-muted;
   }
-  
+
   .health-score-ring .progress-ring {
     @apply transition-all duration-1000 ease-out;
     stroke-linecap: round;
   }
-  
+
   .health-excellent .progress-ring {
     stroke: hsl(var(--health-excellent));
   }
-  
+
   .health-good .progress-ring {
     stroke: hsl(var(--health-good));
   }
-  
+
   .health-fair .progress-ring {
     stroke: hsl(var(--health-fair));
   }
-  
+
   .health-poor .progress-ring {
     stroke: hsl(var(--health-poor));
   }
@@ -178,11 +178,11 @@ Your existing Tailwind CSS foundation provides excellent support for AI SaaS enh
     @apply animate-pulse;
     animation-duration: 2s;
   }
-  
+
   .ai-streaming-progress {
     @apply relative overflow-hidden;
   }
-  
+
   .ai-streaming-progress::after {
     @apply absolute inset-0 -translate-x-full;
     content: '';
@@ -200,26 +200,26 @@ Your existing Tailwind CSS foundation provides excellent support for AI SaaS enh
     @apply max-w-4xl mx-auto bg-card text-card-foreground;
     color: hsl(var(--report-primary));
   }
-  
+
   .report-header {
     @apply border-b-2 pb-6 mb-8;
     border-color: hsl(var(--report-primary));
   }
-  
+
   .report-section {
     @apply mb-8 last:mb-0;
   }
-  
+
   .report-table {
     @apply w-full border-collapse;
   }
-  
+
   .report-table th,
   .report-table td {
     @apply border p-3 text-left;
     border-color: hsl(var(--border));
   }
-  
+
   .report-table th {
     @apply font-semibold bg-muted;
     background-color: hsl(var(--report-neutral));
@@ -229,15 +229,15 @@ Your existing Tailwind CSS foundation provides excellent support for AI SaaS enh
   .tier-badge {
     @apply inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium uppercase tracking-wide;
   }
-  
+
   .tier-free {
     @apply bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300;
   }
-  
+
   .tier-professional {
     @apply bg-blue-100 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400;
   }
-  
+
   .tier-enterprise {
     @apply bg-purple-100 text-purple-700 dark:bg-purple-900/20 dark:text-purple-400;
   }
@@ -246,19 +246,27 @@ Your existing Tailwind CSS foundation provides excellent support for AI SaaS enh
 @layer utilities {
   /* NEW: Animation utilities for AI features */
   @keyframes streaming-shimmer {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
   }
-  
+
   @keyframes health-score-fill {
-    0% { stroke-dashoffset: 283; }
-    100% { stroke-dashoffset: var(--progress-offset); }
+    0% {
+      stroke-dashoffset: 283;
+    }
+    100% {
+      stroke-dashoffset: var(--progress-offset);
+    }
   }
-  
+
   .animate-streaming-shimmer {
     animation: streaming-shimmer 2s infinite;
   }
-  
+
   .animate-health-score-fill {
     animation: health-score-fill 2s ease-out forwards;
   }
